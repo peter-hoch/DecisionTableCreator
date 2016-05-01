@@ -6,7 +6,27 @@
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <local:DataContainer/>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <DataGrid ItemsSource="{Binding Conditions}"></DataGrid>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="1">
+            <DataGrid ItemsSource="{Binding Actions}"></DataGrid>
+        </Grid>
     </Grid>
 </Window>

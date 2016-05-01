@@ -55,6 +55,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DynamicTable\IDataTableAccess.cs" />
+    <Compile Include="GridCellControl.xaml.cs">
+      <DependentUpon>GridCellControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestCases\TestCase.cs" />
+    <Page Include="GridCellControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,6 +72,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataContainer.cs" />
+    <Compile Include="DynamicTable\ColumnPropertyDescriptionCollection.cs" />
+    <Compile Include="DynamicTable\ColumnPropertyDescriptor.cs" />
+    <Compile Include="DynamicTable\DataRowView.cs" />
+    <Compile Include="DynamicTable\DataRowViewCollection.cs" />
+    <Compile Include="DynamicTable\DataTableView.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
