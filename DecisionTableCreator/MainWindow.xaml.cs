@@ -24,5 +24,28 @@ namespace DecisionTableCreator
         {
             InitializeComponent();
         }
+
+        private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            DataGrid dataGrid = sender as DataGrid;
+            DataGridTextColumn col = e.Column as DataGridTextColumn;
+
+            // excange DataGridTextColumn with DataGridTemplateColumn and GridCellControl
+            DataGridTemplateColumn templateColumn = new DataGridTemplateColumn();
+            templateColumn.Header = col.Header;
+
+            Binding bind = new Binding(col.Header.ToString());
+            bind.Mode = BindingMode.TwoWay;
+
+            FrameworkElementFactory gridCellControl = new FrameworkElementFactory(typeof(GridCellControl));
+            gridCellControl.SetBinding(DataContextProperty, bind);
+            DataTemplate dataTemplate = new DataTemplate();
+            dataTemplate.VisualTree = gridCellControl;
+
+            templateColumn.CellTemplate = dataTemplate;
+
+            e.Column = templateColumn;
     }
+
+}
 }

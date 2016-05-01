@@ -23,10 +23,22 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding Conditions}"></DataGrid>
+            <DataGrid ItemsSource="{Binding Conditions}" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn" SelectionUnit="Cell" IsTabStop="False">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="IsTabStop" Value="False"/>
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding Actions}"></DataGrid>
+            <DataGrid ItemsSource="{Binding Actions}" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn" SelectionUnit="Cell" IsTabStop="False">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="IsTabStop" Value="False"/>
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
         </Grid>
     </Grid>
 </Window>

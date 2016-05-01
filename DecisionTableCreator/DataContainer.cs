@@ -28,8 +28,8 @@ namespace DecisionTableCreator
             ValueObject co2 = new ValueObject("Condition2");
             ValueObject ac1 = new ValueObject("Action1");
             ValueObject ac2 = new ValueObject("Action2");
-            TestCase tc1 = new TestCase("TC1", new ValueObject[] { new ValueObject("c1-TC1"), new ValueObject("c2-TC1"), }, new ValueObject[] { new ValueObject("a1"), new ValueObject("a2"), });
-            TestCase tc2 = new TestCase("TC2", new ValueObject[] { new ValueObject("c1-TC2"), new ValueObject("c2-TC2"), }, new ValueObject[] { new ValueObject("a1"), new ValueObject("a2"), });
+            TestCase tc1 = new TestCase("TC1", new ValueObject[] { new ValueObject("c1-TC1"), new ValueObject("c2-TC1"), }, new ValueObject[] { new ValueObject("a1-TC1"), new ValueObject("a2-TC1"), });
+            TestCase tc2 = new TestCase("TC2", new ValueObject[] { new ValueObject("c1-TC2"), new ValueObject("c2-TC2"), }, new ValueObject[] { new ValueObject("a1-TC2"), new ValueObject("a2-TC2"), });
 
             var row = Conditions.Rows.AddRow();
             Conditions.Columns[0].SetValue(row, co1);
