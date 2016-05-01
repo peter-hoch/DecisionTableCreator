@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataGridColumnWidthSync.cs" />
+    <Compile Include="DataGridHeader.cs" />
     <Compile Include="DynamicTable\IDataTableAccess.cs" />
     <Compile Include="GridCellControl.xaml.cs">
       <DependentUpon>GridCellControl.xaml</DependentUpon>

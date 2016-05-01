@@ -10,6 +10,7 @@
     <StackPanel PreviewKeyDown="PreviewKeyDown">
         <StackPanel.Resources>
         </StackPanel.Resources>
+        <TextBox Text="xx"></TextBox>
         <TextBox Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  Background="{Binding Path=Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding Path=TextBoxVisibility, Mode=OneTime}"/>
