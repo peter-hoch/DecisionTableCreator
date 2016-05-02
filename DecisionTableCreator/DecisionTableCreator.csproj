@@ -55,12 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataGridColumnWidthSync.cs" />
     <Compile Include="DataGridHeader.cs" />
     <Compile Include="DynamicTable\IDataTableAccess.cs" />
     <Compile Include="GridCellControl.xaml.cs">
       <DependentUpon>GridCellControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HorizonticalScrollSynchronizer.cs" />
     <Compile Include="TestCases\ConditionActionBase.cs" />
     <Compile Include="TestCases\TestCase.cs" />
     <Compile Include="TestCases\ValueObject.cs" />
