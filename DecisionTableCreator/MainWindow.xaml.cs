@@ -102,5 +102,12 @@ namespace DecisionTableCreator
                 Trace.WriteLine("error in MainWindow.ValueChangedHandler");
             }
         }
+
+
+        private void InsertColumn_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
     }
 }
