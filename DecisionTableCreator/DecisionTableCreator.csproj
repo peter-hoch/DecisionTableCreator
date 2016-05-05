@@ -64,6 +64,7 @@
     <Compile Include="TestCases\ConditionActionBase.cs" />
     <Compile Include="TestCases\Item.cs" />
     <Compile Include="TestCases\TestCase.cs" />
+    <Compile Include="TestCases\TestCasesRoot.cs" />
     <Compile Include="TestCases\ValueObject.cs" />
     <Compile Include="WpfCommands.cs" />
     <Page Include="GridCellControl.xaml">
@@ -115,6 +116,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnitTestSupport\UnitTestSupport.csproj">
+      <Project>{89c32fe9-0a2a-4340-838f-a16b45ebb40b}</Project>
+      <Name>UnitTestSupport</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

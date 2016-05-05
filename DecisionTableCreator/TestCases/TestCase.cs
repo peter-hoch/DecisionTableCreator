@@ -11,6 +11,12 @@ namespace DecisionTableCreator.TestCases
 
     public class TestCase
     {
+        public enum CollectionType
+        {
+            Conditions,
+            Actions    
+        }
+
         public TestCase(string name, ValueObject[] conditions, ValueObject[] actions)
         {
             Name = name;
@@ -30,6 +36,20 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        public ValueObject GetValueObject(CollectionType type, int index)
+        {
+            switch (type)
+            {
+                case CollectionType.Conditions:
+                    return Conditions[index];
+                    
+                case CollectionType.Actions:
+                    return Actions[index];
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
 
         private ObservableCollection<ValueObject> _conditions;
 
@@ -39,7 +59,7 @@ namespace DecisionTableCreator.TestCases
             set
             {
                 _conditions = value;
-                OnPropertyChanged("Conditions");
+                OnPropertyChanged("ConditionTable");
             }
         }
 
@@ -52,10 +72,9 @@ namespace DecisionTableCreator.TestCases
             set
             {
                 _actions = value;
-                OnPropertyChanged("Actions");
+                OnPropertyChanged("ActionTable");
             }
         }
-
 
         #region event
 
@@ -72,5 +91,4 @@ namespace DecisionTableCreator.TestCases
 
         #endregion
     }
-
 }

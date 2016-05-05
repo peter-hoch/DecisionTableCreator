@@ -10,43 +10,27 @@ namespace DecisionTableCreator.TestCases
     /// <summary>
     /// base class for condition and action
     /// </summary>
-    public class ConditionActionBase : INotifyPropertyChanged
+    public class ConditionActionBase : ValueObject
     {
-        private String _name;
-
-        public String Name
+        public ConditionActionBase(string name) : base(name)
         {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                OnPropertyChanged("Name");
-            }
         }
-
-
-        #region event
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChangedEventArgs args = new PropertyChangedEventArgs(name);
-                PropertyChanged(this, args);
-            }
-        }
-
-        #endregion
     }
 
     public class ConditionObject : ConditionActionBase
     {
+        public ConditionObject(string name) : base(name)
+        {
+            
+        }
     }
 
     public class ActionObject : ConditionActionBase
     {
+        public ActionObject(string name) : base(name)
+        {
+            
+        }
     }
 
 }
