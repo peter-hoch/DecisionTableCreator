@@ -10,13 +10,8 @@
         <local:DataContainer/>
     </Window.DataContext>
     <Window.CommandBindings>
-        <CommandBinding Command="local:WpfCommands.InsertColumn" CanExecute="InsertColumn_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.InsertColumn" Executed="InsertColumn_Executed" CanExecute="InsertColumn_OnCanExecute"/>
     </Window.CommandBindings>
-    <Window.ContextMenu>
-        <ContextMenu>
-            <MenuItem Command="local:WpfCommands.InsertColumn" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-        </ContextMenu>
-    </Window.ContextMenu>
 
     <Grid>
 
@@ -38,6 +33,11 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Command="local:WpfCommands.InsertColumn" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+            </ContextMenu>
+        </Grid.ContextMenu>
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <MenuItem Command="local:WpfCommands.InsertColumn"/>
         </Menu>

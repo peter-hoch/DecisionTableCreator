@@ -87,7 +87,7 @@ namespace DecisionTableCreator
             DataGridColumn col = sender as DataGridColumn;
             if (col != null)
             {
-                DataGridHeader header = (DataGridHeader) col.Header;
+                DataGridHeader header = (DataGridHeader)col.Header;
                 DataGridLength value = col.Width;
                 foreach (DataGridColumn column in _columnsDictionary[header.ColumnIndex])
                 {
@@ -106,8 +106,38 @@ namespace DecisionTableCreator
 
         private void InsertColumn_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            DataGrid dataGrid = e.Source as DataGrid;
+            if (dataGrid != null)
+            {
+                DependencyObject dep = (DependencyObject)e.OriginalSource;
+                if (dep != null)
+                {
+                    var parent = SearchForParent(dep, typeof(DataGridCell));
+                    if (parent != null)
+                    {
+                        e.CanExecute = true;
+                    }
+                }
+            }
         }
 
+        DependencyObject SearchForParent(DependencyObject dep, Type typeofParent)
+        {
+            if (dep.GetType() == typeofParent)
+            {
+                return dep;
+            }
+            var parent = VisualTreeHelper.GetParent(dep);
+            if (parent != null)
+            {
+                return SearchForParent(parent, typeofParent);
+            }
+            return null;
+        }
+
+        private void InsertColumn_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
     }
 }

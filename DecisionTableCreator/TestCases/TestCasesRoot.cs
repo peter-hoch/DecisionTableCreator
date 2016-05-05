@@ -48,7 +48,6 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-
         private ObservableCollection<ConditionActionBase> _conditions;
 
         public ObservableCollection<ConditionActionBase> Conditions
@@ -73,9 +72,6 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-
-
-
         public TestCasesRoot()
         {
             ConditionTable = new DataTableView();
@@ -85,16 +81,12 @@ namespace DecisionTableCreator.TestCases
             Actions = new ObservableCollection<ConditionActionBase>();
         }
 
-
         public static TestCasesRoot CreateSampleTable()
         {
             int testCasesCount = 2;
             TestCasesRoot testCasesRoot = new TestCasesRoot();
 
-            testCasesRoot.CreateColumnDescriptions(testCasesCount);
-
-
-            var list = new ObservableCollection<Item>() {new Item("Value1"), new Item("Value2"), new Item("Value3")};
+            var list = new ObservableCollection<Item>() { new Item("Value1"), new Item("Value2"), new Item("Value3") };
             ValueObject enum1 = new ValueObject(list);
             ValueObject enum2 = new ValueObject(list);
 
@@ -106,14 +98,14 @@ namespace DecisionTableCreator.TestCases
             testCasesRoot.Actions.Add(new ActionObject("Action2"));
 
             testCasesRoot.TestCases.Add(new TestCase("TC1",
-                new ValueObject[] {new ValueObject("c1-TC1"), new ValueObject("c2-TC1"), enum1, new ValueObject(true, "Cond4")},
-                new ValueObject[] {new ValueObject("a1-TC1"), new ValueObject("a2-TC1"),}));
+                new ValueObject[] { new ValueObject("c1-TC1"), new ValueObject("c2-TC1"), enum1, new ValueObject(true, "Cond4") },
+                new ValueObject[] { new ValueObject("a1-TC1"), new ValueObject("a2-TC1"), }));
             testCasesRoot.TestCases.Add(new TestCase("TC2",
-                new ValueObject[] {new ValueObject("c1-TC2"), new ValueObject("c2-TC2"), enum2, new ValueObject(true, "Cond4")},
-                new ValueObject[] {new ValueObject("a1-TC2"), new ValueObject("a2-TC2"),}));
+                new ValueObject[] { new ValueObject("c1-TC2"), new ValueObject("c2-TC2"), enum2, new ValueObject(true, "Cond4") },
+                new ValueObject[] { new ValueObject("a1-TC2"), new ValueObject("a2-TC2"), }));
 
+            testCasesRoot.CreateColumnDescriptions(testCasesCount);
             testCasesRoot.PopulateRows(testCasesRoot.ConditionTable, testCasesRoot.Conditions, testCasesRoot.TestCases, TestCase.CollectionType.Conditions);
-
             testCasesRoot.PopulateRows(testCasesRoot.ActionTable, testCasesRoot.Actions, testCasesRoot.TestCases, TestCase.CollectionType.Actions);
 
             return testCasesRoot;
@@ -129,7 +121,7 @@ namespace DecisionTableCreator.TestCases
 
             for (int idx = 0; idx < testCasesCount; idx++)
             {
-                string testCaseName = String.Format("TC{0}", idx);
+                string testCaseName = TestCases[idx].Name;
                 ConditionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCaseName, typeof(TestCase), null));
                 ActionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCaseName, typeof(TestCase), null));
             }
