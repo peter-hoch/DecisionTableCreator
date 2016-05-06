@@ -17,6 +17,10 @@ namespace DecisionTableCreator.DynamicTable
             _dataRows = new DataRowViewCollection(this);
         }
 
+        internal void ResizeColumnCount(int columnCount)
+        {
+            _dataRows.ResizeColumnCount(columnCount);
+        }
 
         public DataRowViewCollection Rows { get { return _dataRows; } }
 

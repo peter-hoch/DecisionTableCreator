@@ -10,9 +10,10 @@
     <!--<UserControl.CommandBindings>
         <CommandBinding Command="local:WpfCommands.InsertColumn" Executed="InsertColumn_Executed" CanExecute="InsertColumn_OnCanExecute"/>
     </UserControl.CommandBindings>-->
-    <StackPanel PreviewKeyDown="PreviewKeyDown">
+    <StackPanel PreviewKeyDown="PreviewKeyDown" ToolTip="{Binding TooltipText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
         <StackPanel.Resources>
         </StackPanel.Resources>
+        
         <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  Background="{Binding Path=Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding Path=TextBoxVisibility, Mode=OneTime}">
@@ -21,7 +22,7 @@
                     <MenuItem Command="ApplicationCommands.Cut" />
                     <MenuItem Command="ApplicationCommands.Copy" />
                     <MenuItem Command="ApplicationCommands.Paste" />
-                    <MenuItem Command="local:WpfCommands.InsertColumn" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Command="local:WpfCommands.AppendColumn" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                 </ContextMenu>
             </TextBox.ContextMenu>
         </TextBox>

@@ -22,12 +22,12 @@ namespace DecisionTableCreator
     /// </summary>
     public partial class MainWindow : Window
     {
-        Dictionary<int, List<DataGridColumn>> _columnsDictionary = new Dictionary<int, List<DataGridColumn>>();
-
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        DataContainer DataContainer { get { return (DataContainer)DataContext; } }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -60,49 +60,68 @@ namespace DecisionTableCreator
             for (int idx = 0; idx < dataGrid.Columns.Count; idx++)
             {
                 DataGridColumn col = dataGrid.Columns[idx] as DataGridColumn;
-                DataGridHeader header = (DataGridHeader)col.Header;
 
                 // add sync column width
-                AddToDictionary(header.ColumnIndex, col);
+                AddToDictionary(dataGrid, col);
                 var widthPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(DataGridColumn.WidthProperty, typeof(DataGridColumn));
-                var value = widthPropertyDescriptor.GetValue(col);
                 widthPropertyDescriptor.AddValueChanged(col, ValueChangedHandler);
             }
         }
 
-        void AddToDictionary(int index, DataGridColumn col)
+
+        #region SyncColumnWidth
+
+        // dictionary for sync column width
+        Dictionary<string, List<DataGridColumnContainer>> ColumnsWidthSyncDictionary = new Dictionary<string, List<DataGridColumnContainer>>();
+
+
+        void AddToDictionary(DataGrid dataGrid, DataGridColumn col)
         {
-            if (_columnsDictionary.ContainsKey(index))
+            DataGridColumnContainer container = new DataGridColumnContainer(dataGrid, col);
+
+            string key = GetColumnKey(container.Column.Header.ToString());
+            if (ColumnsWidthSyncDictionary.ContainsKey(key))
             {
-                _columnsDictionary[index].Add(col);
+                var result = ColumnsWidthSyncDictionary[key].Where(cc => cc.DataGrid.Equals(dataGrid)).ToArray();
+                foreach (DataGridColumnContainer cont in result)
+                {
+                    ColumnsWidthSyncDictionary[key].Remove(cont);
+                }
+                ColumnsWidthSyncDictionary[key].Add(container);
             }
             else
             {
-                _columnsDictionary.Add(index, new List<DataGridColumn>() { col });
+                List<DataGridColumnContainer> colContainer = new List<DataGridColumnContainer>();
+                ColumnsWidthSyncDictionary.Add(key, colContainer);
+                colContainer.Add(container);
             }
+
+        }
+
+        string GetColumnKey(string name)
+        {
+            if (name.Contains("Action") || name.Contains("Condition"))
+            {
+               return "ConditionOrAction";
+            }
+            return name;
         }
 
         private void ValueChangedHandler(object sender, EventArgs eventArgs)
         {
             DataGridColumn col = sender as DataGridColumn;
-            if (col != null)
+            DataGridLength value = col.Width;
+            foreach (DataGridColumnContainer column in ColumnsWidthSyncDictionary[GetColumnKey(col.Header.ToString())])
             {
-                DataGridHeader header = (DataGridHeader)col.Header;
-                DataGridLength value = col.Width;
-                foreach (DataGridColumn column in _columnsDictionary[header.ColumnIndex])
+                if (!col.Equals(column.Column))
                 {
-                    if (!col.Equals(column))
-                    {
-                        column.Width = value;
-                    }
+                    column.Column.Width = value;
                 }
             }
-            else
-            {
-                Trace.WriteLine("error in MainWindow.ValueChangedHandler");
-            }
+
         }
 
+        #endregion
 
         private void InsertColumn_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -121,6 +140,14 @@ namespace DecisionTableCreator
             }
         }
 
+        private void InsertColumn_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var tcr = DataContainer.TestCasesRoot;
+            tcr.AppendTestCase();
+            DataContainer.TestCasesRoot = tcr;
+        }
+
+
         DependencyObject SearchForParent(DependencyObject dep, Type typeofParent)
         {
             if (dep.GetType() == typeofParent)
@@ -135,9 +162,16 @@ namespace DecisionTableCreator
             return null;
         }
 
-        private void InsertColumn_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void Test1_OnClick(object sender, RoutedEventArgs e)
         {
+            //DataContainer.Conditions = null;
+            //DataContainer.Actions= null;
+        }
 
+        private void Test2_OnClick(object sender, RoutedEventArgs e)
+        {
+            DataContainer.Conditions = DataContainer.TestCasesRoot.ConditionTable;
+            DataContainer.Actions = DataContainer.TestCasesRoot.ActionTable;
         }
     }
 }

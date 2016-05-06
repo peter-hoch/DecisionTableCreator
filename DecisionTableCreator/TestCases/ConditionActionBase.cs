@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -12,24 +13,51 @@ namespace DecisionTableCreator.TestCases
     /// </summary>
     public class ConditionActionBase : ValueObject
     {
-        public ConditionActionBase(string name) : base(name)
+        public enum ConditionActionType
         {
+            Text,
+            Enum,
+            Bool
         }
+
+        public ConditionActionBase(string name, ConditionActionType type) : base(name)
+        {
+            Type = type;
+        }
+
+        public ConditionActionBase(string name, ObservableCollection<EnumValue> enums) : base(name)
+        {
+            Type = ConditionActionType.Enum;
+            EnumValues = enums;
+        }
+
+        public ConditionActionType Type { get; private set; }
+
+        public ObservableCollection<EnumValue> EnumValues { get; private set; }
+
     }
 
     public class ConditionObject : ConditionActionBase
     {
-        public ConditionObject(string name) : base(name)
+        public ConditionObject(string name, ConditionActionType type) : base(name, type)
         {
             
+        }
+        public ConditionObject(string name, ObservableCollection<EnumValue> enums) : base(name, enums)
+        {
+
         }
     }
 
     public class ActionObject : ConditionActionBase
     {
-        public ActionObject(string name) : base(name)
+        public ActionObject(string name, ConditionActionType type) : base(name, type)
         {
             
+        }
+        public ActionObject(string name, ObservableCollection<EnumValue> enums) : base(name, enums)
+        {
+
         }
     }
 

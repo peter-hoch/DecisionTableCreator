@@ -19,6 +19,11 @@ namespace DecisionTableCreator.DynamicTable
             _parentCollection = parentCollection;
         }
 
+        internal void ResizeColumnCount(int columnCount)
+        {
+            _columns = new object[columnCount];
+        }
+
         public object this[string name]
         {
             get { return _columns[ColumnIndexFromName(name)]; }

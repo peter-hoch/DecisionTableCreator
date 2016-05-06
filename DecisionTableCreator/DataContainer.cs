@@ -44,7 +44,7 @@ namespace DecisionTableCreator
             set
             {
                 _conditions = value;
-                OnPropertyChanged("ConditionTable");
+                OnPropertyChanged("Conditions");
             }
         }
 
@@ -57,7 +57,7 @@ namespace DecisionTableCreator
             set
             {
                 _actions = value;
-                OnPropertyChanged("ActionTable");
+                OnPropertyChanged("Actions");
             }
         }
 

@@ -9,11 +9,11 @@ namespace DecisionTableCreator
 {
     public class WpfCommands
     {
-        public static readonly RoutedUICommand InsertColumn;
+        public static readonly RoutedUICommand AppendColumn;
 
         static WpfCommands()
         {
-            InsertColumn = new RoutedUICommand("InsertColumn", "InsertColumn", typeof(WpfCommands));
+            AppendColumn = new RoutedUICommand("AppendColumn", "AppendColumn", typeof(WpfCommands));
         }
     }
 }

@@ -39,5 +39,15 @@ namespace DecisionTableCreator.DynamicTable
             return row;
         }
 
+        internal void ResizeColumnCount(int columnCount)
+        {
+            foreach (DataRowView view in this)
+            {
+                view.ResizeColumnCount(columnCount);
+            }
+        }
+
+
+
     }
 }

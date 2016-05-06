@@ -32,7 +32,7 @@ namespace DecisionTableCreator.TestCases
             Name = name;
         }
 
-        public ValueObject(ObservableCollection<Item> items)
+        public ValueObject(ObservableCollection<EnumValue> items)
         {
             DataType = ValueObjejectDataType.Enumeration;
             Items = items;
@@ -183,9 +183,9 @@ namespace DecisionTableCreator.TestCases
         }
 
 
-        private ObservableCollection<Item> _items;
+        private ObservableCollection<EnumValue> _items;
 
-        public ObservableCollection<Item> Items
+        public ObservableCollection<EnumValue> Items
         {
             get { return _items; }
             set
@@ -207,6 +207,20 @@ namespace DecisionTableCreator.TestCases
                 OnPropertyChanged("SelectedItemIndex");
             }
         }
+
+
+        private string _tooltipText;
+
+        public string TooltipText
+        {
+            get { return _tooltipText; }
+            set
+            {
+                _tooltipText = value;
+                OnPropertyChanged("TooltipText");
+            }
+        }
+
 
 
         public override string ToString()

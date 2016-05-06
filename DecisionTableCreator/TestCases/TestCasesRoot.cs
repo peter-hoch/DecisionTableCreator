@@ -83,32 +83,31 @@ namespace DecisionTableCreator.TestCases
 
         public static TestCasesRoot CreateSampleTable()
         {
-            int testCasesCount = 2;
             TestCasesRoot testCasesRoot = new TestCasesRoot();
-
-            var list = new ObservableCollection<Item>() { new Item("Value1"), new Item("Value2"), new Item("Value3") };
-            ValueObject enum1 = new ValueObject(list);
-            ValueObject enum2 = new ValueObject(list);
-
-            testCasesRoot.Conditions.Add(new ConditionObject("Condition1"));
-            testCasesRoot.Conditions.Add(new ConditionObject("Condition2"));
-            testCasesRoot.Conditions.Add(new ConditionObject("Condition3"));
-            testCasesRoot.Conditions.Add(new ConditionObject("Condition4"));
-            testCasesRoot.Actions.Add(new ActionObject("Action1"));
-            testCasesRoot.Actions.Add(new ActionObject("Action2"));
-
-            testCasesRoot.TestCases.Add(new TestCase("TC1",
-                new ValueObject[] { new ValueObject("c1-TC1"), new ValueObject("c2-TC1"), enum1, new ValueObject(true, "Cond4") },
-                new ValueObject[] { new ValueObject("a1-TC1"), new ValueObject("a2-TC1"), }));
-            testCasesRoot.TestCases.Add(new TestCase("TC2",
-                new ValueObject[] { new ValueObject("c1-TC2"), new ValueObject("c2-TC2"), enum2, new ValueObject(true, "Cond4") },
-                new ValueObject[] { new ValueObject("a1-TC2"), new ValueObject("a2-TC2"), }));
-
-            testCasesRoot.CreateColumnDescriptions(testCasesCount);
-            testCasesRoot.PopulateRows(testCasesRoot.ConditionTable, testCasesRoot.Conditions, testCasesRoot.TestCases, TestCase.CollectionType.Conditions);
-            testCasesRoot.PopulateRows(testCasesRoot.ActionTable, testCasesRoot.Actions, testCasesRoot.TestCases, TestCase.CollectionType.Actions);
+            testCasesRoot.CreateSampleTableInternal();
 
             return testCasesRoot;
+        }
+
+        private void CreateSampleTableInternal()
+        {
+            int testCasesCount = 2;
+            var list = new ObservableCollection<EnumValue>() { new EnumValue("EnumValue1"), new EnumValue("EnumValue2"), new EnumValue("EnumValue3") };
+
+            Conditions.Add(new ConditionObject("Condition1", ConditionActionBase.ConditionActionType.Text));
+            Conditions.Add(new ConditionObject("Condition2", ConditionActionBase.ConditionActionType.Text));
+            Conditions.Add(new ConditionObject("Condition3", list));
+            Conditions.Add(new ConditionObject("Condition4", ConditionActionBase.ConditionActionType.Bool));
+            Actions.Add(new ActionObject("Action1", ConditionActionBase.ConditionActionType.Text));
+            Actions.Add(new ActionObject("Action2", ConditionActionBase.ConditionActionType.Text));
+
+            CreateColumnDescriptions(testCasesCount);
+
+            AddTestCase();
+            AddTestCase();
+
+            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
         }
 
         private void CreateColumnDescriptions(int testCasesCount)
@@ -118,17 +117,17 @@ namespace DecisionTableCreator.TestCases
 
             ActionTable = new DataTableView();
             ActionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor("Action", typeof(ActionObject), null));
+        }
 
-            for (int idx = 0; idx < testCasesCount; idx++)
-            {
-                string testCaseName = TestCases[idx].Name;
-                ConditionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCaseName, typeof(TestCase), null));
-                ActionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCaseName, typeof(TestCase), null));
-            }
+        void AddColumnDescriptionForTestCase(string testCaseName)
+        {
+            ConditionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCaseName, typeof(TestCase), null));
+            ActionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCaseName, typeof(TestCase), null));
         }
 
         void PopulateRows(DataTableView dataTable, IList<ConditionActionBase> list, IList<TestCase> testCases, TestCase.CollectionType colType)
         {
+            dataTable.Rows.Clear();
             int rowIndex = 0;
             foreach (ConditionActionBase conditionActionBase in list)
             {
@@ -137,7 +136,8 @@ namespace DecisionTableCreator.TestCases
                 int columnIndex = 1;
                 foreach (TestCase testCase in testCases)
                 {
-                    dataTable.Columns[columnIndex].SetValue(row, testCase.GetValueObject(colType, rowIndex));
+                    var value = testCase.GetValueObject(colType, rowIndex);
+                    dataTable.Columns[columnIndex].SetValue(row, value);
                     columnIndex++;
                 }
                 rowIndex++;
@@ -145,6 +145,48 @@ namespace DecisionTableCreator.TestCases
 
         }
 
+        public void AppendTestCase()
+        {
+            AddTestCase();
+            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+        }
+
+        private void AddTestCase()
+        {
+            int index = TestCases.Count+1;
+            var tc = new TestCase(String.Format("TC{0}", index));
+            TestCases.Add(tc);
+            AddValueObjects(tc, Conditions, TestCase.CollectionType.Conditions);
+            AddValueObjects(tc, Actions, TestCase.CollectionType.Actions);
+            AddColumnDescriptionForTestCase(tc.Name);
+            ConditionTable.ResizeColumnCount(TestCases.Count + 1);
+            ActionTable.ResizeColumnCount(TestCases.Count + 1);
+        }
+
+        public static void AddValueObjects(TestCase tc, ObservableCollection<ConditionActionBase> list, TestCase.CollectionType colType)
+        {
+            foreach (ConditionActionBase condition in list)
+            {
+                ValueObject vo;
+                switch (condition.Type)
+                {
+                    case ConditionActionBase.ConditionActionType.Text:
+                        vo = new ValueObject("defaultText");
+                        break;
+                    case ConditionActionBase.ConditionActionType.Enum:
+                        vo = new ValueObject(condition.EnumValues);
+                        break;
+                    case ConditionActionBase.ConditionActionType.Bool:
+                        vo = new ValueObject(false, "boolText");
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                vo.TooltipText = tc.Name + " " + condition.Text;
+                tc.AddValueObject(colType, vo);
+            }
+        }
 
         #region event
 
@@ -160,6 +202,5 @@ namespace DecisionTableCreator.TestCases
         }
 
         #endregion
-
     }
 }

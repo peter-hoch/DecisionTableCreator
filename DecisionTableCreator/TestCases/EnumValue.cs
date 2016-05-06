@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DecisionTableCreator.TestCases
 {
-    public class Item : INotifyPropertyChanged
+    public class EnumValue : INotifyPropertyChanged
     {
-        public Item( string name)
+        public EnumValue( string name)
         {
             Name = name;
         }

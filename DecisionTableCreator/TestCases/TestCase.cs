@@ -24,6 +24,13 @@ namespace DecisionTableCreator.TestCases
             Actions = new ObservableCollection<ValueObject>(actions);
         }
 
+        public TestCase(string name)
+        {
+            Name = name;
+            Conditions = new ObservableCollection<ValueObject>();
+            Actions = new ObservableCollection<ValueObject>();
+        }
+
         private String _name;
 
         public String Name
@@ -46,6 +53,21 @@ namespace DecisionTableCreator.TestCases
                 case CollectionType.Actions:
                     return Actions[index];
 
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        public void AddValueObject(CollectionType type, ValueObject value)
+        {
+            switch (type)
+            {
+                case CollectionType.Conditions:
+                    Conditions.Add(value);
+                    break;
+                case CollectionType.Actions:
+                    Actions.Add(value);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
