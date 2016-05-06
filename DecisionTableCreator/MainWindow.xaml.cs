@@ -173,5 +173,6 @@ namespace DecisionTableCreator
             DataContainer.Conditions = DataContainer.TestCasesRoot.ConditionTable;
             DataContainer.Actions = DataContainer.TestCasesRoot.ActionTable;
         }
+
     }
 }

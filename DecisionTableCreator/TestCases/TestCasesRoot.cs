@@ -91,20 +91,38 @@ namespace DecisionTableCreator.TestCases
 
         private void CreateSampleTableInternal()
         {
-            int testCasesCount = 2;
-            var list = new ObservableCollection<EnumValue>() { new EnumValue("EnumValue1"), new EnumValue("EnumValue2"), new EnumValue("EnumValue3") };
+            int testCasesCount = 20;
+            int conditionCount = 5;
+            int actionCount = 5;
 
-            Conditions.Add(new ConditionObject("Condition1", ConditionActionBase.ConditionActionType.Text));
-            Conditions.Add(new ConditionObject("Condition2", ConditionActionBase.ConditionActionType.Text));
-            Conditions.Add(new ConditionObject("Condition3", list));
-            Conditions.Add(new ConditionObject("Condition4", ConditionActionBase.ConditionActionType.Bool));
-            Actions.Add(new ActionObject("Action1", ConditionActionBase.ConditionActionType.Text));
-            Actions.Add(new ActionObject("Action2", ConditionActionBase.ConditionActionType.Text));
+            List< ObservableCollection<EnumValue>> lists = new List<ObservableCollection<EnumValue>>();
+            for (int list = 0; list < (conditionCount+ actionCount); list++)
+            {
+                var subList = new ObservableCollection<EnumValue>();
+                lists.Add(subList);
+                for (int idx = 0; idx < 10; idx++)
+                {
+                    subList.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", list, idx)));
+                }
+            }
+
+            int listIndex = 0;
+            for (int idx = 0; idx < conditionCount; idx++)
+            {
+                Conditions.Add(new ConditionObject(String.Format("Condition {0}", idx), lists[listIndex++]));
+            }
+
+            for (int idx = 0; idx < actionCount; idx++)
+            {
+                Actions.Add(new ActionObject(String.Format("Action1{0}", idx), lists[listIndex++]));
+            }
 
             CreateColumnDescriptions(testCasesCount);
 
-            AddTestCase();
-            AddTestCase();
+            for (int idx = 0; idx < testCasesCount; idx++)
+            {
+                AddTestCase();
+            }
 
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
