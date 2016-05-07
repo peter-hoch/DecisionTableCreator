@@ -10,7 +10,7 @@
         <local:DataContainer/>
     </Window.DataContext>
     <Window.CommandBindings>
-        <CommandBinding Command="local:WpfCommands.AppendColumn" Executed="InsertColumn_Executed" CanExecute="InsertColumn_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.AppendColumn" Executed="InsertColumn_Executed" CanExecute="AppendColumn_OnCanExecute"/>
     </Window.CommandBindings>
 
     <Grid>

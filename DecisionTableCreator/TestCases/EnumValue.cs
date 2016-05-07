@@ -9,10 +9,25 @@ namespace DecisionTableCreator.TestCases
 {
     public class EnumValue : INotifyPropertyChanged
     {
-        public EnumValue( string name)
+        public EnumValue( string name, bool isInavlid = false)
         {
             Name = name;
+            IsInvalid = isInavlid;
         }
+
+        private bool _isInvalid;
+
+        public bool IsInvalid
+        {
+            get { return _isInvalid; }
+            set
+            {
+                _isInvalid = value;
+                OnPropertyChanged("IsInvalid");
+            }
+        }
+
+
 
         private string _name;
 

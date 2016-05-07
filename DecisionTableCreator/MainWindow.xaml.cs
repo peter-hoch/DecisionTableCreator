@@ -123,15 +123,18 @@ namespace DecisionTableCreator
 
         #endregion
 
-        private void InsertColumn_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void AppendColumn_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            bool trace = false;
             DataGrid dataGrid = e.Source as DataGrid;
             if (dataGrid != null)
             {
                 DependencyObject dep = (DependencyObject)e.OriginalSource;
                 if (dep != null)
                 {
-                    var parent = SearchForParent(dep, typeof(DataGridCell));
+                    if(trace) { Debug.Write("SearchForParent ");}
+                    var parent = SearchForParent(dep, typeof(DataGridCell), trace);
+                    if (trace) { Debug.WriteLine("");}
                     if (parent != null)
                     {
                         e.CanExecute = true;
@@ -148,8 +151,9 @@ namespace DecisionTableCreator
         }
 
 
-        DependencyObject SearchForParent(DependencyObject dep, Type typeofParent)
+        DependencyObject SearchForParent(DependencyObject dep, Type typeofParent, bool trace)
         {
+            if(trace) { Debug.Write(" " + dep.GetType().Name);}
             if (dep.GetType() == typeofParent)
             {
                 return dep;
@@ -157,7 +161,7 @@ namespace DecisionTableCreator
             var parent = VisualTreeHelper.GetParent(dep);
             if (parent != null)
             {
-                return SearchForParent(parent, typeofParent);
+                return SearchForParent(parent, typeofParent, trace);
             }
             return null;
         }

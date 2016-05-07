@@ -192,6 +192,7 @@ namespace DecisionTableCreator.TestCases
             {
                 _items = value;
                 OnPropertyChanged("Items");
+                SetBackground();
             }
         }
 
@@ -205,6 +206,7 @@ namespace DecisionTableCreator.TestCases
             {
                 _selectedItemIndex = value;
                 OnPropertyChanged("SelectedItemIndex");
+                SetBackground();
             }
         }
 
@@ -221,7 +223,27 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        private void SetBackground()
+        {
+            Brush brush = Brushes.White;
 
+            if (DataType == ValueObjejectDataType.Enumeration)
+            {
+                EnumValue ev = Value as EnumValue;
+                if (ev != null)
+                {
+                    if (ev.IsInvalid)
+                    {
+                        brush = Brushes.Red;
+                    }
+                }
+            }
+
+            if (Background != brush)
+            {
+                Background = brush;
+            }
+        }
 
         public override string ToString()
         {
