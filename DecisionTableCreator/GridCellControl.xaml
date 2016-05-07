@@ -23,6 +23,7 @@
                     <MenuItem Command="ApplicationCommands.Copy" />
                     <MenuItem Command="ApplicationCommands.Paste" />
                     <MenuItem Command="local:WpfCommands.AppendColumn" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Command="local:WpfCommands.EditCondition" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                 </ContextMenu>
             </TextBox.ContextMenu>
         </TextBox>
@@ -33,6 +34,7 @@
             <ComboBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="local:WpfCommands.AppendColumn" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Command="local:WpfCommands.EditCondition" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                 </ContextMenu>
             </ComboBox.ContextMenu>
 

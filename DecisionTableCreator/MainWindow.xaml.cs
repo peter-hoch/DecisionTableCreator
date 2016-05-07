@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DecisionTableCreator.DynamicTable;
+using DecisionTableCreator.TestCases;
 
 namespace DecisionTableCreator
 {
@@ -150,6 +152,40 @@ namespace DecisionTableCreator
             DataContainer.TestCasesRoot = tcr;
         }
 
+        private void EditCondition_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ConditionObject condObject = GetGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ConditionObject;
+
+            EditCondition wnd = new EditCondition(condObject);
+            bool? result = wnd.ShowDialog();
+        }
+
+        private void EditCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            ConditionObject condObject = GetGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ConditionObject;
+            if (condObject != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        object GetGridCellControlDataContext(DataGrid dataGrid, DependencyObject originalSource, bool trace = false)
+        {
+            if (dataGrid != null)
+            {
+                if (originalSource != null)
+                {
+                    if (trace) { Debug.Write("SearchForParent "); }
+                    var parent = SearchForParent(originalSource, typeof(GridCellControl), trace);
+                    if (trace) { Debug.WriteLine(""); }
+                    if (parent != null)
+                    {
+                        return ((GridCellControl)parent).DataContext;
+                    }
+                }
+            }
+            return null;
+        }
 
         DependencyObject SearchForParent(DependencyObject dep, Type typeofParent, bool trace)
         {
