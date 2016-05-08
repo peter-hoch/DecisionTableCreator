@@ -9,11 +9,26 @@ namespace DecisionTableCreator.TestCases
 {
     public class EnumValue : INotifyPropertyChanged
     {
-        public EnumValue( string name, bool isInavlid = false)
+        public EnumValue(string name, bool isInavlid = false, bool dontCare = false, bool isDefault = false)
         {
             Name = name;
             IsInvalid = isInavlid;
+            DontCare = dontCare;
+            IsDefault = isDefault;
         }
+
+        private bool _isDefault;
+
+        public bool IsDefault
+        {
+            get { return _isDefault; }
+            set
+            {
+                _isDefault = value;
+                OnPropertyChanged("IsDefault");
+            }
+        }
+
 
         private bool _isInvalid;
 
@@ -27,7 +42,17 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        private bool _dontCare;
 
+        public bool DontCare
+        {
+            get { return _dontCare; }
+            set
+            {
+                _dontCare = value;
+                OnPropertyChanged("DontCare");
+            }
+        }
 
         private string _name;
 

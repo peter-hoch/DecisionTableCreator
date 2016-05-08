@@ -5,26 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d"
-        Title="EditCondition" Height="300" Width="300">
+        Title="EditCondition" Height="300" Width="500">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="10"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="1" Grid.Row="1">
-            <StackPanel Orientation="Horizontal">
+        <StackPanel Grid.Row="0">
+            <StackPanel Margin="10" Orientation="Horizontal">
                 <Label Content="Name"></Label>
-                <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>
-        <DataGrid Grid.Column="1" Grid.Row="2" ItemsSource="{Binding EnumValues}"></DataGrid>
+        <DataGrid Margin="10"  Grid.Row="1" ItemsSource="{Binding EnumValues}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="80"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding Value}" MinWidth="80"/>
+                <DataGridCheckBoxColumn Header="IsInvalid" Binding="{Binding IsInvalid}"/>
+                <DataGridCheckBoxColumn Header="Don' t care" Binding="{Binding DontCare}"/>
+                <DataGridCheckBoxColumn Header="Is default" Binding="{Binding IsDefault}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

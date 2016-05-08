@@ -42,7 +42,7 @@
         <CheckBox IsChecked="{Binding BoolValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  Background="{Binding Path=Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding Path=CheckboxVisibility, Mode=OneTime, FallbackValue=Collapsed}"
-                 Content="{Binding Name, Mode=OneTime}"
+                 Content="{Binding Text, Mode=OneTime}"
                  Margin="5"/>
     </StackPanel>
 </UserControl>

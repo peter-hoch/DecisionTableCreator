@@ -19,17 +19,57 @@ namespace DecisionTableCreator.TestCases
             Bool    
         }
 
+        public static ValueObject Create(ConditionActionBase conditionOrAction)
+        {
+            ValueObject vo;
+            switch (conditionOrAction.Type)
+            {
+                case ConditionActionBase.ConditionActionType.Text:
+                    vo = new ValueObject(conditionOrAction.DefaultText);
+                    break;
+                case ConditionActionBase.ConditionActionType.Enum:
+                    vo = CreateEnumValueObject(conditionOrAction);
+                    break;
+                case ConditionActionBase.ConditionActionType.Bool:
+                    vo = new ValueObject(false, conditionOrAction.DefaultText);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            vo.ConditionOrActionParent = conditionOrAction;
+            return vo;
+        }
+
+        private static ValueObject CreateEnumValueObject(ConditionActionBase conditionOrAction)
+        {
+            int defaultIndex = 0;
+            int idx = 0;
+            foreach (EnumValue value in conditionOrAction.EnumValues)
+            {
+                if (value.IsDefault)
+                {
+                    defaultIndex = idx;
+                    break;
+                }
+                idx++;
+            }
+            ValueObject vo;
+            vo = new ValueObject(conditionOrAction.EnumValues);
+            vo.SelectedItemIndex = defaultIndex;
+            return vo;
+        }
+
         public ValueObject(string text)
         {
             DataType = ValueObjejectDataType.Text;
             Text = text;
         }
 
-        public ValueObject(bool value, string name)
+        public ValueObject(bool value, string text)
         {
             DataType = ValueObjejectDataType.Bool;
             BoolValue = value;
-            Name = name;
+            Text = text;
         }
 
         public ValueObject(ObservableCollection<EnumValue> items)
@@ -37,6 +77,8 @@ namespace DecisionTableCreator.TestCases
             DataType = ValueObjejectDataType.Enumeration;
             Items = items;
         }
+
+        public ConditionActionBase ConditionOrActionParent { get; private set; }
 
         private ValueObjejectDataType _dataType;
 
@@ -84,20 +126,6 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-
-        private string _name;
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                OnPropertyChanged("Name");
-            }
-        }
-
-
         public object Value
         {
             get
@@ -118,7 +146,6 @@ namespace DecisionTableCreator.TestCases
                 }
             }
         }
-
 
         private Brush _background = Brushes.White;
 
@@ -236,6 +263,10 @@ namespace DecisionTableCreator.TestCases
                     {
                         brush = Brushes.Red;
                     }
+                    else if (ev.DontCare)
+                    {
+                        brush = Brushes.Aqua;
+                    }
                 }
             }
 
@@ -254,7 +285,7 @@ namespace DecisionTableCreator.TestCases
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string name)
+        protected void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
             {

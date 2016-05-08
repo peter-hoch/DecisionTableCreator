@@ -15,8 +15,9 @@ namespace DecisionTableCreator
     {
         public DataContainer()
         {
+            TestCasesRoot = TestCasesRoot.CreateSimpleTable();
             //TestCasesRoot = TestCasesRoot.CreateSampleTable();
-            TestCasesRoot = TestCasesRoot.CreatePrinterTrubbleshootingSample();
+            //TestCasesRoot = TestCasesRoot.CreatePrinterTrubbleshootingSample();
         }
 
         private TestCasesRoot _testCasesRoot;

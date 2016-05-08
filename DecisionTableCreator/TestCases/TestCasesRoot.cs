@@ -89,32 +89,108 @@ namespace DecisionTableCreator.TestCases
             return testCasesRoot;
         }
 
+        public static TestCasesRoot CreateSimpleTable()
+        {
+            TestCasesRoot testCasesRoot = new TestCasesRoot();
+            testCasesRoot.CreateSimpleTableInternal();
+
+            return testCasesRoot;
+        }
+
         private void CreateSampleTableInternal()
         {
             int testCasesCount = 20;
             int conditionCount = 5;
             int actionCount = 5;
 
-            List< ObservableCollection<EnumValue>> lists = new List<ObservableCollection<EnumValue>>();
-            for (int list = 0; list < (conditionCount+ actionCount); list++)
+            List<ObservableCollection<EnumValue>> lists = new List<ObservableCollection<EnumValue>>();
+            for (int list = 0; list < (conditionCount + actionCount); list++)
             {
                 var subList = new ObservableCollection<EnumValue>();
                 lists.Add(subList);
                 bool isInvalid = true;
-                for (int idx = 0; idx < 10; idx++)
+                for (int idx = 1; idx < 10; idx++)
                 {
                     subList.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", list, idx), isInvalid));
-
+                    isInvalid = false;
                 }
             }
 
             int listIndex = 0;
-            for (int idx = 0; idx < conditionCount; idx++)
+            Conditions.Add(new ConditionObject(String.Format("Condition {0}", 0), ConditionActionBase.ConditionActionType.Bool));
+            for (int idx = 1; idx < conditionCount; idx++)
             {
                 Conditions.Add(new ConditionObject(String.Format("Condition {0}", idx), lists[listIndex++]));
             }
 
-            for (int idx = 0; idx < actionCount; idx++)
+            Actions.Add(new ActionObject(String.Format("Action1{0}", 0), ConditionActionBase.ConditionActionType.Bool));
+            for (int idx = 1; idx < actionCount; idx++)
+            {
+                Actions.Add(new ActionObject(String.Format("Action1{0}", idx), lists[listIndex++]));
+            }
+
+            CreateBasicColumnDescriptions();
+
+            for (int idx = 0; idx < testCasesCount; idx++)
+            {
+                AddTestCase();
+            }
+
+            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+        }
+
+        private void CreateSimpleTableInternal()
+        {
+            int testCasesCount = 10;
+            int conditionCount = 5;
+            int actionCount = 5;
+
+            List<ObservableCollection<EnumValue>> lists = new List<ObservableCollection<EnumValue>>();
+            int listNumber = 0;
+            int enumIdx = 0;
+            var subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, true));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}", listNumber++, enumIdx++), false, true, false));
+            enumIdx = 0;
+            subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, true));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}", listNumber++, enumIdx++), false, true, false));
+            enumIdx = 0;
+            subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}", listNumber++, enumIdx++), false, true, true));
+
+            for (int list = listNumber; list < 10; list++)
+            {
+                var subList = new ObservableCollection<EnumValue>();
+                lists.Add(subList);
+                bool isInvalid = true;
+                for (int idx = 1; idx < 10; idx++)
+                {
+                    subList.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", list, idx), isInvalid));
+                    isInvalid = false;
+                }
+            }
+
+            int listIndex = 0;
+            //Conditions.Add(new ConditionObject(String.Format("Condition {0}", 0), ConditionActionBase.ConditionActionType.Bool));
+            for (int idx = 1; idx < conditionCount; idx++)
+            {
+                Conditions.Add(new ConditionObject(String.Format("Condition {0}", idx), lists[listIndex++]));
+            }
+
+            Actions.Add(new ActionObject(String.Format("Action1{0}", 0), ConditionActionBase.ConditionActionType.Bool));
+            for (int idx = 1; idx < actionCount; idx++)
             {
                 Actions.Add(new ActionObject(String.Format("Action1{0}", idx), lists[listIndex++]));
             }
@@ -224,23 +300,10 @@ namespace DecisionTableCreator.TestCases
 
         public static void AddValueObjects(TestCase tc, ObservableCollection<ConditionActionBase> list, TestCase.CollectionType colType)
         {
+
             foreach (ConditionActionBase condition in list)
             {
-                ValueObject vo;
-                switch (condition.Type)
-                {
-                    case ConditionActionBase.ConditionActionType.Text:
-                        vo = new ValueObject("defaultText");
-                        break;
-                    case ConditionActionBase.ConditionActionType.Enum:
-                        vo = new ValueObject(condition.EnumValues);
-                        break;
-                    case ConditionActionBase.ConditionActionType.Bool:
-                        vo = new ValueObject(false, "boolText");
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                ValueObject vo = ValueObject.Create(condition);
                 vo.TooltipText = tc.Name + " " + condition.Text;
                 tc.AddValueObject(colType, vo);
             }

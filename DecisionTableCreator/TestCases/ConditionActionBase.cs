@@ -35,6 +35,19 @@ namespace DecisionTableCreator.TestCases
 
         public ObservableCollection<EnumValue> EnumValues { get; private set; }
 
+        private string _defaultText;
+
+        public string DefaultText
+        {
+            get { return _defaultText; }
+            set
+            {
+                _defaultText = value;
+                OnPropertyChanged("DefaultText");
+            }
+        }
+
+
     }
 
     public class ConditionObject : ConditionActionBase
