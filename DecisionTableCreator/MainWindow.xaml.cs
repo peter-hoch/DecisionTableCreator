@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.TestCases;
+using Microsoft.Win32;
 
 namespace DecisionTableCreator
 {
@@ -156,8 +157,11 @@ namespace DecisionTableCreator
         {
             ConditionObject condObject = GetGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ConditionObject;
 
-            EditCondition wnd = new EditCondition(condObject);
-            bool? result = wnd.ShowDialog();
+            if (condObject != null)
+            {
+                EditCondition wnd = new EditCondition(condObject);
+                bool? result = wnd.ShowDialog();
+            }
         }
 
         private void EditCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -168,6 +172,43 @@ namespace DecisionTableCreator
                 e.CanExecute = true;
             }
         }
+
+        private void EditAction_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ActionObject actionObject = GetGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ActionObject;
+
+            if (actionObject != null)
+            {
+                EditAction wnd = new EditAction(actionObject);
+                bool? result = wnd.ShowDialog();
+            }
+        }
+
+        private void EditAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            ActionObject actionObject = GetGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ActionObject;
+            if (actionObject != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
+            var result = dlg.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                DataContainer.TestCasesRoot.Save(dlg.FileName);                
+            }
+        }
+
+        private void Save_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
 
         object GetGridCellControlDataContext(DataGrid dataGrid, DependencyObject originalSource, bool trace = false)
         {

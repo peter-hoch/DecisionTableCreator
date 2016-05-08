@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{89C32FE9-0A2A-4340-838F-A16B45EBB40B}</ProjectGuid>
+    <ProjectGuid>{54DEB0C9-3CDC-4947-9BAF-D8F55661F9BB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitTestSupport</RootNamespace>
-    <AssemblyName>UnitTestSupport</AssemblyName>
+    <RootNamespace>UnitTests1</RootNamespace>
+    <AssemblyName>UnitTests1</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,12 +44,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileCompareException.cs" />
-    <Compile Include="IInvokeDiffAction.cs" />
-    <Compile Include="InvokeWinMerge.cs" />
+    <Compile Include="LoadSaveUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestSupportUnitTests.cs" />
-    <Compile Include="TestSupport.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DecisionTableCreator\DecisionTableCreator.csproj">
+      <Project>{42444d72-3e56-4bd6-9cc0-5e674f1bd693}</Project>
+      <Name>DecisionTableCreator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnitTestSupport\UnitTestSupport.csproj">
+      <Project>{89c32fe9-0a2a-4340-838f-a16b45ebb40b}</Project>
+      <Name>UnitTestSupport</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

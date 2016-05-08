@@ -10,7 +10,7 @@ using DecisionTableCreator.DynamicTable;
 namespace DecisionTableCreator.TestCases
 {
 
-    public class TestCasesRoot : INotifyPropertyChanged
+    public partial class TestCasesRoot : INotifyPropertyChanged
     {
         private DataTableView _conditionTable;
 

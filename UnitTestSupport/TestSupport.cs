@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace UnitTestSupport
 {
-    public class UnitTestSupport
+    public class TestSupport
     {
         private const string ReferenceFilesDirectoryName = "ReferenceFiles";
         private const string TestFilesDirectoryName = "TestFiles";

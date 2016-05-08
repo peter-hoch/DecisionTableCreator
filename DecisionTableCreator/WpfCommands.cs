@@ -11,11 +11,15 @@ namespace DecisionTableCreator
     {
         public static readonly RoutedUICommand AppendColumn;
         public static readonly RoutedUICommand EditCondition;
+        public static readonly RoutedUICommand EditAction;
+        public static readonly RoutedUICommand Save;
 
         static WpfCommands()
         {
-            AppendColumn = new RoutedUICommand("AppendColumn", "AppendColumn", typeof(WpfCommands));
-            EditCondition = new RoutedUICommand("EditCondition", "EditCondition", typeof(WpfCommands));
+            AppendColumn = new RoutedUICommand("Append test case", "AppendColumn", typeof(WpfCommands));
+            EditCondition = new RoutedUICommand("Edit condition", "EditCondition", typeof(WpfCommands));
+            EditAction = new RoutedUICommand("Edit action", "EditAction", typeof(WpfCommands));
+            Save = new RoutedUICommand("Save", "Save", typeof(WpfCommands));
         }
     }
 }
