@@ -28,7 +28,7 @@
                 </ContextMenu>
             </TextBox.ContextMenu>
         </TextBox>
-        <ComboBox ItemsSource="{Binding Items, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+        <ComboBox ItemsSource="{Binding EnumValues, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Background="{Binding Path=Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding Path=ComboBoxVisibility, Mode=OneTime, FallbackValue=Collapsed}"
                   SelectedIndex="{Binding SelectedItemIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">

@@ -12,26 +12,20 @@ namespace DecisionTableCreator.TestCases
 {
     public class ValueObject : INotifyPropertyChanged
     {
-        public enum ValueObjejectDataType
-        {
-            Text,
-            Enumeration,
-            Bool    
-        }
 
         public static ValueObject Create(ConditionActionBase conditionOrAction)
         {
             ValueObject vo;
-            switch (conditionOrAction.Type)
+            switch (conditionOrAction.DataType)
             {
-                case ConditionActionBase.ConditionActionType.Text:
-                    vo = new ValueObject(conditionOrAction.DefaultText);
+                case ValueDataType.Text:
+                    vo = new ValueObject(conditionOrAction.DefaultText, ValueDataType.Text);
                     break;
-                case ConditionActionBase.ConditionActionType.Enum:
+                case ValueDataType.Enumeration:
                     vo = CreateEnumValueObject(conditionOrAction);
                     break;
-                case ConditionActionBase.ConditionActionType.Bool:
-                    vo = new ValueObject(false, conditionOrAction.DefaultText);
+                case ValueDataType.Bool:
+                    vo = new ValueObject(conditionOrAction.DefaultText, ValueDataType.Bool);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -59,30 +53,30 @@ namespace DecisionTableCreator.TestCases
             return vo;
         }
 
-        public ValueObject(string text)
+        public ValueObject(string text, ValueDataType type)
         {
-            DataType = ValueObjejectDataType.Text;
+            DataType = type;
             Text = text;
         }
 
         public ValueObject(bool value, string text)
         {
-            DataType = ValueObjejectDataType.Bool;
+            DataType = ValueDataType.Bool;
             BoolValue = value;
             Text = text;
         }
 
         public ValueObject(ObservableCollection<EnumValue> items)
         {
-            DataType = ValueObjejectDataType.Enumeration;
-            Items = items;
+            DataType = ValueDataType.Enumeration;
+            EnumValues = items;
         }
 
         public ConditionActionBase ConditionOrActionParent { get; private set; }
 
-        private ValueObjejectDataType _dataType;
+        private ValueDataType _dataType;
 
-        public ValueObjejectDataType DataType
+        public ValueDataType DataType
         {
             get { return _dataType; }
             private set
@@ -92,17 +86,17 @@ namespace DecisionTableCreator.TestCases
 
                 switch (value)
                 {
-                    case ValueObjejectDataType.Text:
+                    case ValueDataType.Text:
                         TextBoxVisibility = Visibility.Visible;
                         ComboBoxVisibility = Visibility.Collapsed;
                         CheckboxVisibility = Visibility.Collapsed;
                         break;
-                    case ValueObjejectDataType.Enumeration:
+                    case ValueDataType.Enumeration:
                         TextBoxVisibility = Visibility.Collapsed;
                         ComboBoxVisibility = Visibility.Visible;
                         CheckboxVisibility = Visibility.Collapsed;
                         break;
-                    case ValueObjejectDataType.Bool:
+                    case ValueDataType.Bool:
                         TextBoxVisibility = Visibility.Collapsed;
                         ComboBoxVisibility = Visibility.Collapsed;
                         CheckboxVisibility = Visibility.Visible;
@@ -112,7 +106,6 @@ namespace DecisionTableCreator.TestCases
                 }
             }
         }
-
 
         private string _text;
 
@@ -132,13 +125,13 @@ namespace DecisionTableCreator.TestCases
             {
                 switch (DataType)
                 {
-                    case ValueObjejectDataType.Text:
+                    case ValueDataType.Text:
                         return Text;
 
-                    case ValueObjejectDataType.Enumeration:
-                        return Items[SelectedItemIndex];
+                    case ValueDataType.Enumeration:
+                        return EnumValues[SelectedItemIndex];
 
-                    case ValueObjejectDataType.Bool:
+                    case ValueDataType.Bool:
                         return BoolValue;
 
                     default:
@@ -210,15 +203,15 @@ namespace DecisionTableCreator.TestCases
         }
 
 
-        private ObservableCollection<EnumValue> _items;
+        private ObservableCollection<EnumValue> _enumValues;
 
-        public ObservableCollection<EnumValue> Items
+        public ObservableCollection<EnumValue> EnumValues
         {
-            get { return _items; }
+            get { return _enumValues; }
             set
             {
-                _items = value;
-                OnPropertyChanged("Items");
+                _enumValues = value;
+                OnPropertyChanged("EnumValues");
                 SetBackground();
             }
         }
@@ -254,7 +247,7 @@ namespace DecisionTableCreator.TestCases
         {
             Brush brush = Brushes.White;
 
-            if (DataType == ValueObjejectDataType.Enumeration)
+            if (DataType == ValueDataType.Enumeration)
             {
                 EnumValue ev = Value as EnumValue;
                 if (ev != null)

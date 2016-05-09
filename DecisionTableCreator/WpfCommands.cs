@@ -13,6 +13,7 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand EditCondition;
         public static readonly RoutedUICommand EditAction;
         public static readonly RoutedUICommand Save;
+        public static readonly RoutedUICommand Open;
 
         static WpfCommands()
         {
@@ -20,6 +21,7 @@ namespace DecisionTableCreator
             EditCondition = new RoutedUICommand("Edit condition", "EditCondition", typeof(WpfCommands));
             EditAction = new RoutedUICommand("Edit action", "EditAction", typeof(WpfCommands));
             Save = new RoutedUICommand("Save", "Save", typeof(WpfCommands));
+            Open = new RoutedUICommand("Open", "Open", typeof(WpfCommands));
         }
     }
 }

@@ -209,6 +209,21 @@ namespace DecisionTableCreator
             e.CanExecute = true;
         }
 
+        private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
+            var result = dlg.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                DataContainer.TestCasesRoot = TestCasesRoot.Load(dlg.FileName);
+            }
+        }
+
+        private void Open_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
 
         object GetGridCellControlDataContext(DataGrid dataGrid, DependencyObject originalSource, bool trace = false)
         {
@@ -241,18 +256,6 @@ namespace DecisionTableCreator
                 return SearchForParent(parent, typeofParent, trace);
             }
             return null;
-        }
-
-        private void Test1_OnClick(object sender, RoutedEventArgs e)
-        {
-            //DataContainer.Conditions = null;
-            //DataContainer.Actions= null;
-        }
-
-        private void Test2_OnClick(object sender, RoutedEventArgs e)
-        {
-            DataContainer.Conditions = DataContainer.TestCasesRoot.ConditionTable;
-            DataContainer.Actions = DataContainer.TestCasesRoot.ActionTable;
         }
 
     }

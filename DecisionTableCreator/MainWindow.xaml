@@ -14,6 +14,7 @@
         <CommandBinding Command="local:WpfCommands.EditCondition" Executed="EditCondition_Executed" CanExecute="EditCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.EditAction" Executed="EditAction_Executed" CanExecute="EditAction_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.Save" Executed="Save_Executed" CanExecute="Save_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.Open" Executed="Open_Executed" CanExecute="Open_OnCanExecute"/>
     </Window.CommandBindings>
 
     <Grid>
@@ -46,6 +47,7 @@
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <MenuItem Header="File">
                 <MenuItem Command="local:WpfCommands.Save"/>
+                <MenuItem Command="local:WpfCommands.Open"/>
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Command="local:WpfCommands.AppendColumn"/>
@@ -72,8 +74,6 @@
             </DataGrid>
         </Grid>
         <StackPanel Grid.Row="5" Grid.Column="1">
-            <Button Content="Test1" Click="Test1_OnClick"></Button>
-            <Button Content="Test2" Click="Test2_OnClick"></Button>
         </StackPanel>
     </Grid>
 </Window>

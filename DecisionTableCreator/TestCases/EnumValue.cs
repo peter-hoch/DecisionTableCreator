@@ -4,17 +4,24 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator.TestCases
 {
     public class EnumValue : INotifyPropertyChanged
     {
-        public EnumValue(string name, bool isInavlid = false, bool dontCare = false, bool isDefault = false)
+        public EnumValue(string name, string value, bool isInavlid = false, bool dontCare = false, bool isDefault = false)
         {
             Name = name;
             IsInvalid = isInavlid;
             DontCare = dontCare;
             IsDefault = isDefault;
+            Value = value;
+        }
+
+        public EnumValue(string name, bool isInavlid = false, bool dontCare = false, bool isDefault = false) : this(name, name, isInavlid, dontCare, isDefault)
+        {
         }
 
         private bool _isDefault;
@@ -81,6 +88,28 @@ namespace DecisionTableCreator.TestCases
         public override string ToString()
         {
             return Name;
+        }
+
+        public void Save(XmlElement parent)
+        {
+            var xmlEnumValue = parent.AddElement(XmlNames.EnumValueName);
+            xmlEnumValue.AddAttribute(XmlNames.NameAttributeName, Name);
+            xmlEnumValue.AddAttribute(XmlNames.ValueAttributeName, Value);
+            xmlEnumValue.AddAttribute(XmlNames.IsDefaultAttributeName, IsDefault);
+            xmlEnumValue.AddAttribute(XmlNames.IsInvalidAttributeName, IsInvalid);
+            xmlEnumValue.AddAttribute(XmlNames.DontCareAttributeName, DontCare);
+        }
+
+        public static EnumValue Load(XmlElement element)
+        {
+            EnumValue ev = new EnumValue(
+                element.GetAttributeStringValue(XmlNames.NameAttributeName),
+                element.GetAttributeStringValue(XmlNames.ValueAttributeName, XmlElementOption.Optional),
+                element.GetAttributeBoolValue(XmlNames.IsInvalidAttributeName),
+                element.GetAttributeBoolValue(XmlNames.DontCareAttributeName),
+                element.GetAttributeBoolValue(XmlNames.IsDefaultAttributeName)
+                );
+            return ev;
         }
 
         #region event

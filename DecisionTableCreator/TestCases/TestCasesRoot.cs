@@ -117,13 +117,13 @@ namespace DecisionTableCreator.TestCases
             }
 
             int listIndex = 0;
-            Conditions.Add(new ConditionObject(String.Format("Condition {0}", 0), ConditionActionBase.ConditionActionType.Bool));
+            Conditions.Add(new ConditionObject(String.Format("Condition {0}", 0), ValueDataType.Bool));
             for (int idx = 1; idx < conditionCount; idx++)
             {
                 Conditions.Add(new ConditionObject(String.Format("Condition {0}", idx), lists[listIndex++]));
             }
 
-            Actions.Add(new ActionObject(String.Format("Action1{0}", 0), ConditionActionBase.ConditionActionType.Bool));
+            Actions.Add(new ActionObject(String.Format("Action1{0}", 0), ValueDataType.Bool));
             for (int idx = 1; idx < actionCount; idx++)
             {
                 Actions.Add(new ActionObject(String.Format("Action1{0}", idx), lists[listIndex++]));
@@ -189,7 +189,7 @@ namespace DecisionTableCreator.TestCases
                 Conditions.Add(new ConditionObject(String.Format("Condition {0}", idx), lists[listIndex++]));
             }
 
-            Actions.Add(new ActionObject(String.Format("Action1{0}", 0), ConditionActionBase.ConditionActionType.Bool));
+            Actions.Add(new ActionObject(String.Format("Action1{0}", 0), ValueDataType.Bool));
             for (int idx = 1; idx < actionCount; idx++)
             {
                 Actions.Add(new ActionObject(String.Format("Action1{0}", idx), lists[listIndex++]));
