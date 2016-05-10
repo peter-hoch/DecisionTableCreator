@@ -214,7 +214,7 @@ namespace DecisionTableCreator.TestCases
         }
         private void CreatePrinterTrubbleshootingSampleInternal()
         {
-            var printerEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue("Yes"), new EnumValue("No"),};
+            var printerEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue("Yes"), new EnumValue("No"), };
             Conditions.Add(new ConditionObject(String.Format("Printer does not print"), printerEnum));
 
             var ledEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue("Yes"), new EnumValue("No"), };
@@ -253,6 +253,14 @@ namespace DecisionTableCreator.TestCases
             ActionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor("Action", typeof(ActionObject), null));
         }
 
+        void AddColumnDescriptionsForTestCases()
+        {
+            foreach (TestCase testCase in TestCases)
+            {
+                AddColumnDescriptionForTestCase(testCase.Name);
+            }
+        }
+
         void AddColumnDescriptionForTestCase(string testCaseName)
         {
             ConditionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCaseName, typeof(TestCase), null));
@@ -288,7 +296,7 @@ namespace DecisionTableCreator.TestCases
 
         private void AddTestCase()
         {
-            int index = TestCases.Count+1;
+            int index = TestCases.Count + 1;
             var tc = new TestCase(String.Format("TC{0}", index));
             TestCases.Add(tc);
             AddValueObjects(tc, Conditions, TestCase.CollectionType.Conditions);
@@ -297,6 +305,61 @@ namespace DecisionTableCreator.TestCases
             ConditionTable.ResizeColumnCount(TestCases.Count + 1);
             ActionTable.ResizeColumnCount(TestCases.Count + 1);
         }
+
+        public void AppendAction()
+        {
+            ActionObject actionObject= new ActionObject("new action", new ObservableCollection<EnumValue>() { new EnumValue("new name", "new value", true, false, true) });
+            Actions.Add(actionObject);
+            AddToTestCases(actionObject);
+            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+        }
+
+        public void AppendCondition()
+        {
+            ConditionObject conditionObject = new ConditionObject("new condition", new ObservableCollection<EnumValue>() {new EnumValue("new name", "new value", true, false, true)});
+            Conditions.Add(conditionObject);
+            AddToTestCases(conditionObject);
+            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+        }
+
+        public void ChangeCondition(int index, ConditionObject condition)
+        {
+            Conditions[index] = condition;
+            UpdateTestCases(index, condition);
+            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+        }
+
+        private void UpdateTestCases(int index, ConditionObject condition)
+        {
+            int colIdx = 1;
+            foreach (TestCase testCase in TestCases)
+            {
+                var rowView = ConditionTable.Rows[index];
+                rowView.SetValue(colIdx, null);
+                ValueObject vo = testCase.Conditions[index];
+                vo.ConditionOrActionParent = condition;
+                rowView.SetValue(colIdx, vo);
+                colIdx++;
+            }
+        }
+
+
+        private void AddToTestCases(ConditionObject conditionObject)
+        {
+            foreach (TestCase testCase in TestCases)
+            {
+                testCase.Conditions.Add(ValueObject.Create(conditionObject));
+            }
+        }
+
+        private void AddToTestCases(ActionObject actionObject)
+        {
+            foreach (TestCase testCase in TestCases)
+            {
+                testCase.Actions.Add(ValueObject.Create(actionObject));
+            }
+        }
+
 
         public static void AddValueObjects(TestCase tc, ObservableCollection<ConditionActionBase> list, TestCase.CollectionType colType)
         {
@@ -323,5 +386,6 @@ namespace DecisionTableCreator.TestCases
         }
 
         #endregion
+
     }
 }

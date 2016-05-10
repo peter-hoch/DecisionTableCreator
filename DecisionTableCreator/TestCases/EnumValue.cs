@@ -90,28 +90,6 @@ namespace DecisionTableCreator.TestCases
             return Name;
         }
 
-        public void Save(XmlElement parent)
-        {
-            var xmlEnumValue = parent.AddElement(XmlNames.EnumValueName);
-            xmlEnumValue.AddAttribute(XmlNames.NameAttributeName, Name);
-            xmlEnumValue.AddAttribute(XmlNames.ValueAttributeName, Value);
-            xmlEnumValue.AddAttribute(XmlNames.IsDefaultAttributeName, IsDefault);
-            xmlEnumValue.AddAttribute(XmlNames.IsInvalidAttributeName, IsInvalid);
-            xmlEnumValue.AddAttribute(XmlNames.DontCareAttributeName, DontCare);
-        }
-
-        public static EnumValue Load(XmlElement element)
-        {
-            EnumValue ev = new EnumValue(
-                element.GetAttributeStringValue(XmlNames.NameAttributeName),
-                element.GetAttributeStringValue(XmlNames.ValueAttributeName, XmlElementOption.Optional),
-                element.GetAttributeBoolValue(XmlNames.IsInvalidAttributeName),
-                element.GetAttributeBoolValue(XmlNames.DontCareAttributeName),
-                element.GetAttributeBoolValue(XmlNames.IsDefaultAttributeName)
-                );
-            return ev;
-        }
-
         #region event
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -127,6 +105,9 @@ namespace DecisionTableCreator.TestCases
 
         #endregion
 
-
+        public EnumValue Clone()
+        {
+            return new EnumValue(Name, Value, IsInvalid, DontCare, IsDefault);
+        }
     }
 }

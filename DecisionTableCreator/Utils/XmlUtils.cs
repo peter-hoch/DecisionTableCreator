@@ -53,6 +53,21 @@ namespace DecisionTableCreator.Utils
         }
 
         /// <summary>
+        /// add attribute
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="name"></param>
+        /// <param name="enumValue"></param>
+        /// <returns></returns>
+        public static XmlElement AddAttribute(this XmlElement parent, string name, Enum enumValue)
+        {
+            var attrib = parent.OwnerDocument.CreateAttribute(name);
+            attrib.Value = enumValue.ToString();
+            parent.Attributes.Append(attrib);
+            return parent;
+        }
+
+        /// <summary>
         /// add attribute 
         /// </summary>
         /// <param name="parent"></param>
@@ -60,6 +75,22 @@ namespace DecisionTableCreator.Utils
         /// <param name="value"></param>
         /// <returns></returns>
         public static XmlElement AddAttribute(this XmlElement parent, string name, bool value)
+        {
+            var attrib = parent.OwnerDocument.CreateAttribute(name);
+            attrib.Value = value.ToString(CultureInfo.InvariantCulture);
+            parent.Attributes.Append(attrib);
+            return parent;
+        }
+
+
+        /// <summary>
+        /// add attribute 
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static XmlElement AddAttribute(this XmlElement parent, string name, int value)
         {
             var attrib = parent.OwnerDocument.CreateAttribute(name);
             attrib.Value = value.ToString(CultureInfo.InvariantCulture);
@@ -105,6 +136,33 @@ namespace DecisionTableCreator.Utils
             return attrib.Value;
         }
 
+        public static int GetAttributeIntValue(this XmlElement me, string name, XmlElementOption option = XmlElementOption.MustHaveValue, int defaultValue = 0)
+        {
+            XmlAttribute attrib = me.GetAttributeNode(name);
+            if (attrib == null)
+            {
+                if (MustExist(option))
+                {
+                    throw new MissingAttributeException(me, name);
+                }
+                return defaultValue;
+            }
+            if (MustHaveValue(option) && string.IsNullOrEmpty(attrib.Value))
+            {
+                throw new InvalidAttributeValueException(me, name);
+            }
+            if (string.IsNullOrEmpty(attrib.Value))
+            {
+                return defaultValue;
+            }
+            int value;
+            if (!int.TryParse(attrib.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out value))
+            {
+                throw new InvalidAttributeValueException(me, name);
+            }
+            return value;
+        }
+
         public static bool GetAttributeBoolValue(this XmlElement me, string name, XmlElementOption option = XmlElementOption.MustHaveValue, bool defaultValue = false)
         {
             XmlAttribute attrib = me.GetAttributeNode(name);
@@ -148,7 +206,7 @@ namespace DecisionTableCreator.Utils
     public class InvalidAttributeValueException : Exception
     {
         public InvalidAttributeValueException(XmlElement element, string attributeName, Exception inner = null)
-            : base(String.Format("xml attribute {0} in element {1} is wrong", element != null ? element.Name : "null", attributeName), inner)
+            : base(String.Format("xml attribute {0} in element {1} is wrong", attributeName, element != null ? element.Name : "null"), inner)
         {
         }
     }
@@ -156,7 +214,15 @@ namespace DecisionTableCreator.Utils
     public class MissingAttributeException : Exception
     {
         public MissingAttributeException(XmlElement element, string attributeName, Exception inner = null)
-            : base(String.Format("xml attribute {0} in element {1} is missing", element != null ? element.Name : "null", attributeName), inner)
+            : base(String.Format("xml attribute {0} in element {1} is missing", attributeName, element != null ? element.Name : "null"), inner)
+        {
+        }
+    }
+
+    public class InvalidObjectIdReferenceException : Exception
+    {
+        public InvalidObjectIdReferenceException(XmlElement element, string attributeName, int id, Exception inner = null)
+            : base(String.Format("object id reference {0} in xml attribute {1} in element {2} is invalid", id, attributeName, element != null ? element.Name : "null"), inner)
         {
         }
     }

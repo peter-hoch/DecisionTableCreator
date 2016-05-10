@@ -36,6 +36,15 @@ namespace DecisionTableCreator.TestCases
 
         private static ValueObject CreateEnumValueObject(ConditionActionBase conditionOrAction)
         {
+            var defaultIndex = CalculateDefaultIndex(conditionOrAction);
+            ValueObject vo;
+            vo = new ValueObject(conditionOrAction.EnumValues);
+            vo.SelectedItemIndex = defaultIndex;
+            return vo;
+        }
+
+        private static int CalculateDefaultIndex(ConditionActionBase conditionOrAction)
+        {
             int defaultIndex = 0;
             int idx = 0;
             foreach (EnumValue value in conditionOrAction.EnumValues)
@@ -47,24 +56,16 @@ namespace DecisionTableCreator.TestCases
                 }
                 idx++;
             }
-            ValueObject vo;
-            vo = new ValueObject(conditionOrAction.EnumValues);
-            vo.SelectedItemIndex = defaultIndex;
-            return vo;
+            return defaultIndex;
         }
 
         public ValueObject(string text, ValueDataType type)
         {
+            EnumValues = new ObservableCollection<EnumValue>();
             DataType = type;
             Text = text;
         }
 
-        public ValueObject(bool value, string text)
-        {
-            DataType = ValueDataType.Bool;
-            BoolValue = value;
-            Text = text;
-        }
 
         public ValueObject(ObservableCollection<EnumValue> items)
         {
@@ -72,7 +73,32 @@ namespace DecisionTableCreator.TestCases
             EnumValues = items;
         }
 
-        public ConditionActionBase ConditionOrActionParent { get; private set; }
+        private ConditionActionBase _conditionOrActionParent;
+        public ConditionActionBase ConditionOrActionParent
+        {
+            get
+            {
+                return _conditionOrActionParent;
+            }
+            set
+            {
+                _conditionOrActionParent = value;
+                if (DataType != value.DataType)
+                {
+                    BoolValue = value.DefaultBool;
+                    Text = value.DefaultText;
+                }
+                DataType = value.DataType;
+                if (EnumValues.Count > 0)
+                {
+                    if (SelectedItemIndex >= value.EnumValues.Count)
+                    {
+                        SelectedItemIndex = CalculateDefaultIndex(value);
+                    }
+                }
+                EnumValues = value.EnumValues;
+            }
+        }
 
         private ValueDataType _dataType;
 
@@ -129,6 +155,10 @@ namespace DecisionTableCreator.TestCases
                         return Text;
 
                     case ValueDataType.Enumeration:
+                        if (SelectedItemIndex < 0)
+                        {
+                            return "";
+                        }
                         return EnumValues[SelectedItemIndex];
 
                     case ValueDataType.Bool:

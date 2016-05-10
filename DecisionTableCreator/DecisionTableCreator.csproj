@@ -77,6 +77,7 @@
     <Compile Include="TestCases\ValueDataType.cs" />
     <Compile Include="TestCases\ValueObject.cs" />
     <Compile Include="TestCases\XmlNames.cs" />
+    <Compile Include="Utils\WpfTools.cs" />
     <Compile Include="Utils\XmlUtils.cs" />
     <Compile Include="WpfCommands.cs" />
     <Page Include="EditAction.xaml">

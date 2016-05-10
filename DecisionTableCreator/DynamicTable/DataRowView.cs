@@ -8,7 +8,7 @@ namespace DecisionTableCreator.DynamicTable
     /// <summary>
     /// this class repesents a row with all properties descripted by ColumnPropertyDescriptor
     /// </summary>
-    public class DataRowView : ICustomTypeDescriptor
+    public class DataRowView : ICustomTypeDescriptor, INotifyPropertyChanged
     {
         private readonly DataRowViewCollection _parentCollection;
         private object[] _columns;
@@ -27,7 +27,11 @@ namespace DecisionTableCreator.DynamicTable
         public object this[string name]
         {
             get { return _columns[ColumnIndexFromName(name)]; }
-            set { _columns[ColumnIndexFromName(name)] = value; }
+            set
+            {
+                _columns[ColumnIndexFromName(name)] = value;
+                OnPropertyChanged(name);
+            }
         }
 
         public void SetValue(int index, object value)
@@ -112,6 +116,22 @@ namespace DecisionTableCreator.DynamicTable
         {
             return this;
         }
+
+        #region event
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChangedEventArgs args = new PropertyChangedEventArgs(name);
+                PropertyChanged(this, args);
+            }
+        }
+
+        #endregion
+
     }
 }
 

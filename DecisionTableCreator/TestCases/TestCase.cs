@@ -43,6 +43,7 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+
         public ValueObject GetValueObject(CollectionType type, int index)
         {
             switch (type)
@@ -84,7 +85,6 @@ namespace DecisionTableCreator.TestCases
                 OnPropertyChanged("ConditionTable");
             }
         }
-
 
         private ObservableCollection<ValueObject> _actions;
 

@@ -15,6 +15,9 @@
         <CommandBinding Command="local:WpfCommands.EditAction" Executed="EditAction_Executed" CanExecute="EditAction_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.Save" Executed="Save_Executed" CanExecute="Save_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.Open" Executed="Open_Executed" CanExecute="Open_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.NewDocument" Executed="NewDocument_Executed" CanExecute="NewDocument_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.AppendAction" Executed="AppendAction_Executed" CanExecute="AppendAction_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.AppendCondition" Executed="AppendCondition_Executed" CanExecute="AppendCondition_OnCanExecute"/>
     </Window.CommandBindings>
 
     <Grid>
@@ -46,6 +49,7 @@
         </Grid.ContextMenu>
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <MenuItem Header="File">
+                <MenuItem Command="local:WpfCommands.NewDocument"/>
                 <MenuItem Command="local:WpfCommands.Save"/>
                 <MenuItem Command="local:WpfCommands.Open"/>
             </MenuItem>
@@ -53,6 +57,8 @@
                 <MenuItem Command="local:WpfCommands.AppendColumn"/>
                 <MenuItem Command="local:WpfCommands.EditCondition"/>
                 <MenuItem Command="local:WpfCommands.EditAction"/>
+                <MenuItem Command="local:WpfCommands.AppendCondition"/>
+                <MenuItem Command="local:WpfCommands.AppendAction"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="2" Grid.Column="1">

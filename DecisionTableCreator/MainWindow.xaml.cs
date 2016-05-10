@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.TestCases;
+using DecisionTableCreator.Utils;
 using Microsoft.Win32;
 
 namespace DecisionTableCreator
@@ -136,7 +137,7 @@ namespace DecisionTableCreator
                 if (dep != null)
                 {
                     if(trace) { Debug.Write("SearchForParent ");}
-                    var parent = SearchForParent(dep, typeof(DataGridCell), trace);
+                    var parent = WpfTools.SearchForParent(dep, typeof(DataGridCell), trace);
                     if (trace) { Debug.WriteLine("");}
                     if (parent != null)
                     {
@@ -155,12 +156,23 @@ namespace DecisionTableCreator
 
         private void EditCondition_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            ConditionObject condObject = GetGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ConditionObject;
-
-            if (condObject != null)
+            DataGrid dataGrid = e.Source as DataGrid;
+            DependencyObject dep = e.OriginalSource as DependencyObject;
+            DataGridRow dataGridRow = WpfTools.SearchForParent(dep, typeof(DataGridRow), false) as DataGridRow;
+            int index = dataGrid.ItemContainerGenerator.IndexFromContainer(dataGridRow);
+            if (index >= 0)
             {
-                EditCondition wnd = new EditCondition(condObject);
+                ConditionObject original =  ((ConditionObject) DataContainer.TestCasesRoot.Conditions[index]);
+                ConditionObject coClone = original.Clone();
+                EditCondition wnd = new EditCondition(coClone);
                 bool? result = wnd.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                    original.Merge(coClone);
+                    DataContainer.Conditions = null;
+                    DataContainer.TestCasesRoot.ChangeCondition(index, original);
+                    DataContainer.Conditions = DataContainer.TestCasesRoot.ConditionTable;
+                }
             }
         }
 
@@ -220,10 +232,44 @@ namespace DecisionTableCreator
             }
         }
 
+        private void NewDocument_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void NewDocument_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            DataContainer.TestCasesRoot = new TestCasesRoot();
+        }
+
+
         private void Open_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
+
+        private void AppendAction_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            DataContainer.TestCasesRoot.AppendAction();
+            DataContainer.TestCasesRoot = DataContainer.TestCasesRoot;
+        }
+
+        private void AppendAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void AppendCondition_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            DataContainer.TestCasesRoot.AppendCondition();
+            DataContainer.TestCasesRoot = DataContainer.TestCasesRoot;
+        }
+
+        private void AppendCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
 
         object GetGridCellControlDataContext(DataGrid dataGrid, DependencyObject originalSource, bool trace = false)
         {
@@ -232,7 +278,7 @@ namespace DecisionTableCreator
                 if (originalSource != null)
                 {
                     if (trace) { Debug.Write("SearchForParent "); }
-                    var parent = SearchForParent(originalSource, typeof(GridCellControl), trace);
+                    var parent = WpfTools.SearchForParent(originalSource, typeof(GridCellControl), trace);
                     if (trace) { Debug.WriteLine(""); }
                     if (parent != null)
                     {
@@ -243,20 +289,6 @@ namespace DecisionTableCreator
             return null;
         }
 
-        DependencyObject SearchForParent(DependencyObject dep, Type typeofParent, bool trace)
-        {
-            if(trace) { Debug.Write(" " + dep.GetType().Name);}
-            if (dep.GetType() == typeofParent)
-            {
-                return dep;
-            }
-            var parent = VisualTreeHelper.GetParent(dep);
-            if (parent != null)
-            {
-                return SearchForParent(parent, typeofParent, trace);
-            }
-            return null;
-        }
 
     }
 }

@@ -29,12 +29,71 @@ namespace DecisionTableCreator.TestCases
             EnumValues = enums;
         }
 
+        public void Merge(ConditionActionBase clone)
+        {
+            if (Text != clone.Text)
+            {
+                Text = clone.Text;
+            }
+            if (DataType != clone.DataType)
+            {
+                DataType = clone.DataType;
+            }
+            if (DefaultText != clone.DefaultText)
+            {
+                DefaultText = clone.DefaultText;
+            }
+            DefaultBool = clone.DefaultBool;
+            Background = clone.Background;
+
+            while (EnumValues.Count > clone.EnumValues.Count)
+            {
+                EnumValues.RemoveAt(EnumValues.Count - 1);
+            }
+            for (int idx = 0; idx < EnumValues.Count; idx++)
+            {
+                EnumValue s = clone.EnumValues[idx];
+                EnumValue t = EnumValues[idx];
+                if (t.Name != s.Name)
+                {
+                    t.Name = s.Name;
+                }
+                if (t.Value != s.Value)
+                {
+                    t.Value = s.Value;
+                }
+                t.IsInvalid = s.IsInvalid;
+                t.IsDefault = s.IsDefault;
+                t.DontCare = s.DontCare;
+            }
+        }
+
+        //protected void Clone(ConditionActionBase co)
+        //{
+        //    var co = new ConditionObject(Text, DataType);
+        //    co.DefaultBool = DefaultBool;
+        //    co.DefaultText = DefaultText;
+        //    co.Background = Background;
+        //    co.EnumValues = new ObservableCollection<EnumValue>();
+        //    foreach (EnumValue value in EnumValues)
+        //    {
+        //        co.EnumValues.Add(value.Clone());
+        //    }
+        //    return co;
+        //}
+
+
+        /// <summary>
+        /// only valid during load and save!!
+        /// </summary>
+        internal int LoadSaveId { get; set; }
+
         private ValueDataType _dataType;
 
         public ValueDataType DataType
         {
             get { return _dataType; }
-            private set
+            protected set
             {
                 _dataType = value;
                 OnPropertyChanged("DataType");
@@ -53,18 +112,6 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        private Visibility _textBoxVisibility = Visibility.Visible;
-
-        public Visibility TextBoxVisibility
-        {
-            get { return _textBoxVisibility; }
-            private set
-            {
-                _textBoxVisibility = value;
-                OnPropertyChanged("TextBoxVisibility");
-            }
-        }
-
         private bool _defaultBool;
 
         public bool DefaultBool
@@ -76,8 +123,6 @@ namespace DecisionTableCreator.TestCases
                 OnPropertyChanged("DefaultBool");
             }
         }
-
-
 
         private string _defaultText;
 
@@ -115,20 +160,64 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        private string _tooltipText;
 
-        protected static void LoadEnumValues(XmlElement element, ConditionActionBase co)
+        public string TooltipText
         {
-            if (co.DataType == ValueDataType.Enumeration)
+            get { return _tooltipText; }
+            set
             {
-                var xmlEnumValuesColl = element.GetElementsByTagName(XmlNames.EnumValuesName);
-                var xmlEnumValues = xmlEnumValuesColl[0] as XmlElement;
-                foreach (XmlElement xmlEnumValue in xmlEnumValues.GetElementsByTagName(XmlNames.EnumValueName))
-                {
-                    co.EnumValues.Add(EnumValue.Load(xmlEnumValue));
-                }
+                _tooltipText = value;
+                OnPropertyChanged("TooltipText");
             }
         }
 
+        private int _selectedItemIndex;
+
+        public int SelectedItemIndex
+        {
+            get { return _selectedItemIndex; }
+            set
+            {
+                _selectedItemIndex = value;
+                OnPropertyChanged("SelectedItemIndex");
+            }
+        }
+
+
+        private Visibility _textBoxVisibility = Visibility.Visible;
+
+        public Visibility TextBoxVisibility
+        {
+            get { return _textBoxVisibility; }
+        }
+
+        private Visibility _checkboxVisibility = Visibility.Collapsed;
+
+        public Visibility CheckboxVisibility
+        {
+            get { return _checkboxVisibility; }
+        }
+
+
+        private Visibility _comboBoxVisibility = Visibility.Collapsed;
+
+        public Visibility ComboBoxVisibility
+        {
+            get { return _comboBoxVisibility; }
+        }
+
+        private bool _boolValue;
+
+        public bool BoolValue
+        {
+            get { return _boolValue; }
+            set
+            {
+                _boolValue = value;
+                OnPropertyChanged("BoolValue");
+            }
+        }
 
         #region event
 
@@ -145,8 +234,6 @@ namespace DecisionTableCreator.TestCases
 
         #endregion
 
-
-
     }
 
     public class ConditionObject : ConditionActionBase
@@ -160,31 +247,21 @@ namespace DecisionTableCreator.TestCases
 
         }
 
-        public void Save(XmlElement parent)
+        public ConditionObject Clone()
         {
-            var xmlCondition = parent.AddElement(XmlNames.ConditionName).AddAttribute(XmlNames.TextAttributeName, Text).AddAttribute(XmlNames.TypeAttributeName, DataType.ToString());
-            xmlCondition.AddAttribute(XmlNames.DefaultTextAttributeName, DefaultText);
-            xmlCondition.AddAttribute(XmlNames.DefaultBoolAttributeName, DefaultBool);
-            if (EnumValues != null && EnumValues.Count != 0)
+            var co = new ConditionObject(Text, DataType);
+            co.DefaultBool = DefaultBool;
+            co.DefaultText = DefaultText;
+            co.Background = Background;
+            co.EnumValues = new ObservableCollection<EnumValue>();
+            foreach (EnumValue value in EnumValues)
             {
-                var xmlEnumValues = xmlCondition.AddElement(XmlNames.EnumValuesName);
-                foreach (EnumValue value in EnumValues)
-                {
-                    value.Save(xmlEnumValues);
-                }
+                co.EnumValues.Add(value.Clone());
             }
-        }
-
-        public static ConditionObject Load(XmlElement element)
-        {
-            string name = element.GetAttributeStringValue(XmlNames.TextAttributeName);
-            ValueDataType type = element.GetAttributeEnumValue<ValueDataType>(XmlNames.TypeAttributeName);
-            ConditionObject co = new ConditionObject(name, type);
-            co.DefaultText = element.GetAttributeStringValue(XmlNames.DefaultTextAttributeName, XmlElementOption.Optional);
-            co.DefaultBool = element.GetAttributeBoolValue(XmlNames.DefaultBoolAttributeName);
-            LoadEnumValues(element, co);
             return co;
         }
+
+
     }
 
     public class ActionObject : ConditionActionBase
@@ -195,34 +272,6 @@ namespace DecisionTableCreator.TestCases
 
         public ActionObject(string name, ObservableCollection<EnumValue> enums) : base(name, enums)
         {
-        }
-
-        public void Save(XmlElement parent)
-        {
-            var xmlCondition = parent.AddElement(XmlNames.ActionName);
-            xmlCondition.AddAttribute(XmlNames.TextAttributeName, Text);
-            xmlCondition.AddAttribute(XmlNames.TypeAttributeName, DataType.ToString());
-            xmlCondition.AddAttribute(XmlNames.DefaultTextAttributeName, DefaultText);
-            xmlCondition.AddAttribute(XmlNames.DefaultBoolAttributeName, DefaultBool);
-            if (EnumValues != null && EnumValues.Count != 0)
-            {
-                var xmlEnumValues = xmlCondition.AddElement(XmlNames.EnumValuesName);
-                foreach (EnumValue value in EnumValues)
-                {
-                    value.Save(xmlEnumValues);
-                }
-            }
-        }
-
-        public static ActionObject Load(XmlElement element)
-        {
-            string name = element.GetAttributeStringValue(XmlNames.TextAttributeName);
-            ValueDataType type = element.GetAttributeEnumValue<ValueDataType>(XmlNames.TypeAttributeName);
-            ActionObject co = new ActionObject(name, type);
-            co.DefaultText = element.GetAttributeStringValue(XmlNames.DefaultTextAttributeName, XmlElementOption.Optional);
-            co.DefaultBool = element.GetAttributeBoolValue(XmlNames.DefaultBoolAttributeName);
-            LoadEnumValues(element, co);
-            return co;
         }
     }
 }

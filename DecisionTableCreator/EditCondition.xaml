@@ -6,18 +6,42 @@
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d"
         Title="EditCondition" Height="300" Width="500">
+    <Window.CommandBindings>
+        <CommandBinding Command="local:WpfCommands.AppendEnumValue" Executed="AppendEnumValue_Executed" CanExecute="AppendEnumValue_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.DeleteEnumValue" Executed="DeleteEnumValue_Executed" CanExecute="DeleteEnumValue_OnCanExecute"/>
+    </Window.CommandBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Command="local:WpfCommands.AppendEnumValue"/>
+            <MenuItem Command="local:WpfCommands.DeleteEnumValue"/>
+        </Menu>
+        <StackPanel Grid.Row="1" Grid.Column="0">
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Label Content="Name"></Label>
                 <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>
-        <DataGrid Margin="10"  Grid.Row="1" ItemsSource="{Binding EnumValues}" AutoGenerateColumns="False">
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Button Margin="5" Content="Ok" MinWidth="80" Click="OnOk_OnClick"/>
+            <Button Margin="5" Content="Cancel" MinWidth="80" Click="OnCancel_OnClick"/>
+        </StackPanel>
+        <DataGrid Margin="10"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding EnumValues}" AutoGenerateColumns="False">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="local:WpfCommands.AppendEnumValue"/>
+                    <MenuItem Command="local:WpfCommands.DeleteEnumValue"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="80"/>
                 <DataGridTextColumn Header="Value" Binding="{Binding Value}" MinWidth="80"/>

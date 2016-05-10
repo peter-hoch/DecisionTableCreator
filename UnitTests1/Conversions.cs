@@ -105,6 +105,36 @@ namespace UnitTests1
             Throws.TypeOf(expectedException));
         }
 
+        [TestCase("<Test value='0'/>", XmlElementOption.MustHaveValue, 0, 0)]
+        [TestCase("<Test value='-1'/>", XmlElementOption.MustExist, 0, -1)]
+        [TestCase("<Test value='1'/>", XmlElementOption.Optional, 0, 1)]
+        [TestCase("<Test value=''/>", XmlElementOption.MustExist, 0, 0)]
+        [TestCase("<Test value=''/>", XmlElementOption.Optional, 0, 0)]
+        [TestCase("<Test />", XmlElementOption.Optional, 0, 0)]
+        [TestCase("<Test />", XmlElementOption.Optional, 5, 5)]
+        public void GetAttributeIntValue(string xml, XmlElementOption option, int defaultValue, int expectedResult)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+
+            int value = doc.DocumentElement.GetAttributeIntValue("value", option, defaultValue);
+            Assert.That(value == expectedResult);
+        }
+
+        [TestCase("<Test value=''/>", XmlElementOption.MustHaveValue, typeof(InvalidAttributeValueException))]
+        [TestCase("<Test />", XmlElementOption.MustExist, typeof(MissingAttributeException))]
+        public void GetAttributeIntValueNegative(string xml, XmlElementOption option, Type expectedException)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+
+            Assert.That(() =>
+            {
+                int value = doc.DocumentElement.GetAttributeIntValue("value", option);
+            },
+            Throws.TypeOf(expectedException));
+        }
+
     }
 
 }
