@@ -168,10 +168,7 @@ namespace DecisionTableCreator
                 bool? result = wnd.ShowDialog();
                 if (result.HasValue && result.Value)
                 {
-                    original.Merge(coClone);
-                    DataContainer.Conditions = null;
-                    DataContainer.TestCasesRoot.ChangeCondition(index, original);
-                    DataContainer.Conditions = DataContainer.TestCasesRoot.ConditionTable;
+                    DataContainer.TestCasesRoot.ChangeCondition(index, coClone);
                 }
             }
         }
@@ -251,7 +248,6 @@ namespace DecisionTableCreator
         private void AppendAction_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             DataContainer.TestCasesRoot.AppendAction();
-            DataContainer.TestCasesRoot = DataContainer.TestCasesRoot;
         }
 
         private void AppendAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -262,7 +258,6 @@ namespace DecisionTableCreator
         private void AppendCondition_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             DataContainer.TestCasesRoot.AppendCondition();
-            DataContainer.TestCasesRoot = DataContainer.TestCasesRoot;
         }
 
         private void AppendCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)

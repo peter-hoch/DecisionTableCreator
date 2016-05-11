@@ -9,6 +9,7 @@ using DecisionTableCreator.DynamicTable;
 
 namespace DecisionTableCreator.TestCases
 {
+    public delegate void ViewChangedDelegate();
 
     public partial class TestCasesRoot : INotifyPropertyChanged
     {
@@ -72,6 +73,10 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        public event ViewChangedDelegate ConditionsChanged;
+
+        public event ViewChangedDelegate ActionsChanged;
+
         public TestCasesRoot()
         {
             ConditionTable = new DataTableView();
@@ -79,6 +84,16 @@ namespace DecisionTableCreator.TestCases
             TestCases = new ObservableCollection<TestCase>();
             Conditions = new ObservableCollection<ConditionActionBase>();
             Actions = new ObservableCollection<ConditionActionBase>();
+        }
+
+        public void FireConditionsChanged()
+        {
+            ConditionsChanged?.Invoke();
+        }
+
+        public void FireActionsChanged()
+        {
+            ActionsChanged?.Invoke();
         }
 
         public static TestCasesRoot CreateSampleTable()
@@ -312,6 +327,7 @@ namespace DecisionTableCreator.TestCases
             Actions.Add(actionObject);
             AddToTestCases(actionObject);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+            FireActionsChanged();
         }
 
         public void AppendCondition()
@@ -320,26 +336,56 @@ namespace DecisionTableCreator.TestCases
             Conditions.Add(conditionObject);
             AddToTestCases(conditionObject);
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+            FireConditionsChanged();
         }
 
-        public void ChangeCondition(int index, ConditionObject condition)
+        public void ChangeCondition(int index, ConditionObject conditionClone)
         {
-            Conditions[index] = condition;
-            UpdateTestCases(index, condition);
-            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+            List<int> savedSelectedItemIndexes = SaveSelectedItemIndex(index);
+            Conditions[index].Merge(conditionClone);
+            RestoreSelectedItemIndex(index, savedSelectedItemIndexes);
+//            FireConditionsChanged();
         }
 
-        private void UpdateTestCases(int index, ConditionObject condition)
+        //private void UpdateTestCases(int index, ConditionObject condition)
+        //{
+        //    int colIdx = 1;
+        //    foreach (TestCase testCase in TestCases)
+        //    {
+        //        var rowView = ConditionTable.Rows[index];
+        //        rowView.SetValue(colIdx, null);
+        //        ValueObject vo = testCase.Conditions[index];
+        //        vo.ConditionOrActionParent = condition;
+        //        rowView.SetValue(colIdx, vo);
+        //        colIdx++;
+        //    }
+        //}
+
+        public List<int> SaveSelectedItemIndex(int conditionIndex)
         {
-            int colIdx = 1;
+            List<int> selectedItemIndexes = new List<int>();
+
             foreach (TestCase testCase in TestCases)
             {
-                var rowView = ConditionTable.Rows[index];
-                rowView.SetValue(colIdx, null);
-                ValueObject vo = testCase.Conditions[index];
-                vo.ConditionOrActionParent = condition;
-                rowView.SetValue(colIdx, vo);
-                colIdx++;
+                selectedItemIndexes.Add(testCase.Conditions[conditionIndex].SelectedItemIndex);
+            }
+
+            return selectedItemIndexes;
+        }
+
+        public void RestoreSelectedItemIndex(int conditionIndex, List<int> selectedItemIndexes)
+        {
+            int enumValueCount = TestCases[0].Conditions[conditionIndex].EnumValues.Count;
+            for (int idx = 0; idx < TestCases.Count; idx++)
+            {
+                if (enumValueCount <= selectedItemIndexes[idx])
+                {
+                    TestCases[idx].Conditions[conditionIndex].CalculateAndSetDefaultIndex();
+                }
+                else
+                {
+                    TestCases[idx].Conditions[conditionIndex].SelectedItemIndex = selectedItemIndexes[idx];
+                }
             }
         }
 

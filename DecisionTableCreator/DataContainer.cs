@@ -18,6 +18,8 @@ namespace DecisionTableCreator
             TestCasesRoot = TestCasesRoot.CreateSimpleTable();
             //TestCasesRoot = TestCasesRoot.CreateSampleTable();
             //TestCasesRoot = TestCasesRoot.CreatePrinterTrubbleshootingSample();
+            Conditions = TestCasesRoot.ConditionTable;
+            Actions = TestCasesRoot.ActionTable;
         }
 
         private TestCasesRoot _testCasesRoot;
@@ -27,15 +29,32 @@ namespace DecisionTableCreator
             get { return _testCasesRoot; }
             set
             {
+                if (_testCasesRoot != null)
+                {
+                    _testCasesRoot.ConditionsChanged -= OnConditionsChanged;
+                    _testCasesRoot.ActionsChanged -= OnActionsChanged;
+                }
                 _testCasesRoot = value;
                 OnPropertyChanged("TestCasesRoot");
-                Conditions = null;
-                Actions = null;
-                Conditions = TestCasesRoot.ConditionTable;
-                Actions = TestCasesRoot.ActionTable;
+                if (_testCasesRoot != null)
+                {
+                    _testCasesRoot.ConditionsChanged += OnConditionsChanged;
+                    _testCasesRoot.ActionsChanged += OnActionsChanged;
+                }
             }
         }
 
+        private void OnActionsChanged()
+        {
+            Actions = null;
+            Actions = TestCasesRoot.ActionTable;
+        }
+
+        private void OnConditionsChanged()
+        {
+            Conditions = null;
+            Conditions = TestCasesRoot.ConditionTable;
+        }
 
 
         private DataTableView _conditions;

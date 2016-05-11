@@ -46,26 +46,32 @@ namespace DecisionTableCreator.TestCases
             DefaultBool = clone.DefaultBool;
             Background = clone.Background;
 
-            while (EnumValues.Count > clone.EnumValues.Count)
+            EnumValues.Clear();
+            foreach (EnumValue value in clone.EnumValues)
             {
-                EnumValues.RemoveAt(EnumValues.Count - 1);
+                EnumValues.Add(value);
             }
-            for (int idx = 0; idx < EnumValues.Count; idx++)
-            {
-                EnumValue s = clone.EnumValues[idx];
-                EnumValue t = EnumValues[idx];
-                if (t.Name != s.Name)
-                {
-                    t.Name = s.Name;
-                }
-                if (t.Value != s.Value)
-                {
-                    t.Value = s.Value;
-                }
-                t.IsInvalid = s.IsInvalid;
-                t.IsDefault = s.IsDefault;
-                t.DontCare = s.DontCare;
-            }
+
+            //while (EnumValues.Count > clone.EnumValues.Count)
+            //{
+            //    EnumValues.RemoveAt(EnumValues.Count - 1);
+            //}
+            //for (int idx = 0; idx < EnumValues.Count; idx++)
+            //{
+            //    EnumValue s = clone.EnumValues[idx];
+            //    EnumValue t = EnumValues[idx];
+            //    if (t.Name != s.Name)
+            //    {
+            //        t.Name = s.Name;
+            //    }
+            //    if (t.Value != s.Value)
+            //    {
+            //        t.Value = s.Value;
+            //    }
+            //    t.IsInvalid = s.IsInvalid;
+            //    t.IsDefault = s.IsDefault;
+            //    t.DontCare = s.DontCare;
+            //}
         }
 
         //protected void Clone(ConditionActionBase co)

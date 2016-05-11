@@ -43,6 +43,11 @@ namespace DecisionTableCreator.TestCases
             return vo;
         }
 
+        public void CalculateAndSetDefaultIndex()
+        {
+            SelectedItemIndex = CalculateDefaultIndex(ConditionOrActionParent);
+        }
+
         private static int CalculateDefaultIndex(ConditionActionBase conditionOrAction)
         {
             int defaultIndex = 0;
@@ -155,7 +160,7 @@ namespace DecisionTableCreator.TestCases
                         return Text;
 
                     case ValueDataType.Enumeration:
-                        if (SelectedItemIndex < 0)
+                        if (SelectedItemIndex < 0 || SelectedItemIndex >= EnumValues.Count)
                         {
                             return "";
                         }
