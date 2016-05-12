@@ -58,11 +58,8 @@
     <Compile Include="DataGridColumnContainer.cs" />
     <Compile Include="DataGridHeader.cs" />
     <Compile Include="DynamicTable\IDataTableAccess.cs" />
-    <Compile Include="EditAction.xaml.cs">
-      <DependentUpon>EditAction.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EditCondition.xaml.cs">
-      <DependentUpon>EditCondition.xaml</DependentUpon>
+    <Compile Include="EditActionOrCondition.xaml.cs">
+      <DependentUpon>EditActionOrCondition.xaml</DependentUpon>
     </Compile>
     <Compile Include="GridCellControl.xaml.cs">
       <DependentUpon>GridCellControl.xaml</DependentUpon>
@@ -80,11 +77,7 @@
     <Compile Include="Utils\WpfTools.cs" />
     <Compile Include="Utils\XmlUtils.cs" />
     <Compile Include="WpfCommands.cs" />
-    <Page Include="EditAction.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EditCondition.xaml">
+    <Page Include="EditActionOrCondition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

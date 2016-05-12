@@ -49,9 +49,9 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        private ObservableCollection<ConditionActionBase> _conditions;
+        private ObservableCollection<ConditionObject> _conditions;
 
-        public ObservableCollection<ConditionActionBase> Conditions
+        public ObservableCollection<ConditionObject> Conditions
         {
             get { return _conditions; }
             set
@@ -61,9 +61,9 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        private ObservableCollection<ConditionActionBase> _actions;
+        private ObservableCollection<ActionObject> _actions;
 
-        public ObservableCollection<ConditionActionBase> Actions
+        public ObservableCollection<ActionObject> Actions
         {
             get { return _actions; }
             set
@@ -82,8 +82,8 @@ namespace DecisionTableCreator.TestCases
             ConditionTable = new DataTableView();
             ActionTable = new DataTableView();
             TestCases = new ObservableCollection<TestCase>();
-            Conditions = new ObservableCollection<ConditionActionBase>();
-            Actions = new ObservableCollection<ConditionActionBase>();
+            Conditions = new ObservableCollection<ConditionObject>();
+            Actions = new ObservableCollection<ActionObject>();
         }
 
         public void FireConditionsChanged()
@@ -132,16 +132,16 @@ namespace DecisionTableCreator.TestCases
             }
 
             int listIndex = 0;
-            Conditions.Add(new ConditionObject(String.Format("Condition {0}", 0), ValueDataType.Bool));
+            Conditions.Add(ConditionObject.Create(String.Format("Condition {0}", 0), ValueDataType.Bool));
             for (int idx = 1; idx < conditionCount; idx++)
             {
-                Conditions.Add(new ConditionObject(String.Format("Condition {0}", idx), lists[listIndex++]));
+                Conditions.Add(ConditionObject.Create(String.Format("Condition {0}", idx), lists[listIndex++]));
             }
 
-            Actions.Add(new ActionObject(String.Format("Action1{0}", 0), ValueDataType.Bool));
+            Actions.Add(ActionObject.Create(String.Format("Action1{0}", 0), ValueDataType.Bool));
             for (int idx = 1; idx < actionCount; idx++)
             {
-                Actions.Add(new ActionObject(String.Format("Action1{0}", idx), lists[listIndex++]));
+                Actions.Add( ActionObject.Create(String.Format("Action1{0}", idx), lists[listIndex++]));
             }
 
             CreateBasicColumnDescriptions();
@@ -201,13 +201,12 @@ namespace DecisionTableCreator.TestCases
             //Conditions.Add(new ConditionObject(String.Format("Condition {0}", 0), ConditionActionBase.ConditionActionType.Bool));
             for (int idx = 1; idx < conditionCount; idx++)
             {
-                Conditions.Add(new ConditionObject(String.Format("Condition {0}", idx), lists[listIndex++]));
+                Conditions.Add(ConditionObject.Create(String.Format("Condition {0}", idx), lists[listIndex++]));
             }
 
-            Actions.Add(new ActionObject(String.Format("Action1{0}", 0), ValueDataType.Bool));
             for (int idx = 1; idx < actionCount; idx++)
             {
-                Actions.Add(new ActionObject(String.Format("Action1{0}", idx), lists[listIndex++]));
+                Actions.Add(ActionObject.Create(String.Format("Action1{0}", idx), lists[listIndex++]));
             }
 
             CreateBasicColumnDescriptions();
@@ -230,28 +229,28 @@ namespace DecisionTableCreator.TestCases
         private void CreatePrinterTrubbleshootingSampleInternal()
         {
             var printerEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue("Yes"), new EnumValue("No"), };
-            Conditions.Add(new ConditionObject(String.Format("Printer does not print"), printerEnum));
+            Conditions.Add(ConditionObject.Create(String.Format("Printer does not print"), printerEnum));
 
             var ledEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue("Yes"), new EnumValue("No"), };
-            Conditions.Add(new ConditionObject("An error led is flashing", ledEnum));
+            Conditions.Add(ConditionObject.Create("An error led is flashing", ledEnum));
 
             var unrecognizedEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue("Yes"), new EnumValue("No"), };
-            Conditions.Add(new ConditionObject("Printer is unrecognized", unrecognizedEnum));
+            Conditions.Add(ConditionObject.Create("Printer is unrecognized", unrecognizedEnum));
 
             var checkPowerEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue(""), new EnumValue("X") };
-            Actions.Add(new ActionObject(String.Format("Check the power cable"), checkPowerEnum));
+            Actions.Add(ActionObject.Create(String.Format("Check the power cable"), checkPowerEnum));
 
             var checkPinterCableEnum = new ObservableCollection<EnumValue>() { new EnumValue(""), new EnumValue("X") };
-            Actions.Add(new ActionObject(String.Format("Check the printer-computer cable"), checkPinterCableEnum));
+            Actions.Add(ActionObject.Create(String.Format("Check the printer-computer cable"), checkPinterCableEnum));
 
             var softwareInstalledEnum = new ObservableCollection<EnumValue>() { new EnumValue(""), new EnumValue("X") };
-            Actions.Add(new ActionObject(String.Format("Enshure printer software is installed"), softwareInstalledEnum));
+            Actions.Add(ActionObject.Create(String.Format("Enshure printer software is installed"), softwareInstalledEnum));
 
             var checkInkEnum = new ObservableCollection<EnumValue>() { new EnumValue(""), new EnumValue("X") };
-            Actions.Add(new ActionObject(String.Format("Check/replace ink"), checkInkEnum));
+            Actions.Add(ActionObject.Create(String.Format("Check/replace ink"), checkInkEnum));
 
             var checkPaperJamEnum = new ObservableCollection<EnumValue>() { new EnumValue(""), new EnumValue("X") };
-            Actions.Add(new ActionObject(String.Format("Check for paper jam"), checkPaperJamEnum));
+            Actions.Add(ActionObject.Create(String.Format("Check for paper jam"), checkPaperJamEnum));
 
             CreateBasicColumnDescriptions();
 
@@ -282,11 +281,31 @@ namespace DecisionTableCreator.TestCases
             ActionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCaseName, typeof(TestCase), null));
         }
 
-        void PopulateRows(DataTableView dataTable, IList<ConditionActionBase> list, IList<TestCase> testCases, TestCase.CollectionType colType)
+        //void PopulateRows(DataTableView dataTable, IList<ConditionActionBase> list, IList<TestCase> testCases, TestCase.CollectionType colType)
+        //{
+        //    dataTable.Rows.Clear();
+        //    int rowIndex = 0;
+        //    foreach (ConditionActionBase conditionActionBase in list)
+        //    {
+        //        var row = dataTable.Rows.AddRow();
+        //        dataTable.Columns[0].SetValue(row, conditionActionBase);
+        //        int columnIndex = 1;
+        //        foreach (TestCase testCase in testCases)
+        //        {
+        //            var value = testCase.GetValueObject(colType, rowIndex);
+        //            dataTable.Columns[columnIndex].SetValue(row, value);
+        //            columnIndex++;
+        //        }
+        //        rowIndex++;
+        //    }
+
+        //}
+
+        void PopulateRows<TType>(DataTableView dataTable, IList<TType> list, IList<TestCase> testCases, TestCase.CollectionType colType)
         {
             dataTable.Rows.Clear();
             int rowIndex = 0;
-            foreach (ConditionActionBase conditionActionBase in list)
+            foreach (TType conditionActionBase in list)
             {
                 var row = dataTable.Rows.AddRow();
                 dataTable.Columns[0].SetValue(row, conditionActionBase);
@@ -323,7 +342,7 @@ namespace DecisionTableCreator.TestCases
 
         public void AppendAction()
         {
-            ActionObject actionObject= new ActionObject("new action", new ObservableCollection<EnumValue>() { new EnumValue("new name", "new value", true, false, true) });
+            ActionObject actionObject= ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new name", "new value", true, false, true) });
             Actions.Add(actionObject);
             AddToTestCases(actionObject);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
@@ -332,7 +351,7 @@ namespace DecisionTableCreator.TestCases
 
         public void AppendCondition()
         {
-            ConditionObject conditionObject = new ConditionObject("new condition", new ObservableCollection<EnumValue>() {new EnumValue("new name", "new value", true, false, true)});
+            ConditionObject conditionObject = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() {new EnumValue("new name", "new value", true, false, true)});
             Conditions.Add(conditionObject);
             AddToTestCases(conditionObject);
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
@@ -344,7 +363,13 @@ namespace DecisionTableCreator.TestCases
             List<int> savedSelectedItemIndexes = SaveSelectedItemIndex(index);
             Conditions[index].Merge(conditionClone);
             RestoreSelectedItemIndex(index, savedSelectedItemIndexes);
-//            FireConditionsChanged();
+        }
+
+        internal void ChangeAction(int index, ActionObject actionClone)
+        {
+            List<int> savedSelectedItemIndexes = SaveSelectedItemIndex(index);
+            Actions[index].Merge(actionClone);
+            RestoreSelectedItemIndex(index, savedSelectedItemIndexes);
         }
 
         //private void UpdateTestCases(int index, ConditionObject condition)
@@ -407,10 +432,10 @@ namespace DecisionTableCreator.TestCases
         }
 
 
-        public static void AddValueObjects(TestCase tc, ObservableCollection<ConditionActionBase> list, TestCase.CollectionType colType)
+        public static void AddValueObjects<TType>(TestCase tc, ObservableCollection<TType> list, TestCase.CollectionType colType) where TType: IConditionAction
         {
 
-            foreach (ConditionActionBase condition in list)
+            foreach (IConditionAction condition in list)
             {
                 ValueObject vo = ValueObject.Create(condition);
                 vo.TooltipText = tc.Name + " " + condition.Text;

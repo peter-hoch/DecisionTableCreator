@@ -12,13 +12,41 @@ using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator.TestCases
 {
+    public interface IConditionAction 
+    {
+        int LoadSaveId { get; set; }
+
+        ValueDataType DataType { get; }
+
+        string Text { get; set; }
+
+        bool DefaultBool { get; set; }
+
+        string DefaultText { get; set; }
+
+        ObservableCollection<EnumValue> EnumValues { get; set; }
+
+        string TooltipText { get; set; }
+
+        int SelectedItemIndex { get; set; }
+
+        bool BoolValue { get; set; }
+
+        Brush Background { get; set; }
+
+    }
+
     /// <summary>
     /// base class for condition and action
     /// </summary>
-    public class ConditionActionBase
+    public class ConditionActionBase : IConditionAction
     {
 
-        protected ConditionActionBase(string text, ValueDataType type)
+        protected ConditionActionBase()
+        {
+        }
+
+        protected ConditionActionBase(string text, ValueDataType type) : this()
         {
             Text = text;
             DataType = type;
@@ -74,25 +102,34 @@ namespace DecisionTableCreator.TestCases
             //}
         }
 
-        //protected void Clone(ConditionActionBase co)
-        //{
-        //    var co = new ConditionObject(Text, DataType);
-        //    co.DefaultBool = DefaultBool;
-        //    co.DefaultText = DefaultText;
-        //    co.Background = Background;
-        //    co.EnumValues = new ObservableCollection<EnumValue>();
-        //    foreach (EnumValue value in EnumValues)
-        //    {
-        //        co.EnumValues.Add(value.Clone());
-        //    }
-        //    return co;
-        //}
+        /// <summary>
+        /// clone the object and all its content
+        /// </summary>
+        /// <param name="clone"></param>
+        protected void Clone(IConditionAction clone)
+        {
+            ConditionActionBase co = (ConditionActionBase) clone;
+            co.Text = Text;
+            co.DataType = DataType;
+            co.DefaultBool = DefaultBool;
+            co.DefaultText = DefaultText;
+            co.Background = Background;
+            co.EnumValues = new ObservableCollection<EnumValue>();
+            foreach (EnumValue value in EnumValues)
+            {
+                co.EnumValues.Add(value.Clone());
+            }
+        }
 
+
+        #region properties
+
+        public string EditBoxName { get; protected set; }
 
         /// <summary>
         /// only valid during load and save!!
         /// </summary>
-        internal int LoadSaveId { get; set; }
+        public int LoadSaveId { get; set; }
 
         private ValueDataType _dataType;
 
@@ -101,6 +138,10 @@ namespace DecisionTableCreator.TestCases
             get { return _dataType; }
             protected set
             {
+                if (value != ValueDataType.Enumeration)
+                {
+                    throw new NotSupportedException("only enumerations are supported");
+                }
                 _dataType = value;
                 OnPropertyChanged("DataType");
             }
@@ -225,6 +266,8 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        #endregion
+
         #region event
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -244,27 +287,33 @@ namespace DecisionTableCreator.TestCases
 
     public class ConditionObject : ConditionActionBase
     {
-        public ConditionObject(string name, ValueDataType type) : base(name, type)
+        private ConditionObject() : base()
         {
-
+            EditBoxName = "Edit condition object";
         }
-        public ConditionObject(string name, ObservableCollection<EnumValue> enums) : base(name, enums)
-        {
 
+        public static ConditionObject Create(string text, ValueDataType type)
+        {
+            ConditionObject ao = new ConditionObject();
+            ao.Text = text;
+            ao.DataType = type;
+            return ao;
+        }
+
+        public static ConditionObject Create(string text, ObservableCollection<EnumValue> enums)
+        {
+            ConditionObject ao = new ConditionObject();
+            ao.Text = text;
+            ao.DataType = ValueDataType.Enumeration;
+            ao.EnumValues = enums;
+            return ao;
         }
 
         public ConditionObject Clone()
         {
-            var co = new ConditionObject(Text, DataType);
-            co.DefaultBool = DefaultBool;
-            co.DefaultText = DefaultText;
-            co.Background = Background;
-            co.EnumValues = new ObservableCollection<EnumValue>();
-            foreach (EnumValue value in EnumValues)
-            {
-                co.EnumValues.Add(value.Clone());
-            }
-            return co;
+            ConditionObject clone = new ConditionObject();
+            Clone(clone);
+            return clone;
         }
 
 
@@ -272,12 +321,34 @@ namespace DecisionTableCreator.TestCases
 
     public class ActionObject : ConditionActionBase
     {
-        public ActionObject(string name, ValueDataType type) : base(name, type)
+        private ActionObject() : base()
         {
+            EditBoxName = "Edit action object";
         }
 
-        public ActionObject(string name, ObservableCollection<EnumValue> enums) : base(name, enums)
+        public static ActionObject Create(string text, ValueDataType type)
         {
+            ActionObject ao = new ActionObject();
+            ao.Text = text;
+            ao.DataType = type;
+            return ao;
         }
+
+        public static ActionObject Create(string text, ObservableCollection<EnumValue> enums) 
+        {
+            ActionObject ao = new ActionObject();
+            ao.Text = text;
+            ao.DataType = ValueDataType.Enumeration;
+            ao.EnumValues = enums;
+            return ao;
+        }
+
+        public ActionObject Clone()
+        {
+            ActionObject clone = new ActionObject();
+            Clone(clone);
+            return clone;
+        }
+
     }
 }

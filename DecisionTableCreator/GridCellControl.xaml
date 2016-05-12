@@ -25,6 +25,8 @@
                     <MenuItem Command="local:WpfCommands.AppendColumn" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.EditCondition" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.EditAction" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Command="local:WpfCommands.AppendCondition"/>
+                    <MenuItem Command="local:WpfCommands.AppendAction"/>
                 </ContextMenu>
             </TextBox.ContextMenu>
         </TextBox>
@@ -37,10 +39,12 @@
                     <MenuItem Command="local:WpfCommands.AppendColumn" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.EditCondition" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.EditAction" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Command="local:WpfCommands.AppendCondition"/>
+                    <MenuItem Command="local:WpfCommands.AppendAction"/>
                 </ContextMenu>
             </ComboBox.ContextMenu>
         </ComboBox>
-        <TextBox Text="{Binding SelectedItemIndex}" IsReadOnly="true"></TextBox>
+        <!--<TextBox Text="{Binding SelectedItemIndex}" IsReadOnly="true"></TextBox>-->
         <CheckBox IsChecked="{Binding BoolValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  Background="{Binding Path=Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding Path=CheckboxVisibility, Mode=OneTime, FallbackValue=Collapsed}"

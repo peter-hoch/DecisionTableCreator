@@ -156,10 +156,7 @@ namespace DecisionTableCreator
 
         private void EditCondition_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DataGrid dataGrid = e.Source as DataGrid;
-            DependencyObject dep = e.OriginalSource as DependencyObject;
-            DataGridRow dataGridRow = WpfTools.SearchForParent(dep, typeof(DataGridRow), false) as DataGridRow;
-            int index = dataGrid.ItemContainerGenerator.IndexFromContainer(dataGridRow);
+            var index = CalculateRowIndex(e);
             if (index >= 0)
             {
                 ConditionObject original =  ((ConditionObject) DataContainer.TestCasesRoot.Conditions[index]);
@@ -173,6 +170,19 @@ namespace DecisionTableCreator
             }
         }
 
+        private static int CalculateRowIndex(ExecutedRoutedEventArgs e)
+        {
+            DataGrid dataGrid = e.Source as DataGrid;
+            DependencyObject dep = e.OriginalSource as DependencyObject;
+            DataGridRow dataGridRow = WpfTools.SearchForParent(dep, typeof(DataGridRow), false) as DataGridRow;
+            if (dataGridRow != null && dataGrid != null)
+            {
+                int index = dataGrid.ItemContainerGenerator.IndexFromContainer(dataGridRow);
+                return index;
+            }
+            return -1;
+        }
+
         private void EditCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             ConditionObject condObject = GetGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ConditionObject;
@@ -184,12 +194,17 @@ namespace DecisionTableCreator
 
         private void EditAction_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            ActionObject actionObject = GetGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ActionObject;
-
-            if (actionObject != null)
+            var index = CalculateRowIndex(e);
+            if (index >= 0)
             {
-                EditAction wnd = new EditAction(actionObject);
+                ActionObject original = ((ActionObject)DataContainer.TestCasesRoot.Actions[index]);
+                ActionObject coClone = original.Clone();
+                EditCondition wnd = new EditCondition(coClone);
                 bool? result = wnd.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                    DataContainer.TestCasesRoot.ChangeAction(index, coClone);
+                }
             }
         }
 

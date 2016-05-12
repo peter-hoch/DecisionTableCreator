@@ -13,7 +13,7 @@ namespace DecisionTableCreator.TestCases
     public class ValueObject : INotifyPropertyChanged
     {
 
-        public static ValueObject Create(ConditionActionBase conditionOrAction)
+        public static ValueObject Create(IConditionAction conditionOrAction)
         {
             ValueObject vo;
             switch (conditionOrAction.DataType)
@@ -34,7 +34,7 @@ namespace DecisionTableCreator.TestCases
             return vo;
         }
 
-        private static ValueObject CreateEnumValueObject(ConditionActionBase conditionOrAction)
+        private static ValueObject CreateEnumValueObject(IConditionAction conditionOrAction)
         {
             var defaultIndex = CalculateDefaultIndex(conditionOrAction);
             ValueObject vo;
@@ -48,7 +48,7 @@ namespace DecisionTableCreator.TestCases
             SelectedItemIndex = CalculateDefaultIndex(ConditionOrActionParent);
         }
 
-        private static int CalculateDefaultIndex(ConditionActionBase conditionOrAction)
+        private static int CalculateDefaultIndex(IConditionAction conditionOrAction)
         {
             int defaultIndex = 0;
             int idx = 0;
@@ -78,8 +78,8 @@ namespace DecisionTableCreator.TestCases
             EnumValues = items;
         }
 
-        private ConditionActionBase _conditionOrActionParent;
-        public ConditionActionBase ConditionOrActionParent
+        private IConditionAction _conditionOrActionParent;
+        public IConditionAction ConditionOrActionParent
         {
             get
             {

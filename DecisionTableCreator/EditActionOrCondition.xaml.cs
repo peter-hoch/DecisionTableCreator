@@ -21,15 +21,17 @@ namespace DecisionTableCreator
     /// </summary>
     public partial class EditCondition : Window
     {
-        public EditCondition(ConditionObject condObject)
+        public EditCondition(IConditionAction condObject)
         {
             InitializeComponent();
             DataContext = condObject;
         }
 
+        IConditionAction DataContainer { get { return (IConditionAction) DataContext; } }
+
         private void AppendEnumValue_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            ((ConditionObject)DataContext).EnumValues.Add(new EnumValue("new name", "new value"));
+            DataContainer.EnumValues.Add(new EnumValue("new name", "new value"));
         }
 
         private void AppendEnumValue_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -49,7 +51,7 @@ namespace DecisionTableCreator
                     int index = dataGrid.ItemContainerGenerator.IndexFromContainer(dataGridRow);
                     if (index >= 0 && index < dataGrid.Items.Count)
                     {
-                        ((ConditionObject)DataContext).EnumValues.RemoveAt(index);
+                        DataContainer.EnumValues.RemoveAt(index);
                     }
                 }
             }

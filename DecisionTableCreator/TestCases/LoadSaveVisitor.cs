@@ -242,7 +242,7 @@ namespace DecisionTableCreator.TestCases
         {
             string name = element.GetAttributeStringValue(XmlNames.TextAttributeName);
             ValueDataType type = element.GetAttributeEnumValue<ValueDataType>(XmlNames.TypeAttributeName);
-            condition = new ConditionObject(name, type);
+            condition = ConditionObject.Create(name, type);
             condition.LoadSaveId = element.GetAttributeIntValue(XmlNames.IdAttributeName, XmlElementOption.MustHaveValue);
             condition.DefaultText = element.GetAttributeStringValue(XmlNames.DefaultTextAttributeName, XmlElementOption.Optional);
             condition.DefaultBool = element.GetAttributeBoolValue(XmlNames.DefaultBoolAttributeName);
@@ -254,7 +254,7 @@ namespace DecisionTableCreator.TestCases
         {
             string name = element.GetAttributeStringValue(XmlNames.TextAttributeName);
             ValueDataType type = element.GetAttributeEnumValue<ValueDataType>(XmlNames.TypeAttributeName);
-            action = new ActionObject(name, type);
+            action = ActionObject.Create(name, type);
             action.LoadSaveId = element.GetAttributeIntValue(XmlNames.IdAttributeName, XmlElementOption.MustHaveValue);
             action.DefaultText = element.GetAttributeStringValue(XmlNames.DefaultTextAttributeName, XmlElementOption.Optional);
             action.DefaultBool = element.GetAttributeBoolValue(XmlNames.DefaultBoolAttributeName);
