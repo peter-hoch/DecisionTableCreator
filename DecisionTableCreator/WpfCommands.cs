@@ -17,7 +17,9 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand Open;
         public static readonly RoutedUICommand NewDocument;
         public static readonly RoutedUICommand AppendCondition;
+        public static readonly RoutedUICommand InsertCondition;
         public static readonly RoutedUICommand AppendAction;
+        public static readonly RoutedUICommand InsertAction;
         public static readonly RoutedUICommand AppendEnumValue;
         public static readonly RoutedUICommand DeleteEnumValue;
 
@@ -31,7 +33,9 @@ namespace DecisionTableCreator
             Open = new RoutedUICommand("Open", "Open", typeof(WpfCommands));
             NewDocument = new RoutedUICommand("New", "NewDocument", typeof(WpfCommands));
             AppendCondition = new RoutedUICommand("Append condition", "AppendCondition", typeof(WpfCommands));
+            InsertCondition = new RoutedUICommand("Insert condition", "InsertCondition", typeof(WpfCommands));
             AppendAction = new RoutedUICommand("Append action", "AppendAction", typeof(WpfCommands));
+            InsertAction = new RoutedUICommand("Insert action", "InsertAction", typeof(WpfCommands));
             AppendEnumValue = new RoutedUICommand("Append enum value", "AppendEnumValue", typeof(WpfCommands));
             DeleteEnumValue = new RoutedUICommand("Delete enum value", "DeleteEnumValue", typeof(WpfCommands));
         }

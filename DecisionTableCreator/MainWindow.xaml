@@ -18,7 +18,9 @@
         <CommandBinding Command="local:WpfCommands.Open" Executed="Open_Executed" CanExecute="Open_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.NewDocument" Executed="NewDocument_Executed" CanExecute="NewDocument_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.AppendAction" Executed="AppendAction_Executed" CanExecute="AppendAction_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.InsertAction" Executed="InsertAction_Executed" CanExecute="InsertAction_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.AppendCondition" Executed="AppendCondition_Executed" CanExecute="AppendCondition_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.InsertCondition" Executed="InsertCondition_Executed" CanExecute="InsertCondition_OnCanExecute"/>
     </Window.CommandBindings>
 
     <Grid>
@@ -58,7 +60,9 @@
                 <MenuItem Command="local:WpfCommands.AppendTestCase"/>
                 <MenuItem Command="local:WpfCommands.EditCondition"/>
                 <MenuItem Command="local:WpfCommands.EditAction"/>
+                <MenuItem Command="local:WpfCommands.InsertCondition"/>
                 <MenuItem Command="local:WpfCommands.AppendCondition"/>
+                <MenuItem Command="local:WpfCommands.InsertAction"/>
                 <MenuItem Command="local:WpfCommands.AppendAction"/>
             </MenuItem>
         </Menu>

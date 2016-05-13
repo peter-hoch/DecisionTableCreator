@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -276,7 +277,13 @@ namespace DecisionTableCreator
 
         private void AppendAction_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DataContainer.TestCasesRoot.AppendAction();
+            ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
+            EditCondition wnd = new EditCondition(newAction);
+            bool? result = wnd.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                DataContainer.TestCasesRoot.AppendAction(newAction);
+            }
         }
 
         private void AppendAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -284,14 +291,74 @@ namespace DecisionTableCreator
             e.CanExecute = true;
         }
 
+        private void InsertAction_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var index = CalculateRowIndex(e);
+            if (index >= 0)
+            {
+                ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() {new EnumValue("new text", "new value")});
+                EditCondition wnd = new EditCondition(newAction);
+                bool? result = wnd.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                   DataContainer.TestCasesRoot.InsertAction(index, newAction);
+                }
+            }
+        }
+
+        private void InsertAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            DataGrid dataGrid = e.Source as DataGrid;
+            if (dataGrid != null && dataGrid.Columns.Count > 0)
+            {
+                if (dataGrid.Columns[0].Header.ToString().Equals( TestCasesRoot.ActionsColumnHeaderName))
+                {
+                    e.CanExecute = true;
+                }
+            }
+        }
+
         private void AppendCondition_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DataContainer.TestCasesRoot.AppendCondition();
+            ConditionObject newCondition = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
+            EditCondition wnd = new EditCondition(newCondition);
+            bool? result = wnd.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                DataContainer.TestCasesRoot.AppendCondition(newCondition);
+            }
         }
 
         private void AppendCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+        }
+
+        private void InsertCondition_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var index = CalculateRowIndex(e);
+            if (index >= 0)
+            {
+                ConditionObject conditionObject = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() {new EnumValue("new text", "new value")});
+                EditCondition wnd = new EditCondition(conditionObject);
+                bool? result = wnd.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                    DataContainer.TestCasesRoot.InsertCondition(index, conditionObject);
+                }
+            }
+        }
+
+        private void InsertCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            DataGrid dataGrid = e.Source as DataGrid;
+            if (dataGrid != null && dataGrid.Columns.Count > 0)
+            {
+                if (dataGrid.Columns[0].Header.ToString().Equals(TestCasesRoot.ConditionsColumnHeaderName))
+                {
+                    e.CanExecute = true;
+                }
+            }
         }
 
 

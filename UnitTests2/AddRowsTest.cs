@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace UnitTests2
             TestCasesRoot tcr = TestCasesRoot.CreateSimpleTable();
             tcr.Save(firstPath);
 
-            tcr.AppendCondition();
+            tcr.AppendCondition(ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() {new EnumValue("new test", "new value")}));
 
             tcr.Save(secondPath);
 
