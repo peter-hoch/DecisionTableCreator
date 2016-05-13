@@ -106,7 +106,7 @@ namespace DecisionTableCreator
         {
             if (name.Contains("Action") || name.Contains("Condition"))
             {
-               return "ConditionOrAction";
+                return "ConditionOrAction";
             }
             return name;
         }
@@ -127,39 +127,41 @@ namespace DecisionTableCreator
 
         #endregion
 
-        private void AppendColumn_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void AppendTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            bool trace = false;
-            DataGrid dataGrid = e.Source as DataGrid;
-            if (dataGrid != null)
-            {
-                DependencyObject dep = (DependencyObject)e.OriginalSource;
-                if (dep != null)
-                {
-                    if(trace) { Debug.Write("SearchForParent ");}
-                    var parent = WpfTools.SearchForParent(dep, typeof(DataGridCell), trace);
-                    if (trace) { Debug.WriteLine("");}
-                    if (parent != null)
-                    {
-                        e.CanExecute = true;
-                    }
-                }
-            }
+            e.CanExecute = true;
         }
 
-        private void InsertColumn_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void AppendTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var tcr = DataContainer.TestCasesRoot;
             tcr.AppendTestCase();
-            DataContainer.TestCasesRoot = tcr;
         }
+
+        private void InsertTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var tcr = DataContainer.TestCasesRoot;
+            int index = CalculateColumnIndex(e, true);
+            tcr.InsertTestCase(index);
+        }
+
+        private void InsertTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            int index = CalculateColumnIndex(e, true);
+            // focus must be at least on first testcase
+            if (index >= 1)
+            {
+                e.CanExecute = true;
+            }
+        }
+
 
         private void EditCondition_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var index = CalculateRowIndex(e);
             if (index >= 0)
             {
-                ConditionObject original =  ((ConditionObject) DataContainer.TestCasesRoot.Conditions[index]);
+                ConditionObject original = ((ConditionObject)DataContainer.TestCasesRoot.Conditions[index]);
                 ConditionObject coClone = original.Clone();
                 EditCondition wnd = new EditCondition(coClone);
                 bool? result = wnd.ShowDialog();
@@ -182,6 +184,18 @@ namespace DecisionTableCreator
             }
             return -1;
         }
+
+        private static int CalculateColumnIndex(RoutedEventArgs e, bool trace=false)
+        {
+            DependencyObject dep = e.OriginalSource as DependencyObject;
+            DataGridCell dataGridCell = WpfTools.SearchForParent(dep, typeof(DataGridCell), trace) as DataGridCell;
+            if (dataGridCell != null)
+            {
+                return dataGridCell.Column.DisplayIndex;
+            }
+            return -1;
+        }
+
 
         private void EditCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -224,7 +238,7 @@ namespace DecisionTableCreator
             var result = dlg.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                DataContainer.TestCasesRoot.Save(dlg.FileName);                
+                DataContainer.TestCasesRoot.Save(dlg.FileName);
             }
         }
 
@@ -298,7 +312,6 @@ namespace DecisionTableCreator
             }
             return null;
         }
-
 
     }
 }

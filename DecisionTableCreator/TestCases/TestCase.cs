@@ -74,6 +74,7 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+
         private ObservableCollection<ValueObject> _conditions;
 
         public ObservableCollection<ValueObject> Conditions

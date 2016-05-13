@@ -10,7 +10,8 @@
         <local:DataContainer/>
     </Window.DataContext>
     <Window.CommandBindings>
-        <CommandBinding Command="local:WpfCommands.AppendColumn" Executed="InsertColumn_Executed" CanExecute="AppendColumn_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.AppendTestCase" Executed="AppendTestCase_Executed" CanExecute="AppendTestCase_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.InsertTestCase" Executed="InsertTestCase_Executed" CanExecute="InsertTestCase_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.EditCondition" Executed="EditCondition_Executed" CanExecute="EditCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.EditAction" Executed="EditAction_Executed" CanExecute="EditAction_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.Save" Executed="Save_Executed" CanExecute="Save_OnCanExecute"/>
@@ -35,14 +36,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="200"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="200"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem Command="local:WpfCommands.AppendColumn" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                <MenuItem Command="local:WpfCommands.AppendTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                 <MenuItem Command="local:WpfCommands.EditCondition" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                 <MenuItem Command="local:WpfCommands.EditAction" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
             </ContextMenu>
@@ -54,7 +55,7 @@
                 <MenuItem Command="local:WpfCommands.Open"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Command="local:WpfCommands.AppendColumn"/>
+                <MenuItem Command="local:WpfCommands.AppendTestCase"/>
                 <MenuItem Command="local:WpfCommands.EditCondition"/>
                 <MenuItem Command="local:WpfCommands.EditAction"/>
                 <MenuItem Command="local:WpfCommands.AppendCondition"/>

@@ -9,7 +9,8 @@ namespace DecisionTableCreator
 {
     public class WpfCommands
     {
-        public static readonly RoutedUICommand AppendColumn;
+        public static readonly RoutedUICommand AppendTestCase;
+        public static readonly RoutedUICommand InsertTestCase;
         public static readonly RoutedUICommand EditCondition;
         public static readonly RoutedUICommand EditAction;
         public static readonly RoutedUICommand Save;
@@ -22,7 +23,8 @@ namespace DecisionTableCreator
 
         static WpfCommands()
         {
-            AppendColumn = new RoutedUICommand("Append test case", "AppendColumn", typeof(WpfCommands));
+            AppendTestCase = new RoutedUICommand("Append test case", "AppendTestCase", typeof(WpfCommands));
+            InsertTestCase = new RoutedUICommand("Insert test case", "InsertTestCase", typeof(WpfCommands));
             EditCondition = new RoutedUICommand("Edit condition", "EditCondition", typeof(WpfCommands));
             EditAction = new RoutedUICommand("Edit action", "EditAction", typeof(WpfCommands));
             Save = new RoutedUICommand("Save", "Save", typeof(WpfCommands));

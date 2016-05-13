@@ -141,7 +141,7 @@ namespace DecisionTableCreator.TestCases
             Actions.Add(ActionObject.Create(String.Format("Action1{0}", 0), ValueDataType.Bool));
             for (int idx = 1; idx < actionCount; idx++)
             {
-                Actions.Add( ActionObject.Create(String.Format("Action1{0}", idx), lists[listIndex++]));
+                Actions.Add(ActionObject.Create(String.Format("Action1{0}", idx), lists[listIndex++]));
             }
 
             CreateBasicColumnDescriptions();
@@ -326,13 +326,32 @@ namespace DecisionTableCreator.TestCases
             AddTestCase();
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+            FireActionsChanged();
+            FireConditionsChanged();
         }
 
-        private void AddTestCase()
+        internal void InsertTestCase(int index)
+        {
+            AddTestCase(index);
+            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+            FireActionsChanged();
+            FireConditionsChanged();
+        }
+
+
+        private void AddTestCase(int indexWhereToInsert = -1)
         {
             int index = TestCases.Count + 1;
             var tc = new TestCase(String.Format("TC{0}", index));
-            TestCases.Add(tc);
+            if (indexWhereToInsert == -1)
+            {
+                TestCases.Add(tc);
+            }
+            else
+            {
+                TestCases.Insert(indexWhereToInsert, tc);
+            }
             AddValueObjects(tc, Conditions, TestCase.CollectionType.Conditions);
             AddValueObjects(tc, Actions, TestCase.CollectionType.Actions);
             AddColumnDescriptionForTestCase(tc.Name);
@@ -340,9 +359,10 @@ namespace DecisionTableCreator.TestCases
             ActionTable.ResizeColumnCount(TestCases.Count + 1);
         }
 
+
         public void AppendAction()
         {
-            ActionObject actionObject= ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new name", "new value", true, false, true) });
+            ActionObject actionObject = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new name", "new value", true, false, true) });
             Actions.Add(actionObject);
             AddToTestCases(actionObject);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
@@ -351,7 +371,7 @@ namespace DecisionTableCreator.TestCases
 
         public void AppendCondition()
         {
-            ConditionObject conditionObject = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() {new EnumValue("new name", "new value", true, false, true)});
+            ConditionObject conditionObject = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() { new EnumValue("new name", "new value", true, false, true) });
             Conditions.Add(conditionObject);
             AddToTestCases(conditionObject);
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
@@ -432,7 +452,7 @@ namespace DecisionTableCreator.TestCases
         }
 
 
-        public static void AddValueObjects<TType>(TestCase tc, ObservableCollection<TType> list, TestCase.CollectionType colType) where TType: IConditionAction
+        public static void AddValueObjects<TType>(TestCase tc, ObservableCollection<TType> list, TestCase.CollectionType colType) where TType : IConditionAction
         {
 
             foreach (IConditionAction condition in list)
