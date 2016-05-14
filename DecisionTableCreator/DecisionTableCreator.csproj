@@ -71,6 +71,8 @@
     <Compile Include="TestCases\TestCase.cs" />
     <Compile Include="TestCases\TestCasesRoot.cs" />
     <Compile Include="TestCases\TestCasesRootLoadSave.cs" />
+    <Compile Include="TestCases\TestCasesRootProperties.cs" />
+    <Compile Include="TestCases\TestCasesRootSampleTables.cs" />
     <Compile Include="TestCases\ValueDataType.cs" />
     <Compile Include="TestCases\ValueObject.cs" />
     <Compile Include="TestCases\XmlNames.cs" />
