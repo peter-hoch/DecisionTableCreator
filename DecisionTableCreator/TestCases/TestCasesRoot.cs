@@ -124,6 +124,15 @@ namespace DecisionTableCreator.TestCases
             FireActionsChanged();
         }
 
+        internal void DeleteActionAt(int index)
+        {
+            Actions.RemoveAt(index);
+            RemoveActionFromTestCases(index);
+            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+            FireActionsChanged();
+        }
+
+
         public void AppendCondition(ConditionObject conditionObject)
         {
             Conditions.Add(conditionObject);
@@ -136,6 +145,14 @@ namespace DecisionTableCreator.TestCases
         {
             Conditions.Insert(index, newCondition);
             AddToTestCases(newCondition, index);
+            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+            FireConditionsChanged();
+        }
+
+        internal void DeleteConditionAt(int index)
+        {
+            Conditions.RemoveAt(index);
+            RemoveConditionFromTestCases(index);
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             FireConditionsChanged();
         }
@@ -211,6 +228,23 @@ namespace DecisionTableCreator.TestCases
                 {
                     testCase.Actions.Insert(whereToInsert, ValueObject.Create(actionObject));
                 }
+            }
+        }
+
+
+        private void RemoveActionFromTestCases(int whereToDelete)
+        {
+            foreach (TestCase testCase in TestCases)
+            {
+                testCase.Actions.RemoveAt(whereToDelete);
+            }
+        }
+
+        private void RemoveConditionFromTestCases(int whereToDelete)
+        {
+            foreach (TestCase testCase in TestCases)
+            {
+                testCase.Conditions.RemoveAt(whereToDelete);
             }
         }
 

@@ -84,6 +84,5 @@ namespace DecisionTableCreator.TestCases
             ActionsChanged?.Invoke();
         }
 
-
     }
 }

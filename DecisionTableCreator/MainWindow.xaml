@@ -19,8 +19,10 @@
         <CommandBinding Command="local:WpfCommands.NewDocument" Executed="NewDocument_Executed" CanExecute="NewDocument_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.AppendAction" Executed="AppendAction_Executed" CanExecute="AppendAction_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.InsertAction" Executed="InsertAction_Executed" CanExecute="InsertAction_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.DeleteAction" Executed="DeleteAction_Executed" CanExecute="DeleteAction_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.AppendCondition" Executed="AppendCondition_Executed" CanExecute="AppendCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.InsertCondition" Executed="InsertCondition_Executed" CanExecute="InsertCondition_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.DeleteCondition" Executed="DeleteCondition_Executed" CanExecute="DeleteCondition_OnCanExecute"/>
     </Window.CommandBindings>
 
     <Grid>
@@ -46,8 +48,8 @@
         <Grid.ContextMenu>
             <ContextMenu>
                 <MenuItem Command="local:WpfCommands.AppendTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-                <MenuItem Command="local:WpfCommands.EditCondition" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-                <MenuItem Command="local:WpfCommands.EditAction" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                <MenuItem Command="local:WpfCommands.AppendCondition" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                <MenuItem Command="local:WpfCommands.AppendAction" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
             </ContextMenu>
         </Grid.ContextMenu>
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -62,8 +64,10 @@
                 <MenuItem Command="local:WpfCommands.EditAction"/>
                 <MenuItem Command="local:WpfCommands.InsertCondition"/>
                 <MenuItem Command="local:WpfCommands.AppendCondition"/>
+                <MenuItem Command="local:WpfCommands.DeleteCondition"/>
                 <MenuItem Command="local:WpfCommands.InsertAction"/>
                 <MenuItem Command="local:WpfCommands.AppendAction"/>
+                <MenuItem Command="local:WpfCommands.DeleteAction"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="2" Grid.Column="1">

@@ -186,7 +186,7 @@ namespace DecisionTableCreator
             return -1;
         }
 
-        private static int CalculateColumnIndex(RoutedEventArgs e, bool trace=false)
+        private static int CalculateColumnIndex(RoutedEventArgs e, bool trace = false)
         {
             DependencyObject dep = e.OriginalSource as DependencyObject;
             DataGridCell dataGridCell = WpfTools.SearchForParent(dep, typeof(DataGridCell), trace) as DataGridCell;
@@ -296,26 +296,20 @@ namespace DecisionTableCreator
             var index = CalculateRowIndex(e);
             if (index >= 0)
             {
-                ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() {new EnumValue("new text", "new value")});
+                ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
                 EditCondition wnd = new EditCondition(newAction);
                 bool? result = wnd.ShowDialog();
                 if (result.HasValue && result.Value)
                 {
-                   DataContainer.TestCasesRoot.InsertAction(index, newAction);
+                    DataContainer.TestCasesRoot.InsertAction(index, newAction);
                 }
             }
         }
 
         private void InsertAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            DataGrid dataGrid = e.Source as DataGrid;
-            if (dataGrid != null && dataGrid.Columns.Count > 0)
-            {
-                if (dataGrid.Columns[0].Header.ToString().Equals( TestCasesRoot.ActionsColumnHeaderName))
-                {
-                    e.CanExecute = true;
-                }
-            }
+            DataGrid dataGrid;
+            e.CanExecute = IsActionsDataGridSelected(e, out dataGrid);
         }
 
         private void AppendCondition_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -339,7 +333,7 @@ namespace DecisionTableCreator
             var index = CalculateRowIndex(e);
             if (index >= 0)
             {
-                ConditionObject conditionObject = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() {new EnumValue("new text", "new value")});
+                ConditionObject conditionObject = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
                 EditCondition wnd = new EditCondition(conditionObject);
                 bool? result = wnd.ShowDialog();
                 if (result.HasValue && result.Value)
@@ -351,16 +345,66 @@ namespace DecisionTableCreator
 
         private void InsertCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            DataGrid dataGrid = e.Source as DataGrid;
+            DataGrid dataGrid;
+            e.CanExecute = IsConditionsDataGridSelected(e, out dataGrid);
+        }
+
+        private void DeleteAction_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var index = CalculateRowIndex(e);
+            if (index >= 0)
+            {
+                DataContainer.TestCasesRoot.DeleteActionAt(index);
+            }
+        }
+
+        private void DeleteAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            DataGrid dataGrid;
+            e.CanExecute = IsActionsDataGridSelected(e, out dataGrid);
+        }
+
+        private void DeleteCondition_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var index = CalculateRowIndex(e);
+            if (index >= 0)
+            {
+                DataContainer.TestCasesRoot.DeleteConditionAt(index);
+            }
+        }
+
+        private void DeleteCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            DataGrid dataGrid;
+            e.CanExecute = IsConditionsDataGridSelected(e, out dataGrid);
+        }
+
+
+        bool IsConditionsDataGridSelected(RoutedEventArgs args, out DataGrid dataGrid)
+        {
+            dataGrid = args.Source as DataGrid;
             if (dataGrid != null && dataGrid.Columns.Count > 0)
             {
                 if (dataGrid.Columns[0].Header.ToString().Equals(TestCasesRoot.ConditionsColumnHeaderName))
                 {
-                    e.CanExecute = true;
+                    return true;
                 }
             }
+            return false;
         }
 
+        bool IsActionsDataGridSelected(RoutedEventArgs args, out DataGrid dataGrid)
+        {
+            dataGrid = args.Source as DataGrid;
+            if (dataGrid != null && dataGrid.Columns.Count > 0)
+            {
+                if (dataGrid.Columns[0].Header.ToString().Equals(TestCasesRoot.ActionsColumnHeaderName))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         object GetGridCellControlDataContext(DataGrid dataGrid, DependencyObject originalSource, bool trace = false)
         {
