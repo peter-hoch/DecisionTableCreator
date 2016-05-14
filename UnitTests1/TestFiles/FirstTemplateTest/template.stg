@@ -1,0 +1,6 @@
+﻿
+TestCasesRoot(root) ::= <<
+actions count == <root.Actions.Count>
+conditions count == <root.Conditions.Count>
+test cases count == <root.TestCases.Count>
+>>

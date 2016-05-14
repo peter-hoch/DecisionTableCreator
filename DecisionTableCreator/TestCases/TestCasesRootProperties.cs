@@ -10,6 +10,8 @@ namespace DecisionTableCreator.TestCases
 {
     public partial class TestCasesRoot
     {
+        public string Test { get; set; }
+
         private DataTableView _conditionTable;
 
         public DataTableView ConditionTable
