@@ -175,9 +175,9 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        private Brush _background = Brushes.White;
+        private Background _background = new Background(BackgroundColor.White);
 
-        public Brush Background
+        public Background Background
         {
             get { return _background; }
             set
@@ -289,20 +289,35 @@ namespace DecisionTableCreator.TestCases
                 {
                     if (ev.IsInvalid)
                     {
-                        brush = Brushes.Red;
+                        Background.BackgroundColor = BackgroundColor.Red;
                     }
                     else if (ev.DontCare)
                     {
-                        brush = Brushes.Aqua;
+                        Background.BackgroundColor = BackgroundColor.Aqua;
+                    }
+                    else
+                    {
+                        Background.BackgroundColor = BackgroundColor.White;
                     }
                 }
             }
+        }
 
-            if (Background != brush)
+        private string _testProperty;
+
+        /// <summary>
+        /// for unit testing only
+        /// </summary>
+        public string TestProperty
+        {
+            get { return _testProperty; }
+            set
             {
-                Background = brush;
+                _testProperty = value;
+                OnPropertyChanged("TestProperty");
             }
         }
+
 
         public override string ToString()
         {

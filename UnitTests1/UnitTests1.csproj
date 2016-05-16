@@ -61,7 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestFiles\CreateHtmlTableTest\HtmlTemplate.stg" />
     <None Include="TestFiles\FirstTemplateTest\template.stg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ReferenceFiles\CreateHtmlTableTest\" />
+    <Folder Include="ReferenceFiles\FirstTemplateTest\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

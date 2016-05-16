@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,6 @@ namespace DecisionTableCreator.TestCases
 {
     public partial class TestCasesRoot
     {
-        public string Test { get; set; }
-
         private DataTableView _conditionTable;
 
         public DataTableView ConditionTable
@@ -55,8 +54,27 @@ namespace DecisionTableCreator.TestCases
             get { return _conditions; }
             set
             {
+                if (_conditions != null)
+                {
+                    _conditions.CollectionChanged -= OnCollectionChanged;                   
+                }
                 _conditions = value;
                 OnPropertyChanged("Conditions");
+                if (_conditions != null)
+                {
+                    _conditions.CollectionChanged += OnCollectionChanged;
+                }
+            }
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
+        {
+            if (eventArgs.Action == NotifyCollectionChangedAction.Add || eventArgs.Action == NotifyCollectionChangedAction.Replace)
+            {
+                foreach (ConditionActionBase newItem in eventArgs.NewItems)
+                {
+                    newItem.TestCasesRoot = this;
+                }
             }
         }
 
@@ -67,8 +85,16 @@ namespace DecisionTableCreator.TestCases
             get { return _actions; }
             set
             {
+                if (_actions != null)
+                {
+                    _actions.CollectionChanged -= OnCollectionChanged;
+                }
                 _actions = value;
                 OnPropertyChanged("Actions");
+                if (_actions != null)
+                {
+                    _actions.CollectionChanged += OnCollectionChanged;
+                }
             }
         }
 

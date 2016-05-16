@@ -17,11 +17,22 @@ namespace DecisionTableCreator.TestCases
             return testCasesRoot;
         }
 
+        /// <summary>
+        /// used for unit tests
+        /// </summary>
+        /// <returns></returns>
         public static TestCasesRoot CreateSimpleTable()
         {
             TestCasesRoot testCasesRoot = new TestCasesRoot();
             testCasesRoot.CreateSimpleTableInternal();
 
+            return testCasesRoot;
+        }
+
+        public static TestCasesRoot CreatePrinterTrubbleshootingSample()
+        {
+            TestCasesRoot testCasesRoot = new TestCasesRoot();
+            testCasesRoot.CreatePrinterTrubbleshootingSampleInternal();
             return testCasesRoot;
         }
 
@@ -70,16 +81,16 @@ namespace DecisionTableCreator.TestCases
 
         private void CreateSimpleTableInternal()
         {
-            int testCasesCount = 10;
-            int conditionCount = 5;
-            int actionCount = 5;
+            int testCasesCount = 6;
+            int conditionCount = 3;
+            int actionCount = 3;
 
             List<ObservableCollection<EnumValue>> lists = new List<ObservableCollection<EnumValue>>();
             int listNumber = 0;
             int enumIdx = 0;
             var subListSample = new ObservableCollection<EnumValue>();
             lists.Add(subListSample);
-            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, true));
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}-Default", listNumber, enumIdx++), true, false, true));
             subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
             subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
             subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}", listNumber++, enumIdx++), false, true, false));
@@ -87,7 +98,7 @@ namespace DecisionTableCreator.TestCases
             subListSample = new ObservableCollection<EnumValue>();
             lists.Add(subListSample);
             subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, false));
-            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, true));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}-Default", listNumber, enumIdx++), false, false, true));
             subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
             subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}", listNumber++, enumIdx++), false, true, false));
             enumIdx = 0;
@@ -96,28 +107,36 @@ namespace DecisionTableCreator.TestCases
             subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, false));
             subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
             subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
-            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}", listNumber++, enumIdx++), false, true, true));
-
-            for (int list = listNumber; list < 10; list++)
-            {
-                var subList = new ObservableCollection<EnumValue>();
-                lists.Add(subList);
-                bool isInvalid = true;
-                for (int idx = 1; idx < 10; idx++)
-                {
-                    subList.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", list, idx), isInvalid));
-                    isInvalid = false;
-                }
-            }
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}-Default", listNumber++, enumIdx++), false, true, true));
+            enumIdx = 0;
+            subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}-Default", listNumber, enumIdx++), true, false, true));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}", listNumber++, enumIdx++), false, true, false));
+            enumIdx = 0;
+            subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}-Default", listNumber, enumIdx++), false, false, true));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}", listNumber++, enumIdx++), false, true, false));
+            enumIdx = 0;
+            subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}-Default", listNumber++, enumIdx++), false, true, true));
 
             int listIndex = 0;
-            //Conditions.Add(new ConditionObject(String.Format("Condition {0}", 0), ConditionActionBase.ConditionActionType.Bool));
-            for (int idx = 1; idx < conditionCount; idx++)
+            for (int idx = 1; idx <= conditionCount; idx++)
             {
                 Conditions.Add(ConditionObject.Create(String.Format("Condition {0}", idx), lists[listIndex++]));
             }
 
-            for (int idx = 1; idx < actionCount; idx++)
+            for (int idx = 1; idx <= actionCount; idx++)
             {
                 Actions.Add(ActionObject.Create(String.Format("Action1{0}", idx), lists[listIndex++]));
             }
@@ -126,19 +145,17 @@ namespace DecisionTableCreator.TestCases
 
             for (int idx = 0; idx < testCasesCount; idx++)
             {
-                AddTestCase();
+                TestCase tc = AddTestCase();
+                foreach (ValueObject value in tc.Conditions)
+                {
+                    value.SelectedItemIndex = idx % value.EnumValues.Count;
+                }
             }
 
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
         }
 
-        public static TestCasesRoot CreatePrinterTrubbleshootingSample()
-        {
-            TestCasesRoot testCasesRoot = new TestCasesRoot();
-            testCasesRoot.CreatePrinterTrubbleshootingSampleInternal();
-            return testCasesRoot;
-        }
         private void CreatePrinterTrubbleshootingSampleInternal()
         {
             var printerEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue("Yes"), new EnumValue("No"), };

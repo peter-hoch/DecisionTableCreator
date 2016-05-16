@@ -12,7 +12,7 @@ using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator.TestCases
 {
-    public interface IConditionAction 
+    public interface IConditionAction
     {
         int LoadSaveId { get; set; }
 
@@ -79,27 +79,6 @@ namespace DecisionTableCreator.TestCases
             {
                 EnumValues.Add(value);
             }
-
-            //while (EnumValues.Count > clone.EnumValues.Count)
-            //{
-            //    EnumValues.RemoveAt(EnumValues.Count - 1);
-            //}
-            //for (int idx = 0; idx < EnumValues.Count; idx++)
-            //{
-            //    EnumValue s = clone.EnumValues[idx];
-            //    EnumValue t = EnumValues[idx];
-            //    if (t.Name != s.Name)
-            //    {
-            //        t.Name = s.Name;
-            //    }
-            //    if (t.Value != s.Value)
-            //    {
-            //        t.Value = s.Value;
-            //    }
-            //    t.IsInvalid = s.IsInvalid;
-            //    t.IsDefault = s.IsDefault;
-            //    t.DontCare = s.DontCare;
-            //}
         }
 
         /// <summary>
@@ -108,7 +87,7 @@ namespace DecisionTableCreator.TestCases
         /// <param name="clone"></param>
         protected void Clone(IConditionAction clone)
         {
-            ConditionActionBase co = (ConditionActionBase) clone;
+            ConditionActionBase co = (ConditionActionBase)clone;
             co.Text = Text;
             co.DataType = DataType;
             co.DefaultBool = DefaultBool;
@@ -121,8 +100,57 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        public IList<ValueObject> TestValues
+        {
+            get
+            {
+                var result = new List<ValueObject>();
+                if (TestCasesRoot != null && TestCasesRoot.TestCases != null && TestCasesRoot.TestCases.Count != 0)
+                {
+                    if (this is ConditionObject)
+                    {
+                        GetTestValues(result, TestCase.CollectionType.Conditions);
+                    }
+                    else
+                    {
+                        GetTestValues(result, TestCase.CollectionType.Actions);
+                    }
+                }
+                return result;
+            }
+        }
+
+        private void GetTestValues(List<ValueObject> result, TestCase.CollectionType collectionType)
+        {
+            int index = CalculateIndexOfConditionOrAction(collectionType);
+            foreach (TestCase testCase in TestCasesRoot.TestCases)
+            {
+                result.Add(testCase.GetValueObject(collectionType, index));
+            }
+        }
+
+        int CalculateIndexOfConditionOrAction(TestCase.CollectionType collectionType)
+        {
+            IList<ValueObject> values;
+            if (collectionType == TestCase.CollectionType.Conditions)
+            {
+                values = TestCasesRoot.TestCases[0].Conditions;
+            }
+            else
+            {
+                values = TestCasesRoot.TestCases[0].Actions;
+            }
+            ValueObject value = values.FirstOrDefault(vo => vo.ConditionOrActionParent.Equals(this));
+            if (value != null)
+            {
+                return values.IndexOf(value);
+            }
+            return -1;
+        }
 
         #region properties
+
+        public TestCasesRoot TestCasesRoot { get; set; }
 
         public string EditBoxName { get; protected set; }
 
@@ -156,6 +184,16 @@ namespace DecisionTableCreator.TestCases
             {
                 _text = value;
                 OnPropertyChanged("Text");
+            }
+        }
+
+        public string Name
+        {
+            get { return _text; }
+            set
+            {
+                _text = value;
+                OnPropertyChanged("Name");
             }
         }
 
@@ -266,6 +304,23 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        private string _testProperty;
+
+        /// <summary>
+        /// for unit testing only
+        /// </summary>
+        public string TestProperty
+        {
+            get { return _testProperty; }
+            set
+            {
+                _testProperty = value;
+                OnPropertyChanged("TestProperty");
+            }
+        }
+
+
+
         #endregion
 
         #region event
@@ -317,6 +372,7 @@ namespace DecisionTableCreator.TestCases
         }
 
 
+
     }
 
     public class ActionObject : ConditionActionBase
@@ -334,7 +390,7 @@ namespace DecisionTableCreator.TestCases
             return ao;
         }
 
-        public static ActionObject Create(string text, ObservableCollection<EnumValue> enums) 
+        public static ActionObject Create(string text, ObservableCollection<EnumValue> enums)
         {
             ActionObject ao = new ActionObject();
             ao.Text = text;

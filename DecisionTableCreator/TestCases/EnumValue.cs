@@ -20,7 +20,7 @@ namespace DecisionTableCreator.TestCases
             Value = value;
         }
 
-        public EnumValue(string name, bool isInavlid = false, bool dontCare = false, bool isDefault = false) : this(name, name, isInavlid, dontCare, isDefault)
+        public EnumValue(string name, bool isInavlid = false, bool dontCare = false, bool isDefault = false) : this(name, "value-"+name, isInavlid, dontCare, isDefault)
         {
         }
 

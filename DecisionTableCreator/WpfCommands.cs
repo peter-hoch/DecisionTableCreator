@@ -27,6 +27,7 @@ namespace DecisionTableCreator
 
         static WpfCommands()
         {
+            KeyGesture gestureAltC = new KeyGesture(Key.C, ModifierKeys.Alt);
             AppendTestCase = new RoutedUICommand("Append test case", "AppendTestCase", typeof(WpfCommands));
             InsertTestCase = new RoutedUICommand("Insert test case", "InsertTestCase", typeof(WpfCommands));
             EditCondition = new RoutedUICommand("Edit condition", "EditCondition", typeof(WpfCommands));
@@ -36,7 +37,7 @@ namespace DecisionTableCreator
             Save = new RoutedUICommand("Save", "Save", typeof(WpfCommands));
             Open = new RoutedUICommand("Open", "Open", typeof(WpfCommands));
             NewDocument = new RoutedUICommand("New", "NewDocument", typeof(WpfCommands));
-            AppendCondition = new RoutedUICommand("Append condition", "AppendCondition", typeof(WpfCommands));
+            AppendCondition = new RoutedUICommand("Append condition", "AppendCondition", typeof(WpfCommands), new InputGestureCollection() { gestureAltC});
             InsertCondition = new RoutedUICommand("Insert condition", "InsertCondition", typeof(WpfCommands));
             AppendAction = new RoutedUICommand("Append action", "AppendAction", typeof(WpfCommands));
             InsertAction = new RoutedUICommand("Insert action", "InsertAction", typeof(WpfCommands));

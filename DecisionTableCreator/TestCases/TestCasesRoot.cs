@@ -88,7 +88,7 @@ namespace DecisionTableCreator.TestCases
         }
 
 
-        private void AddTestCase(int indexWhereToInsert = -1)
+        private TestCase AddTestCase(int indexWhereToInsert = -1)
         {
             int index = TestCases.Count + 1;
             var tc = new TestCase(String.Format("TC{0}", index));
@@ -105,6 +105,8 @@ namespace DecisionTableCreator.TestCases
             AddColumnDescriptionForTestCase(tc.Name);
             ConditionTable.ResizeColumnCount(TestCases.Count + 1);
             ActionTable.ResizeColumnCount(TestCases.Count + 1);
+
+            return tc;
         }
 
 
@@ -255,7 +257,7 @@ namespace DecisionTableCreator.TestCases
             foreach (IConditionAction condition in list)
             {
                 ValueObject vo = ValueObject.Create(condition);
-                vo.TooltipText = tc.Name + " " + condition.Text;
+                vo.TestProperty = tc.Name + " " + condition.Text;
                 tc.AddValueObject(colType, vo);
             }
         }

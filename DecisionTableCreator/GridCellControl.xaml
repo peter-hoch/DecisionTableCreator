@@ -15,7 +15,7 @@
         </StackPanel.Resources>
         
         <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 Background="{Binding Path=Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                 Background="{Binding Path=Background.WpfBrush, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding Path=TextBoxVisibility, Mode=OneTime, FallbackValue=Collapsed}">
             <TextBox.ContextMenu>
                 <ContextMenu>
@@ -36,7 +36,7 @@
             </TextBox.ContextMenu>
         </TextBox>
         <ComboBox ItemsSource="{Binding EnumValues, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                 Background="{Binding Path=Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                 Background="{Binding Path=Background.WpfBrush, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding Path=ComboBoxVisibility, Mode=OneTime, FallbackValue=Collapsed}"
                   SelectedIndex="{Binding SelectedItemIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ComboBox.ContextMenu>
@@ -56,7 +56,7 @@
         </ComboBox>
         <!--<TextBox Text="{Binding SelectedItemIndex}" IsReadOnly="true"></TextBox>-->
         <CheckBox IsChecked="{Binding BoolValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 Background="{Binding Path=Background, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                 Background="{Binding Path=Background.WpfBrush, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding Path=CheckboxVisibility, Mode=OneTime, FallbackValue=Collapsed}"
                  Content="{Binding Text, Mode=OneTime}"
                  Margin="5"/>
