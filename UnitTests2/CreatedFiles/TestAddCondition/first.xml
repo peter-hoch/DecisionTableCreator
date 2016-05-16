@@ -3,94 +3,52 @@
   <Conditions>
     <Condition Text="Condition 1" Type="Enumeration" LoadSaveId="1" DefaultBool="False">
       <EnumValues>
-        <EnumValue Name="0-Invalid-0" Value="0-Invalid-0" IsDefault="True" IsInvalid="True" DontCare="False" />
-        <EnumValue Name="0-EnumValue-1" Value="0-EnumValue-1" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="0-EnumValue-2" Value="0-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="0-Don' t care-3" Value="0-Don' t care-3" IsDefault="False" IsInvalid="False" DontCare="True" />
+        <EnumValue Name="0-Invalid-0-Default" Value="value-0-Invalid-0-Default" IsDefault="True" IsInvalid="True" DontCare="False" />
+        <EnumValue Name="0-EnumValue-1" Value="value-0-EnumValue-1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="0-EnumValue-2" Value="value-0-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="0-Don' t care-3" Value="value-0-Don' t care-3" IsDefault="False" IsInvalid="False" DontCare="True" />
       </EnumValues>
     </Condition>
     <Condition Text="Condition 2" Type="Enumeration" LoadSaveId="2" DefaultBool="False">
       <EnumValues>
-        <EnumValue Name="1-Invalid-0" Value="1-Invalid-0" IsDefault="False" IsInvalid="True" DontCare="False" />
-        <EnumValue Name="1-EnumValue-1" Value="1-EnumValue-1" IsDefault="True" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="1-EnumValue-2" Value="1-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="1-Don' t care-3" Value="1-Don' t care-3" IsDefault="False" IsInvalid="False" DontCare="True" />
+        <EnumValue Name="1-Invalid-0" Value="value-1-Invalid-0" IsDefault="False" IsInvalid="True" DontCare="False" />
+        <EnumValue Name="1-EnumValue-1-Default" Value="value-1-EnumValue-1-Default" IsDefault="True" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="1-EnumValue-2" Value="value-1-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="1-Don' t care-3" Value="value-1-Don' t care-3" IsDefault="False" IsInvalid="False" DontCare="True" />
       </EnumValues>
     </Condition>
     <Condition Text="Condition 3" Type="Enumeration" LoadSaveId="3" DefaultBool="False">
       <EnumValues>
-        <EnumValue Name="2-Invalid-0" Value="2-Invalid-0" IsDefault="False" IsInvalid="True" DontCare="False" />
-        <EnumValue Name="2-EnumValue-1" Value="2-EnumValue-1" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="2-EnumValue-2" Value="2-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="2-Don' t care-3" Value="2-Don' t care-3" IsDefault="True" IsInvalid="False" DontCare="True" />
-      </EnumValues>
-    </Condition>
-    <Condition Text="Condition 4" Type="Enumeration" LoadSaveId="4" DefaultBool="False">
-      <EnumValues>
-        <EnumValue Name="3-EnumValue-1" Value="3-EnumValue-1" IsDefault="False" IsInvalid="True" DontCare="False" />
-        <EnumValue Name="3-EnumValue-2" Value="3-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="3-EnumValue-3" Value="3-EnumValue-3" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="3-EnumValue-4" Value="3-EnumValue-4" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="3-EnumValue-5" Value="3-EnumValue-5" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="3-EnumValue-6" Value="3-EnumValue-6" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="3-EnumValue-7" Value="3-EnumValue-7" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="3-EnumValue-8" Value="3-EnumValue-8" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="3-EnumValue-9" Value="3-EnumValue-9" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="2-Invalid-0" Value="value-2-Invalid-0" IsDefault="False" IsInvalid="True" DontCare="False" />
+        <EnumValue Name="2-EnumValue-1" Value="value-2-EnumValue-1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="2-EnumValue-2" Value="value-2-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="2-Don' t care-3-Default" Value="value-2-Don' t care-3-Default" IsDefault="True" IsInvalid="False" DontCare="True" />
       </EnumValues>
     </Condition>
   </Conditions>
   <Actions>
-    <Action LoadSaveId="1000" Text="Action10" Type="Bool" DefaultBool="False" />
-    <Action LoadSaveId="1001" Text="Action11" Type="Enumeration" DefaultBool="False">
+    <Action LoadSaveId="1000" Text="Action11" Type="Enumeration" DefaultBool="False">
       <EnumValues>
-        <EnumValue Name="4-EnumValue-1" Value="4-EnumValue-1" IsDefault="False" IsInvalid="True" DontCare="False" />
-        <EnumValue Name="4-EnumValue-2" Value="4-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="4-EnumValue-3" Value="4-EnumValue-3" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="4-EnumValue-4" Value="4-EnumValue-4" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="4-EnumValue-5" Value="4-EnumValue-5" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="4-EnumValue-6" Value="4-EnumValue-6" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="4-EnumValue-7" Value="4-EnumValue-7" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="4-EnumValue-8" Value="4-EnumValue-8" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="4-EnumValue-9" Value="4-EnumValue-9" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="3-Invalid-0-Default" Value="value-3-Invalid-0-Default" IsDefault="True" IsInvalid="True" DontCare="False" />
+        <EnumValue Name="3-EnumValue-1" Value="value-3-EnumValue-1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="3-EnumValue-2" Value="value-3-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="3-Don' t care-3" Value="value-3-Don' t care-3" IsDefault="False" IsInvalid="False" DontCare="True" />
       </EnumValues>
     </Action>
-    <Action LoadSaveId="1002" Text="Action12" Type="Enumeration" DefaultBool="False">
+    <Action LoadSaveId="1001" Text="Action12" Type="Enumeration" DefaultBool="False">
       <EnumValues>
-        <EnumValue Name="5-EnumValue-1" Value="5-EnumValue-1" IsDefault="False" IsInvalid="True" DontCare="False" />
-        <EnumValue Name="5-EnumValue-2" Value="5-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="5-EnumValue-3" Value="5-EnumValue-3" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="5-EnumValue-4" Value="5-EnumValue-4" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="5-EnumValue-5" Value="5-EnumValue-5" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="5-EnumValue-6" Value="5-EnumValue-6" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="5-EnumValue-7" Value="5-EnumValue-7" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="5-EnumValue-8" Value="5-EnumValue-8" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="5-EnumValue-9" Value="5-EnumValue-9" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="4-Invalid-0" Value="value-4-Invalid-0" IsDefault="False" IsInvalid="True" DontCare="False" />
+        <EnumValue Name="4-EnumValue-1-Default" Value="value-4-EnumValue-1-Default" IsDefault="True" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="4-EnumValue-2" Value="value-4-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="4-Don' t care-3" Value="value-4-Don' t care-3" IsDefault="False" IsInvalid="False" DontCare="True" />
       </EnumValues>
     </Action>
-    <Action LoadSaveId="1003" Text="Action13" Type="Enumeration" DefaultBool="False">
+    <Action LoadSaveId="1002" Text="Action13" Type="Enumeration" DefaultBool="False">
       <EnumValues>
-        <EnumValue Name="6-EnumValue-1" Value="6-EnumValue-1" IsDefault="False" IsInvalid="True" DontCare="False" />
-        <EnumValue Name="6-EnumValue-2" Value="6-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="6-EnumValue-3" Value="6-EnumValue-3" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="6-EnumValue-4" Value="6-EnumValue-4" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="6-EnumValue-5" Value="6-EnumValue-5" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="6-EnumValue-6" Value="6-EnumValue-6" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="6-EnumValue-7" Value="6-EnumValue-7" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="6-EnumValue-8" Value="6-EnumValue-8" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="6-EnumValue-9" Value="6-EnumValue-9" IsDefault="False" IsInvalid="False" DontCare="False" />
-      </EnumValues>
-    </Action>
-    <Action LoadSaveId="1004" Text="Action14" Type="Enumeration" DefaultBool="False">
-      <EnumValues>
-        <EnumValue Name="7-EnumValue-1" Value="7-EnumValue-1" IsDefault="False" IsInvalid="True" DontCare="False" />
-        <EnumValue Name="7-EnumValue-2" Value="7-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="7-EnumValue-3" Value="7-EnumValue-3" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="7-EnumValue-4" Value="7-EnumValue-4" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="7-EnumValue-5" Value="7-EnumValue-5" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="7-EnumValue-6" Value="7-EnumValue-6" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="7-EnumValue-7" Value="7-EnumValue-7" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="7-EnumValue-8" Value="7-EnumValue-8" IsDefault="False" IsInvalid="False" DontCare="False" />
-        <EnumValue Name="7-EnumValue-9" Value="7-EnumValue-9" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="5-Invalid-0" Value="value-5-Invalid-0" IsDefault="False" IsInvalid="True" DontCare="False" />
+        <EnumValue Name="5-EnumValue-1" Value="value-5-EnumValue-1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="5-EnumValue-2" Value="value-5-EnumValue-2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="5-Don' t care-3-Default" Value="value-5-Don' t care-3-Default" IsDefault="True" IsInvalid="False" DontCare="True" />
       </EnumValues>
     </Action>
   </Actions>
@@ -98,151 +56,73 @@
     <TestCase Name="TC1">
       <TestCaseConditions>
         <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseConditions>
       <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Bool" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1004" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
       </TestCaseActions>
     </TestCase>
     <TestCase Name="TC2">
       <TestCaseConditions>
-        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
         <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
       </TestCaseConditions>
       <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Bool" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1004" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
       </TestCaseActions>
     </TestCase>
     <TestCase Name="TC3">
       <TestCaseConditions>
-        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
       </TestCaseConditions>
       <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Bool" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1004" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
       </TestCaseActions>
     </TestCase>
     <TestCase Name="TC4">
       <TestCaseConditions>
-        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseConditions>
       <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Bool" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1004" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
       </TestCaseActions>
     </TestCase>
     <TestCase Name="TC5">
       <TestCaseConditions>
         <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseConditions>
       <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Bool" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1004" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
       </TestCaseActions>
     </TestCase>
     <TestCase Name="TC6">
       <TestCaseConditions>
-        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
         <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
       </TestCaseConditions>
       <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Bool" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1004" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-      </TestCaseActions>
-    </TestCase>
-    <TestCase Name="TC7">
-      <TestCaseConditions>
-        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-      </TestCaseConditions>
-      <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Bool" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1004" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-      </TestCaseActions>
-    </TestCase>
-    <TestCase Name="TC8">
-      <TestCaseConditions>
-        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-      </TestCaseConditions>
-      <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Bool" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1004" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-      </TestCaseActions>
-    </TestCase>
-    <TestCase Name="TC9">
-      <TestCaseConditions>
-        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-      </TestCaseConditions>
-      <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Bool" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1004" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-      </TestCaseActions>
-    </TestCase>
-    <TestCase Name="TC10">
-      <TestCaseConditions>
-        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-      </TestCaseConditions>
-      <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Bool" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1004" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
       </TestCaseActions>
     </TestCase>
   </TestCases>

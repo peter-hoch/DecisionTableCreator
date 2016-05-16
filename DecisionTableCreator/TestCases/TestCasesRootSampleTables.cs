@@ -56,7 +56,6 @@ namespace DecisionTableCreator.TestCases
             }
 
             int listIndex = 0;
-            Conditions.Add(ConditionObject.Create(String.Format("Condition {0}", 0), ValueDataType.Bool));
             for (int idx = 1; idx < conditionCount; idx++)
             {
                 Conditions.Add(ConditionObject.Create(String.Format("Condition {0}", idx), lists[listIndex++]));

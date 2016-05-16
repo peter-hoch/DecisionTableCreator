@@ -28,12 +28,6 @@ namespace DecisionTableCreator.TestCases
 
         string TooltipText { get; set; }
 
-        int SelectedItemIndex { get; set; }
-
-        bool BoolValue { get; set; }
-
-        Brush Background { get; set; }
-
     }
 
     /// <summary>
@@ -166,10 +160,6 @@ namespace DecisionTableCreator.TestCases
             get { return _dataType; }
             protected set
             {
-                if (value != ValueDataType.Enumeration)
-                {
-                    throw new NotSupportedException("only enumerations are supported");
-                }
                 _dataType = value;
                 OnPropertyChanged("DataType");
             }
@@ -233,18 +223,6 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        private Brush _background = Brushes.White;
-
-        public Brush Background
-        {
-            get { return _background; }
-            set
-            {
-                _background = value;
-                OnPropertyChanged("Background");
-            }
-        }
-
         private string _tooltipText;
 
         public string TooltipText
@@ -257,50 +235,15 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        private int _selectedItemIndex;
+        private Background _background = new Background(BackgroundColor.White);
 
-        public int SelectedItemIndex
+        public Background Background
         {
-            get { return _selectedItemIndex; }
+            get { return _background; }
             set
             {
-                _selectedItemIndex = value;
-                OnPropertyChanged("SelectedItemIndex");
-            }
-        }
-
-
-        private Visibility _textBoxVisibility = Visibility.Visible;
-
-        public Visibility TextBoxVisibility
-        {
-            get { return _textBoxVisibility; }
-        }
-
-        private Visibility _checkboxVisibility = Visibility.Collapsed;
-
-        public Visibility CheckboxVisibility
-        {
-            get { return _checkboxVisibility; }
-        }
-
-
-        private Visibility _comboBoxVisibility = Visibility.Collapsed;
-
-        public Visibility ComboBoxVisibility
-        {
-            get { return _comboBoxVisibility; }
-        }
-
-        private bool _boolValue;
-
-        public bool BoolValue
-        {
-            get { return _boolValue; }
-            set
-            {
-                _boolValue = value;
-                OnPropertyChanged("BoolValue");
+                _background = value;
+                OnPropertyChanged("Background");
             }
         }
 
@@ -318,8 +261,6 @@ namespace DecisionTableCreator.TestCases
                 OnPropertyChanged("TestProperty");
             }
         }
-
-
 
         #endregion
 
@@ -340,71 +281,5 @@ namespace DecisionTableCreator.TestCases
 
     }
 
-    public class ConditionObject : ConditionActionBase
-    {
-        private ConditionObject() : base()
-        {
-            EditBoxName = "Edit condition object";
-        }
 
-        public static ConditionObject Create(string text, ValueDataType type)
-        {
-            ConditionObject ao = new ConditionObject();
-            ao.Text = text;
-            ao.DataType = type;
-            return ao;
-        }
-
-        public static ConditionObject Create(string text, ObservableCollection<EnumValue> enums)
-        {
-            ConditionObject ao = new ConditionObject();
-            ao.Text = text;
-            ao.DataType = ValueDataType.Enumeration;
-            ao.EnumValues = enums;
-            return ao;
-        }
-
-        public ConditionObject Clone()
-        {
-            ConditionObject clone = new ConditionObject();
-            Clone(clone);
-            return clone;
-        }
-
-
-
-    }
-
-    public class ActionObject : ConditionActionBase
-    {
-        private ActionObject() : base()
-        {
-            EditBoxName = "Edit action object";
-        }
-
-        public static ActionObject Create(string text, ValueDataType type)
-        {
-            ActionObject ao = new ActionObject();
-            ao.Text = text;
-            ao.DataType = type;
-            return ao;
-        }
-
-        public static ActionObject Create(string text, ObservableCollection<EnumValue> enums)
-        {
-            ActionObject ao = new ActionObject();
-            ao.Text = text;
-            ao.DataType = ValueDataType.Enumeration;
-            ao.EnumValues = enums;
-            return ao;
-        }
-
-        public ActionObject Clone()
-        {
-            ActionObject clone = new ActionObject();
-            Clone(clone);
-            return clone;
-        }
-
-    }
 }

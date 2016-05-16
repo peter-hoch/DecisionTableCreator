@@ -241,8 +241,8 @@ namespace DecisionTableCreator.TestCases
         private void Load(XmlElement element, out ConditionObject condition)
         {
             string name = element.GetAttributeStringValue(XmlNames.TextAttributeName);
-            ValueDataType type = element.GetAttributeEnumValue<ValueDataType>(XmlNames.TypeAttributeName);
-            condition = ConditionObject.Create(name, type);
+            // only enums are supported by conditions ValueDataType type = element.GetAttributeEnumValue<ValueDataType>(XmlNames.TypeAttributeName);            
+            condition = ConditionObject.Create(name);
             condition.LoadSaveId = element.GetAttributeIntValue(XmlNames.IdAttributeName, XmlElementOption.MustHaveValue);
             condition.DefaultText = element.GetAttributeStringValue(XmlNames.DefaultTextAttributeName, XmlElementOption.Optional);
             condition.DefaultBool = element.GetAttributeBoolValue(XmlNames.DefaultBoolAttributeName);

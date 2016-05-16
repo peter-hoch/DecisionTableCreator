@@ -49,13 +49,24 @@ namespace DecisionTableCreator
             Binding bind = new Binding(col.Header.ToString());
             bind.Mode = BindingMode.TwoWay;
 
-            FrameworkElementFactory gridCellControl = new FrameworkElementFactory(typeof(GridCellControl));
-            gridCellControl.SetBinding(DataContextProperty, bind);
-            DataTemplate dataTemplate = new DataTemplate();
-            dataTemplate.VisualTree = gridCellControl;
+            if (col.Header.Equals(TestCasesRoot.ActionsColumnHeaderName) || col.Header.Equals(TestCasesRoot.ConditionsColumnHeaderName))
+            {
+                // this is action or condition column
+                FrameworkElementFactory gridCellControl = new FrameworkElementFactory(typeof(ConditionOrActionGridCellControl));
+                gridCellControl.SetBinding(DataContextProperty, bind);
+                DataTemplate dataTemplate = new DataTemplate();
+                dataTemplate.VisualTree = gridCellControl;
+                templateColumn.CellTemplate = dataTemplate;
+            }
+            else
+            {
+                FrameworkElementFactory gridCellControl = new FrameworkElementFactory(typeof(GridCellControl));
+                gridCellControl.SetBinding(DataContextProperty, bind);
+                DataTemplate dataTemplate = new DataTemplate();
+                dataTemplate.VisualTree = gridCellControl;
+                templateColumn.CellTemplate = dataTemplate;
 
-            templateColumn.CellTemplate = dataTemplate;
-
+            }
             e.Column = templateColumn;
         }
 
@@ -200,7 +211,7 @@ namespace DecisionTableCreator
 
         private void EditCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            ConditionObject condObject = GetGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ConditionObject;
+            ConditionObject condObject = GetConditionOrActionGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ConditionObject;
             if (condObject != null)
             {
                 e.CanExecute = true;
@@ -214,7 +225,7 @@ namespace DecisionTableCreator
             {
                 ActionObject original = ((ActionObject)DataContainer.TestCasesRoot.Actions[index]);
                 ActionObject coClone = original.Clone();
-                EditCondition wnd = new EditCondition(coClone);
+                EditAction wnd = new EditAction(coClone);
                 bool? result = wnd.ShowDialog();
                 if (result.HasValue && result.Value)
                 {
@@ -225,7 +236,7 @@ namespace DecisionTableCreator
 
         private void EditAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            ActionObject actionObject = GetGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ActionObject;
+            ActionObject actionObject = GetConditionOrActionGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ActionObject;
             if (actionObject != null)
             {
                 e.CanExecute = true;
@@ -278,7 +289,7 @@ namespace DecisionTableCreator
         private void AppendAction_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
-            EditCondition wnd = new EditCondition(newAction);
+            EditAction wnd = new EditAction(newAction);
             bool? result = wnd.ShowDialog();
             if (result.HasValue && result.Value)
             {
@@ -418,6 +429,24 @@ namespace DecisionTableCreator
                     if (parent != null)
                     {
                         return ((GridCellControl)parent).DataContext;
+                    }
+                }
+            }
+            return null;
+        }
+
+        object GetConditionOrActionGridCellControlDataContext(DataGrid dataGrid, DependencyObject originalSource, bool trace = false)
+        {
+            if (dataGrid != null)
+            {
+                if (originalSource != null)
+                {
+                    if (trace) { Debug.Write("SearchForParent "); }
+                    var parent = WpfTools.SearchForParent(originalSource, typeof(ConditionOrActionGridCellControl), trace);
+                    if (trace) { Debug.WriteLine(""); }
+                    if (parent != null)
+                    {
+                        return ((ConditionOrActionGridCellControl)parent).DataContext;
                     }
                 }
             }

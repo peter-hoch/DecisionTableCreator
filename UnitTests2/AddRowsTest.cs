@@ -17,7 +17,7 @@ namespace UnitTests2
         [SetUp]
         public void Setup()
         {
-            TestSupport.DiffAction = new InvokeWinMerge();     
+            //TestSupport.DiffAction = new InvokeWinMerge();     
         }
 
         [Test]
