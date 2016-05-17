@@ -18,7 +18,7 @@ namespace DecisionTableCreator.TestCases
 
         ValueDataType DataType { get; }
 
-        string Text { get; set; }
+        string Name { get; set; }
 
         bool DefaultBool { get; set; }
 
@@ -27,7 +27,6 @@ namespace DecisionTableCreator.TestCases
         ObservableCollection<EnumValue> EnumValues { get; set; }
 
         string TooltipText { get; set; }
-
     }
 
     /// <summary>
@@ -42,7 +41,7 @@ namespace DecisionTableCreator.TestCases
 
         protected ConditionActionBase(string text, ValueDataType type) : this()
         {
-            Text = text;
+            Name = text;
             DataType = type;
         }
 
@@ -53,9 +52,9 @@ namespace DecisionTableCreator.TestCases
 
         public void Merge(ConditionActionBase clone)
         {
-            if (Text != clone.Text)
+            if (Name != clone.Name)
             {
-                Text = clone.Text;
+                Name = clone.Name;
             }
             if (DataType != clone.DataType)
             {
@@ -82,7 +81,7 @@ namespace DecisionTableCreator.TestCases
         protected void Clone(IConditionAction clone)
         {
             ConditionActionBase co = (ConditionActionBase)clone;
-            co.Text = Text;
+            co.Name = Name;
             co.DataType = DataType;
             co.DefaultBool = DefaultBool;
             co.DefaultText = DefaultText;
@@ -165,24 +164,13 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        private string _text;
-
-        public string Text
-        {
-            get { return _text; }
-            set
-            {
-                _text = value;
-                OnPropertyChanged("Text");
-            }
-        }
-
+        private string _name;
         public string Name
         {
-            get { return _text; }
+            get { return _name; }
             set
             {
-                _text = value;
+                _name = value;
                 OnPropertyChanged("Name");
             }
         }

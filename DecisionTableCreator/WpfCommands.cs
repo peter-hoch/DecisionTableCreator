@@ -28,7 +28,9 @@ namespace DecisionTableCreator
         static WpfCommands()
         {
             KeyGesture gestureAltC = new KeyGesture(Key.C, ModifierKeys.Alt);
-            AppendTestCase = new RoutedUICommand("Append test case", "AppendTestCase", typeof(WpfCommands));
+            KeyGesture gestureAltA = new KeyGesture(Key.A, ModifierKeys.Alt);
+            KeyGesture gestureAltT = new KeyGesture(Key.T, ModifierKeys.Alt);
+            AppendTestCase = new RoutedUICommand("Append test case", "AppendTestCase", typeof(WpfCommands), new InputGestureCollection() { gestureAltT });
             InsertTestCase = new RoutedUICommand("Insert test case", "InsertTestCase", typeof(WpfCommands));
             EditCondition = new RoutedUICommand("Edit condition", "EditCondition", typeof(WpfCommands));
             DeleteCondition = new RoutedUICommand("Delete condition", "DeleteCondition", typeof(WpfCommands));
@@ -39,7 +41,7 @@ namespace DecisionTableCreator
             NewDocument = new RoutedUICommand("New", "NewDocument", typeof(WpfCommands));
             AppendCondition = new RoutedUICommand("Append condition", "AppendCondition", typeof(WpfCommands), new InputGestureCollection() { gestureAltC});
             InsertCondition = new RoutedUICommand("Insert condition", "InsertCondition", typeof(WpfCommands));
-            AppendAction = new RoutedUICommand("Append action", "AppendAction", typeof(WpfCommands));
+            AppendAction = new RoutedUICommand("Append action", "AppendAction", typeof(WpfCommands), new InputGestureCollection() { gestureAltA });
             InsertAction = new RoutedUICommand("Insert action", "InsertAction", typeof(WpfCommands));
             AppendEnumValue = new RoutedUICommand("Append enum value", "AppendEnumValue", typeof(WpfCommands));
             DeleteEnumValue = new RoutedUICommand("Delete enum value", "DeleteEnumValue", typeof(WpfCommands));

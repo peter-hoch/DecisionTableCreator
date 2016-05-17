@@ -17,7 +17,7 @@ namespace DecisionTableCreator.TestCases
         public static ActionObject Create(string text, ValueDataType type)
         {
             ActionObject ao = new ActionObject();
-            ao.Text = text;
+            ao.Name = text;
             ao.DataType = type;
             return ao;
         }
@@ -25,7 +25,7 @@ namespace DecisionTableCreator.TestCases
         public static ActionObject Create(string text, ObservableCollection<EnumValue> enums)
         {
             ActionObject ao = new ActionObject();
-            ao.Text = text;
+            ao.Name = text;
             ao.DataType = ValueDataType.Enumeration;
             ao.EnumValues = enums;
             return ao;

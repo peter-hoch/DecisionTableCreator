@@ -14,10 +14,10 @@ namespace DecisionTableCreator.TestCases
             EditBoxName = "Edit condition object";
         }
 
-        public static ConditionObject Create(string text)
+        public static ConditionObject Create(string name)
         {
             ConditionObject ao = new ConditionObject();
-            ao.Text = text;
+            ao.Name = name;
             ao.DataType = ValueDataType.Enumeration;
             return ao;
         }
@@ -28,10 +28,10 @@ namespace DecisionTableCreator.TestCases
         /// <param name="text"></param>
         /// <param name="enums"></param>
         /// <returns></returns>
-        public static ConditionObject Create(string text, ObservableCollection<EnumValue> enums)
+        public static ConditionObject Create(string name, ObservableCollection<EnumValue> enums)
         {
             ConditionObject ao = new ConditionObject();
-            ao.Text = text;
+            ao.Name = name;
             ao.DataType = ValueDataType.Enumeration;
             ao.EnumValues = enums;
             return ao;

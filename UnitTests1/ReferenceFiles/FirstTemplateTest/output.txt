@@ -3,10 +3,10 @@ List conditions
 	Condition 1
 		Possible Values:
 			enum value count 4
-			0-Invalid-0-Default IsDefault(true) DontCare(false) IsInvalid(true) 
-			0-EnumValue-1 IsDefault(false) DontCare(false) IsInvalid(false) 
-			0-EnumValue-2 IsDefault(false) DontCare(false) IsInvalid(false) 
-			0-Don' t care-3 IsDefault(false) DontCare(true) IsInvalid(false) 
+			0-Invalid-0-Default IsDefault  IsInvalid 
+			0-EnumValue-1    
+			0-EnumValue-2    
+			0-Don' t care-3  DontCare  
 		Selected values:
 			0-Invalid-0-Default in Condition 1
 				Name: 0-Invalid-0-Default
@@ -29,10 +29,10 @@ List conditions
 	Condition 2
 		Possible Values:
 			enum value count 4
-			1-Invalid-0 IsDefault(false) DontCare(false) IsInvalid(true) 
-			1-EnumValue-1-Default IsDefault(true) DontCare(false) IsInvalid(false) 
-			1-EnumValue-2 IsDefault(false) DontCare(false) IsInvalid(false) 
-			1-Don' t care-3 IsDefault(false) DontCare(true) IsInvalid(false) 
+			1-Invalid-0   IsInvalid 
+			1-EnumValue-1-Default IsDefault   
+			1-EnumValue-2    
+			1-Don' t care-3  DontCare  
 		Selected values:
 			1-Invalid-0 in Condition 2
 				Name: 1-Invalid-0
@@ -55,10 +55,10 @@ List conditions
 	Condition 3
 		Possible Values:
 			enum value count 4
-			2-Invalid-0 IsDefault(false) DontCare(false) IsInvalid(true) 
-			2-EnumValue-1 IsDefault(false) DontCare(false) IsInvalid(false) 
-			2-EnumValue-2 IsDefault(false) DontCare(false) IsInvalid(false) 
-			2-Don' t care-3-Default IsDefault(true) DontCare(true) IsInvalid(false) 
+			2-Invalid-0   IsInvalid 
+			2-EnumValue-1    
+			2-EnumValue-2    
+			2-Don' t care-3-Default IsDefault DontCare  
 		Selected values:
 			2-Invalid-0 in Condition 3
 				Name: 2-Invalid-0
@@ -84,10 +84,10 @@ List actions:
 	Action11
 		Possible Values:
 			enum value count 4
-			3-Invalid-0-Default IsDefault(true) DontCare(false) IsInvalid(true) 
-			3-EnumValue-1 IsDefault(false) DontCare(false) IsInvalid(false) 
-			3-EnumValue-2 IsDefault(false) DontCare(false) IsInvalid(false) 
-			3-Don' t care-3 IsDefault(false) DontCare(true) IsInvalid(false) 
+			3-Invalid-0-Default IsDefault  IsInvalid 
+			3-EnumValue-1    
+			3-EnumValue-2    
+			3-Don' t care-3  DontCare  
 		Selected values:
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
@@ -110,10 +110,10 @@ List actions:
 	Action12
 		Possible Values:
 			enum value count 4
-			4-Invalid-0 IsDefault(false) DontCare(false) IsInvalid(true) 
-			4-EnumValue-1-Default IsDefault(true) DontCare(false) IsInvalid(false) 
-			4-EnumValue-2 IsDefault(false) DontCare(false) IsInvalid(false) 
-			4-Don' t care-3 IsDefault(false) DontCare(true) IsInvalid(false) 
+			4-Invalid-0   IsInvalid 
+			4-EnumValue-1-Default IsDefault   
+			4-EnumValue-2    
+			4-Don' t care-3  DontCare  
 		Selected values:
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
@@ -136,10 +136,10 @@ List actions:
 	Action13
 		Possible Values:
 			enum value count 4
-			5-Invalid-0 IsDefault(false) DontCare(false) IsInvalid(true) 
-			5-EnumValue-1 IsDefault(false) DontCare(false) IsInvalid(false) 
-			5-EnumValue-2 IsDefault(false) DontCare(false) IsInvalid(false) 
-			5-Don' t care-3-Default IsDefault(true) DontCare(true) IsInvalid(false) 
+			5-Invalid-0   IsInvalid 
+			5-EnumValue-1    
+			5-EnumValue-2    
+			5-Don' t care-3-Default IsDefault DontCare  
 		Selected values:
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default

@@ -38,14 +38,9 @@ namespace DecisionTableCreator.TestCases
         {
             foreach (TestCase testCase in TestCases)
             {
-                AddColumnDescriptionForTestCase(testCase.Name);
+                ConditionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCase.Name, typeof(TestCase), null));
+                ActionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCase.Name, typeof(TestCase), null));
             }
-        }
-
-        void AddColumnDescriptionForTestCase(string testCaseName)
-        {
-            ConditionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCaseName, typeof(TestCase), null));
-            ActionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCaseName, typeof(TestCase), null));
         }
 
 
@@ -69,24 +64,36 @@ namespace DecisionTableCreator.TestCases
 
         }
 
-        public void AppendTestCase()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="index">-1 --> append</param>
+        /// <returns></returns>
+        public TestCase InsertTestCase(int index = -1)
         {
-            AddTestCase();
+            var tc = AddTestCase(index);
+            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+            FireActionsChanged();
+            FireConditionsChanged();
+            return tc;
+        }
+
+        public void DeleteTestCaseAt(int index)
+        {
+            TestCases.RemoveAt(index);
+
+            CreateBasicColumnDescriptions();
+            AddColumnDescriptionsForTestCases();
+
+            ConditionTable.ResizeColumnCount(TestCases.Count + 1);
+            ActionTable.ResizeColumnCount(TestCases.Count + 1);
+
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
             FireActionsChanged();
             FireConditionsChanged();
         }
-
-        internal void InsertTestCase(int index)
-        {
-            AddTestCase(index);
-            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
-            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
-            FireActionsChanged();
-            FireConditionsChanged();
-        }
-
 
         private TestCase AddTestCase(int indexWhereToInsert = -1)
         {
@@ -102,7 +109,10 @@ namespace DecisionTableCreator.TestCases
             }
             AddValueObjects(tc, Conditions, TestCase.CollectionType.Conditions);
             AddValueObjects(tc, Actions, TestCase.CollectionType.Actions);
-            AddColumnDescriptionForTestCase(tc.Name);
+
+            CreateBasicColumnDescriptions();
+            AddColumnDescriptionsForTestCases();
+
             ConditionTable.ResizeColumnCount(TestCases.Count + 1);
             ActionTable.ResizeColumnCount(TestCases.Count + 1);
 
@@ -118,7 +128,7 @@ namespace DecisionTableCreator.TestCases
             FireActionsChanged();
         }
 
-        internal void InsertAction(int index, ActionObject newAction)
+        public void InsertAction(int index, ActionObject newAction)
         {
             Actions.Insert(index, newAction);
             AddToTestCases(newAction, index);
@@ -126,7 +136,7 @@ namespace DecisionTableCreator.TestCases
             FireActionsChanged();
         }
 
-        internal void DeleteActionAt(int index)
+        public void DeleteActionAt(int index)
         {
             Actions.RemoveAt(index);
             RemoveActionFromTestCases(index);
@@ -143,7 +153,7 @@ namespace DecisionTableCreator.TestCases
             FireConditionsChanged();
         }
 
-        internal void InsertCondition(int index, ConditionObject newCondition)
+        public void InsertCondition(int index, ConditionObject newCondition)
         {
             Conditions.Insert(index, newCondition);
             AddToTestCases(newCondition, index);
@@ -151,7 +161,7 @@ namespace DecisionTableCreator.TestCases
             FireConditionsChanged();
         }
 
-        internal void DeleteConditionAt(int index)
+        public void DeleteConditionAt(int index)
         {
             Conditions.RemoveAt(index);
             RemoveConditionFromTestCases(index);
@@ -257,7 +267,7 @@ namespace DecisionTableCreator.TestCases
             foreach (IConditionAction condition in list)
             {
                 ValueObject vo = ValueObject.Create(condition);
-                vo.TestProperty = tc.Name + " " + condition.Text;
+                vo.TestProperty = tc.Name + " " + condition.Name;
                 tc.AddValueObject(colType, vo);
             }
         }

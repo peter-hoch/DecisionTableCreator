@@ -86,7 +86,7 @@ namespace DecisionTableCreator.TestCases
 
         private void Save(XmlElement parent, ConditionObject condition)
         {
-            var xmlCondition = parent.AddElement(XmlNames.ConditionName).AddAttribute(XmlNames.TextAttributeName, condition.Text).AddAttribute(XmlNames.TypeAttributeName, condition.DataType.ToString());
+            var xmlCondition = parent.AddElement(XmlNames.ConditionName).AddAttribute(XmlNames.NameAttributeName, condition.Name).AddAttribute(XmlNames.TypeAttributeName, condition.DataType.ToString());
             xmlCondition.AddAttribute(XmlNames.IdAttributeName, condition.LoadSaveId);
             xmlCondition.AddAttribute(XmlNames.DefaultTextAttributeName, condition.DefaultText);
             xmlCondition.AddAttribute(XmlNames.DefaultBoolAttributeName, condition.DefaultBool);
@@ -132,7 +132,7 @@ namespace DecisionTableCreator.TestCases
         {
             var xmlCondition = parent.AddElement(XmlNames.ActionName);
             xmlCondition.AddAttribute(XmlNames.IdAttributeName, action.LoadSaveId);
-            xmlCondition.AddAttribute(XmlNames.TextAttributeName, action.Text);
+            xmlCondition.AddAttribute(XmlNames.NameAttributeName, action.Name);
             xmlCondition.AddAttribute(XmlNames.TypeAttributeName, action.DataType.ToString());
             xmlCondition.AddAttribute(XmlNames.DefaultTextAttributeName, action.DefaultText);
             xmlCondition.AddAttribute(XmlNames.DefaultBoolAttributeName, action.DefaultBool);
@@ -240,7 +240,7 @@ namespace DecisionTableCreator.TestCases
 
         private void Load(XmlElement element, out ConditionObject condition)
         {
-            string name = element.GetAttributeStringValue(XmlNames.TextAttributeName);
+            string name = element.GetAttributeStringValue(XmlNames.NameAttributeName);
             // only enums are supported by conditions ValueDataType type = element.GetAttributeEnumValue<ValueDataType>(XmlNames.TypeAttributeName);            
             condition = ConditionObject.Create(name);
             condition.LoadSaveId = element.GetAttributeIntValue(XmlNames.IdAttributeName, XmlElementOption.MustHaveValue);
@@ -252,7 +252,7 @@ namespace DecisionTableCreator.TestCases
 
         private void Load(XmlElement element, out ActionObject action)
         {
-            string name = element.GetAttributeStringValue(XmlNames.TextAttributeName);
+            string name = element.GetAttributeStringValue(XmlNames.NameAttributeName);
             ValueDataType type = element.GetAttributeEnumValue<ValueDataType>(XmlNames.TypeAttributeName);
             action = ActionObject.Create(name, type);
             action.LoadSaveId = element.GetAttributeIntValue(XmlNames.IdAttributeName, XmlElementOption.MustHaveValue);

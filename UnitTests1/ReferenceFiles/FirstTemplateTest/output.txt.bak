@@ -11,27 +11,21 @@ List conditions
 			0-Invalid-0-Default in Condition 1
 				Name: 0-Invalid-0-Default
 				Value: value-0-Invalid-0-Default
-				Value: 0-Invalid-0-Default
 			0-EnumValue-1 in Condition 1
 				Name: 0-EnumValue-1
 				Value: value-0-EnumValue-1
-				Value: 0-EnumValue-1
 			0-EnumValue-2 in Condition 1
 				Name: 0-EnumValue-2
 				Value: value-0-EnumValue-2
-				Value: 0-EnumValue-2
 			0-Don' t care-3 in Condition 1
 				Name: 0-Don' t care-3
 				Value: value-0-Don' t care-3
-				Value: 0-Don' t care-3
 			0-Invalid-0-Default in Condition 1
 				Name: 0-Invalid-0-Default
 				Value: value-0-Invalid-0-Default
-				Value: 0-Invalid-0-Default
 			0-EnumValue-1 in Condition 1
 				Name: 0-EnumValue-1
 				Value: value-0-EnumValue-1
-				Value: 0-EnumValue-1
 	Condition 2
 		Possible Values:
 			enum value count 4
@@ -43,27 +37,21 @@ List conditions
 			1-Invalid-0 in Condition 2
 				Name: 1-Invalid-0
 				Value: value-1-Invalid-0
-				Value: 1-Invalid-0
 			1-EnumValue-1-Default in Condition 2
 				Name: 1-EnumValue-1-Default
 				Value: value-1-EnumValue-1-Default
-				Value: 1-EnumValue-1-Default
 			1-EnumValue-2 in Condition 2
 				Name: 1-EnumValue-2
 				Value: value-1-EnumValue-2
-				Value: 1-EnumValue-2
 			1-Don' t care-3 in Condition 2
 				Name: 1-Don' t care-3
 				Value: value-1-Don' t care-3
-				Value: 1-Don' t care-3
 			1-Invalid-0 in Condition 2
 				Name: 1-Invalid-0
 				Value: value-1-Invalid-0
-				Value: 1-Invalid-0
 			1-EnumValue-1-Default in Condition 2
 				Name: 1-EnumValue-1-Default
 				Value: value-1-EnumValue-1-Default
-				Value: 1-EnumValue-1-Default
 	Condition 3
 		Possible Values:
 			enum value count 4
@@ -75,27 +63,21 @@ List conditions
 			2-Invalid-0 in Condition 3
 				Name: 2-Invalid-0
 				Value: value-2-Invalid-0
-				Value: 2-Invalid-0
 			2-EnumValue-1 in Condition 3
 				Name: 2-EnumValue-1
 				Value: value-2-EnumValue-1
-				Value: 2-EnumValue-1
 			2-EnumValue-2 in Condition 3
 				Name: 2-EnumValue-2
 				Value: value-2-EnumValue-2
-				Value: 2-EnumValue-2
 			2-Don' t care-3-Default in Condition 3
 				Name: 2-Don' t care-3-Default
 				Value: value-2-Don' t care-3-Default
-				Value: 2-Don' t care-3-Default
 			2-Invalid-0 in Condition 3
 				Name: 2-Invalid-0
 				Value: value-2-Invalid-0
-				Value: 2-Invalid-0
 			2-EnumValue-1 in Condition 3
 				Name: 2-EnumValue-1
 				Value: value-2-EnumValue-1
-				Value: 2-EnumValue-1
 
 actions count == 3
 List actions:
@@ -110,27 +92,21 @@ List actions:
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 	Action12
 		Possible Values:
 			enum value count 4
@@ -142,27 +118,21 @@ List actions:
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 	Action13
 		Possible Values:
 			enum value count 4
@@ -174,27 +144,21 @@ List actions:
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 
 test cases count == 6
 List test cases:
@@ -203,160 +167,124 @@ List test cases:
 			0-Invalid-0-Default in Condition 1
 				Name: 0-Invalid-0-Default
 				Value: value-0-Invalid-0-Default
-				Value: 0-Invalid-0-Default
 			1-Invalid-0 in Condition 2
 				Name: 1-Invalid-0
 				Value: value-1-Invalid-0
-				Value: 1-Invalid-0
 			2-Invalid-0 in Condition 3
 				Name: 2-Invalid-0
 				Value: value-2-Invalid-0
-				Value: 2-Invalid-0
 		Actions:
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 	TC2
 		Conditions:
 			0-EnumValue-1 in Condition 1
 				Name: 0-EnumValue-1
 				Value: value-0-EnumValue-1
-				Value: 0-EnumValue-1
 			1-EnumValue-1-Default in Condition 2
 				Name: 1-EnumValue-1-Default
 				Value: value-1-EnumValue-1-Default
-				Value: 1-EnumValue-1-Default
 			2-EnumValue-1 in Condition 3
 				Name: 2-EnumValue-1
 				Value: value-2-EnumValue-1
-				Value: 2-EnumValue-1
 		Actions:
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 	TC3
 		Conditions:
 			0-EnumValue-2 in Condition 1
 				Name: 0-EnumValue-2
 				Value: value-0-EnumValue-2
-				Value: 0-EnumValue-2
 			1-EnumValue-2 in Condition 2
 				Name: 1-EnumValue-2
 				Value: value-1-EnumValue-2
-				Value: 1-EnumValue-2
 			2-EnumValue-2 in Condition 3
 				Name: 2-EnumValue-2
 				Value: value-2-EnumValue-2
-				Value: 2-EnumValue-2
 		Actions:
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 	TC4
 		Conditions:
 			0-Don' t care-3 in Condition 1
 				Name: 0-Don' t care-3
 				Value: value-0-Don' t care-3
-				Value: 0-Don' t care-3
 			1-Don' t care-3 in Condition 2
 				Name: 1-Don' t care-3
 				Value: value-1-Don' t care-3
-				Value: 1-Don' t care-3
 			2-Don' t care-3-Default in Condition 3
 				Name: 2-Don' t care-3-Default
 				Value: value-2-Don' t care-3-Default
-				Value: 2-Don' t care-3-Default
 		Actions:
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 	TC5
 		Conditions:
 			0-Invalid-0-Default in Condition 1
 				Name: 0-Invalid-0-Default
 				Value: value-0-Invalid-0-Default
-				Value: 0-Invalid-0-Default
 			1-Invalid-0 in Condition 2
 				Name: 1-Invalid-0
 				Value: value-1-Invalid-0
-				Value: 1-Invalid-0
 			2-Invalid-0 in Condition 3
 				Name: 2-Invalid-0
 				Value: value-2-Invalid-0
-				Value: 2-Invalid-0
 		Actions:
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default
 	TC6
 		Conditions:
 			0-EnumValue-1 in Condition 1
 				Name: 0-EnumValue-1
 				Value: value-0-EnumValue-1
-				Value: 0-EnumValue-1
 			1-EnumValue-1-Default in Condition 2
 				Name: 1-EnumValue-1-Default
 				Value: value-1-EnumValue-1-Default
-				Value: 1-EnumValue-1-Default
 			2-EnumValue-1 in Condition 3
 				Name: 2-EnumValue-1
 				Value: value-2-EnumValue-1
-				Value: 2-EnumValue-1
 		Actions:
 			3-Invalid-0-Default in Action11
 				Name: 3-Invalid-0-Default
 				Value: value-3-Invalid-0-Default
-				Value: 3-Invalid-0-Default
 			4-EnumValue-1-Default in Action12
 				Name: 4-EnumValue-1-Default
 				Value: value-4-EnumValue-1-Default
-				Value: 4-EnumValue-1-Default
 			5-Don' t care-3-Default in Action13
 				Name: 5-Don' t care-3-Default
 				Value: value-5-Don' t care-3-Default
-				Value: 5-Don' t care-3-Default

@@ -99,6 +99,22 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        private string _testProperty;
+
+        /// <summary>
+        /// for unit testing only
+        /// </summary>
+        public string TestProperty
+        {
+            get { return _testProperty; }
+            set
+            {
+                _testProperty = value;
+                OnPropertyChanged("TestProperty");
+            }
+        }
+
+
         #region event
 
         public event PropertyChangedEventHandler PropertyChanged;

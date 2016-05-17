@@ -27,11 +27,11 @@
         <StackPanel Grid.Row="1" Grid.Column="0">
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Label Content="Name"></Label>
-                <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
-            <Button Margin="5" Content="Ok" MinWidth="80" Click="OnOk_OnClick"/>
+            <Button Margin="5" Content="Ok" MinWidth="80" Click="OnOk_OnClick" IsDefault="True"/>
             <Button Margin="5" Content="Cancel" MinWidth="80" Click="OnCancel_OnClick"/>
         </StackPanel>
         <DataGrid Margin="10"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding EnumValues}" AutoGenerateColumns="False">

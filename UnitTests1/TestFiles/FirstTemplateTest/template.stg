@@ -24,7 +24,7 @@ ConditionOrAction(co) ::= <<	<co.Name>
 EnumValue(value) ::= <<
 			<value> <value.IsDefault:Bool("IsDefault")> <value.DontCare:Bool("DontCare")> <value.IsInvalid:Bool("IsInvalid")> >>
 
-Bool(value, text) ::= "<text>(<value>)"
+Bool(value, text) ::= "<if(value)><text><endif>"
 
 TestCase(tc) ::= <<	<tc.Name>
 		Conditions:

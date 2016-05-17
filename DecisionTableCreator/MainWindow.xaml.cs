@@ -147,14 +147,14 @@ namespace DecisionTableCreator
         private void AppendTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var tcr = DataContainer.TestCasesRoot;
-            tcr.AppendTestCase();
+            tcr.InsertTestCase();
         }
 
         private void InsertTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var tcr = DataContainer.TestCasesRoot;
             int index = CalculateColumnIndex(e, true);
-            tcr.InsertTestCase(index);
+            tcr.InsertTestCase(index-1);
         }
 
         private void InsertTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)

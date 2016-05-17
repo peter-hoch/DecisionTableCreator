@@ -24,6 +24,8 @@ namespace DecisionTableCreator.DynamicTable
             _columns = new object[columnCount];
         }
 
+        public int ColumnCount { get { return _columns.Length; } }
+
         public object this[string name]
         {
             get { return _columns[ColumnIndexFromName(name)]; }
@@ -32,6 +34,12 @@ namespace DecisionTableCreator.DynamicTable
                 _columns[ColumnIndexFromName(name)] = value;
                 OnPropertyChanged(name);
             }
+        }
+
+        // only for testing purposes
+        public object this[int index]
+        {
+            get { return _columns[index]; }
         }
 
         public void SetValue(int index, object value)
