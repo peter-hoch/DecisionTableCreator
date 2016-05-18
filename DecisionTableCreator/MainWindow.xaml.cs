@@ -390,6 +390,31 @@ namespace DecisionTableCreator
             e.CanExecute = IsConditionsDataGridSelected(e, out dataGrid);
         }
 
+        private void ExportHtmlToClipboard_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            StringBuilder html = new StringBuilder();
+
+            try
+            {
+                string text = DataContainer.TestCasesRoot.GenerateFromTemplateString(Templates.Resources.HtmlTemplate);
+                PrepareForClipboard prepare = new PrepareForClipboard();
+                string clipboardText = prepare.Prepare(text);
+
+                DataObject dataObject = new DataObject();
+                dataObject.SetData(DataFormats.Html, new System.IO.MemoryStream(Encoding.UTF8.GetBytes(clipboardText)));
+                Clipboard.SetDataObject(dataObject, true);
+            }
+            catch( Exception ex)
+            {
+               MessageBox.Show("unexpected error during export to clipboard" + Environment.NewLine + ex.ToString());
+            }
+        }
+
+        private void ExportHtmlToClipboard_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
 
         bool IsConditionsDataGridSelected(RoutedEventArgs args, out DataGrid dataGrid)
         {

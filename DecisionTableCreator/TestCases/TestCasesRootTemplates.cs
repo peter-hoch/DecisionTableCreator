@@ -16,5 +16,12 @@ namespace DecisionTableCreator.TestCases
             templ.Add("root", this);
             return templ.Render();
         }
+        public string GenerateFromTemplateString(string groupFileContent)
+        {
+            TemplateGroup group = new TemplateGroupString(groupFileContent);
+            Template templ = group.GetInstanceOf("TestCasesRoot");
+            templ.Add("root", this);
+            return templ.Render();
+        }
     }
 }

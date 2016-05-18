@@ -28,7 +28,9 @@ namespace UnitTests1
             TestCasesRoot root = TestCasesRoot.CreateSimpleTable();
             root.Save(savePath);
 
-            root = TestCasesRoot.Load(savePath);
+            root.New();
+
+            root.Load(savePath);
 
             ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", savePath);
             Process.Start(info);

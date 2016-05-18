@@ -75,6 +75,11 @@
       <DependentUpon>GridCellControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="HorizonticalScrollSynchronizer.cs" />
+    <Compile Include="Templates\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="TestCases\ActionObject.cs" />
     <Compile Include="TestCases\Background.cs" />
     <Compile Include="TestCases\ConditionActionBase.cs" />
@@ -90,6 +95,7 @@
     <Compile Include="TestCases\ValueDataType.cs" />
     <Compile Include="TestCases\ValueObject.cs" />
     <Compile Include="TestCases\XmlNames.cs" />
+    <Compile Include="Utils\PrepareForClipboard.cs" />
     <Compile Include="Utils\WpfTools.cs" />
     <Compile Include="Utils\XmlUtils.cs" />
     <Compile Include="WpfCommands.cs" />
@@ -146,12 +152,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Templates\HtmlTemplate.stg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

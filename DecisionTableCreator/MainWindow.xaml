@@ -23,6 +23,7 @@
         <CommandBinding Command="local:WpfCommands.AppendCondition" Executed="AppendCondition_Executed" CanExecute="AppendCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.InsertCondition" Executed="InsertCondition_Executed" CanExecute="InsertCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.DeleteCondition" Executed="DeleteCondition_Executed" CanExecute="DeleteCondition_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.ExportHtmlToClipboard" Executed="ExportHtmlToClipboard_Executed" CanExecute="ExportHtmlToClipboard_OnCanExecute"/>
     </Window.CommandBindings>
 
     <Grid MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}">
@@ -67,6 +68,9 @@
                 <MenuItem Command="local:WpfCommands.InsertAction"/>
                 <MenuItem Command="local:WpfCommands.AppendAction"/>
                 <MenuItem Command="local:WpfCommands.DeleteAction"/>
+            </MenuItem>
+            <MenuItem Header="Export">
+                <MenuItem Command="local:WpfCommands.ExportHtmlToClipboard"/>
             </MenuItem>
         </Menu>
            

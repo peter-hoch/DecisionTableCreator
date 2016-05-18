@@ -1,0 +1,47 @@
+﻿delimiters "$", "$"
+
+TestCasesRoot(root) ::= <<
+<!DOCTYPE>
+<HTML>
+<BODY>
+<TABLE border="1" cellpadding="2" cellspacing="0">
+	<TR>
+		<TD bgcolor="White">&nbsp</TD>
+$root.TestCases:TestCase(); separator="\r\n"$
+	</TR>
+	<TR>
+		<TD bgcolor="DarkGray"><i><strong>Conditions</strong></i></TD>
+$root.TestCases:TestCaseDummy(); separator="\r\n"$
+	</TR>
+$root.Conditions:ConditionOrAction(); separator="\r\n"$
+	<TR>
+		<TD bgcolor="DarkGray"><i><strong>Actions</strong></i></TD>
+$root.TestCases:TestCaseDummy(); separator="\r\n"$
+	</TR>
+$root.Actions:ConditionOrAction(); separator="\r\n"$
+</TABLE>
+<BR>
+</BODY>
+</HTML>
+>>
+
+TestCase(tc) ::= <<
+		<TD align="center" bgcolor="DarkGray"><strong>$tc.Name$</strong></TD> >>
+
+TestCaseDummy(tc) ::= <<
+		<TD></TD> >>
+
+ConditionOrAction(cond) ::= <<
+	<TR>
+		<TD>$cond.Name$</TD>
+$cond.TestValues:TestValue(); separator="\r\n"$
+	</TR>
+>>
+
+TestValue(value) ::= << <TD align="center" bgcolor="$value.Background.HtmlColor:(value.Background.HtmlColor)()$">$value$</TD>  >>
+
+Red(color) ::= "Red"
+
+White(color) ::= "LightGrey"
+
+Aqua(color) ::= "Aqua"
