@@ -16,14 +16,13 @@ namespace DecisionTableCreator.TestCases
             save.Save(this);
         }
 
-        public static TestCasesRoot Load(string filePath)
+        public void Load(string filePath)
         {
-            var testCasesRoot = new TestCasesRoot();
+            Init();
             LoadSaveVisitor load = new LoadSaveVisitor(filePath);
-            load.Load(testCasesRoot);
-            testCasesRoot.CreateInfosForDatagrid();
-            return testCasesRoot;
-        }
+            load.Load(this);
+            CreateInfosForDatagrid();
+       }
 
         private void CreateInfosForDatagrid()
         {
@@ -32,6 +31,15 @@ namespace DecisionTableCreator.TestCases
 
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+
+            FireActionsChanged();
+            FireConditionsChanged();
+        }
+
+        public void New()
+        {
+            Init();
+            CreateInfosForDatagrid();
         }
 
     }

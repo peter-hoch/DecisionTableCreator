@@ -266,7 +266,7 @@ namespace DecisionTableCreator
             var result = dlg.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                DataContainer.TestCasesRoot = TestCasesRoot.Load(dlg.FileName);
+                DataContainer.TestCasesRoot.Load(dlg.FileName);
             }
         }
 
@@ -277,7 +277,7 @@ namespace DecisionTableCreator
 
         private void NewDocument_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DataContainer.TestCasesRoot = new TestCasesRoot();
+            DataContainer.TestCasesRoot.New();
         }
 
 

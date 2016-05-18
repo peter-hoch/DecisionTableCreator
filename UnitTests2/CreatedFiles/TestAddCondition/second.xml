@@ -25,7 +25,7 @@
         <EnumValue Name="2-Don' t care-3-Default" Value="value-2-Don' t care-3-Default" IsDefault="True" IsInvalid="False" DontCare="True" />
       </EnumValues>
     </Condition>
-    <Condition Name="new condition Dienstag, 17. Mai 2016 23:17:17" Type="Enumeration" LoadSaveId="4" DefaultBool="False">
+    <Condition Name="new condition Mittwoch, 18. Mai 2016 19:36:50" Type="Enumeration" LoadSaveId="4" DefaultBool="False">
       <EnumValues>
         <EnumValue Name="new test" Value="new value" IsDefault="False" IsInvalid="False" DontCare="False" />
       </EnumValues>

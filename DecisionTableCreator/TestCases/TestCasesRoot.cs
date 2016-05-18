@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DecisionTableCreator.DynamicTable;
 
@@ -14,6 +15,11 @@ namespace DecisionTableCreator.TestCases
     public partial class TestCasesRoot : INotifyPropertyChanged
     {
         public TestCasesRoot()
+        {
+            Init();
+        }
+
+        void Init()
         {
             ConditionTable = new DataTableView();
             ActionTable = new DataTableView();
@@ -95,9 +101,34 @@ namespace DecisionTableCreator.TestCases
             FireConditionsChanged();
         }
 
+        int CalculateNextTestCaseId()
+        {
+            int nextId = 0;
+
+            foreach (TestCase testCase in TestCases)
+            {
+                Regex regex = new Regex(@"^TC(?<value>\d+)$");
+                var match = regex.Match(testCase.Name);
+                if (match.Success)
+                {
+                    int id = int.Parse(match.Groups["value"].Value);
+                    if (nextId < id)
+                    {
+                        nextId = id;
+                    }
+                }
+                else
+                {
+                    throw new Exception("unexpected test case name " + testCase.Name);
+                }
+            }
+
+            return ++nextId;
+        }
+
         private TestCase AddTestCase(int indexWhereToInsert = -1)
         {
-            int index = TestCases.Count + 1;
+            int index = CalculateNextTestCaseId();
             var tc = new TestCase(String.Format("TC{0}", index));
             if (indexWhereToInsert == -1)
             {
