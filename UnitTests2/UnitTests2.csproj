@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr4.StringTemplate, Version=4.0.6.9004, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr4.StringTemplate.4.0.6.9004\lib\net35\Antlr4.StringTemplate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -63,6 +67,9 @@
       <Project>{89c32fe9-0a2a-4340-838f-a16b45ebb40b}</Project>
       <Name>UnitTestSupport</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestFiles\AddTestCaseTemplate.stg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

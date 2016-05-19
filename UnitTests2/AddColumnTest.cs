@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Antlr4.StringTemplate;
 using DecisionTableCreator.TestCases;
 using NUnit.Framework;
 using UnitTestSupport;
@@ -20,6 +21,15 @@ namespace UnitTests2
             TestSupport.DiffAction = new InvokeWinMerge();
         }
 
+        void SaveTestCasesDisplayOrder(TestCasesRootContainer tcrc, string path)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (TestCase testCase in tcrc.TestCasesRoot.TestCases.OrderBy(tc=>tc.DisplayIndex))
+            {
+                sb.AppendFormat("{0} di={1}", testCase.Name, testCase.DisplayIndex).AppendLine();
+            }
+            File.WriteAllText(path, sb.ToString());
+        }
 
         [Test]
         public void TestAddTestCase()
@@ -28,7 +38,15 @@ namespace UnitTests2
             string secondPath = Path.Combine(TestSupport.CreatedFilesDirectory, "second.xml");
             TestCasesRootContainer tcrc = new TestCasesRootContainer();
 
-            tcrc.TestCasesRoot.Save(firstPath);
+            tcrc.TestCasesRoot.TestCases[0].DisplayIndex = 3;
+            tcrc.TestCasesRoot.TestCases[1].DisplayIndex = 4;
+            tcrc.TestCasesRoot.TestCases[2].DisplayIndex = 6;
+            tcrc.TestCasesRoot.TestCases[3].DisplayIndex = 1;
+            tcrc.TestCasesRoot.TestCases[4].DisplayIndex = 5;
+            tcrc.TestCasesRoot.TestCases[5].DisplayIndex = 2;
+
+            SaveTestCasesDisplayOrder(tcrc, firstPath);
+
             SelectedValuesByTestCases selValues = new SelectedValuesByTestCases();
             selValues.CollectValues(tcrc.TestCasesRoot);
             selValues.Check(tcrc.TestCasesRoot);
@@ -43,11 +61,13 @@ namespace UnitTests2
             Assert.That(tcrc.TestCasesRoot.TestCases.Last().TestProperty.Equals(testCaseId));
             Assert.That(tcrc.ConditionChangeCount == 1);
             Assert.That(tcrc.ActionChangeCount == 1);
-            selValues.AppendTestCase(tcrc.TestCasesRoot);
+            selValues.AppendTestCase(newTestCase, tcrc.TestCasesRoot);
             selValues.Check(tcrc.TestCasesRoot);
 
+            SaveTestCasesDisplayOrder(tcrc, secondPath);
 
-            tcrc.TestCasesRoot.Save(secondPath);
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(firstPath)));
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(secondPath)));
             // only for manual check of testcase
             //TestSupport.CompareFile(firstPath, secondPath);
         }
@@ -59,10 +79,18 @@ namespace UnitTests2
         [TestCase(AddRowsTest.InsertPosition.AfterLast)]
         public void TestInsertTestCase(AddRowsTest.InsertPosition insertPosition)
         {
-            string firstPath = Path.Combine(TestSupport.CreatedFilesDirectory, "first.xml");
-            string secondPath = Path.Combine(TestSupport.CreatedFilesDirectory, "second.xml");
+            string firstPath = Path.Combine(TestSupport.CreatedFilesDirectory, insertPosition+"_first.xml");
+            string secondPath = Path.Combine(TestSupport.CreatedFilesDirectory, insertPosition + "_second.xml");
             TestCasesRootContainer tcrc = new TestCasesRootContainer();
-            tcrc.TestCasesRoot.Save(firstPath);
+
+            tcrc.TestCasesRoot.TestCases[0].DisplayIndex = 3;
+            tcrc.TestCasesRoot.TestCases[1].DisplayIndex = 4;
+            tcrc.TestCasesRoot.TestCases[2].DisplayIndex = 6;
+            tcrc.TestCasesRoot.TestCases[3].DisplayIndex = 1;
+            tcrc.TestCasesRoot.TestCases[4].DisplayIndex = 5;
+            tcrc.TestCasesRoot.TestCases[5].DisplayIndex = 2;
+
+            SaveTestCasesDisplayOrder(tcrc, firstPath);
             SelectedValuesByTestCases selValues = new SelectedValuesByTestCases();
             selValues.CollectValues(tcrc.TestCasesRoot);
             selValues.Check(tcrc.TestCasesRoot);
@@ -79,11 +107,13 @@ namespace UnitTests2
             Assert.That(tcrc.TestCasesRoot.TestCases[indexWhereToInsert].TestProperty.Equals(testCaseId));
             Assert.That(tcrc.ConditionChangeCount == 1);
             Assert.That(tcrc.ActionChangeCount == 1);
-            selValues.InsertTestCase(insertPosition, tcrc.TestCasesRoot);
+            selValues.AppendTestCase(newTestCase, tcrc.TestCasesRoot);
             selValues.Check(tcrc.TestCasesRoot);
 
+            SaveTestCasesDisplayOrder(tcrc, secondPath);
 
-            tcrc.TestCasesRoot.Save(secondPath);
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(firstPath)));
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(secondPath)));
             // only for manual check of testcase
             //TestSupport.CompareFile(firstPath, secondPath);
         }
@@ -93,10 +123,18 @@ namespace UnitTests2
         [TestCase(AddRowsTest.DeletePosition.Last)]
         public void TestDeleteTestCase(AddRowsTest.DeletePosition deletePosition)
         {
-            string firstPath = Path.Combine(TestSupport.CreatedFilesDirectory, "first.xml");
-            string secondPath = Path.Combine(TestSupport.CreatedFilesDirectory, "second.xml");
+            string firstPath = Path.Combine(TestSupport.CreatedFilesDirectory, deletePosition+"_first.xml");
+            string secondPath = Path.Combine(TestSupport.CreatedFilesDirectory, deletePosition+"_second.xml");
             TestCasesRootContainer tcrc = new TestCasesRootContainer();
-            tcrc.TestCasesRoot.Save(firstPath);
+
+            tcrc.TestCasesRoot.TestCases[0].DisplayIndex = 3;
+            tcrc.TestCasesRoot.TestCases[1].DisplayIndex = 4;
+            tcrc.TestCasesRoot.TestCases[2].DisplayIndex = 6;
+            tcrc.TestCasesRoot.TestCases[3].DisplayIndex = 1;
+            tcrc.TestCasesRoot.TestCases[4].DisplayIndex = 5;
+            tcrc.TestCasesRoot.TestCases[5].DisplayIndex = 2;
+
+            SaveTestCasesDisplayOrder(tcrc, firstPath);
             SelectedValuesByTestCases selValues = new SelectedValuesByTestCases();
             selValues.CollectValues(tcrc.TestCasesRoot);
             selValues.Check(tcrc.TestCasesRoot);
@@ -104,17 +142,19 @@ namespace UnitTests2
             int indexWhereToDelete = TestUtils.CalculateIndex(tcrc.TestCasesRoot.TestCases, deletePosition);
 
             int testCaseCount = tcrc.TestCasesRoot.TestCases.Count;
-            tcrc.TestCasesRoot.DeleteTestCaseAt(indexWhereToDelete);
+            TestCase deletedTestCase = tcrc.TestCasesRoot.DeleteTestCaseAt(indexWhereToDelete);
 
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
             Assert.That(tcrc.TestCasesRoot.TestCases.Count == testCaseCount - 1);
             Assert.That(tcrc.ConditionChangeCount == 1);
             Assert.That(tcrc.ActionChangeCount == 1);
-            selValues.DeleteTestCase(deletePosition, tcrc.TestCasesRoot);
+            selValues.DeleteTestCase(deletedTestCase, tcrc.TestCasesRoot);
             selValues.Check(tcrc.TestCasesRoot);
 
+            SaveTestCasesDisplayOrder(tcrc, secondPath);
 
-            tcrc.TestCasesRoot.Save(secondPath);
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(firstPath)));
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(secondPath)));
             // only for manual check of testcase
             //TestSupport.CompareFile(firstPath, secondPath);
         }
@@ -138,8 +178,9 @@ namespace UnitTests2
             for (int idx = 0; idx < deleteCount; idx++)
             {
                 int indexWhereToDelete = TestUtils.CalculateIndex(tcrc.TestCasesRoot.TestCases, deletePosition);
+                TestCase deletedTestCase = tcrc.TestCasesRoot.TestCases[indexWhereToDelete];
                 tcrc.TestCasesRoot.DeleteTestCaseAt(indexWhereToDelete);
-                selValues.DeleteTestCase(deletePosition, tcrc.TestCasesRoot);
+                selValues.DeleteTestCase(deletedTestCase, tcrc.TestCasesRoot);
             }
 
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
@@ -155,7 +196,7 @@ namespace UnitTests2
                 TestCase newTestCase = tcrc.TestCasesRoot.InsertTestCase(indexWhereToInsert);
                 string testCaseId = "new test case " + DateTime.Now.ToString("F");
                 newTestCase.TestProperty = testCaseId;
-                selValues.InsertTestCase(insertPosition, tcrc.TestCasesRoot);
+                selValues.AppendTestCase(newTestCase, tcrc.TestCasesRoot);
                 Assert.That(tcrc.TestCasesRoot.TestCases[indexWhereToInsert].TestProperty.Equals(testCaseId));
             }
 

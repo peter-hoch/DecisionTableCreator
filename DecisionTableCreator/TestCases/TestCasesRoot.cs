@@ -85,9 +85,15 @@ namespace DecisionTableCreator.TestCases
             return tc;
         }
 
-        public void DeleteTestCaseAt(int index)
+        public TestCase DeleteTestCaseAt(int index)
         {
-            TestCases.RemoveAt(index);
+            TestCases = new ObservableCollection<TestCase>(TestCases.OrderBy(testcase => testcase.DisplayIndex));
+            TestCase deleted = TestCases[index];
+            if (!TestCases.Remove(deleted))
+            {
+                throw new Exception("test case " + deleted.Name + " not found");
+            }
+            UpdateDisplayIndex(TestCases);
 
             CreateBasicColumnDescriptions();
             AddColumnDescriptionsForTestCases();
@@ -99,6 +105,7 @@ namespace DecisionTableCreator.TestCases
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
             FireActionsChanged();
             FireConditionsChanged();
+            return deleted;
         }
 
         int CalculateNextTestCaseId()
@@ -133,10 +140,14 @@ namespace DecisionTableCreator.TestCases
             if (indexWhereToInsert == -1)
             {
                 TestCases.Add(tc);
+                tc.DisplayIndex = TestCases.Count; // displayindex includes first column action or condition
             }
             else
             {
+                // sort test cases by display index
+                TestCases = new ObservableCollection<TestCase>(TestCases.OrderBy(testcase => testcase.DisplayIndex));
                 TestCases.Insert(indexWhereToInsert, tc);
+                UpdateDisplayIndex(TestCases);
             }
             AddValueObjects(tc, Conditions, TestCase.CollectionType.Conditions);
             AddValueObjects(tc, Actions, TestCase.CollectionType.Actions);
@@ -150,6 +161,13 @@ namespace DecisionTableCreator.TestCases
             return tc;
         }
 
+        private void UpdateDisplayIndex(ObservableCollection<TestCase> testCases)
+        {
+            for (int idx = 0; idx < testCases.Count; idx++)
+            {
+                testCases[idx].DisplayIndex = idx + 1;
+            }
+        }
 
         public void AppendAction(ActionObject actionObject)
         {

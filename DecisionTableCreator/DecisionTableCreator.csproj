@@ -95,6 +95,7 @@
     <Compile Include="TestCases\ValueDataType.cs" />
     <Compile Include="TestCases\ValueObject.cs" />
     <Compile Include="TestCases\XmlNames.cs" />
+    <Compile Include="Utils\ColumnInfo.cs" />
     <Compile Include="Utils\PrepareForClipboard.cs" />
     <Compile Include="Utils\WpfTools.cs" />
     <Compile Include="Utils\XmlUtils.cs" />

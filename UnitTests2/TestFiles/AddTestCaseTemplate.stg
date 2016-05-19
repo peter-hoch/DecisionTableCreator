@@ -1,0 +1,7 @@
+﻿
+TestCasesRoot(root) ::= <<
+<root.TestCases:TestCase();separator="\r\n">
+>>
+
+TestCase(tc) ::= "<tc.Name> DisplayIndex=<tc.DisplayIndex>"
+

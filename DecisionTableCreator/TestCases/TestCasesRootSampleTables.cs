@@ -145,6 +145,7 @@ namespace DecisionTableCreator.TestCases
             for (int idx = 0; idx < testCasesCount; idx++)
             {
                 TestCase tc = AddTestCase();
+                tc.DisplayIndex = idx + 1;
                 foreach (ValueObject value in tc.Conditions)
                 {
                     value.SelectedItemIndex = idx % value.EnumValues.Count;

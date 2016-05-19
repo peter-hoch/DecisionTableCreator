@@ -82,10 +82,19 @@ namespace DecisionTableCreator
                 var widthPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(DataGridColumn.WidthProperty, typeof(DataGridColumn));
                 widthPropertyDescriptor.AddValueChanged(col, ValueChangedHandler);
             }
+            var testcasesByDisplayOrder = DataContainer.TestCasesRoot.TestCases.OrderBy(tc => tc.DisplayIndex);
+            foreach (TestCase testCase in testcasesByDisplayOrder)
+            {
+                var testCaseCol = dataGrid.Columns.FirstOrDefault(col => col.Header.ToString().Equals(testCase.Name));
+                if (testCaseCol != null)
+                {
+                    testCaseCol.DisplayIndex = testCase.DisplayIndex;
+                }
+            }
         }
 
 
-        #region SyncColumnWidth
+        #region SyncColumnWidth and order
 
         // dictionary for sync column width
         Dictionary<string, List<DataGridColumnContainer>> ColumnsWidthSyncDictionary = new Dictionary<string, List<DataGridColumnContainer>>();
@@ -137,6 +146,96 @@ namespace DecisionTableCreator
 
         }
 
+        private void DataGrid_OnColumnReordering(object sender, DataGridColumnReorderingEventArgs e)
+        {
+            // do not move the first column
+            if (e.Column.Header.Equals(TestCasesRoot.ActionsColumnHeaderName) || e.Column.Header.Equals(TestCasesRoot.ConditionsColumnHeaderName))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void DataGrid_OnColumnReordered(object sender, DataGridColumnEventArgs e)
+        {
+            DataGrid dataGrid = sender as DataGrid;
+            if (dataGrid != null)
+            {
+                // test case columns are not allowed in the first column
+                if (e.Column.DisplayIndex == 0)
+                {
+                    var colName = dataGrid.Columns.FirstOrDefault(c => c.Header.Equals(TestCasesRoot.ActionsColumnHeaderName) || c.Header.Equals(TestCasesRoot.ConditionsColumnHeaderName));
+                    if (colName != null)
+                    {
+                        colName.DisplayIndex = 0;
+                    }
+                }
+                SyncColumnOrder(dataGrid);
+            }
+        }
+
+        void SyncColumnOrder(DataGrid dataGrid)
+        {
+            var colInfos = SaveColumnOrder(dataGrid);
+
+            if (dataGrid == DataGridConditions)
+            {
+                SetColumnOrder(colInfos, DataGridActions);
+            }
+            else
+            {
+                SetColumnOrder(colInfos, DataGridConditions);
+            }
+        }
+
+        private static List<ColumnInfo> SaveColumnOrder(DataGrid dataGrid)
+        {
+            List<ColumnInfo> colInfos = new List<ColumnInfo>();
+
+            foreach (DataGridColumn column in dataGrid.Columns)
+            {
+                colInfos.Add(new ColumnInfo(column.DisplayIndex, column.Header));
+            }
+            return colInfos;
+        }
+
+        private void SetColumnOrder(List<ColumnInfo> colInfos, DataGrid dataGrid)
+        {
+            foreach (ColumnInfo info in colInfos.OrderBy(ci => ci.DisplayIndex))
+            {
+                if (info.Header.ToString().Equals(TestCasesRoot.ActionsColumnHeaderName) || info.Header.ToString().Equals(TestCasesRoot.ConditionsColumnHeaderName))
+                {
+                    var selCol = dataGrid.Columns.FirstOrDefault(col => col.Header.ToString().Equals(TestCasesRoot.ActionsColumnHeaderName) || col.Header.ToString().Equals(TestCasesRoot.ConditionsColumnHeaderName));
+                    if (selCol != null)
+                    {
+                        selCol.DisplayIndex = 0;
+                    }
+                    else
+                    {
+                        throw new Exception("problem... unable to find header " + info.Header.ToString());
+                    }
+                }
+                else
+                {
+                    var selCol = dataGrid.Columns.FirstOrDefault(col => col.Header.ToString().Equals(info.Header.ToString()));
+                    if (selCol != null)
+                    {
+                        selCol.DisplayIndex = info.DisplayIndex;
+                    }
+                    else
+                    {
+                        throw new Exception("problem... unable to find header " + info.Header.ToString());
+                    }
+                    for (int idx = 0; idx < DataContainer.TestCasesRoot.TestCases.Count; idx++)
+                    {
+                        DataContainer.TestCasesRoot.TestCases[idx].DisplayIndex = dataGrid.Columns[idx + 1].DisplayIndex;
+                    }
+                }
+
+            }
+        }
+
+
+
         #endregion
 
         private void AppendTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -146,15 +245,14 @@ namespace DecisionTableCreator
 
         private void AppendTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var tcr = DataContainer.TestCasesRoot;
-            tcr.InsertTestCase();
+            DataContainer.TestCasesRoot.InsertTestCase();
         }
 
         private void InsertTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var tcr = DataContainer.TestCasesRoot;
             int index = CalculateColumnIndex(e, true);
-            tcr.InsertTestCase(index-1);
+            tcr.InsertTestCase(index - 1);
         }
 
         private void InsertTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -404,9 +502,9 @@ namespace DecisionTableCreator
                 dataObject.SetData(DataFormats.Html, new System.IO.MemoryStream(Encoding.UTF8.GetBytes(clipboardText)));
                 Clipboard.SetDataObject(dataObject, true);
             }
-            catch( Exception ex)
+            catch (Exception ex)
             {
-               MessageBox.Show("unexpected error during export to clipboard" + Environment.NewLine + ex.ToString());
+                MessageBox.Show("unexpected error during export to clipboard" + Environment.NewLine + ex.ToString());
             }
         }
 

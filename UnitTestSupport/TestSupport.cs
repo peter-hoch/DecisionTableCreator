@@ -72,6 +72,20 @@ namespace UnitTestSupport
         }
 
         /// <summary>
+        /// the test files directory is in the project directory
+        /// create the directory if it does not exist
+        /// </summary>
+        public static string TestFilesBaseDirectory
+        {
+            get
+            {
+                string dir = Path.Combine(ProjectDir, TestFilesDirectoryName);
+                Directory.CreateDirectory(dir);
+                return dir;
+            }
+        }
+
+        /// <summary>
         /// the created files directory is in the project directory
         /// create the directory if it does not exist
         /// </summary>

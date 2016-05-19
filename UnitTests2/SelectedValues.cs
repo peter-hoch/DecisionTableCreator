@@ -9,113 +9,80 @@ using NUnit.Framework;
 
 namespace UnitTests2
 {
+    public class TestCaseContainer
+    {
+        public SelectedValues TestCaseConditionValues { get; set; }
+
+        public SelectedValues TestCaseActionValues { get; set; }
+
+        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return String.Format("{0} cond {1}  act {2}", Name, TestCaseConditionValues, TestCaseActionValues);
+        }
+    }
 
     public class SelectedValuesByTestCases
     {
-        public List<SelectedValues> TestCaseConditionValues { get; set; }
-
-        public List<SelectedValues> TestCaseActionValues { get; set; }
+        public List<TestCaseContainer> TestCaseContainers { get; set; }
 
         internal void CollectValues(TestCasesRoot testCasesRoot)
         {
-            TestCaseConditionValues = new List<SelectedValues>();
-            TestCaseActionValues = new List<SelectedValues>();
+            TestCaseContainers = new List<TestCaseContainer>();
             foreach (TestCase testCase in testCasesRoot.TestCases)
             {
+                TestCaseContainer container = new TestCaseContainer();
+                container.Name = testCase.Name;
+
                 var selValues = new SelectedValues();
                 selValues.Collect(testCase.Conditions);
-                TestCaseConditionValues.Add(selValues);
+                container.TestCaseConditionValues = selValues;
 
                 selValues = new SelectedValues();
                 selValues.Collect(testCase.Actions);
-                TestCaseActionValues.Add(selValues);
+                container.TestCaseActionValues = selValues;
+
+                TestCaseContainers.Add(container);
             }
         }
 
+        TestCaseContainer GetContainerByName(string name)
+        {
+            return TestCaseContainers.FirstOrDefault(c => c.Name.Equals(name));
+        }
         internal void Check(TestCasesRoot testCasesRoot)
         {
-            Assert.That(testCasesRoot.TestCases.Count == TestCaseConditionValues.Count);
-            Assert.That(testCasesRoot.TestCases.Count == TestCaseActionValues.Count);
+            Assert.That(testCasesRoot.TestCases.Count == TestCaseContainers.Count);
+            Assert.That(testCasesRoot.TestCases.Count == TestCaseContainers.Count);
+
+            var orderedTestCases  = testCasesRoot.TestCases.OrderBy(tc=>tc.Name).ToArray();
 
             for (int idx = 0; idx < testCasesRoot.TestCases.Count; idx++)
             {
-                TestCase tc = testCasesRoot.TestCases[idx];
-                TestCaseConditionValues[idx].Check(tc.Conditions);
-                TestCaseActionValues[idx].Check(tc.Actions);
+                TestCase tc = orderedTestCases[idx];
+                GetContainerByName(tc.Name).TestCaseConditionValues.Check(tc.Conditions);
+                GetContainerByName(tc.Name).TestCaseActionValues.Check(tc.Actions);
             }
         }
 
-        internal void AppendTestCase(TestCasesRoot testCasesRoot)
+        internal void AppendTestCase(TestCase newTestCase, TestCasesRoot testCasesRoot)
         {
+            TestCaseContainer cont = new TestCaseContainer();
+            cont.Name = newTestCase.Name;
             var selValues = new SelectedValues();
             selValues.Values = SelectedValue.CreateNew(testCasesRoot.Conditions.Count);
-            TestCaseConditionValues.Add(selValues);
+            cont.TestCaseConditionValues = selValues;
             selValues = new SelectedValues();
             selValues.Values = SelectedValue.CreateNew(testCasesRoot.Actions.Count);
-            TestCaseActionValues.Add(selValues);
+            cont.TestCaseActionValues = selValues;
+            TestCaseContainers.Add(cont);
         }
 
-        internal void InsertTestCase(AddRowsTest.InsertPosition insertPosition, TestCasesRoot testCasesRoot)
-        {
-            var selValues = new SelectedValues();
-            selValues.Values = SelectedValue.CreateNew(testCasesRoot.Conditions.Count);
-            switch (insertPosition)
-            {
-                case AddRowsTest.InsertPosition.First:
-                    TestCaseConditionValues.Insert(0, selValues);
-                    break;
-                case AddRowsTest.InsertPosition.Second:
-                    TestCaseConditionValues.Insert(1, selValues);
-                    break;
-                case AddRowsTest.InsertPosition.Last:
-                    TestCaseConditionValues.Insert(TestCaseConditionValues.Count - 1, selValues);
-                    break;
-                case AddRowsTest.InsertPosition.AfterLast:
-                    TestCaseConditionValues.Add(selValues);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(insertPosition), insertPosition, null);
-            }
-            selValues = new SelectedValues();
-            selValues.Values = SelectedValue.CreateNew(testCasesRoot.Actions.Count);
-            switch (insertPosition)
-            {
-                case AddRowsTest.InsertPosition.First:
-                    TestCaseActionValues.Insert(0, selValues);
-                    break;
-                case AddRowsTest.InsertPosition.Second:
-                    TestCaseActionValues.Insert(1, selValues);
-                    break;
-                case AddRowsTest.InsertPosition.Last:
-                    TestCaseActionValues.Insert(TestCaseActionValues.Count - 1, selValues);
-                    break;
-                case AddRowsTest.InsertPosition.AfterLast:
-                    TestCaseActionValues.Add(selValues);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(insertPosition), insertPosition, null);
-            }
-        }
 
-        internal void DeleteTestCase(AddRowsTest.DeletePosition deletePosition, TestCasesRoot testCasesRoot)
+        internal void DeleteTestCase(TestCase deletedTestCase, TestCasesRoot testCasesRoot)
         {
-            switch (deletePosition)
-            {
-                case AddRowsTest.DeletePosition.First:
-                    TestCaseConditionValues.RemoveAt(0);
-                    TestCaseActionValues.RemoveAt(0);
-                    break;
-                case AddRowsTest.DeletePosition.Second:
-                    TestCaseConditionValues.RemoveAt(1);
-                    TestCaseActionValues.RemoveAt(1);
-                    break;
-                case AddRowsTest.DeletePosition.Last:
-                    TestCaseConditionValues.RemoveAt(TestCaseConditionValues.Count - 1);
-                    TestCaseActionValues.RemoveAt(TestCaseActionValues.Count - 1);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(deletePosition), deletePosition, null);
-            }
+            TestCaseContainers.Remove(GetContainerByName(deletedTestCase.Name));
         }
     }
 
@@ -326,6 +293,16 @@ namespace UnitTests2
                 Values.Add(new SelectedValue(value));
             }
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (SelectedValue value in Values)
+            {
+                sb.AppendFormat("{0} ", value);
+            }
+            return sb.ToString();
+        }
     }
 
     public class SelectedValue
@@ -409,6 +386,11 @@ namespace UnitTests2
                 list.Add(new SelectedValue());
             }
             return list;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("idx{0} {1}", SelectedItemIndex, Inserted ? "ins " : "");
         }
     }
 }

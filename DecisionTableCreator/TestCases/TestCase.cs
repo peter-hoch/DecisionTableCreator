@@ -114,6 +114,23 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        private int _displayIndex;
+
+        public int DisplayIndex
+        {
+            get { return _displayIndex; }
+            set
+            {
+                _displayIndex = value;
+                OnPropertyChanged("DisplayIndex");
+            }
+        }
+
+
+        public override string ToString()
+        {
+            return "TestCase " + Name + " dispIdx=" + DisplayIndex;
+        }
 
         #region event
 
