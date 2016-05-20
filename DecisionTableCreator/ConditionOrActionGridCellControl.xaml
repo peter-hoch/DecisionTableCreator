@@ -21,6 +21,8 @@
                     <MenuItem Command="local:WpfCommands.InsertAction" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.AppendAction" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.DeleteAction" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Command="local:WpfCommands.MoveConditionOrActionUp" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Command="local:WpfCommands.MoveConditionOrActionDown" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                 </ContextMenu>
             </TextBox.ContextMenu>
         </TextBox>

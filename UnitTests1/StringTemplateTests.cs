@@ -18,7 +18,7 @@ namespace UnitTests1
         public void Setup()
         {
             TestSupport.ClearCreatedFiles();
-            //TestSupport.DiffAction = new InvokeWinMerge();
+            TestSupport.DiffAction = new InvokeWinMerge();
         }
 
         [Test]

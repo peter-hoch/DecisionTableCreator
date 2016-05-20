@@ -218,6 +218,79 @@ namespace DecisionTableCreator.TestCases
             FireConditionsChanged();
         }
 
+        public void MoveConditionDown(int index)
+        {
+            if (Conditions.Count > 1 && index < Conditions.Count - 1)
+            {
+                ConditionObject co = Conditions[index];
+                Conditions.RemoveAt(index);
+                Conditions.Insert(index + 1, co);
+                foreach (TestCase testCase in TestCases)
+                {
+                    var vo = testCase.Conditions[index];
+                    testCase.Conditions.RemoveAt(index);
+                    testCase.Conditions.Insert(index + 1, vo);
+                }
+                PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+                FireConditionsChanged();
+            }
+        }
+
+        public void MoveConditionUp(int index)
+        {
+            if (Conditions.Count > 1 && index >= 1)
+            {
+                ConditionObject co = Conditions[index];
+                Conditions.RemoveAt(index);
+                Conditions.Insert(index - 1, co);
+                foreach (TestCase testCase in TestCases)
+                {
+                    var vo = testCase.Conditions[index];
+                    testCase.Conditions.RemoveAt(index);
+                    testCase.Conditions.Insert(index - 1, vo);
+                }
+                PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+                FireConditionsChanged();
+            }
+        }
+
+        public void MoveActionUp(int index)
+        {
+            if (Actions.Count > 1 && index >= 1)
+            {
+                ActionObject co = Actions[index];
+                Actions.RemoveAt(index);
+                Actions.Insert(index - 1, co);
+                foreach (TestCase testCase in TestCases)
+                {
+                    var vo = testCase.Actions[index];
+                    testCase.Actions.RemoveAt(index);
+                    testCase.Actions.Insert(index - 1, vo);
+                }
+                PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+                FireActionsChanged();
+            }
+        }
+
+        public void MoveActionDown(int index)
+        {
+            if (Actions.Count > 1 && index < Actions.Count - 1)
+            {
+                ActionObject co = Actions[index];
+                Actions.RemoveAt(index);
+                Actions.Insert(index + 1, co);
+                foreach (TestCase testCase in TestCases)
+                {
+                    var vo = testCase.Actions[index];
+                    testCase.Actions.RemoveAt(index);
+                    testCase.Actions.Insert(index + 1, vo);
+                }
+                PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+                FireActionsChanged();
+            }
+        }
+
+
         public void ChangeCondition(int index, ConditionObject conditionClone)
         {
             List<int> savedSelectedItemIndexes = SaveSelectedItemIndex(index);
@@ -268,11 +341,11 @@ namespace DecisionTableCreator.TestCases
             {
                 if (whereToInsert < 0)
                 {
-                    testCase.Conditions.Add(ValueObject.Create(conditionObject));
+                    testCase.AddValueObject(TestCase.CollectionType.Conditions,  ValueObject.Create(conditionObject));
                 }
                 else
                 {
-                    testCase.Conditions.Insert(whereToInsert, ValueObject.Create(conditionObject));
+                    testCase.InsertValueObject(TestCase.CollectionType.Conditions,  whereToInsert, ValueObject.Create(conditionObject));
                 }
             }
         }
@@ -283,11 +356,11 @@ namespace DecisionTableCreator.TestCases
             {
                 if (whereToInsert < 0)
                 {
-                    testCase.Actions.Add(ValueObject.Create(actionObject));
+                    testCase.AddValueObject(TestCase.CollectionType.Actions,  ValueObject.Create(actionObject));
                 }
                 else
                 {
-                    testCase.Actions.Insert(whereToInsert, ValueObject.Create(actionObject));
+                    testCase.InsertValueObject(TestCase.CollectionType.Actions,  whereToInsert, ValueObject.Create(actionObject));
                 }
             }
         }

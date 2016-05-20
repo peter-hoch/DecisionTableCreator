@@ -488,6 +488,67 @@ namespace DecisionTableCreator
             e.CanExecute = IsConditionsDataGridSelected(e, out dataGrid);
         }
 
+        private void MoveConditionOrActionUp_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var index = CalculateRowIndex(e);
+            if (index >= 0)
+            {
+                DataGrid dataGrid;
+                if (IsConditionsDataGridSelected(e, out dataGrid))
+                {
+                    DataContainer.TestCasesRoot.MoveConditionUp(index);
+                }
+                else if (IsActionsDataGridSelected(e, out dataGrid))
+                {
+                    DataContainer.TestCasesRoot.MoveActionUp(index);
+                }
+            }
+        }
+
+        private void MoveConditionOrActionDown_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var index = CalculateRowIndex(e);
+            if (index >= 0)
+            {
+                DataGrid dataGrid;
+                if (IsConditionsDataGridSelected(e, out dataGrid))
+                {
+                    DataContainer.TestCasesRoot.MoveConditionDown(index);
+                }
+                else if (IsActionsDataGridSelected(e, out dataGrid))
+                {
+                    DataContainer.TestCasesRoot.MoveActionDown(index);
+                }
+            }
+        }
+
+        private void MoveConditionOrActionUp_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            DataGrid dataGrid;
+            if (IsConditionsDataGridSelected(e, out dataGrid))
+            {
+                e.CanExecute = DataContainer.TestCasesRoot.Conditions.Count > 1;
+            }
+            else if (IsActionsDataGridSelected(e, out dataGrid))
+            {
+                e.CanExecute = DataContainer.TestCasesRoot.Actions.Count > 1;
+            }
+        }
+
+        private void MoveConditionOrActionDown_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            DataGrid dataGrid;
+            if (IsConditionsDataGridSelected(e, out dataGrid))
+            {
+                e.CanExecute = DataContainer.TestCasesRoot.Conditions.Count > 1;
+            }
+            else if (IsActionsDataGridSelected(e, out dataGrid))
+            {
+                e.CanExecute = DataContainer.TestCasesRoot.Actions.Count > 1;
+            }
+
+        }
+
         private void ExportHtmlToClipboard_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             StringBuilder html = new StringBuilder();

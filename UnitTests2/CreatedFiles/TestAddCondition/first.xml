@@ -61,8 +61,8 @@
       </TestCaseConditions>
       <TestCaseActions>
         <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseActions>
     </TestCase>
     <TestCase Name="TC2">
@@ -72,9 +72,9 @@
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
       </TestCaseConditions>
       <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
         <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
       </TestCaseActions>
     </TestCase>
     <TestCase Name="TC3">
@@ -84,9 +84,9 @@
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
       </TestCaseConditions>
       <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
       </TestCaseActions>
     </TestCase>
     <TestCase Name="TC4">
@@ -96,8 +96,8 @@
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
       </TestCaseConditions>
       <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
         <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
       </TestCaseActions>
     </TestCase>
@@ -109,8 +109,8 @@
       </TestCaseConditions>
       <TestCaseActions>
         <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseActions>
     </TestCase>
     <TestCase Name="TC6">
@@ -120,9 +120,9 @@
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
       </TestCaseConditions>
       <TestCaseActions>
-        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
         <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
       </TestCaseActions>
     </TestCase>
   </TestCases>

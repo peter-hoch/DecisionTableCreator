@@ -252,6 +252,11 @@ namespace DecisionTableCreator.TestCases
 
         #endregion
 
+        public override string ToString()
+        {
+            return this.GetType().Name + " " + Name;
+        }
+
         #region event
 
         public event PropertyChangedEventHandler PropertyChanged;

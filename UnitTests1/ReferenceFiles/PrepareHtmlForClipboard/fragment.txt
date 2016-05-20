@@ -59,29 +59,29 @@
 	<TR>
 		<TD>Action11</TD>
  <TD align="center" bgcolor="Red">3-Invalid-0-Default</TD>  
+ <TD align="center" bgcolor="LightGrey">3-EnumValue-1</TD>  
+ <TD align="center" bgcolor="LightGrey">3-EnumValue-2</TD>  
+ <TD align="center" bgcolor="Aqua">3-Don' t care-3</TD>  
  <TD align="center" bgcolor="Red">3-Invalid-0-Default</TD>  
- <TD align="center" bgcolor="Red">3-Invalid-0-Default</TD>  
- <TD align="center" bgcolor="Red">3-Invalid-0-Default</TD>  
- <TD align="center" bgcolor="Red">3-Invalid-0-Default</TD>  
- <TD align="center" bgcolor="Red">3-Invalid-0-Default</TD>  
+ <TD align="center" bgcolor="LightGrey">3-EnumValue-1</TD>  
 	</TR>
 	<TR>
 		<TD>Action12</TD>
+ <TD align="center" bgcolor="Red">4-Invalid-0</TD>  
  <TD align="center" bgcolor="LightGrey">4-EnumValue-1-Default</TD>  
- <TD align="center" bgcolor="LightGrey">4-EnumValue-1-Default</TD>  
- <TD align="center" bgcolor="LightGrey">4-EnumValue-1-Default</TD>  
- <TD align="center" bgcolor="LightGrey">4-EnumValue-1-Default</TD>  
- <TD align="center" bgcolor="LightGrey">4-EnumValue-1-Default</TD>  
+ <TD align="center" bgcolor="LightGrey">4-EnumValue-2</TD>  
+ <TD align="center" bgcolor="Aqua">4-Don' t care-3</TD>  
+ <TD align="center" bgcolor="Red">4-Invalid-0</TD>  
  <TD align="center" bgcolor="LightGrey">4-EnumValue-1-Default</TD>  
 	</TR>
 	<TR>
 		<TD>Action13</TD>
+ <TD align="center" bgcolor="Red">5-Invalid-0</TD>  
+ <TD align="center" bgcolor="LightGrey">5-EnumValue-1</TD>  
+ <TD align="center" bgcolor="LightGrey">5-EnumValue-2</TD>  
  <TD align="center" bgcolor="Aqua">5-Don' t care-3-Default</TD>  
- <TD align="center" bgcolor="Aqua">5-Don' t care-3-Default</TD>  
- <TD align="center" bgcolor="Aqua">5-Don' t care-3-Default</TD>  
- <TD align="center" bgcolor="Aqua">5-Don' t care-3-Default</TD>  
- <TD align="center" bgcolor="Aqua">5-Don' t care-3-Default</TD>  
- <TD align="center" bgcolor="Aqua">5-Don' t care-3-Default</TD>  
+ <TD align="center" bgcolor="Red">5-Invalid-0</TD>  
+ <TD align="center" bgcolor="LightGrey">5-EnumValue-1</TD>  
 	</TR>
 </TABLE>
 <BR>

@@ -150,6 +150,10 @@ namespace DecisionTableCreator.TestCases
                 {
                     value.SelectedItemIndex = idx % value.EnumValues.Count;
                 }
+                foreach (ValueObject value in tc.Actions)
+                {
+                    value.SelectedItemIndex = idx % value.EnumValues.Count;
+                }
             }
 
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);

@@ -25,6 +25,8 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand AppendEnumValue;
         public static readonly RoutedUICommand DeleteEnumValue;
         public static readonly RoutedUICommand ExportHtmlToClipboard;
+        public static readonly RoutedUICommand MoveConditionOrActionUp;
+        public static readonly RoutedUICommand MoveConditionOrActionDown;
 
         static WpfCommands()
         {
@@ -47,6 +49,8 @@ namespace DecisionTableCreator
             AppendEnumValue = new RoutedUICommand("Append enum value", "AppendEnumValue", typeof(WpfCommands));
             DeleteEnumValue = new RoutedUICommand("Delete enum value", "DeleteEnumValue", typeof(WpfCommands));
             ExportHtmlToClipboard = new RoutedUICommand("Export HTML to clipboard", "ExportHtmlToClipboard", typeof(WpfCommands));
+            MoveConditionOrActionUp = new RoutedUICommand("Move up", "MoveConditionOrActionUp", typeof(WpfCommands));
+            MoveConditionOrActionDown = new RoutedUICommand("Move down", "MoveConditionOrActionDown", typeof(WpfCommands));
         }
     }
 }

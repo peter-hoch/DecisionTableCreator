@@ -31,6 +31,23 @@ namespace UnitTests2
             Last,
         }
 
+        public enum Move
+        {
+            Up,
+            Down
+        }
+
+        void SaveConditionsOrActions<TType>(ObservableCollection<TType> list , string path)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in list)
+            {
+                sb.AppendFormat("{0}", item).AppendLine();
+            }
+            File.WriteAllText(path, sb.ToString());
+        }
+
+
 
         [SetUp]
         public void Setup()
@@ -220,6 +237,77 @@ namespace UnitTests2
             selValues.Check(tcrc.TestCasesRoot);
 
             tcrc.TestCasesRoot.Save(secondPath);
+            // only for manual check of testcase
+            //TestSupport.CompareFile(firstPath, secondPath);
+        }
+
+
+        [TestCase(Move.Up, 1)]
+        [TestCase(Move.Up, 2)]
+        [TestCase(Move.Down, 1)]
+        [TestCase(Move.Down, 0)]
+        public void TestConditionMove(Move move, int index)
+        {
+            string firstPath = Path.Combine(TestSupport.CreatedFilesDirectory, move + "_" + index + "_first.xml");
+            string secondPath = Path.Combine(TestSupport.CreatedFilesDirectory, move + "_" + index + "_second.xml");
+            TestCasesRootContainer tcrc = new TestCasesRootContainer();
+            SaveConditionsOrActions(tcrc.TestCasesRoot.Conditions, firstPath);
+            SelectedValuesByConditionsAndActions selValues = new SelectedValuesByConditionsAndActions();
+            selValues.CollectValues(tcrc.TestCasesRoot);
+            selValues.Check(tcrc.TestCasesRoot);
+
+            if (move == Move.Up)
+            {
+                tcrc.TestCasesRoot.MoveConditionUp(index);
+            }
+            else
+            {
+                tcrc.TestCasesRoot.MoveConditionDown(index);
+            }
+
+            TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
+            Assert.That(tcrc.TestCasesRoot.Actions.Count == 3);
+            Assert.That(tcrc.TestCasesRoot.Conditions.Count == 3);
+            Assert.That(tcrc.ConditionChangeCount == 1);
+            Assert.That(tcrc.ActionChangeCount == 0);
+            selValues.Check(tcrc.TestCasesRoot);
+
+            SaveConditionsOrActions(tcrc.TestCasesRoot.Conditions, secondPath);
+            // only for manual check of testcase
+            //TestSupport.CompareFile(firstPath, secondPath);
+        }
+
+        [TestCase(Move.Up, 1)]
+        [TestCase(Move.Up, 2)]
+        [TestCase(Move.Down, 1)]
+        [TestCase(Move.Down, 0)]
+        public void TestActionMove(Move move, int index)
+        {
+            string firstPath = Path.Combine(TestSupport.CreatedFilesDirectory, move + "_" + index + "_first.xml");
+            string secondPath = Path.Combine(TestSupport.CreatedFilesDirectory, move + "_" + index + "_second.xml");
+            TestCasesRootContainer tcrc = new TestCasesRootContainer();
+            SaveConditionsOrActions(tcrc.TestCasesRoot.Actions, firstPath);
+            SelectedValuesByConditionsAndActions selValues = new SelectedValuesByConditionsAndActions();
+            selValues.CollectValues(tcrc.TestCasesRoot);
+            selValues.Check(tcrc.TestCasesRoot);
+
+            if (move == Move.Up)
+            {
+                tcrc.TestCasesRoot.MoveActionUp(index);
+            }
+            else
+            {
+                tcrc.TestCasesRoot.MoveActionDown(index);
+            }
+
+            TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
+            Assert.That(tcrc.TestCasesRoot.Actions.Count == 3);
+            Assert.That(tcrc.TestCasesRoot.Conditions.Count == 3);
+            Assert.That(tcrc.ConditionChangeCount == 0);
+            Assert.That(tcrc.ActionChangeCount == 1);
+            selValues.Check(tcrc.TestCasesRoot);
+
+            SaveConditionsOrActions(tcrc.TestCasesRoot.Actions, secondPath);
             // only for manual check of testcase
             //TestSupport.CompareFile(firstPath, secondPath);
         }
