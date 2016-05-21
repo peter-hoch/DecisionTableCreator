@@ -102,14 +102,38 @@ namespace DecisionTableCreator.TestCases
 
         public event ViewChangedDelegate ActionsChanged;
 
-        private void FireConditionsChanged()
+        public event StatisticsChangedDelegate StatisticsChanged;
+
+        private void ProcessConditionsChanged()
         {
+            RecalculateStatistics();
+
             ConditionsChanged?.Invoke();
         }
+
 
         private void FireActionsChanged()
         {
             ActionsChanged?.Invoke();
+        }
+
+        private void FireStatisticsChanged()
+        {
+            StatisticsChanged?.Invoke();
+        }
+
+
+
+        private int _possibleCombinations;
+
+        public int PossibleCombinations
+        {
+            get { return _possibleCombinations; }
+            set
+            {
+                _possibleCombinations = value;
+                OnPropertyChanged("PossibleCombinations");
+            }
         }
 
 

@@ -9,13 +9,6 @@ namespace DecisionTableCreator.TestCases
 {
     public partial class TestCasesRoot
     {
-        public static TestCasesRoot CreateSampleTable()
-        {
-            TestCasesRoot testCasesRoot = new TestCasesRoot();
-            testCasesRoot.CreateSampleTableInternal();
-
-            return testCasesRoot;
-        }
 
         /// <summary>
         /// used for unit tests
@@ -29,53 +22,18 @@ namespace DecisionTableCreator.TestCases
             return testCasesRoot;
         }
 
-        public static TestCasesRoot CreatePrinterTrubbleshootingSample()
+
+        public static ObservableCollection<EnumValue> CreateSampleEnum(string name, int count, int defaultIndex, int invalidIndex, int dontCareIndex)
         {
-            TestCasesRoot testCasesRoot = new TestCasesRoot();
-            testCasesRoot.CreatePrinterTrubbleshootingSampleInternal();
-            return testCasesRoot;
-        }
+            ObservableCollection<EnumValue> list = new ObservableCollection<EnumValue>();
 
-        private void CreateSampleTableInternal()
-        {
-            int testCasesCount = 20;
-            int conditionCount = 5;
-            int actionCount = 5;
-
-            List<ObservableCollection<EnumValue>> lists = new List<ObservableCollection<EnumValue>>();
-            for (int list = 0; list < (conditionCount + actionCount); list++)
+            for (int idx = 0; idx < count; idx++)
             {
-                var subList = new ObservableCollection<EnumValue>();
-                lists.Add(subList);
-                bool isInvalid = true;
-                for (int idx = 1; idx < 10; idx++)
-                {
-                    subList.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", list, idx), isInvalid));
-                    isInvalid = false;
-                }
+                EnumValue ev = new EnumValue(name+idx, idx==invalidIndex, idx==dontCareIndex, idx==defaultIndex);
+                list.Add(ev);
             }
 
-            int listIndex = 0;
-            for (int idx = 1; idx < conditionCount; idx++)
-            {
-                Conditions.Add(ConditionObject.Create(String.Format("Condition {0}", idx), lists[listIndex++]));
-            }
-
-            Actions.Add(ActionObject.Create(String.Format("Action1{0}", 0), ValueDataType.Bool));
-            for (int idx = 1; idx < actionCount; idx++)
-            {
-                Actions.Add(ActionObject.Create(String.Format("Action1{0}", idx), lists[listIndex++]));
-            }
-
-            CreateBasicColumnDescriptions();
-
-            for (int idx = 0; idx < testCasesCount; idx++)
-            {
-                AddTestCase();
-            }
-
-            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
-            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+            return list;
         }
 
         private void CreateSimpleTableInternal()
@@ -158,39 +116,9 @@ namespace DecisionTableCreator.TestCases
 
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+            RecalculateStatistics();
         }
 
-        private void CreatePrinterTrubbleshootingSampleInternal()
-        {
-            var printerEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue("Yes"), new EnumValue("No"), };
-            Conditions.Add(ConditionObject.Create(String.Format("Printer does not print"), printerEnum));
-
-            var ledEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue("Yes"), new EnumValue("No"), };
-            Conditions.Add(ConditionObject.Create("An error led is flashing", ledEnum));
-
-            var unrecognizedEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue("Yes"), new EnumValue("No"), };
-            Conditions.Add(ConditionObject.Create("Printer is unrecognized", unrecognizedEnum));
-
-            var checkPowerEnum = new ObservableCollection<EnumValue>() { new EnumValue("", true), new EnumValue(""), new EnumValue("X") };
-            Actions.Add(ActionObject.Create(String.Format("Check the power cable"), checkPowerEnum));
-
-            var checkPinterCableEnum = new ObservableCollection<EnumValue>() { new EnumValue(""), new EnumValue("X") };
-            Actions.Add(ActionObject.Create(String.Format("Check the printer-computer cable"), checkPinterCableEnum));
-
-            var softwareInstalledEnum = new ObservableCollection<EnumValue>() { new EnumValue(""), new EnumValue("X") };
-            Actions.Add(ActionObject.Create(String.Format("Enshure printer software is installed"), softwareInstalledEnum));
-
-            var checkInkEnum = new ObservableCollection<EnumValue>() { new EnumValue(""), new EnumValue("X") };
-            Actions.Add(ActionObject.Create(String.Format("Check/replace ink"), checkInkEnum));
-
-            var checkPaperJamEnum = new ObservableCollection<EnumValue>() { new EnumValue(""), new EnumValue("X") };
-            Actions.Add(ActionObject.Create(String.Format("Check for paper jam"), checkPaperJamEnum));
-
-            CreateBasicColumnDescriptions();
-
-            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
-            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
-        }
 
     }
 }

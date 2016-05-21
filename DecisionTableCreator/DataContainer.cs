@@ -20,6 +20,7 @@ namespace DecisionTableCreator
             //TestCasesRoot = TestCasesRoot.CreatePrinterTrubbleshootingSample();
             Conditions = TestCasesRoot.ConditionTable;
             Actions = TestCasesRoot.ActionTable;
+            PossibleCombinations = TestCasesRoot.PossibleCombinations;
         }
 
         private TestCasesRoot _testCasesRoot;
@@ -33,6 +34,7 @@ namespace DecisionTableCreator
                 {
                     _testCasesRoot.ConditionsChanged -= OnConditionsChanged;
                     _testCasesRoot.ActionsChanged -= OnActionsChanged;
+                    _testCasesRoot.StatisticsChanged -= OnStatisticsChanged;
                 }
                 _testCasesRoot = value;
                 OnPropertyChanged("TestCasesRoot");
@@ -40,8 +42,14 @@ namespace DecisionTableCreator
                 {
                     _testCasesRoot.ConditionsChanged += OnConditionsChanged;
                     _testCasesRoot.ActionsChanged += OnActionsChanged;
+                    _testCasesRoot.StatisticsChanged += OnStatisticsChanged;
                 }
             }
+        }
+
+        private void OnStatisticsChanged()
+        {
+            PossibleCombinations = TestCasesRoot.PossibleCombinations;
         }
 
         private void OnActionsChanged()
@@ -79,6 +87,18 @@ namespace DecisionTableCreator
             {
                 _actions = value;
                 OnPropertyChanged("Actions");
+            }
+        }
+
+        private int _possibleCombinations;
+
+        public int PossibleCombinations
+        {
+            get { return _possibleCombinations; }
+            set
+            {
+                _possibleCombinations = value;
+                OnPropertyChanged("PossibleCombinations");
             }
         }
 

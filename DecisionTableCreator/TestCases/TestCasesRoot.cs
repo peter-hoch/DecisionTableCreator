@@ -12,6 +12,8 @@ namespace DecisionTableCreator.TestCases
 {
     public delegate void ViewChangedDelegate();
 
+    public delegate void StatisticsChangedDelegate();
+
     public partial class TestCasesRoot : INotifyPropertyChanged
     {
         public TestCasesRoot()
@@ -81,7 +83,7 @@ namespace DecisionTableCreator.TestCases
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
             FireActionsChanged();
-            FireConditionsChanged();
+            ProcessConditionsChanged();
             return tc;
         }
 
@@ -104,7 +106,7 @@ namespace DecisionTableCreator.TestCases
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
             FireActionsChanged();
-            FireConditionsChanged();
+            ProcessConditionsChanged();
             return deleted;
         }
 
@@ -199,7 +201,7 @@ namespace DecisionTableCreator.TestCases
             Conditions.Add(conditionObject);
             AddToTestCases(conditionObject);
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
-            FireConditionsChanged();
+            ProcessConditionsChanged();
         }
 
         public void InsertCondition(int index, ConditionObject newCondition)
@@ -207,7 +209,7 @@ namespace DecisionTableCreator.TestCases
             Conditions.Insert(index, newCondition);
             AddToTestCases(newCondition, index);
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
-            FireConditionsChanged();
+            ProcessConditionsChanged();
         }
 
         public void DeleteConditionAt(int index)
@@ -215,7 +217,7 @@ namespace DecisionTableCreator.TestCases
             Conditions.RemoveAt(index);
             RemoveConditionFromTestCases(index);
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
-            FireConditionsChanged();
+            ProcessConditionsChanged();
         }
 
         public void MoveConditionDown(int index)
@@ -232,7 +234,7 @@ namespace DecisionTableCreator.TestCases
                     testCase.Conditions.Insert(index + 1, vo);
                 }
                 PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
-                FireConditionsChanged();
+                ProcessConditionsChanged();
             }
         }
 
@@ -250,7 +252,7 @@ namespace DecisionTableCreator.TestCases
                     testCase.Conditions.Insert(index - 1, vo);
                 }
                 PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
-                FireConditionsChanged();
+                ProcessConditionsChanged();
             }
         }
 
@@ -296,6 +298,7 @@ namespace DecisionTableCreator.TestCases
             List<int> savedSelectedItemIndexes = SaveSelectedItemIndex(index);
             Conditions[index].Merge(conditionClone);
             RestoreSelectedItemIndex(index, savedSelectedItemIndexes);
+            RecalculateStatistics();
         }
 
         internal void ChangeAction(int index, ActionObject actionClone)
@@ -392,6 +395,12 @@ namespace DecisionTableCreator.TestCases
                 vo.TestProperty = tc.Name + " " + condition.Name;
                 tc.AddValueObject(colType, vo);
             }
+        }
+
+        public void RecalculateStatistics()
+        {
+            PossibleCombinations = CalculatePossibleCombinations();
+            FireStatisticsChanged();
         }
 
         #region event

@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>DtcIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr4.StringTemplate, Version=4.0.6.9004, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr4.StringTemplate.4.0.6.9004\lib\net35\Antlr4.StringTemplate.dll</HintPath>
@@ -41,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -88,6 +92,7 @@
     <Compile Include="TestCases\LoadSaveVisitor.cs" />
     <Compile Include="TestCases\TestCase.cs" />
     <Compile Include="TestCases\TestCasesRoot.cs" />
+    <Compile Include="TestCases\TestCasesRootCalculations.cs" />
     <Compile Include="TestCases\TestCasesRootLoadSave.cs" />
     <Compile Include="TestCases\TestCasesRootProperties.cs" />
     <Compile Include="TestCases\TestCasesRootSampleTables.cs" />
@@ -97,6 +102,7 @@
     <Compile Include="TestCases\XmlNames.cs" />
     <Compile Include="Utils\ColumnInfo.cs" />
     <Compile Include="Utils\PrepareForClipboard.cs" />
+    <Compile Include="Utils\Utilities.cs" />
     <Compile Include="Utils\WpfTools.cs" />
     <Compile Include="Utils\XmlUtils.cs" />
     <Compile Include="WpfCommands.cs" />
@@ -167,6 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="DtcIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

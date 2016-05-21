@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="800" Icon="pack://application:,,,/DtcIcon.ico">
     <Window.DataContext>
         <local:DataContainer/>
     </Window.DataContext>
@@ -103,6 +103,10 @@
         </DockPanel>
         
         <StackPanel Grid.Row="5" Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <Label Margin="5" Content="Possible combinations"/>
+                <TextBox Margin="5" MinWidth="60" Text="{Binding PossibleCombinations, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"></TextBox>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

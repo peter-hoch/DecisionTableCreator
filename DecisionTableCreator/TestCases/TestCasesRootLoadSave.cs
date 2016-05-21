@@ -33,7 +33,7 @@ namespace DecisionTableCreator.TestCases
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
 
             FireActionsChanged();
-            FireConditionsChanged();
+            ProcessConditionsChanged();
         }
 
         public void New()

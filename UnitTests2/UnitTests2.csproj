@@ -52,6 +52,7 @@
     <Compile Include="AddRowsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectedValues.cs" />
+    <Compile Include="TestCaseCalculation.cs" />
     <Compile Include="TestCasesRootContainer.cs" />
     <Compile Include="TestUtils.cs" />
   </ItemGroup>
