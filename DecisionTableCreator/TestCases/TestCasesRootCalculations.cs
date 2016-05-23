@@ -12,6 +12,10 @@ namespace DecisionTableCreator.TestCases
     {
         public int PossibleCombinations { get; set; }
 
+        public int CoveredTestCases { get; set; }
+
+        public double Coverage { get; set; }
+
     }
     public partial class TestCasesRoot
     {
@@ -21,7 +25,8 @@ namespace DecisionTableCreator.TestCases
 
             stat.PossibleCombinations = CalculatePossibleCombinations();
             TestCase.UpdateUniqueness(TestCases);
-
+            stat.CoveredTestCases = CalculateNumberOfUniqueCoveredTestCases(TestCases);
+            stat.Coverage = CalculateCoverage();
             return stat;
         }
 
@@ -59,7 +64,7 @@ namespace DecisionTableCreator.TestCases
             return count;
         }
 
-        public double CalculateCoverage()
+        private double CalculateCoverage()
         {
             double combinations = CalculatePossibleCombinations();
             double result = CalculateNumberOfUniqueCoveredTestCases();

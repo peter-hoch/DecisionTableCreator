@@ -49,9 +49,10 @@ namespace DecisionTableCreator
 
         private void OnStatisticsChanged()
         {
-            PossibleCombinations = TestCasesRoot.CalculatePossibleCombinations();
-            CoveredTestCases = TestCasesRoot.CalculateNumberOfUniqueCoveredTestCases();
-            CoveredTestCases = TestCasesRoot.CalculateCoverage();
+            Statistics stat = TestCasesRoot.CalculateStatistics();
+            PossibleCombinations = stat.PossibleCombinations;
+            CoveredTestCases = stat.CoveredTestCases;
+            Coverage = stat.Coverage;
         }
 
         private void OnActionsChanged()
@@ -104,15 +105,27 @@ namespace DecisionTableCreator
             }
         }
 
-        private double _coveredTestCases;
+        private int _coveredTestCases;
 
-        public double CoveredTestCases
+        public int CoveredTestCases
         {
             get { return _coveredTestCases; }
             set
             {
                 _coveredTestCases = value;
                 OnPropertyChanged("CoveredTestCases");
+            }
+        }
+
+        private double _coverage;
+
+        public double Coverage
+        {
+            get { return _coverage; }
+            set
+            {
+                _coverage = value;
+                OnPropertyChanged("Coverage");
             }
         }
 

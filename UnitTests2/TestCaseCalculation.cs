@@ -84,15 +84,24 @@ namespace UnitTests2
 
         }
 
-        [TestCase("Sample.dtc", 8, 5, 50.0)]
+        [TestCase("Sample.dtc", 8, 8, 100.0)]
         public void CalculateCoverage(string fileName, int expectedCombinations, int expectedUniqueTestCases, double expectedCoverage)
         {
+            string testSettingPath = Path.Combine(TestSupport.CreatedFilesDirectory, "TestSetting.txt");
+
             string source = Path.Combine(TestSupport.TestFilesDirectory, fileName);
             TestCasesRoot tcr = new TestCasesRoot();
             tcr.Load(source);
-            int combinations = tcr.CalculatePossibleCombinations();
-            int uniqueTestCases = tcr.CalculateNumberOfUniqueCoveredTestCases();
-            double coverage = tcr.CalculateCoverage();
+            Statistics stat = tcr.CalculateStatistics();
+
+            for (int idx = 0; idx < tcr.TestCases.Count; idx++)
+            {
+                File.AppendAllText(testSettingPath, String.Format("{0}" + Environment.NewLine, tcr.TestCases[idx]));
+            }
+
+            Assert.That(stat.Coverage.Equals(expectedCoverage));
+            Assert.That(stat.CoveredTestCases == expectedUniqueTestCases);
+            Assert.That(stat.PossibleCombinations == expectedCombinations);
         }
 
 
@@ -221,6 +230,7 @@ namespace UnitTests2
         [TestCase(3, new int[] { 31, 32, 33, 34, 37, 38, 39, 40, 71, 71 }, 16, 16, 100)]
         [TestCase(4, new int[] { 31, 32, 33, 34, 37, 38, 39, 40, 71, 11 }, 16, 16, 100)]
         [TestCase(5, new int[] { 31, 32, 33, 34, 37, 38, 39, 40, 71, 65 }, 16, 16, 100)]
+        [TestCase(6, new int[] { 72 }, 16, 16, 100)]
         public void CalculateUniqueTestCasesWithDontCare(int id, int[] values, int expectedCombinations, int expectedCoveredTestCases, double expectedCovarage)
         {
             string testOutputPath = Path.Combine(TestSupport.CreatedFilesDirectory, "TestOutput.txt");
@@ -229,7 +239,7 @@ namespace UnitTests2
 
             List<List<ValueObject>> listOfValueLists = new List<List<ValueObject>>();
 
-            var enum1 = TestCasesRoot.CreateSampleEnum("enum1", 3, 0, 0, -1);
+            var enum1 = TestCasesRoot.CreateSampleEnum("enum1", 4, 0, 0, 3);
             var enum2 = TestCasesRoot.CreateSampleEnum("enum2", 4, 0, 0, 3);
             var enum3 = TestCasesRoot.CreateSampleEnum("enum3", 6, 0, 0, 5);
 
@@ -248,6 +258,7 @@ namespace UnitTests2
                 }
             }
 
+            listOfValueLists.Add(new List<ValueObject>() { new ValueObject(enum1, 3), new ValueObject(enum2, 3), new ValueObject(enum3, 5), });
 
             for (int idx = 0; idx < listOfValueLists.Count; idx++)
             {
@@ -261,19 +272,16 @@ namespace UnitTests2
                 tcr.TestCases.Add(tc);
                 //File.AppendAllText(testSettingPath, String.Format("{0}" + Environment.NewLine, tc));
             }
-            int combinations = tcr.CalculatePossibleCombinations();
-            TestCase.UpdateUniqueness(tcr.TestCases);
-            int result = tcr.CalculateNumberOfUniqueCoveredTestCases();
-            double coverage = tcr.CalculateCoverage();
+            Statistics stat = tcr.CalculateStatistics();
 
             for (int idx = 0; idx < tcr.TestCases.Count; idx++)
             {
                 File.AppendAllText(testSettingPath, String.Format("{0}" + Environment.NewLine, tcr.TestCases[idx]));
             }
 
-            Assert.That(result == expectedCoveredTestCases);
-            Assert.That(combinations == expectedCombinations);
-            Assert.That(coverage.Equals(expectedCovarage));
+            Assert.That(stat.CoveredTestCases == expectedCoveredTestCases);
+            Assert.That(stat.PossibleCombinations == expectedCombinations);
+            Assert.That(stat.Coverage.Equals(expectedCovarage));
         }
 
     }
