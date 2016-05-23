@@ -97,6 +97,7 @@
     <Compile Include="TestCases\TestCasesRootProperties.cs" />
     <Compile Include="TestCases\TestCasesRootSampleTables.cs" />
     <Compile Include="TestCases\TestCasesRootTemplates.cs" />
+    <Compile Include="TestCases\TestSetting.cs" />
     <Compile Include="TestCases\ValueDataType.cs" />
     <Compile Include="TestCases\ValueObject.cs" />
     <Compile Include="TestCases\XmlNames.cs" />

@@ -10,7 +10,19 @@ using System.Windows.Media;
 
 namespace DecisionTableCreator.TestCases
 {
-    public class ValueObject : INotifyPropertyChanged
+    public enum ValueObjectSettingOption
+    {
+        Normal,
+        IsInvalid,
+        DontCare
+    }
+
+    public interface IEqualTestSetting<TType>
+    {
+        bool TestSettingIsEqual(TType other);
+    }
+
+    public class ValueObject : INotifyPropertyChanged, IEqualTestSetting<ValueObject>
     {
 
         public static ValueObject Create(IConditionAction conditionOrAction)
@@ -76,6 +88,17 @@ namespace DecisionTableCreator.TestCases
         {
             DataType = ValueDataType.Enumeration;
             EnumValues = items;
+        }
+
+        public ValueObject(ObservableCollection<EnumValue> items, int selectedItem)
+        {
+            DataType = ValueDataType.Enumeration;
+            EnumValues = items;
+            if (selectedItem < 0 || selectedItem >= EnumValues.Count)
+            {
+                throw new ArgumentOutOfRangeException("selectedItem index out of range");
+            }
+            SelectedItemIndex = selectedItem;
         }
 
         private IConditionAction _conditionOrActionParent;
@@ -319,8 +342,60 @@ namespace DecisionTableCreator.TestCases
         }
 
 
+        #region test case calculation
+
+        public ValueObjectSettingOption SettingOption { get; private set; }
+
+        public bool TestSettingIsEqual(ValueObject other)
+        {
+            //TODO
+            //if (this.EnumValues.Equals(other.EnumValues))
+            //{
+            //    throw new ArgumentException("the two ValueObjects do not have the same enumeration");
+            //}
+            return SettingOption == other.SettingOption && SelectedItemIndex == other.SelectedItemIndex;
+        }
+
+        public bool IsInvalid
+        {
+            get { return EnumValues[SelectedItemIndex].IsInvalid; }
+        }
+
+        public EnumValue SelectedValue
+        {
+            get { return EnumValues[SelectedItemIndex]; }
+        }
+
+        public int PossibleValues
+        {
+            get
+            {
+                int count = 0;
+                foreach (EnumValue value in EnumValues)
+                {
+                    if (!value.IsInvalid && !value.DontCare)
+                    {
+                        count++;
+                    }
+                }
+                return count;
+            }
+        }
+
+        #endregion
+
+
         public override string ToString()
         {
+            return Value.ToString();
+        }
+
+        public string ToTestString()
+        {
+            if (Value is EnumValue)
+            {
+                return ((EnumValue)Value).ToTestString();
+            }
             return Value.ToString();
         }
 

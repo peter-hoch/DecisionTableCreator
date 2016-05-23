@@ -37,6 +37,7 @@ namespace UnitTests2
             string firstPath = Path.Combine(TestSupport.CreatedFilesDirectory, "first.xml");
             string secondPath = Path.Combine(TestSupport.CreatedFilesDirectory, "second.xml");
             TestCasesRootContainer tcrc = new TestCasesRootContainer();
+            TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
 
             tcrc.TestCasesRoot.TestCases[0].DisplayIndex = 3;
             tcrc.TestCasesRoot.TestCases[1].DisplayIndex = 4;

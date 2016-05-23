@@ -136,7 +136,8 @@ namespace DecisionTableCreator.TestCases
             ValueObject value = values.FirstOrDefault(vo => vo.ConditionOrActionParent.Equals(this));
             if (value != null)
             {
-                return values.IndexOf(value);
+                int index =  values.IndexOf(value);
+                return index;
             }
             return -1;
         }

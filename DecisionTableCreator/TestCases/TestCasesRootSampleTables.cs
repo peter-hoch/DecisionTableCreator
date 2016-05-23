@@ -29,7 +29,7 @@ namespace DecisionTableCreator.TestCases
 
             for (int idx = 0; idx < count; idx++)
             {
-                EnumValue ev = new EnumValue(name+idx, idx==invalidIndex, idx==dontCareIndex, idx==defaultIndex);
+                EnumValue ev = new EnumValue(name+"-"+idx, idx==invalidIndex, idx==dontCareIndex, idx==defaultIndex);
                 list.Add(ev);
             }
 

@@ -20,7 +20,7 @@ namespace DecisionTableCreator
             //TestCasesRoot = TestCasesRoot.CreatePrinterTrubbleshootingSample();
             Conditions = TestCasesRoot.ConditionTable;
             Actions = TestCasesRoot.ActionTable;
-            PossibleCombinations = TestCasesRoot.PossibleCombinations;
+            OnStatisticsChanged();
         }
 
         private TestCasesRoot _testCasesRoot;
@@ -49,7 +49,9 @@ namespace DecisionTableCreator
 
         private void OnStatisticsChanged()
         {
-            PossibleCombinations = TestCasesRoot.PossibleCombinations;
+            PossibleCombinations = TestCasesRoot.CalculatePossibleCombinations();
+            CoveredTestCases = TestCasesRoot.CalculateNumberOfUniqueCoveredTestCases();
+            CoveredTestCases = TestCasesRoot.CalculateCoverage();
         }
 
         private void OnActionsChanged()
@@ -99,6 +101,18 @@ namespace DecisionTableCreator
             {
                 _possibleCombinations = value;
                 OnPropertyChanged("PossibleCombinations");
+            }
+        }
+
+        private double _coveredTestCases;
+
+        public double CoveredTestCases
+        {
+            get { return _coveredTestCases; }
+            set
+            {
+                _coveredTestCases = value;
+                OnPropertyChanged("CoveredTestCases");
             }
         }
 

@@ -399,7 +399,6 @@ namespace DecisionTableCreator.TestCases
 
         public void RecalculateStatistics()
         {
-            PossibleCombinations = CalculatePossibleCombinations();
             FireStatisticsChanged();
         }
 

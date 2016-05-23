@@ -124,18 +124,5 @@ namespace DecisionTableCreator.TestCases
 
 
 
-        private int _possibleCombinations;
-
-        public int PossibleCombinations
-        {
-            get { return _possibleCombinations; }
-            set
-            {
-                _possibleCombinations = value;
-                OnPropertyChanged("PossibleCombinations");
-            }
-        }
-
-
     }
 }

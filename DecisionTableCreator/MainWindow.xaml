@@ -107,6 +107,14 @@
                 <Label Margin="5" Content="Possible combinations"/>
                 <TextBox Margin="5" MinWidth="60" Text="{Binding PossibleCombinations, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"></TextBox>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Margin="5" Content="Covered test cases"/>
+                <TextBox Margin="5" MinWidth="60" Text="{Binding CoveredTestCases, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Margin="5" Content="Coverage"/>
+                <TextBox Margin="5" MinWidth="60" Text="{Binding PossibleCombinations, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"></TextBox>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

@@ -25,11 +25,6 @@
         <EnumValue Name="2-Don' t care-3-Default" Value="value-2-Don' t care-3-Default" IsDefault="True" IsInvalid="False" DontCare="True" />
       </EnumValues>
     </Condition>
-    <Condition Name="new condition Freitag, 20. Mai 2016 20:36:17" Type="Enumeration" LoadSaveId="4" DefaultBool="False">
-      <EnumValues>
-        <EnumValue Name="new test" Value="new value" IsDefault="False" IsInvalid="False" DontCare="False" />
-      </EnumValues>
-    </Condition>
   </Conditions>
   <Actions>
     <Action LoadSaveId="1000" Name="Action11" Type="Enumeration" DefaultBool="False">
@@ -63,7 +58,6 @@
         <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
         <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseConditions>
       <TestCaseActions>
         <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
@@ -76,7 +70,6 @@
         <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
         <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseConditions>
       <TestCaseActions>
         <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
@@ -89,7 +82,6 @@
         <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
         <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseConditions>
       <TestCaseActions>
         <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
@@ -102,7 +94,6 @@
         <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
         <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseConditions>
       <TestCaseActions>
         <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
@@ -115,7 +106,6 @@
         <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
         <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseConditions>
       <TestCaseActions>
         <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
@@ -128,7 +118,6 @@
         <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
         <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
         <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
-        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
       </TestCaseConditions>
       <TestCaseActions>
         <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="1" />

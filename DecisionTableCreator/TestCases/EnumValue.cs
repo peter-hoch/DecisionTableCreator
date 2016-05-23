@@ -9,6 +9,10 @@ using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator.TestCases
 {
+    /// <summary>
+    /// this clas represents a possible value for a condition or action
+    /// DontCare==true and IsInvalid==true is not a possible combination 
+    /// </summary>
     public class EnumValue : INotifyPropertyChanged
     {
         public EnumValue(string name, string value, bool isInavlid = false, bool dontCare = false, bool isDefault = false)
@@ -46,6 +50,11 @@ namespace DecisionTableCreator.TestCases
             {
                 _isInvalid = value;
                 OnPropertyChanged("IsInvalid");
+                if (_isInvalid && _dontCare)
+                {
+                    _dontCare = false;
+                    OnPropertyChanged("DontCare");
+                }
             }
         }
 
@@ -58,6 +67,11 @@ namespace DecisionTableCreator.TestCases
             {
                 _dontCare = value;
                 OnPropertyChanged("DontCare");
+                if (_isInvalid && _dontCare)
+                {
+                    _isInvalid = false;
+                    OnPropertyChanged("IsInvalid");
+                }
             }
         }
 
@@ -88,6 +102,11 @@ namespace DecisionTableCreator.TestCases
         public override string ToString()
         {
             return Name;
+        }
+
+        public string ToTestString()
+        {
+            return string.Format("{0} {1} {2}", Name, IsInvalid ? "I" : " ", DontCare ? "D" : " ");
         }
 
         #region event
