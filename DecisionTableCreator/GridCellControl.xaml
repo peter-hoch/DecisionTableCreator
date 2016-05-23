@@ -7,10 +7,7 @@
              xmlns:local="clr-namespace:DecisionTableCreator"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <!--<UserControl.CommandBindings>
-        <CommandBinding Command="local:WpfCommands.InsertColumn" Executed="InsertColumn_Executed" CanExecute="InsertColumn_OnCanExecute"/>
-    </UserControl.CommandBindings>-->
-    <StackPanel PreviewKeyDown="PreviewKeyDown" ToolTip="{Binding TooltipText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+    <StackPanel ToolTip="{Binding TooltipText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
         <StackPanel.Resources>
         </StackPanel.Resources>
         
@@ -38,7 +35,7 @@
         <ComboBox ItemsSource="{Binding EnumValues, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Background="{Binding Path=Background.WpfBrush, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding Path=ComboBoxVisibility, Mode=OneTime, FallbackValue=Collapsed}"
-                  SelectedIndex="{Binding SelectedItemIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                  SelectedIndex="{Binding SelectedItemIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
             <ComboBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="local:WpfCommands.InsertTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>

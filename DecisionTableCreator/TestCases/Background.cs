@@ -16,7 +16,7 @@ namespace DecisionTableCreator.TestCases
     }
 
 
-    public class Background
+    public class Background : INotifyPropertyChanged
     {
         public Background(BackgroundColor color)
         {

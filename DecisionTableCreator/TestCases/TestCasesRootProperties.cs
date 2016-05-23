@@ -117,7 +117,7 @@ namespace DecisionTableCreator.TestCases
             ActionsChanged?.Invoke();
         }
 
-        private void FireStatisticsChanged()
+        public void FireStatisticsChanged()
         {
             StatisticsChanged?.Invoke();
         }

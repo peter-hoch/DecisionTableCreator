@@ -637,5 +637,9 @@ namespace DecisionTableCreator
             return null;
         }
 
+        private void ComboBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            DataContainer.TestCasesRoot.FireStatisticsChanged();
+        }
     }
 }

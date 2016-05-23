@@ -25,10 +25,5 @@ namespace DecisionTableCreator
         {
             InitializeComponent();
         }
-
-        private new void PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
     }
 }
