@@ -375,29 +375,6 @@ namespace DecisionTableCreator
         }
 
 
-        private void EditCondition_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            try
-            {
-                var index = CalculateRowIndex(e);
-                if (index >= 0)
-                {
-                    ConditionObject original = ((ConditionObject)DataContainer.TestCasesRoot.Conditions[index]);
-                    ConditionObject coClone = original.Clone();
-                    EditCondition wnd = new EditCondition(coClone);
-                    bool? result = wnd.ShowDialog();
-                    if (result.HasValue && result.Value)
-                    {
-                        DataContainer.TestCasesRoot.ChangeCondition(index, coClone);
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                ShowAndLogMessage("exception caught", ex);
-            }
-        }
         private void EditConditionOrAction_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             try
@@ -497,23 +474,6 @@ namespace DecisionTableCreator
                 if (condObject != null && (condObject is ConditionObject || condObject is ActionObject))
                 {
                     e.CanExecute = true;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                ShowAndLogMessage("exception caught", ex);
-            }
-        }
-
-        private void EditAction_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            try
-            {
-                var index = CalculateRowIndex(e);
-                if (index >= 0)
-                {
-                    EditAction(index);
                 }
 
             }
