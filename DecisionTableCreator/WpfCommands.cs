@@ -14,6 +14,7 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand EditCondition;
         public static readonly RoutedUICommand DeleteCondition;
         public static readonly RoutedUICommand EditAction;
+        public static readonly RoutedUICommand EditConditionOrAction;
         public static readonly RoutedUICommand DeleteAction;
         public static readonly RoutedUICommand Save;
         public static readonly RoutedUICommand Open;
@@ -27,6 +28,7 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand ExportHtmlToClipboard;
         public static readonly RoutedUICommand MoveConditionOrActionUp;
         public static readonly RoutedUICommand MoveConditionOrActionDown;
+        public static readonly RoutedUICommand ExportToFileWithExternalTemplate;
 
         static WpfCommands()
         {
@@ -36,6 +38,7 @@ namespace DecisionTableCreator
             AppendTestCase = new RoutedUICommand("Append test case", "AppendTestCase", typeof(WpfCommands), new InputGestureCollection() { gestureAltT });
             InsertTestCase = new RoutedUICommand("Insert test case", "InsertTestCase", typeof(WpfCommands));
             EditCondition = new RoutedUICommand("Edit condition", "EditCondition", typeof(WpfCommands));
+            EditConditionOrAction = new RoutedUICommand("Edit condition or action", "EditConditionOrAction", typeof(WpfCommands));
             DeleteCondition = new RoutedUICommand("Delete condition", "DeleteCondition", typeof(WpfCommands));
             EditAction = new RoutedUICommand("Edit action", "EditAction", typeof(WpfCommands));
             DeleteAction = new RoutedUICommand("Delete action", "DeleteAction", typeof(WpfCommands));
@@ -51,6 +54,7 @@ namespace DecisionTableCreator
             ExportHtmlToClipboard = new RoutedUICommand("Export HTML to clipboard", "ExportHtmlToClipboard", typeof(WpfCommands));
             MoveConditionOrActionUp = new RoutedUICommand("Move up", "MoveConditionOrActionUp", typeof(WpfCommands));
             MoveConditionOrActionDown = new RoutedUICommand("Move down", "MoveConditionOrActionDown", typeof(WpfCommands));
+            ExportToFileWithExternalTemplate = new RoutedUICommand("Export to file with external template", "ExportToFileWithExternalTemplate", typeof(WpfCommands));
         }
     }
 }

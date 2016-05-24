@@ -64,7 +64,7 @@ namespace DecisionTableCreator.Templates {
         ///   Looks up a localized string similar to delimiters &quot;$&quot;, &quot;$&quot;
         ///
         ///TestCasesRoot(root) ::= &lt;&lt;
-        ///&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+        ///&lt;!DOCTYPE&gt;
         ///&lt;HTML&gt;
         ///&lt;BODY&gt;
         ///&lt;TABLE border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot;&gt;
@@ -77,11 +77,34 @@ namespace DecisionTableCreator.Templates {
         ///$root.TestCases:TestCaseDummy(); separator=&quot;\r\n&quot;$
         ///	&lt;/TR&gt;
         ///$root.Conditions:ConditionOrAction(); separator=&quot;\r\n&quot;$
-        ///	&lt;T [rest of string was truncated]&quot;;.
+        ///	&lt;TR&gt;
+        ///		&lt;TD bgcolor=&quot;DarkGray&quot;&gt;&lt;i&gt;&lt;strong&gt;Actions&lt;/strong&gt;&lt;/i&gt;&lt;/TD&gt;
+        ///$root.TestCases:TestCaseD [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HtmlTemplate {
             get {
                 return ResourceManager.GetString("HtmlTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///using System.Text;
+        ///using System.Threading.Tasks;
+        ///
+        ///namespace DecisionTableCreator.Templates
+        ///{
+        ///    class Sample
+        ///    {
+        ///    }
+        ///}
+        ///.
+        /// </summary>
+        public static string Sample_file {
+            get {
+                return ResourceManager.GetString("Sample_file", resourceCulture);
             }
         }
     }

@@ -171,6 +171,7 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="Templates\HtmlTemplate.stg" />
+    <None Include="Templates\Sample.file.stg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

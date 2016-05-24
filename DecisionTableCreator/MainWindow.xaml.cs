@@ -23,6 +23,7 @@ using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.TestCases;
 using DecisionTableCreator.Utils;
 using Microsoft.Win32;
+using Path = System.IO.Path;
 
 namespace DecisionTableCreator
 {
@@ -42,6 +43,36 @@ namespace DecisionTableCreator
             _timer.Interval = new TimeSpan(0,0,0,1);
             _timer.Tick += TimerOnTick;
             _timer.Start();
+            SearchForTemplatesAndCreateSubmenu();
+        }
+
+        private void SearchForTemplatesAndCreateSubmenu()
+        {
+            try
+            {
+                DirectoryInfo di = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "DecisionTableCreatorTemplates"));
+                if (!di.Exists)
+                {
+                    di.Create();
+                }
+                FileInfo fi = new FileInfo(System.IO.Path.Combine(di.FullName, "Sample.file.stg"));
+                if (!fi.Exists)
+                {
+                    File.WriteAllText(fi.FullName, Templates.Resources.Sample_file);
+                }
+                foreach (FileInfo fileInfo in di.GetFiles("*.stg"))
+                {
+                    MenuItem menuItem = new MenuItem();
+                    menuItem.Header = fileInfo.Name;
+                    menuItem.Command = WpfCommands.ExportToFileWithExternalTemplate;
+                    menuItem.CommandParameter = fileInfo.FullName;
+                    DataContainer.ExportToFileItem.Add(menuItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void TimerOnTick(object sender, EventArgs eventArgs)
@@ -367,6 +398,54 @@ namespace DecisionTableCreator
                 ShowAndLogMessage("exception caught", ex);
             }
         }
+        private void EditConditionOrAction_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                var index = CalculateRowIndex(e);
+                if (index >= 0)
+                {
+                    if (sender.Equals(DataGridConditions))
+                    {
+                        EditCondition(index);
+                    }
+                    else
+                    {
+                        EditAction(index);   
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        private void EditCondition(int index)
+        {
+            ConditionObject original = ((ConditionObject) DataContainer.TestCasesRoot.Conditions[index]);
+            ConditionObject coClone = original.Clone();
+            EditCondition wnd = new EditCondition(coClone);
+            bool? result = wnd.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                DataContainer.TestCasesRoot.ChangeCondition(index, coClone);
+            }
+        }
+
+        private void EditAction(int index)
+        {
+            ActionObject original = ((ActionObject)DataContainer.TestCasesRoot.Actions[index]);
+            ActionObject coClone = original.Clone();
+            EditAction wnd = new EditAction(coClone);
+            bool? result = wnd.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                DataContainer.TestCasesRoot.ChangeAction(index, coClone);
+            }
+        }
+
 
         private static int CalculateRowIndex(ExecutedRoutedEventArgs e)
         {
@@ -410,6 +489,23 @@ namespace DecisionTableCreator
             }
         }
 
+        private void EditConditionOrAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            try
+            {
+                object condObject = GetConditionOrActionGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject);
+                if (condObject != null && (condObject is ConditionObject || condObject is ActionObject))
+                {
+                    e.CanExecute = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
         private void EditAction_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             try
@@ -417,14 +513,7 @@ namespace DecisionTableCreator
                 var index = CalculateRowIndex(e);
                 if (index >= 0)
                 {
-                    ActionObject original = ((ActionObject)DataContainer.TestCasesRoot.Actions[index]);
-                    ActionObject coClone = original.Clone();
-                    EditAction wnd = new EditAction(coClone);
-                    bool? result = wnd.ShowDialog();
-                    if (result.HasValue && result.Value)
-                    {
-                        DataContainer.TestCasesRoot.ChangeAction(index, coClone);
-                    }
+                    EditAction(index);
                 }
 
             }
@@ -892,5 +981,40 @@ namespace DecisionTableCreator
         {
             CalculateStatistics = true;
         }
+
+        private void ExportToFileWithExternalTemplate_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void ExportToFileWithExternalTemplate_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                ExecutedRoutedEventArgs args = e as ExecutedRoutedEventArgs;
+                FileInfo fi = new  FileInfo(e.Parameter.ToString());
+                if (fi.Exists)
+                {
+                    SaveFileDialog dlg = new SaveFileDialog();
+                    dlg.Filter = "Text files|*.txt|Source files|*.c;*.cs;*.cpp;*.h|All files|*.*";
+                    dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    bool? result = dlg.ShowDialog(this);
+                    if (result.HasValue && result.Value)
+                    {
+                        string text = DataContainer.TestCasesRoot.GenerateFromtemplate(fi.FullName);
+                        File.WriteAllText(dlg.FileName, text);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this, "File " + args.Parameter + " not found", "File not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
     }
 }

@@ -12,8 +12,9 @@
     <Window.CommandBindings>
         <CommandBinding Command="local:WpfCommands.AppendTestCase" Executed="AppendTestCase_Executed" CanExecute="AppendTestCase_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.InsertTestCase" Executed="InsertTestCase_Executed" CanExecute="InsertTestCase_OnCanExecute"/>
-        <CommandBinding Command="local:WpfCommands.EditCondition" Executed="EditCondition_Executed" CanExecute="EditCondition_OnCanExecute"/>
-        <CommandBinding Command="local:WpfCommands.EditAction" Executed="EditAction_Executed" CanExecute="EditAction_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.EditConditionOrAction" Executed="EditConditionOrAction_Executed" CanExecute="EditConditionOrAction_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.EditCondition" Executed="EditConditionOrAction_Executed" CanExecute="EditCondition_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.EditAction" Executed="EditConditionOrAction_Executed" CanExecute="EditAction_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.Save" Executed="Save_Executed" CanExecute="Save_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.Open" Executed="Open_Executed" CanExecute="Open_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.NewDocument" Executed="NewDocument_Executed" CanExecute="NewDocument_OnCanExecute"/>
@@ -26,6 +27,7 @@
         <CommandBinding Command="local:WpfCommands.ExportHtmlToClipboard" Executed="ExportHtmlToClipboard_Executed" CanExecute="ExportHtmlToClipboard_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.MoveConditionOrActionUp" Executed="MoveConditionOrActionUp_Executed" CanExecute="MoveConditionOrActionUp_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.MoveConditionOrActionDown" Executed="MoveConditionOrActionDown_Executed" CanExecute="MoveConditionOrActionDown_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.ExportToFileWithExternalTemplate" Executed="ExportToFileWithExternalTemplate_Executed" CanExecute="ExportToFileWithExternalTemplate_OnCanExecute"/>
     </Window.CommandBindings>
 
     <Grid MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}">
@@ -75,6 +77,9 @@
             </MenuItem>
             <MenuItem Header="Export">
                 <MenuItem Command="local:WpfCommands.ExportHtmlToClipboard"/>
+                <MenuItem Header="External template" ItemsSource="{Binding ExportToFileItem}">
+                    <!--<MenuItem Header="test1" Command="local:WpfCommands.ExportToFileWithExternalTemplate" CommandParameter="test"></MenuItem>-->
+                </MenuItem>
             </MenuItem>
         </Menu>
            

@@ -1,0 +1,41 @@
+﻿
+TestCasesRoot(root) ::= <<
+conditions count == <root.Conditions.Count>
+List conditions
+<root.Conditions:ConditionOrAction(); separator="\r\n">
+
+actions count == <root.Actions.Count>
+List actions:
+<root.Actions:ConditionOrAction(); separator="\r\n">
+
+test cases count == <root.TestCases.Count>
+List test cases:
+<root.TestCases:TestCase();separator="\r\n">
+>>
+
+ConditionOrAction(co) ::= <<	<co.Name>
+		Possible Values:
+			enum value count <co.EnumValues.Count>
+<co.EnumValues:EnumValue(); separator="\r\n">
+		Selected values:
+<co.TestValues:TestValue(); separator="\r\n">
+>>
+
+EnumValue(value) ::= <<
+			<value> <value.IsDefault:Bool("IsDefault")> <value.DontCare:Bool("DontCare")> <value.IsInvalid:Bool("IsInvalid")> >>
+
+Bool(value, text) ::= "<if(value)><text><endif>"
+
+TestCase(tc) ::= <<	<tc.Name>
+		Conditions:
+<tc.Conditions:TestValue();separator="\r\n">
+		Actions:
+<tc.Actions:TestValue();separator="\r\n">
+>>
+
+TestValue(value) ::= <<
+			<value> in <value.ConditionOrActionParent.Name>
+				Name: <value.Value.Name>
+				Value: <value.Value.Value>
+>>
+

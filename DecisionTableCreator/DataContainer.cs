@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.TestCases;
 
@@ -126,6 +127,19 @@ namespace DecisionTableCreator
             {
                 _coverage = value;
                 OnPropertyChanged("Coverage");
+            }
+        }
+
+
+        private ObservableCollection<MenuItem> _exportToFileItem = new ObservableCollection<MenuItem>();
+
+        public ObservableCollection<MenuItem> ExportToFileItem
+        {
+            get { return _exportToFileItem; }
+            set
+            {
+                _exportToFileItem = value;
+                OnPropertyChanged("ExportToFileItem");
             }
         }
 

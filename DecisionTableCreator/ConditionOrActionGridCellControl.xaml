@@ -9,6 +9,9 @@
     <StackPanel>
         <TextBox Text="{Binding Path=Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
                  Background="{Binding Path=Background.WpfBrush, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.InputBindings>
+                <MouseBinding Command="local:WpfCommands.EditConditionOrAction" Gesture="LeftDoubleClick"/>
+            </TextBox.InputBindings>
             <TextBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="local:WpfCommands.InsertTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
