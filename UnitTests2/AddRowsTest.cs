@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Antlr.Runtime;
 using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.TestCases;
 using Microsoft.Win32;
@@ -80,6 +81,43 @@ namespace UnitTests2
             selValues.AppendCondition(tcrc.TestCasesRoot.TestCases.Count);
             selValues.Check(tcrc.TestCasesRoot);
 
+
+            tcrc.TestCasesRoot.Save(secondPath);
+            // only for manual check of testcase
+            //TestSupport.CompareFile(firstPath, secondPath);
+        }
+
+        [Test]
+        public void TestAddAndEditCondition()
+        {
+            string firstPath = Path.Combine(TestSupport.CreatedFilesDirectory, "first.xml");
+            string secondPath = Path.Combine(TestSupport.CreatedFilesDirectory, "second.xml");
+            TestCasesRootContainer tcrc = new TestCasesRootContainer();
+
+            tcrc.TestCasesRoot.Save(firstPath);
+            SelectedValuesByConditionsAndActions selValues = new SelectedValuesByConditionsAndActions();
+            selValues.CollectValues(tcrc.TestCasesRoot);
+            selValues.Check(tcrc.TestCasesRoot);
+
+            string newConditionName = "new condition " + DateTime.Now.ToString("F");
+            int conditionCount = tcrc.TestCasesRoot.Conditions.Count;
+            tcrc.TestCasesRoot.AppendCondition(ConditionObject.Create(newConditionName, new ObservableCollection<EnumValue>() { new EnumValue("new test", "new value") }));
+
+            TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
+            Assert.That(tcrc.TestCasesRoot.Conditions.Count == conditionCount + 1);
+            Assert.That(tcrc.TestCasesRoot.Conditions.Last().Name.Equals(newConditionName));
+            Assert.That(tcrc.ConditionChangeCount == 1);
+            Assert.That(tcrc.ActionChangeCount == 0);
+            selValues.AppendCondition(tcrc.TestCasesRoot.TestCases.Count);
+            selValues.Check(tcrc.TestCasesRoot);
+
+            int index = conditionCount;
+            ConditionObject original = tcrc.TestCasesRoot.Conditions[index];
+            ConditionObject coClone = original.Clone();
+            coClone.EnumValues.Add(new EnumValue("test1", false, true));
+            tcrc.TestCasesRoot.ChangeCondition(index, coClone);
+
+            tcrc.TestCasesRoot.CalculateStatistics();
 
             tcrc.TestCasesRoot.Save(secondPath);
             // only for manual check of testcase

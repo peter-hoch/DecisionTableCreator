@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.TestCases;
 using DecisionTableCreator.Utils;
@@ -27,69 +31,119 @@ namespace DecisionTableCreator
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer _timer;
+        public bool CalculateStatistics { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            CalculateStatistics = false;
+            _timer = new DispatcherTimer();
+            _timer.Interval = new TimeSpan(0,0,0,1);
+            _timer.Tick += TimerOnTick;
+            _timer.Start();
         }
+
+        private void TimerOnTick(object sender, EventArgs eventArgs)
+        {
+            try
+            {
+                if (CalculateStatistics)
+                {
+                    CalculateStatistics = false;
+                    DataContainer.TestCasesRoot.FireStatisticsChanged();
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        void ShowAndLogMessage(string message, Exception ex, [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string memberName = null, [CallerFilePath] string fileName = null)
+        {
+            string text = String.Format("{0} in method({3}) file({4}/{2})"+Environment.NewLine+"{1}", message, ex, lineNumber, memberName, fileName);
+            Trace.WriteLine(text);
+#if DEBUG
+            MessageBox.Show(this, text);
+#endif
+        }
+
 
         DataContainer DataContainer { get { return (DataContainer)DataContext; } }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            DataGrid dataGrid = sender as DataGrid;
-            DataGridTextColumn col = e.Column as DataGridTextColumn;
-
-            //// exchange DataGridTextColumn with DataGridTemplateColumn and GridCellControl
-
-            DataGridHeader header = new DataGridHeader(col.Header.ToString(), dataGrid.Columns.Count);
-
-            DataGridTemplateColumn templateColumn = new DataGridTemplateColumn();
-            templateColumn.Header = header;
-
-            Binding bind = new Binding(col.Header.ToString());
-            bind.Mode = BindingMode.TwoWay;
-
-            if (col.Header.Equals(TestCasesRoot.ActionsColumnHeaderName) || col.Header.Equals(TestCasesRoot.ConditionsColumnHeaderName))
+            try
             {
-                // this is action or condition column
-                FrameworkElementFactory gridCellControl = new FrameworkElementFactory(typeof(ConditionOrActionGridCellControl));
-                gridCellControl.SetBinding(DataContextProperty, bind);
-                DataTemplate dataTemplate = new DataTemplate();
-                dataTemplate.VisualTree = gridCellControl;
-                templateColumn.CellTemplate = dataTemplate;
-            }
-            else
-            {
-                FrameworkElementFactory gridCellControl = new FrameworkElementFactory(typeof(GridCellControl));
-                gridCellControl.SetBinding(DataContextProperty, bind);
-                DataTemplate dataTemplate = new DataTemplate();
-                dataTemplate.VisualTree = gridCellControl;
-                templateColumn.CellTemplate = dataTemplate;
+                DataGrid dataGrid = sender as DataGrid;
+                DataGridTextColumn col = e.Column as DataGridTextColumn;
+
+                //// exchange DataGridTextColumn with DataGridTemplateColumn and GridCellControl
+
+                DataGridHeader header = new DataGridHeader(col.Header.ToString(), dataGrid.Columns.Count);
+
+                DataGridTemplateColumn templateColumn = new DataGridTemplateColumn();
+                templateColumn.Header = header;
+
+                Binding bind = new Binding(col.Header.ToString());
+                bind.Mode = BindingMode.TwoWay;
+
+                if (col.Header.Equals(TestCasesRoot.ActionsColumnHeaderName) || col.Header.Equals(TestCasesRoot.ConditionsColumnHeaderName))
+                {
+                    // this is action or condition column
+                    FrameworkElementFactory gridCellControl = new FrameworkElementFactory(typeof(ConditionOrActionGridCellControl));
+                    gridCellControl.SetBinding(DataContextProperty, bind);
+                    DataTemplate dataTemplate = new DataTemplate();
+                    dataTemplate.VisualTree = gridCellControl;
+                    templateColumn.CellTemplate = dataTemplate;
+                }
+                else
+                {
+                    FrameworkElementFactory gridCellControl = new FrameworkElementFactory(typeof(GridCellControl));
+                    gridCellControl.SetBinding(DataContextProperty, bind);
+                    DataTemplate dataTemplate = new DataTemplate();
+                    dataTemplate.VisualTree = gridCellControl;
+                    templateColumn.CellTemplate = dataTemplate;
+
+                }
+                e.Column = templateColumn;
 
             }
-            e.Column = templateColumn;
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void DataGrid_OnAutoGeneratedColumns(object sender, EventArgs e)
         {
-            DataGrid dataGrid = (DataGrid)sender;
-            for (int idx = 0; idx < dataGrid.Columns.Count; idx++)
+            try
             {
-                DataGridColumn col = dataGrid.Columns[idx] as DataGridColumn;
-
-                // add sync column width
-                AddToDictionary(dataGrid, col);
-                var widthPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(DataGridColumn.WidthProperty, typeof(DataGridColumn));
-                widthPropertyDescriptor.AddValueChanged(col, ValueChangedHandler);
-            }
-            var testcasesByDisplayOrder = DataContainer.TestCasesRoot.TestCases.OrderBy(tc => tc.DisplayIndex);
-            foreach (TestCase testCase in testcasesByDisplayOrder)
-            {
-                var testCaseCol = dataGrid.Columns.FirstOrDefault(col => col.Header.ToString().Equals(testCase.Name));
-                if (testCaseCol != null)
+                DataGrid dataGrid = (DataGrid)sender;
+                for (int idx = 0; idx < dataGrid.Columns.Count; idx++)
                 {
-                    testCaseCol.DisplayIndex = testCase.DisplayIndex;
+                    DataGridColumn col = dataGrid.Columns[idx] as DataGridColumn;
+
+                    // add sync column width
+                    AddToDictionary(dataGrid, col);
+                    var widthPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(DataGridColumn.WidthProperty, typeof(DataGridColumn));
+                    widthPropertyDescriptor.AddValueChanged(col, ValueChangedHandler);
                 }
+                var testcasesByDisplayOrder = DataContainer.TestCasesRoot.TestCases.OrderBy(tc => tc.DisplayIndex);
+                foreach (TestCase testCase in testcasesByDisplayOrder)
+                {
+                    var testCaseCol = dataGrid.Columns.FirstOrDefault(col => col.Header.ToString().Equals(testCase.Name));
+                    if (testCaseCol != null)
+                    {
+                        testCaseCol.DisplayIndex = testCase.DisplayIndex;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
@@ -245,40 +299,72 @@ namespace DecisionTableCreator
 
         private void AppendTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DataContainer.TestCasesRoot.InsertTestCase();
+            try
+            {
+                DataContainer.TestCasesRoot.InsertTestCase();
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void InsertTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var tcr = DataContainer.TestCasesRoot;
-            int index = CalculateColumnIndex(e, true);
-            tcr.InsertTestCase(index - 1);
+            try
+            {
+                var tcr = DataContainer.TestCasesRoot;
+                int index = CalculateColumnIndex(e, true);
+                tcr.InsertTestCase(index - 1);
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void InsertTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            int index = CalculateColumnIndex(e, true);
-            // focus must be at least on first testcase
-            if (index >= 1)
+            try
             {
-                e.CanExecute = true;
+                int index = CalculateColumnIndex(e, true);
+                // focus must be at least on first testcase
+                if (index >= 1)
+                {
+                    e.CanExecute = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
 
         private void EditCondition_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var index = CalculateRowIndex(e);
-            if (index >= 0)
+            try
             {
-                ConditionObject original = ((ConditionObject)DataContainer.TestCasesRoot.Conditions[index]);
-                ConditionObject coClone = original.Clone();
-                EditCondition wnd = new EditCondition(coClone);
-                bool? result = wnd.ShowDialog();
-                if (result.HasValue && result.Value)
+                var index = CalculateRowIndex(e);
+                if (index >= 0)
                 {
-                    DataContainer.TestCasesRoot.ChangeCondition(index, coClone);
+                    ConditionObject original = ((ConditionObject)DataContainer.TestCasesRoot.Conditions[index]);
+                    ConditionObject coClone = original.Clone();
+                    EditCondition wnd = new EditCondition(coClone);
+                    bool? result = wnd.ShowDialog();
+                    if (result.HasValue && result.Value)
+                    {
+                        DataContainer.TestCasesRoot.ChangeCondition(index, coClone);
+                    }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
@@ -309,46 +395,78 @@ namespace DecisionTableCreator
 
         private void EditCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            ConditionObject condObject = GetConditionOrActionGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ConditionObject;
-            if (condObject != null)
+            try
             {
-                e.CanExecute = true;
+                ConditionObject condObject = GetConditionOrActionGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ConditionObject;
+                if (condObject != null)
+                {
+                    e.CanExecute = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void EditAction_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var index = CalculateRowIndex(e);
-            if (index >= 0)
+            try
             {
-                ActionObject original = ((ActionObject)DataContainer.TestCasesRoot.Actions[index]);
-                ActionObject coClone = original.Clone();
-                EditAction wnd = new EditAction(coClone);
-                bool? result = wnd.ShowDialog();
-                if (result.HasValue && result.Value)
+                var index = CalculateRowIndex(e);
+                if (index >= 0)
                 {
-                    DataContainer.TestCasesRoot.ChangeAction(index, coClone);
+                    ActionObject original = ((ActionObject)DataContainer.TestCasesRoot.Actions[index]);
+                    ActionObject coClone = original.Clone();
+                    EditAction wnd = new EditAction(coClone);
+                    bool? result = wnd.ShowDialog();
+                    if (result.HasValue && result.Value)
+                    {
+                        DataContainer.TestCasesRoot.ChangeAction(index, coClone);
+                    }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void EditAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            ActionObject actionObject = GetConditionOrActionGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ActionObject;
-            if (actionObject != null)
+            try
             {
-                e.CanExecute = true;
+                ActionObject actionObject = GetConditionOrActionGridCellControlDataContext(e.Source as DataGrid, e.OriginalSource as DependencyObject) as ActionObject;
+                if (actionObject != null)
+                {
+                    e.CanExecute = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
-            var result = dlg.ShowDialog();
-            if (result.HasValue && result.Value)
+            try
             {
-                DataContainer.TestCasesRoot.Save(dlg.FileName);
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
+                var result = dlg.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                    DataContainer.TestCasesRoot.Save(dlg.FileName);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
@@ -359,12 +477,20 @@ namespace DecisionTableCreator
 
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
-            var result = dlg.ShowDialog();
-            if (result.HasValue && result.Value)
+            try
             {
-                DataContainer.TestCasesRoot.Load(dlg.FileName);
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
+                var result = dlg.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                    DataContainer.TestCasesRoot.Load(dlg.FileName);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
@@ -375,7 +501,15 @@ namespace DecisionTableCreator
 
         private void NewDocument_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DataContainer.TestCasesRoot.New();
+            try
+            {
+                DataContainer.TestCasesRoot.New();
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
 
@@ -386,12 +520,20 @@ namespace DecisionTableCreator
 
         private void AppendAction_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
-            EditAction wnd = new EditAction(newAction);
-            bool? result = wnd.ShowDialog();
-            if (result.HasValue && result.Value)
+            try
             {
-                DataContainer.TestCasesRoot.AppendAction(newAction);
+                ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
+                EditAction wnd = new EditAction(newAction);
+                bool? result = wnd.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                    DataContainer.TestCasesRoot.AppendAction(newAction);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
@@ -402,33 +544,57 @@ namespace DecisionTableCreator
 
         private void InsertAction_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var index = CalculateRowIndex(e);
-            if (index >= 0)
+            try
             {
-                ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
-                EditCondition wnd = new EditCondition(newAction);
-                bool? result = wnd.ShowDialog();
-                if (result.HasValue && result.Value)
+                var index = CalculateRowIndex(e);
+                if (index >= 0)
                 {
-                    DataContainer.TestCasesRoot.InsertAction(index, newAction);
+                    ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
+                    EditCondition wnd = new EditCondition(newAction);
+                    bool? result = wnd.ShowDialog();
+                    if (result.HasValue && result.Value)
+                    {
+                        DataContainer.TestCasesRoot.InsertAction(index, newAction);
+                    }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void InsertAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            DataGrid dataGrid;
-            e.CanExecute = IsActionsDataGridSelected(e, out dataGrid);
+            try
+            {
+                DataGrid dataGrid;
+                e.CanExecute = IsActionsDataGridSelected(e, out dataGrid);
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void AppendCondition_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            ConditionObject newCondition = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
-            EditCondition wnd = new EditCondition(newCondition);
-            bool? result = wnd.ShowDialog();
-            if (result.HasValue && result.Value)
+            try
             {
-                DataContainer.TestCasesRoot.AppendCondition(newCondition);
+                ConditionObject newCondition = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
+                EditCondition wnd = new EditCondition(newCondition);
+                bool? result = wnd.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                    DataContainer.TestCasesRoot.AppendCondition(newCondition);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
@@ -439,133 +605,218 @@ namespace DecisionTableCreator
 
         private void InsertCondition_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var index = CalculateRowIndex(e);
-            if (index >= 0)
+            try
             {
-                ConditionObject conditionObject = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
-                EditCondition wnd = new EditCondition(conditionObject);
-                bool? result = wnd.ShowDialog();
-                if (result.HasValue && result.Value)
+                var index = CalculateRowIndex(e);
+                if (index >= 0)
                 {
-                    DataContainer.TestCasesRoot.InsertCondition(index, conditionObject);
+                    ConditionObject conditionObject = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
+                    EditCondition wnd = new EditCondition(conditionObject);
+                    bool? result = wnd.ShowDialog();
+                    if (result.HasValue && result.Value)
+                    {
+                        DataContainer.TestCasesRoot.InsertCondition(index, conditionObject);
+                    }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void InsertCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            DataGrid dataGrid;
-            e.CanExecute = IsConditionsDataGridSelected(e, out dataGrid);
+            try
+            {
+                DataGrid dataGrid;
+                e.CanExecute = IsConditionsDataGridSelected(e, out dataGrid);
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void DeleteAction_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var index = CalculateRowIndex(e);
-            if (index >= 0)
+            try
             {
-                DataContainer.TestCasesRoot.DeleteActionAt(index);
+                var index = CalculateRowIndex(e);
+                if (index >= 0)
+                {
+                    DataContainer.TestCasesRoot.DeleteActionAt(index);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void DeleteAction_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            DataGrid dataGrid;
-            e.CanExecute = IsActionsDataGridSelected(e, out dataGrid);
+            try
+            {
+                DataGrid dataGrid;
+                e.CanExecute = IsActionsDataGridSelected(e, out dataGrid);
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void DeleteCondition_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var index = CalculateRowIndex(e);
-            if (index >= 0)
+            try
             {
-                DataContainer.TestCasesRoot.DeleteConditionAt(index);
+                var index = CalculateRowIndex(e);
+                if (index >= 0)
+                {
+                    DataContainer.TestCasesRoot.DeleteConditionAt(index);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void DeleteCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            DataGrid dataGrid;
-            e.CanExecute = IsConditionsDataGridSelected(e, out dataGrid);
+            try
+            {
+                DataGrid dataGrid;
+                e.CanExecute = IsConditionsDataGridSelected(e, out dataGrid);
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void MoveConditionOrActionUp_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var index = CalculateRowIndex(e);
-            if (index >= 0)
+            try
             {
-                DataGrid dataGrid;
-                if (IsConditionsDataGridSelected(e, out dataGrid))
+                var index = CalculateRowIndex(e);
+                if (index >= 0)
                 {
-                    DataContainer.TestCasesRoot.MoveConditionUp(index);
+                    DataGrid dataGrid;
+                    if (IsConditionsDataGridSelected(e, out dataGrid))
+                    {
+                        DataContainer.TestCasesRoot.MoveConditionUp(index);
+                    }
+                    else if (IsActionsDataGridSelected(e, out dataGrid))
+                    {
+                        DataContainer.TestCasesRoot.MoveActionUp(index);
+                    }
                 }
-                else if (IsActionsDataGridSelected(e, out dataGrid))
-                {
-                    DataContainer.TestCasesRoot.MoveActionUp(index);
-                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void MoveConditionOrActionDown_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var index = CalculateRowIndex(e);
-            if (index >= 0)
+            try
             {
-                DataGrid dataGrid;
-                if (IsConditionsDataGridSelected(e, out dataGrid))
+                var index = CalculateRowIndex(e);
+                if (index >= 0)
                 {
-                    DataContainer.TestCasesRoot.MoveConditionDown(index);
+                    DataGrid dataGrid;
+                    if (IsConditionsDataGridSelected(e, out dataGrid))
+                    {
+                        DataContainer.TestCasesRoot.MoveConditionDown(index);
+                    }
+                    else if (IsActionsDataGridSelected(e, out dataGrid))
+                    {
+                        DataContainer.TestCasesRoot.MoveActionDown(index);
+                    }
                 }
-                else if (IsActionsDataGridSelected(e, out dataGrid))
-                {
-                    DataContainer.TestCasesRoot.MoveActionDown(index);
-                }
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void MoveConditionOrActionUp_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            DataGrid dataGrid;
-            if (IsConditionsDataGridSelected(e, out dataGrid))
+            try
             {
-                e.CanExecute = DataContainer.TestCasesRoot.Conditions.Count > 1;
+                DataGrid dataGrid;
+                if (IsConditionsDataGridSelected(e, out dataGrid))
+                {
+                    e.CanExecute = DataContainer.TestCasesRoot.Conditions.Count > 1;
+                }
+                else if (IsActionsDataGridSelected(e, out dataGrid))
+                {
+                    e.CanExecute = DataContainer.TestCasesRoot.Actions.Count > 1;
+                }
+
             }
-            else if (IsActionsDataGridSelected(e, out dataGrid))
+            catch (Exception ex)
             {
-                e.CanExecute = DataContainer.TestCasesRoot.Actions.Count > 1;
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void MoveConditionOrActionDown_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            DataGrid dataGrid;
-            if (IsConditionsDataGridSelected(e, out dataGrid))
+            try
             {
-                e.CanExecute = DataContainer.TestCasesRoot.Conditions.Count > 1;
-            }
-            else if (IsActionsDataGridSelected(e, out dataGrid))
-            {
-                e.CanExecute = DataContainer.TestCasesRoot.Actions.Count > 1;
-            }
+                DataGrid dataGrid;
+                if (IsConditionsDataGridSelected(e, out dataGrid))
+                {
+                    e.CanExecute = DataContainer.TestCasesRoot.Conditions.Count > 1;
+                }
+                else if (IsActionsDataGridSelected(e, out dataGrid))
+                {
+                    e.CanExecute = DataContainer.TestCasesRoot.Actions.Count > 1;
+                }
 
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void ExportHtmlToClipboard_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            StringBuilder html = new StringBuilder();
-
             try
             {
-                string text = DataContainer.TestCasesRoot.GenerateFromTemplateString(Templates.Resources.HtmlTemplate);
-                PrepareForClipboard prepare = new PrepareForClipboard();
-                string clipboardText = prepare.Prepare(text);
+                try
+                {
+                    string text = DataContainer.TestCasesRoot.GenerateFromTemplateString(Templates.Resources.HtmlTemplate);
+                    PrepareForClipboard prepare = new PrepareForClipboard();
+                    string clipboardText = prepare.Prepare(text);
 
-                DataObject dataObject = new DataObject();
-                dataObject.SetData(DataFormats.Html, new System.IO.MemoryStream(Encoding.UTF8.GetBytes(clipboardText)));
-                Clipboard.SetDataObject(dataObject, true);
+                    DataObject dataObject = new DataObject();
+                    dataObject.SetData(DataFormats.Html, new MemoryStream(Encoding.UTF8.GetBytes(clipboardText)));
+                    Clipboard.SetDataObject(dataObject, true);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("unexpected error during export to clipboard" + Environment.NewLine + ex.ToString());
+                }
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show("unexpected error during export to clipboard" + Environment.NewLine + ex.ToString());
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
@@ -639,7 +890,7 @@ namespace DecisionTableCreator
 
         private void ComboBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            DataContainer.TestCasesRoot.FireStatisticsChanged();
+            CalculateStatistics = true;
         }
     }
 }
