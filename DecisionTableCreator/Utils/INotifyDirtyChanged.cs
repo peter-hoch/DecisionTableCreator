@@ -28,30 +28,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace DecisionTableCreator
+namespace DecisionTableCreator.Utils
 {
-    /// <summary>
-    /// Interaction logic for GridCellControl.xaml
-    /// </summary>
-    public partial class GridCellControl : UserControl
+    public delegate void DirtyChangedDelegate();
+
+    public interface INotifyDirtyChanged : INotifyPropertyChanged
     {
-        public GridCellControl()
-        {
-            InitializeComponent();
-        }
+        event DirtyChangedDelegate DirtyChanged;
+        void ResetDirty();
+        void FireDirtyChanged();
     }
+
 }

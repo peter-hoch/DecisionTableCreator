@@ -28,30 +28,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace DecisionTableCreator
+namespace DecisionTableCreator.Utils
 {
-    /// <summary>
-    /// Interaction logic for GridCellControl.xaml
-    /// </summary>
-    public partial class GridCellControl : UserControl
+    public class ObservedItem
     {
-        public GridCellControl()
+        public string Name { get; private set; }
+
+        public INotifyCollectionChanged Collection { get; set; }
+
+        public INotifyPropertyChanged Property { get; set; }
+
+        public INotifyDirtyChanged DirtyChanged { get; set; }
+
+        public PropertyInfo PropertyInfo { get; private set; }
+
+        public ObservedItem(string name, PropertyInfo propInfo)
         {
-            InitializeComponent();
+            Name = name;
+            PropertyInfo = propInfo;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0} {1} {2}", Name, Property != null ? "prop" : "", Collection != null ? "coll" : "");
         }
     }
+
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" Icon="pack://application:,,,/DtcIcon.ico" Closing="Window_Closing" >
+        Title="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="600" Width="800" Icon="pack://application:,,,/DtcIcon.ico" Closing="Window_Closing" >
     <Window.DataContext>
         <local:DataContainer/>
     </Window.DataContext>
@@ -112,8 +112,8 @@
             <StackPanel Orientation="Horizontal">
                 <Label Margin="5" Content="Possible combinations"/>
                 <TextBox Margin="5" MinWidth="60" Text="{Binding PossibleCombinations, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"></TextBox>
-                <TextBox Margin="5" MinWidth="60" Text="{Binding DirtyObserver.Dirty, Mode=OneWay}"/>
-                <Button Content="ResetDirty" Click="ButtonBase_OnClick"></Button>
+                <!--<TextBox Margin="5" MinWidth="60" Text="{Binding DirtyObserver.Dirty, Mode=OneWay}"/>
+                <Button Content="ResetDirty" Click="ButtonBase_OnClick"></Button>-->
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Margin="5" Content="Covered test cases"/>

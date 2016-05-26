@@ -28,30 +28,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace DecisionTableCreator
+namespace DecisionTableCreator.TestCases
 {
-    /// <summary>
-    /// Interaction logic for GridCellControl.xaml
-    /// </summary>
-    public partial class GridCellControl : UserControl
+    public class Statistics
     {
-        public GridCellControl()
-        {
-            InitializeComponent();
-        }
+        public int PossibleCombinations { get; set; }
+
+        public int CoveredTestCases { get; set; }
+
+        public double Coverage { get; set; }
+
     }
 }

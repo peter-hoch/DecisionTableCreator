@@ -28,30 +28,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace DecisionTableCreator
+namespace DecisionTableCreator.TestCases
 {
-    /// <summary>
-    /// Interaction logic for GridCellControl.xaml
-    /// </summary>
-    public partial class GridCellControl : UserControl
+    public interface IConditionAction
     {
-        public GridCellControl()
-        {
-            InitializeComponent();
-        }
+        int LoadSaveId { get; set; }
+
+        ValueDataType DataType { get; }
+
+        string Name { get; set; }
+
+        bool DefaultBool { get; set; }
+
+        string DefaultText { get; set; }
+
+        ObservableCollection<EnumValue> EnumValues { get; set; }
+
+        string TooltipText { get; set; }
     }
+
 }
