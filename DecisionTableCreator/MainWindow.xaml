@@ -84,6 +84,7 @@
                     <!--<MenuItem Header="test1" Command="local:WpfCommands.ExportToFileWithExternalTemplate" CommandParameter="test"></MenuItem>-->
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="About" Click="About_OnClick"></MenuItem>
         </Menu>
            
         <DockPanel Grid.Row="2" Grid.Column="1" >

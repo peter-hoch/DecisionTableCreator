@@ -1,0 +1,28 @@
+﻿<Window x:Class="DecisionTableCreator.AboutBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DecisionTableCreator"
+        xmlns:properties="clr-namespace:DecisionTableCreator.Properties"
+        mc:Ignorable="d"
+        Title="AboutBox" Height="250" Width="600" Icon="pack://application:,,,/DtcIcon.ico" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Margin="5"  Text="Decision Table Creator"/>
+        <TextBlock Grid.Row="1" Margin="5"  Text="Version 1.0"/>
+        <TextBlock Grid.Row="2" Margin="5"  Text="Copyright (c) 2016 Peter Hoch"/>
+        <TextBlock Grid.Row="3" Margin="5"  Text="License:"/>
+        <ScrollViewer Grid.Row="4" Margin="5">
+            <TextBlock Text="{x:Static properties:Resources.License}"/>
+        </ScrollViewer>
+    </Grid>
+</Window>

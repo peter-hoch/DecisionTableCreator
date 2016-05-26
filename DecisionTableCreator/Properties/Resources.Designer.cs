@@ -22,7 +22,7 @@ namespace DecisionTableCreator.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace DecisionTableCreator.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DecisionTableCreator.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace DecisionTableCreator.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,10 +63,30 @@ namespace DecisionTableCreator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon DtcIcon {
+        public static System.Drawing.Icon DtcIcon {
             get {
                 object obj = ResourceManager.GetObject("DtcIcon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [The &quot;BSD license&quot;]
+        ///Copyright (c) 2016 Peter Hoch
+        ///All rights reserved.
+        ///
+        ///Redistribution and use in source and binary forms, with or without
+        ///modification, are permitted provided that the following conditions
+        ///are met:
+        ///1. Redistributions of source code must retain the above copyright
+        ///   notice, this list of conditions and the following disclaimer.
+        ///2. Redistributions in binary form must reproduce the above copyright
+        ///   notice, this list of conditions and the following disclaimer in the
+        ///   documentatio [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string License {
+            get {
+                return ResourceManager.GetString("License", resourceCulture);
             }
         }
     }

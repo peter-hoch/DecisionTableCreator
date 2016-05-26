@@ -1076,9 +1076,10 @@ namespace DecisionTableCreator
             }
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void About_OnClick(object sender, RoutedEventArgs e)
         {
-            DataContainer.DirtyObserver.Reset();
+            AboutBox dlg = new AboutBox();
+            dlg.ShowDialog();
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)

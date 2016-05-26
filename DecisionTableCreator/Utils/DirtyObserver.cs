@@ -160,7 +160,6 @@ namespace DecisionTableCreator.Utils
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     throw new NotSupportedException("this command is not supported - deleted item are not provided");
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
