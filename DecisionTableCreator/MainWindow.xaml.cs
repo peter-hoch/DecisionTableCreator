@@ -1112,5 +1112,10 @@ namespace DecisionTableCreator
             }
         }
 
+        private void DataGridConditions_Unloaded(object sender, RoutedEventArgs e)
+        {
+            var grid = (DataGrid)sender;
+            grid.CommitEdit(DataGridEditingUnit.Row, true);
+        }
     }
 }

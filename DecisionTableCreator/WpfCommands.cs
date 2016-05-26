@@ -65,6 +65,7 @@ namespace DecisionTableCreator
             KeyGesture gestureAltC = new KeyGesture(Key.C, ModifierKeys.Alt);
             KeyGesture gestureAltA = new KeyGesture(Key.A, ModifierKeys.Alt);
             KeyGesture gestureAltT = new KeyGesture(Key.T, ModifierKeys.Alt);
+            KeyGesture gestureAltE = new KeyGesture(Key.E, ModifierKeys.Alt);
             AppendTestCase = new RoutedUICommand("Append test case", "AppendTestCase", typeof(WpfCommands), new InputGestureCollection() { gestureAltT });
             DeleteTestCase = new RoutedUICommand("Delete test case", "DeleteTestCase", typeof(WpfCommands));
             InsertTestCase = new RoutedUICommand("Insert test case", "InsertTestCase", typeof(WpfCommands));
@@ -81,7 +82,7 @@ namespace DecisionTableCreator
             InsertCondition = new RoutedUICommand("Insert condition", "InsertCondition", typeof(WpfCommands));
             AppendAction = new RoutedUICommand("Append action", "AppendAction", typeof(WpfCommands), new InputGestureCollection() { gestureAltA });
             InsertAction = new RoutedUICommand("Insert action", "InsertAction", typeof(WpfCommands));
-            AppendEnumValue = new RoutedUICommand("Append enum value", "AppendEnumValue", typeof(WpfCommands));
+            AppendEnumValue = new RoutedUICommand("Append enum value", "AppendEnumValue", typeof(WpfCommands), new InputGestureCollection() { gestureAltE });
             DeleteEnumValue = new RoutedUICommand("Delete enum value", "DeleteEnumValue", typeof(WpfCommands));
             ExportHtmlToClipboard = new RoutedUICommand("Export HTML to clipboard", "ExportHtmlToClipboard", typeof(WpfCommands));
             MoveConditionOrActionUp = new RoutedUICommand("Move up", "MoveConditionOrActionUp", typeof(WpfCommands));
