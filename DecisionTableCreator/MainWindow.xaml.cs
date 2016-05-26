@@ -40,7 +40,7 @@ namespace DecisionTableCreator
             InitializeComponent();
             CalculateStatistics = false;
             _timer = new DispatcherTimer();
-            _timer.Interval = new TimeSpan(0,0,0,1);
+            _timer.Interval = new TimeSpan(0, 0, 0, 1);
             _timer.Tick += TimerOnTick;
             _timer.Start();
             SearchForTemplatesAndCreateSubmenu();
@@ -94,7 +94,7 @@ namespace DecisionTableCreator
 
         void ShowAndLogMessage(string message, Exception ex, [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string memberName = null, [CallerFilePath] string fileName = null)
         {
-            string text = String.Format("{0} in method({3}) file({4}/{2})"+Environment.NewLine+"{1}", message, ex, lineNumber, memberName, fileName);
+            string text = String.Format("{0} in method({3}) file({4}/{2})" + Environment.NewLine + "{1}", message, ex, lineNumber, memberName, fileName);
             Trace.WriteLine(text);
 #if DEBUG
             MessageBox.Show(this, text);
@@ -389,7 +389,7 @@ namespace DecisionTableCreator
                     }
                     else
                     {
-                        EditAction(index);   
+                        EditAction(index);
                     }
                 }
 
@@ -402,7 +402,7 @@ namespace DecisionTableCreator
 
         private void EditCondition(int index)
         {
-            ConditionObject original = ((ConditionObject) DataContainer.TestCasesRoot.Conditions[index]);
+            ConditionObject original = ((ConditionObject)DataContainer.TestCasesRoot.Conditions[index]);
             ConditionObject coClone = original.Clone();
             EditCondition wnd = new EditCondition(coClone);
             bool? result = wnd.ShowDialog();
@@ -505,18 +505,23 @@ namespace DecisionTableCreator
         {
             try
             {
-                SaveFileDialog dlg = new SaveFileDialog();
-                dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
-                var result = dlg.ShowDialog();
-                if (result.HasValue && result.Value)
-                {
-                    DataContainer.TestCasesRoot.Save(dlg.FileName);
-                }
-
+                SaveProject();
             }
             catch (Exception ex)
             {
                 ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        private void SaveProject()
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
+            var result = dlg.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                DataContainer.TestCasesRoot.Save(dlg.FileName);
+                DataContainer.ResetDirty();
             }
         }
 
@@ -953,7 +958,7 @@ namespace DecisionTableCreator
             try
             {
                 ExecutedRoutedEventArgs args = e as ExecutedRoutedEventArgs;
-                FileInfo fi = new  FileInfo(e.Parameter.ToString());
+                FileInfo fi = new FileInfo(e.Parameter.ToString());
                 if (fi.Exists)
                 {
                     SaveFileDialog dlg = new SaveFileDialog();
@@ -980,6 +985,37 @@ namespace DecisionTableCreator
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             DataContainer.DirtyObserver.Reset();
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                if (DataContainer.DirtyObserver.Dirty)
+                {
+                    MessageBoxResult result = MessageBox.Show(this, "Your work is not save. Do you want to save?", "Save", MessageBoxButton.YesNoCancel);
+                    switch (result)
+                    {
+                        case MessageBoxResult.OK:
+                        case MessageBoxResult.Yes:
+                            SaveProject();
+                            e.Cancel = true;
+                            break;
+                        case MessageBoxResult.No:
+                            // exit without save
+                            break;
+                        case MessageBoxResult.None:
+                        case MessageBoxResult.Cancel:
+                        default:
+                            e.Cancel = true;
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
     }
 }
