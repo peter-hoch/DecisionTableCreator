@@ -72,7 +72,7 @@ namespace DecisionTableCreator.TestCases
             }
 
             var xmlTestCases = root.AddElement(XmlNames.TestCasesName);
-            foreach (TestCase testCase in testCasesRoot.TestCases)
+            foreach (TestCase testCase in testCasesRoot.TestCases.OrderBy(tc=>tc.DisplayIndex))
             {
                 Save(xmlTestCases, testCase);
             }
@@ -215,10 +215,12 @@ namespace DecisionTableCreator.TestCases
 
                 var xmlTestCases = root.GetElementsByTagName(XmlNames.TestCasesName);
                 element = xmlTestCases[0] as XmlElement;
+                int displayIndex = 1;
                 foreach (XmlElement item in element.GetElementsByTagName(XmlNames.TestCaseName))
                 {
                     TestCase testCase;
                     Load(item, out testCase);
+                    testCase.DisplayIndex = displayIndex++;
                     testCasesRoot.TestCases.Add(testCase);
                 }
             }

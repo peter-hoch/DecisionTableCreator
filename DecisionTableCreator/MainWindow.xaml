@@ -11,11 +11,13 @@
     </Window.DataContext>
     <Window.CommandBindings>
         <CommandBinding Command="local:WpfCommands.AppendTestCase" Executed="AppendTestCase_Executed" CanExecute="AppendTestCase_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.DeleteTestCase" Executed="DeleteTestCase_Executed" CanExecute="DeleteTestCase_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.InsertTestCase" Executed="InsertTestCase_Executed" CanExecute="InsertTestCase_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.EditConditionOrAction" Executed="EditConditionOrAction_Executed" CanExecute="EditConditionOrAction_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.EditCondition" Executed="EditConditionOrAction_Executed" CanExecute="EditCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.EditAction" Executed="EditConditionOrAction_Executed" CanExecute="EditAction_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.Save" Executed="Save_Executed" CanExecute="Save_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.SaveAs" Executed="SaveAs_Executed" CanExecute="Save_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.Open" Executed="Open_Executed" CanExecute="Open_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.NewDocument" Executed="NewDocument_Executed" CanExecute="NewDocument_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.AppendAction" Executed="AppendAction_Executed" CanExecute="AppendAction_OnCanExecute"/>

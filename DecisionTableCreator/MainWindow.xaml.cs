@@ -370,6 +370,41 @@ namespace DecisionTableCreator
             }
         }
 
+        private void DeleteTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            try
+            {
+                var tcr = DataContainer.TestCasesRoot;
+                int index = CalculateColumnIndex(e, true);
+                if (index >= 0)
+                {
+                    e.CanExecute = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        private void DeleteTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                var tcr = DataContainer.TestCasesRoot;
+                int index = CalculateColumnIndex(e, true);
+                if (index >= 0)
+                {
+                    tcr.DeleteTestCaseAt(index-1);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+
         private void InsertTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             try
@@ -541,15 +576,44 @@ namespace DecisionTableCreator
             }
         }
 
-        private void SaveProject()
+        private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                SaveAsProject();
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        private void SaveAsProject()
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
+            dlg.InitialDirectory = Path.GetDirectoryName(DataContainer.ProjectPath);
+            dlg.FileName = DataContainer.ProjectPath;
             var result = dlg.ShowDialog();
             if (result.HasValue && result.Value)
             {
                 DataContainer.TestCasesRoot.Save(dlg.FileName);
                 DataContainer.ResetDirty();
+                DataContainer.ProjectPath = dlg.FileName;
+            }
+        }
+
+        private void SaveProject()
+        {
+            FileInfo fi = new FileInfo(DataContainer.ProjectPath);
+            if (fi.Exists)
+            {
+                DataContainer.TestCasesRoot.Save(DataContainer.ProjectPath);
+                DataContainer.ResetDirty();
+            }
+            else
+            {
+                SaveAsProject();
             }
         }
 
@@ -568,6 +632,8 @@ namespace DecisionTableCreator
                 if (result.HasValue && result.Value)
                 {
                     DataContainer.TestCasesRoot.Load(dlg.FileName);
+                    DataContainer.ProjectPath = dlg.FileName;
+                    DataContainer.ResetDirty();
                 }
 
             }
@@ -1045,5 +1111,6 @@ namespace DecisionTableCreator
                 ShowAndLogMessage("exception caught", ex);
             }
         }
+
     }
 }

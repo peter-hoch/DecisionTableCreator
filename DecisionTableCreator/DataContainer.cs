@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
@@ -67,7 +68,12 @@ namespace DecisionTableCreator
 
         public void UpdateTitle()
         {
-            Title = string.Format(TitleFormat, DirtyObserver.Dirty ? "*" : "", ProjectName??"");
+            string projectName = "New Project";
+            if (!String.IsNullOrEmpty(ProjectPath))
+            {
+                projectName = Path.GetFileNameWithoutExtension(ProjectPath);
+            }
+            Title = string.Format(TitleFormat, DirtyObserver.Dirty ? "*" : "", projectName);
         }
 
         private string _title;
@@ -82,15 +88,15 @@ namespace DecisionTableCreator
             }
         }
 
-        private string _projectName = "New Project";
+        private string _projectPath = "New Project";
 
-        public string ProjectName
+        public string ProjectPath
         {
-            get { return _projectName; }
+            get { return _projectPath; }
             set
             {
-                _projectName = value;
-                OnPropertyChanged("ProjectName");
+                _projectPath = value;
+                OnPropertyChanged("ProjectPath");
                 UpdateTitle();
             }
         }

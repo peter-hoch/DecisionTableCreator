@@ -38,6 +38,7 @@ namespace DecisionTableCreator
     public class WpfCommands
     {
         public static readonly RoutedUICommand AppendTestCase;
+        public static readonly RoutedUICommand DeleteTestCase;
         public static readonly RoutedUICommand InsertTestCase;
         public static readonly RoutedUICommand EditCondition;
         public static readonly RoutedUICommand DeleteCondition;
@@ -45,6 +46,7 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand EditConditionOrAction;
         public static readonly RoutedUICommand DeleteAction;
         public static readonly RoutedUICommand Save;
+        public static readonly RoutedUICommand SaveAs;
         public static readonly RoutedUICommand Open;
         public static readonly RoutedUICommand NewDocument;
         public static readonly RoutedUICommand AppendCondition;
@@ -64,6 +66,7 @@ namespace DecisionTableCreator
             KeyGesture gestureAltA = new KeyGesture(Key.A, ModifierKeys.Alt);
             KeyGesture gestureAltT = new KeyGesture(Key.T, ModifierKeys.Alt);
             AppendTestCase = new RoutedUICommand("Append test case", "AppendTestCase", typeof(WpfCommands), new InputGestureCollection() { gestureAltT });
+            DeleteTestCase = new RoutedUICommand("Delete test case", "DeleteTestCase", typeof(WpfCommands));
             InsertTestCase = new RoutedUICommand("Insert test case", "InsertTestCase", typeof(WpfCommands));
             EditCondition = new RoutedUICommand("Edit condition", "EditCondition", typeof(WpfCommands));
             EditConditionOrAction = new RoutedUICommand("Edit condition or action", "EditConditionOrAction", typeof(WpfCommands));
@@ -71,6 +74,7 @@ namespace DecisionTableCreator
             EditAction = new RoutedUICommand("Edit action", "EditAction", typeof(WpfCommands));
             DeleteAction = new RoutedUICommand("Delete action", "DeleteAction", typeof(WpfCommands));
             Save = new RoutedUICommand("Save", "Save", typeof(WpfCommands));
+            SaveAs = new RoutedUICommand("Save as", "SaveAs", typeof(WpfCommands));
             Open = new RoutedUICommand("Open", "Open", typeof(WpfCommands));
             NewDocument = new RoutedUICommand("New", "NewDocument", typeof(WpfCommands));
             AppendCondition = new RoutedUICommand("Append condition", "AppendCondition", typeof(WpfCommands), new InputGestureCollection() { gestureAltC});
