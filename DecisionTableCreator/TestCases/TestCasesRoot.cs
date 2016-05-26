@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DecisionTableCreator.DynamicTable;
+using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator.TestCases
 {
@@ -14,11 +15,12 @@ namespace DecisionTableCreator.TestCases
 
     public delegate void StatisticsChangedDelegate();
 
-    public partial class TestCasesRoot : INotifyPropertyChanged
+    public partial class TestCasesRoot : INotifyDirtyChanged
     {
         public TestCasesRoot()
         {
             Init();
+            DirtyObserver = new DirtyObserver(this);
         }
 
         void Init()
@@ -402,6 +404,19 @@ namespace DecisionTableCreator.TestCases
             FireStatisticsChanged();
         }
 
+        private DirtyObserver _dirtyObserver;
+
+        public DirtyObserver DirtyObserver
+        {
+            get { return _dirtyObserver; }
+            set
+            {
+                _dirtyObserver = value;
+                OnPropertyChanged("DirtyObserver");
+            }
+        }
+
+
         #region event
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -416,6 +431,26 @@ namespace DecisionTableCreator.TestCases
         }
 
         #endregion
+
+        #region Dirty Support
+
+        public event DirtyChangedDelegate DirtyChanged;
+
+        public void FireDirtyChanged()
+        {
+            DirtyChanged?.Invoke();
+        }
+
+        public void ResetDirty()
+        {
+            if (DirtyObserver != null)
+            {
+                DirtyObserver.Reset();
+            }
+        }
+
+        #endregion
+
 
     }
 }

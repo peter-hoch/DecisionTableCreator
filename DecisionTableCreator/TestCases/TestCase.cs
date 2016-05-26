@@ -5,11 +5,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator.TestCases
 {
 
-    public class TestCase : IEqualTestSetting<TestCase>
+    public class TestCase : IEqualTestSetting<TestCase>, INotifyDirtyChanged
     {
         public enum CollectionType
         {
@@ -19,6 +20,7 @@ namespace DecisionTableCreator.TestCases
 
         public TestCase(string name, ValueObject[] conditions, ValueObject[] actions)
         {
+            DirtyObserver = new DirtyObserver(this);
             TestCaseIsUnique = true;
             Name = name;
             Conditions = new ObservableCollection<ValueObject>(conditions);
@@ -27,6 +29,7 @@ namespace DecisionTableCreator.TestCases
 
         public TestCase(string name, List<ValueObject> conditions, List<ValueObject> actions)
         {
+            DirtyObserver = new DirtyObserver(this);
             TestCaseIsUnique = true;
             Name = name;
             Conditions = new ObservableCollection<ValueObject>(conditions);
@@ -35,6 +38,7 @@ namespace DecisionTableCreator.TestCases
 
         public TestCase(string name)
         {
+            DirtyObserver = new DirtyObserver(this);
             TestCaseIsUnique = true;
             Name = name;
             Conditions = new ObservableCollection<ValueObject>();
@@ -43,6 +47,7 @@ namespace DecisionTableCreator.TestCases
 
         private String _name;
 
+        [ObserveForDirty]
         public String Name
         {
             get { return _name; }
@@ -124,25 +129,27 @@ namespace DecisionTableCreator.TestCases
 
         private ObservableCollection<ValueObject> _conditions;
 
+        [ObserveForDirty]
         public ObservableCollection<ValueObject> Conditions
         {
             get { return _conditions; }
             set
             {
                 _conditions = value;
-                OnPropertyChanged("ConditionTable");
+                OnPropertyChanged("Conditions");
             }
         }
 
         private ObservableCollection<ValueObject> _actions;
 
+        [ObserveForDirty]
         public ObservableCollection<ValueObject> Actions
         {
             get { return _actions; }
             set
             {
                 _actions = value;
-                OnPropertyChanged("ActionTable");
+                OnPropertyChanged("Actions");
             }
         }
 
@@ -163,6 +170,7 @@ namespace DecisionTableCreator.TestCases
 
         private int _displayIndex;
 
+        [ObserveForDirty]
         public int DisplayIndex
         {
             get { return _displayIndex; }
@@ -385,6 +393,20 @@ namespace DecisionTableCreator.TestCases
             return sb.ToString();
         }
 
+        private DirtyObserver _dirtyObserver;
+
+        public DirtyObserver DirtyObserver
+        {
+            get { return _dirtyObserver; }
+            set
+            {
+                _dirtyObserver = value;
+                OnPropertyChanged("DirtyObserver");
+            }
+        }
+
+
+
         #region event
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -399,5 +421,26 @@ namespace DecisionTableCreator.TestCases
         }
 
         #endregion
+
+        #region Dirty Support
+
+        public event DirtyChangedDelegate DirtyChanged;
+
+        public void FireDirtyChanged()
+        {
+            DirtyChanged?.Invoke();
+        }
+
+        public void ResetDirty()
+        {
+            if (DirtyObserver != null)
+            {
+                DirtyObserver.Reset();
+            }
+        }
+
+        #endregion
+
+
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DecisionTableCreator.DynamicTable;
+using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator.TestCases
 {
@@ -37,6 +38,7 @@ namespace DecisionTableCreator.TestCases
 
         private ObservableCollection<TestCase> _testCases;
 
+        [ObserveForDirty]
         public ObservableCollection<TestCase> TestCases
         {
             get { return _testCases; }
@@ -49,6 +51,7 @@ namespace DecisionTableCreator.TestCases
 
         private ObservableCollection<ConditionObject> _conditions;
 
+        [ObserveForDirty]
         public ObservableCollection<ConditionObject> Conditions
         {
             get { return _conditions; }
@@ -80,6 +83,7 @@ namespace DecisionTableCreator.TestCases
 
         private ObservableCollection<ActionObject> _actions;
 
+        [ObserveForDirty]
         public ObservableCollection<ActionObject> Actions
         {
             get { return _actions; }

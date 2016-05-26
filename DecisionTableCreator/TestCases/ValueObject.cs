@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator.TestCases
 {
@@ -22,7 +23,7 @@ namespace DecisionTableCreator.TestCases
         bool TestSettingIsEqual(TType other);
     }
 
-    public class ValueObject : INotifyPropertyChanged, IEqualTestSetting<ValueObject>
+    public class ValueObject : INotifyDirtyChanged, IEqualTestSetting<ValueObject>
     {
 
         public static ValueObject Create(IConditionAction conditionOrAction)
@@ -78,6 +79,7 @@ namespace DecisionTableCreator.TestCases
 
         public ValueObject(string text, ValueDataType type)
         {
+            DirtyObserver = new DirtyObserver(this);
             EnumValues = new ObservableCollection<EnumValue>();
             DataType = type;
             Text = text;
@@ -86,12 +88,14 @@ namespace DecisionTableCreator.TestCases
 
         public ValueObject(ObservableCollection<EnumValue> items)
         {
+            DirtyObserver = new DirtyObserver(this);
             DataType = ValueDataType.Enumeration;
             EnumValues = items;
         }
 
         public ValueObject(ObservableCollection<EnumValue> items, int selectedItem)
         {
+            DirtyObserver = new DirtyObserver(this);
             DataType = ValueDataType.Enumeration;
             EnumValues = items;
             if (selectedItem < 0 || selectedItem >= EnumValues.Count)
@@ -130,6 +134,7 @@ namespace DecisionTableCreator.TestCases
 
         private ValueDataType _dataType;
 
+        [ObserveForDirty]
         public ValueDataType DataType
         {
             get { return _dataType; }
@@ -163,6 +168,7 @@ namespace DecisionTableCreator.TestCases
 
         private string _text;
 
+        [ObserveForDirty]
         public string Text
         {
             get { return _text; }
@@ -237,6 +243,7 @@ namespace DecisionTableCreator.TestCases
 
         private bool _boolValue;
 
+        [ObserveForDirty]
         public bool BoolValue
         {
             get { return _boolValue; }
@@ -263,6 +270,7 @@ namespace DecisionTableCreator.TestCases
 
         private ObservableCollection<EnumValue> _enumValues;
 
+        [ObserveForDirty]
         public ObservableCollection<EnumValue> EnumValues
         {
             get { return _enumValues; }
@@ -277,6 +285,7 @@ namespace DecisionTableCreator.TestCases
 
         private int _selectedItemIndex;
 
+        [ObserveForDirty]
         public int SelectedItemIndex
         {
             get { return _selectedItemIndex; }
@@ -291,6 +300,7 @@ namespace DecisionTableCreator.TestCases
 
         private string _tooltipText;
 
+        [ObserveForDirty]
         public string TooltipText
         {
             get { return _tooltipText; }
@@ -399,6 +409,20 @@ namespace DecisionTableCreator.TestCases
             return Value.ToString();
         }
 
+        private DirtyObserver _dirtyObserver;
+
+        public DirtyObserver DirtyObserver
+        {
+            get { return _dirtyObserver; }
+            set
+            {
+                _dirtyObserver = value;
+                OnPropertyChanged("DirtyObserver");
+            }
+        }
+
+
+
         #region event
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -413,5 +437,26 @@ namespace DecisionTableCreator.TestCases
         }
 
         #endregion
+
+        #region Dirty Support
+
+        public event DirtyChangedDelegate DirtyChanged;
+
+        public void FireDirtyChanged()
+        {
+            DirtyChanged?.Invoke();
+        }
+
+        public void ResetDirty()
+        {
+            if (DirtyObserver != null)
+            {
+                DirtyObserver.Reset();
+            }
+        }
+
+        #endregion
+
+
     }
 }

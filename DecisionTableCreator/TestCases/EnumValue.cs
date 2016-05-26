@@ -13,10 +13,11 @@ namespace DecisionTableCreator.TestCases
     /// this clas represents a possible value for a condition or action
     /// DontCare==true and IsInvalid==true is not a possible combination 
     /// </summary>
-    public class EnumValue : INotifyPropertyChanged
+    public class EnumValue : INotifyDirtyChanged
     {
         public EnumValue(string name, string value, bool isInavlid = false, bool dontCare = false, bool isDefault = false)
         {
+            DirtyObserver = new DirtyObserver(this);
             Name = name;
             IsInvalid = isInavlid;
             DontCare = dontCare;
@@ -30,6 +31,7 @@ namespace DecisionTableCreator.TestCases
 
         private bool _isDefault;
 
+        [ObserveForDirty]
         public bool IsDefault
         {
             get { return _isDefault; }
@@ -43,6 +45,7 @@ namespace DecisionTableCreator.TestCases
 
         private bool _isInvalid;
 
+        [ObserveForDirty]
         public bool IsInvalid
         {
             get { return _isInvalid; }
@@ -60,6 +63,7 @@ namespace DecisionTableCreator.TestCases
 
         private bool _dontCare;
 
+        [ObserveForDirty]
         public bool DontCare
         {
             get { return _dontCare; }
@@ -77,6 +81,7 @@ namespace DecisionTableCreator.TestCases
 
         private string _name;
 
+        [ObserveForDirty]
         public string Name
         {
             get { return _name; }
@@ -89,6 +94,7 @@ namespace DecisionTableCreator.TestCases
 
         private String _value;
 
+        [ObserveForDirty]
         public String Value
         {
             get { return _value; }
@@ -109,6 +115,20 @@ namespace DecisionTableCreator.TestCases
             return string.Format("{0} {1} {2}", Name, IsInvalid ? "I" : " ", DontCare ? "D" : " ");
         }
 
+        private DirtyObserver _dirtyObserver;
+
+        public DirtyObserver DirtyObserver
+        {
+            get { return _dirtyObserver; }
+            set
+            {
+                _dirtyObserver = value;
+                OnPropertyChanged("DirtyObserver");
+            }
+        }
+
+
+
         #region event
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -123,6 +143,26 @@ namespace DecisionTableCreator.TestCases
         }
 
         #endregion
+
+        #region Dirty Support
+
+        public event DirtyChangedDelegate DirtyChanged;
+
+        public void FireDirtyChanged()
+        {
+            DirtyChanged?.Invoke();
+        }
+
+        public void ResetDirty()
+        {
+            if (DirtyObserver != null)
+            {
+                DirtyObserver.Reset();
+            }
+        }
+
+        #endregion
+
 
         public EnumValue Clone()
         {

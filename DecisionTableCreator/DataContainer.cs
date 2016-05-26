@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.TestCases;
+using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator
 {
-    public class DataContainer : INotifyPropertyChanged
+    public class DataContainer : INotifyDirtyChanged
     {
         public DataContainer()
         {
@@ -22,10 +23,12 @@ namespace DecisionTableCreator
             Conditions = TestCasesRoot.ConditionTable;
             Actions = TestCasesRoot.ActionTable;
             OnStatisticsChanged();
+            DirtyObserver = new DirtyObserver(this);
         }
 
         private TestCasesRoot _testCasesRoot;
 
+        [ObserveForDirty]
         public TestCasesRoot TestCasesRoot
         {
             get { return _testCasesRoot; }
@@ -143,6 +146,18 @@ namespace DecisionTableCreator
             }
         }
 
+        private DirtyObserver _dirtyObserver;
+
+        public DirtyObserver DirtyObserver
+        {
+            get { return _dirtyObserver; }
+            set
+            {
+                _dirtyObserver = value;
+                OnPropertyChanged("DirtyObserver");
+            }
+        }
+
 
 
 
@@ -156,6 +171,25 @@ namespace DecisionTableCreator
             {
                 PropertyChangedEventArgs args = new PropertyChangedEventArgs(name);
                 PropertyChanged(this, args);
+            }
+        }
+
+        #endregion
+
+        #region Dirty Support
+
+        public event DirtyChangedDelegate DirtyChanged;
+
+        public void FireDirtyChanged()
+        {
+            DirtyChanged?.Invoke();
+        }
+
+        public void ResetDirty()
+        {
+            if (DirtyObserver != null)
+            {
+                DirtyObserver.Reset();
             }
         }
 

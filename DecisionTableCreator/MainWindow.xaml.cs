@@ -44,6 +44,7 @@ namespace DecisionTableCreator
             _timer.Tick += TimerOnTick;
             _timer.Start();
             SearchForTemplatesAndCreateSubmenu();
+            DataContainer.ResetDirty();
         }
 
         private void SearchForTemplatesAndCreateSubmenu()
@@ -382,7 +383,7 @@ namespace DecisionTableCreator
                 var index = CalculateRowIndex(e);
                 if (index >= 0)
                 {
-                    if (sender.Equals(DataGridConditions))
+                    if (e.Source.Equals(DataGridConditions))
                     {
                         EditCondition(index);
                     }
@@ -976,5 +977,9 @@ namespace DecisionTableCreator
             }
         }
 
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            DataContainer.DirtyObserver.Reset();
+        }
     }
 }

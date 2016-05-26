@@ -32,11 +32,12 @@ namespace DecisionTableCreator.TestCases
     /// <summary>
     /// base class for condition and action
     /// </summary>
-    public class ConditionActionBase : IConditionAction
+    public class ConditionActionBase : IConditionAction, INotifyDirtyChanged
     {
 
         protected ConditionActionBase()
         {
+            DirtyObserver = new DirtyObserver(this);
         }
 
         protected ConditionActionBase(string text, ValueDataType type) : this()
@@ -67,7 +68,11 @@ namespace DecisionTableCreator.TestCases
             DefaultBool = clone.DefaultBool;
             Background = clone.Background;
 
-            EnumValues.Clear();
+            //EnumValues.Clear();
+            while (EnumValues.Count != 0)
+            {
+              EnumValues.RemoveAt(0);  
+            }
             foreach (EnumValue value in clone.EnumValues)
             {
                 EnumValues.Add(value);
@@ -155,6 +160,7 @@ namespace DecisionTableCreator.TestCases
 
         private ValueDataType _dataType;
 
+        [ObserveForDirty]
         public ValueDataType DataType
         {
             get { return _dataType; }
@@ -166,6 +172,7 @@ namespace DecisionTableCreator.TestCases
         }
 
         private string _name;
+        [ObserveForDirty]
         public string Name
         {
             get { return _name; }
@@ -178,6 +185,7 @@ namespace DecisionTableCreator.TestCases
 
         private bool _defaultBool;
 
+        [ObserveForDirty]
         public bool DefaultBool
         {
             get { return _defaultBool; }
@@ -190,6 +198,7 @@ namespace DecisionTableCreator.TestCases
 
         private string _defaultText;
 
+        [ObserveForDirty]
         public string DefaultText
         {
             get { return _defaultText; }
@@ -202,6 +211,7 @@ namespace DecisionTableCreator.TestCases
 
         private ObservableCollection<EnumValue> _enumValues = new ObservableCollection<EnumValue>();
 
+        [ObserveForDirty]
         public ObservableCollection<EnumValue> EnumValues
         {
             get { return _enumValues; }
@@ -214,6 +224,7 @@ namespace DecisionTableCreator.TestCases
 
         private string _tooltipText;
 
+        [ObserveForDirty]
         public string TooltipText
         {
             get { return _tooltipText; }
@@ -258,6 +269,20 @@ namespace DecisionTableCreator.TestCases
             return this.GetType().Name + " " + Name;
         }
 
+        private DirtyObserver _dirtyObserver;
+
+        public DirtyObserver DirtyObserver
+        {
+            get { return _dirtyObserver; }
+            set
+            {
+                _dirtyObserver = value;
+                OnPropertyChanged("DirtyObserver");
+            }
+        }
+
+
+
         #region event
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -272,6 +297,26 @@ namespace DecisionTableCreator.TestCases
         }
 
         #endregion
+
+        #region Dirty Support
+
+        public event DirtyChangedDelegate DirtyChanged;
+
+        public void FireDirtyChanged()
+        {
+            DirtyChanged?.Invoke();
+        }
+
+        public void ResetDirty()
+        {
+            if (DirtyObserver != null)
+            {
+                DirtyObserver.Reset();
+            }
+        }
+
+        #endregion
+
 
     }
 

@@ -102,6 +102,7 @@
     <Compile Include="TestCases\ValueObject.cs" />
     <Compile Include="TestCases\XmlNames.cs" />
     <Compile Include="Utils\ColumnInfo.cs" />
+    <Compile Include="Utils\ObserveForDirtyAttribute.cs" />
     <Compile Include="Utils\PrepareForClipboard.cs" />
     <Compile Include="Utils\Utilities.cs" />
     <Compile Include="Utils\WpfTools.cs" />
