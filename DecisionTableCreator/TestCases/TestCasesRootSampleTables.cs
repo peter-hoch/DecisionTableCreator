@@ -50,6 +50,17 @@ namespace DecisionTableCreator.TestCases
             return testCasesRoot;
         }
 
+        public void CreateSampleProject()
+        {
+            Init();
+            CreateSampleProjectInternal();
+            CreateInfosForDatagrid();
+            FireActionsChanged();
+            ProcessConditionsChanged();
+            FireStatisticsChanged();  
+            FireDirtyChanged();
+        }
+
 
         public static ObservableCollection<EnumValue> CreateSampleEnum(string name, int count, int defaultIndex, int invalidIndex, int dontCareIndex)
         {
@@ -147,6 +158,82 @@ namespace DecisionTableCreator.TestCases
             RecalculateStatistics();
         }
 
+        private void CreateSampleProjectInternal()
+        {
+            var enumList = new ObservableCollection<EnumValue>();
+            enumList.Add(new EnumValue("invalid condition", true, false, true));
+            enumList.Add(new EnumValue("Printer is printing", false, false, false));
+            enumList.Add(new EnumValue("Printer is not printing", false, false, false));
+            enumList.Add(new EnumValue("DC", false, true, false));
+
+            Conditions.Add(ConditionObject.Create("Basic Printer status", enumList));
+
+            enumList = new ObservableCollection<EnumValue>();
+            enumList.Add(new EnumValue("invalid condition", true, false, true));
+            enumList.Add(new EnumValue("LED is on", false, false, false));
+            enumList.Add(new EnumValue("LED is flashing", false, false, false));
+            enumList.Add(new EnumValue("LED is off", false, false, false));
+            enumList.Add(new EnumValue("DC", false, true, false));
+
+            Conditions.Add(ConditionObject.Create("Green LED", enumList));
+
+            enumList = new ObservableCollection<EnumValue>();
+            enumList.Add(new EnumValue("invalid condition", true, false, true));
+            enumList.Add(new EnumValue("Blank sheet is ejected", false, false, false));
+            enumList.Add(new EnumValue("Print quality is bad", false, false, false));
+            enumList.Add(new EnumValue("DC", false, true, false));
+
+            Conditions.Add(ConditionObject.Create("Paper", enumList));
+
+
+            enumList = new ObservableCollection<EnumValue>();
+            enumList.Add(new EnumValue("", false, false, true));
+            enumList.Add(new EnumValue("Check connection", false, false, false));
+
+            Actions.Add(ActionObject.Create("Power", enumList));
+
+            enumList = new ObservableCollection<EnumValue>();
+            enumList.Add(new EnumValue("", false, false, true));
+            enumList.Add(new EnumValue("Check filling level", false, false, false));
+
+            Actions.Add(ActionObject.Create("Ink catridge", enumList));
+
+            enumList = new ObservableCollection<EnumValue>();
+            enumList.Add(new EnumValue("", false, false, true));
+            enumList.Add(new EnumValue("Check connection", false, false, false));
+
+            Actions.Add(ActionObject.Create("PC connection", enumList));
+
+            enumList = new ObservableCollection<EnumValue>();
+            enumList.Add(new EnumValue("", false, false, true));
+            enumList.Add(new EnumValue("Check paper filling level", false, false, false));
+
+            Actions.Add(ActionObject.Create("Paper", enumList));
+
+            int idx = 1;
+            TestCase tc = AddTestCase();
+            tc.DisplayIndex = idx++;
+            SetSelectedItemIndex(tc, new int[] {1, 4, 3}, new int[0]);
+
+            tc = AddTestCase();
+            tc.DisplayIndex = idx++;
+            SetSelectedItemIndex(tc, new int[] { 2, 3, 3 }, new int[] {1});
+
+        }
+
+        void SetSelectedItemIndex(TestCase tc, int[] conditions, int[] actions)
+        {
+            int idx = 0;
+            foreach (int condition in conditions)
+            {
+                tc.Conditions[idx++].SelectedItemIndex = condition;
+            }
+            idx = 0;
+            foreach (int action in actions)
+            {
+                tc.Actions[idx++].SelectedItemIndex = action;
+            }
+        }
 
     }
 }

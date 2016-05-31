@@ -66,6 +66,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="TestFiles\CreateHtmlTableTest\HtmlTemplate.stg" />
+    <None Include="TestFiles\CustomErrorListenerTest\Template2.stg" />
+    <None Include="TestFiles\CustomErrorListenerTest\Template1.stg" />
     <None Include="TestFiles\FirstTemplateTest\template.stg" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,6 @@
+﻿delimiters "$", "$"
+
+TestCasesRoot(root) ::= <<
+$root.TestCases; separator="\r\n"$
+>>
+

@@ -48,6 +48,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using DecisionTableCreator.DynamicTable;
+using DecisionTableCreator.ErrorDialog;
 using DecisionTableCreator.TestCases;
 using DecisionTableCreator.Utils;
 using Microsoft.Win32;
@@ -395,7 +396,7 @@ namespace DecisionTableCreator
                 int index = CalculateColumnIndex(e, true);
                 if (index >= 0)
                 {
-                    tcr.DeleteTestCaseAt(index-1);
+                    tcr.DeleteTestCaseAt(index - 1);
                 }
             }
             catch (Exception ex)
@@ -588,7 +589,7 @@ namespace DecisionTableCreator
             }
         }
 
-        private void SaveAsProject()
+        private bool SaveAsProject()
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
@@ -600,20 +601,30 @@ namespace DecisionTableCreator
                 DataContainer.TestCasesRoot.Save(dlg.FileName);
                 DataContainer.ResetDirty();
                 DataContainer.ProjectPath = dlg.FileName;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        private void SaveProject()
+        /// <summary>
+        /// save project
+        /// </summary>
+        /// <returns>true id successfully saved</returns>
+        private bool SaveProject()
         {
             FileInfo fi = new FileInfo(DataContainer.ProjectPath);
             if (fi.Exists)
             {
                 DataContainer.TestCasesRoot.Save(DataContainer.ProjectPath);
                 DataContainer.ResetDirty();
+                return true;
             }
             else
             {
-                SaveAsProject();
+                return SaveAsProject();
             }
         }
 
@@ -626,16 +637,18 @@ namespace DecisionTableCreator
         {
             try
             {
-                OpenFileDialog dlg = new OpenFileDialog();
-                dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
-                var result = dlg.ShowDialog();
-                if (result.HasValue && result.Value)
+                if (CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave())
                 {
-                    DataContainer.TestCasesRoot.Load(dlg.FileName);
-                    DataContainer.ProjectPath = dlg.FileName;
-                    DataContainer.ResetDirty();
+                    OpenFileDialog dlg = new OpenFileDialog();
+                    dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
+                    var result = dlg.ShowDialog();
+                    if (result.HasValue && result.Value)
+                    {
+                        DataContainer.TestCasesRoot.Load(dlg.FileName);
+                        DataContainer.ProjectPath = dlg.FileName;
+                        DataContainer.ResetDirty();
+                    }
                 }
-
             }
             catch (Exception ex)
             {
@@ -652,7 +665,10 @@ namespace DecisionTableCreator
         {
             try
             {
-                DataContainer.TestCasesRoot.New();
+                if (CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave())
+                {
+                    DataContainer.TestCasesRoot.New();
+                }
 
             }
             catch (Exception ex)
@@ -947,21 +963,20 @@ namespace DecisionTableCreator
         {
             try
             {
-                try
+                var templResult = DataContainer.TestCasesRoot.GenerateFromtemplate(Templates.Resources.HtmlTemplate);
+                if (templResult.ErrorListener.ErrorReported)
                 {
-                    string text = DataContainer.TestCasesRoot.GenerateFromTemplateString(Templates.Resources.HtmlTemplate);
+                    DisplayTemplateErrorMessages(templResult);
+                }
+                else
+                {
                     PrepareForClipboard prepare = new PrepareForClipboard();
-                    string clipboardText = prepare.Prepare(text);
+                    string clipboardText = prepare.Prepare(templResult.GeneratedContent);
 
                     DataObject dataObject = new DataObject();
                     dataObject.SetData(DataFormats.Html, new MemoryStream(Encoding.UTF8.GetBytes(clipboardText)));
                     Clipboard.SetDataObject(dataObject, true);
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("unexpected error during export to clipboard" + Environment.NewLine + ex.ToString());
-                }
-
             }
             catch (Exception ex)
             {
@@ -973,6 +988,48 @@ namespace DecisionTableCreator
         {
             e.CanExecute = true;
         }
+
+        private void ExportToFileWithExternalTemplate_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void ExportToFileWithExternalTemplate_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                ExecutedRoutedEventArgs args = e as ExecutedRoutedEventArgs;
+                FileInfo fi = new FileInfo(e.Parameter.ToString());
+                if (fi.Exists)
+                {
+                    SaveFileDialog dlg = new SaveFileDialog();
+                    dlg.Filter = "Text files|*.txt|Source files|*.c;*.cs;*.cpp;*.h|All files|*.*";
+                    dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    bool? result = dlg.ShowDialog(this);
+                    if (result.HasValue && result.Value)
+                    {
+                        var templResult = DataContainer.TestCasesRoot.GenerateFromtemplate(fi.FullName);
+                        if (templResult.ErrorListener.ErrorReported)
+                        {
+                            DisplayTemplateErrorMessages(templResult);
+                        }
+                        else
+                        {
+                            File.WriteAllText(dlg.FileName, templResult.GeneratedContent);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this, "File " + args.Parameter + " not found", "File not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
 
 
         bool IsConditionsDataGridSelected(RoutedEventArgs args, out DataGrid dataGrid)
@@ -1042,38 +1099,31 @@ namespace DecisionTableCreator
             CalculateStatistics = true;
         }
 
-        private void ExportToFileWithExternalTemplate_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void ExportToFileWithExternalTemplate_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void CreateSampleProject_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             try
             {
-                ExecutedRoutedEventArgs args = e as ExecutedRoutedEventArgs;
-                FileInfo fi = new FileInfo(e.Parameter.ToString());
-                if (fi.Exists)
+                if (CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave())
                 {
-                    SaveFileDialog dlg = new SaveFileDialog();
-                    dlg.Filter = "Text files|*.txt|Source files|*.c;*.cs;*.cpp;*.h|All files|*.*";
-                    dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    bool? result = dlg.ShowDialog(this);
-                    if (result.HasValue && result.Value)
-                    {
-                        string text = DataContainer.TestCasesRoot.GenerateFromtemplate(fi.FullName);
-                        File.WriteAllText(dlg.FileName, text);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(this, "File " + args.Parameter + " not found", "File not found");
+                    DataContainer.TestCasesRoot = new TestCasesRoot();
+                    DataContainer.TestCasesRoot.CreateSampleProject();
                 }
             }
             catch (Exception ex)
             {
                 ShowAndLogMessage("exception caught", ex);
             }
+        }
+
+        private void CreateSampleProject_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        void DisplayTemplateErrorMessages(StringTemplateResult result)
+        {
+            TemplateErrorDialog dlg = new TemplateErrorDialog(result);
+            dlg.ShowDialog();
         }
 
         private void About_OnClick(object sender, RoutedEventArgs e)
@@ -1086,26 +1136,7 @@ namespace DecisionTableCreator
         {
             try
             {
-                if (DataContainer.DirtyObserver.Dirty)
-                {
-                    MessageBoxResult result = MessageBox.Show(this, "Your work is not save. Do you want to save?", "Save", MessageBoxButton.YesNoCancel);
-                    switch (result)
-                    {
-                        case MessageBoxResult.OK:
-                        case MessageBoxResult.Yes:
-                            SaveProject();
-                            e.Cancel = true;
-                            break;
-                        case MessageBoxResult.No:
-                            // exit without save
-                            break;
-                        case MessageBoxResult.None:
-                        case MessageBoxResult.Cancel:
-                        default:
-                            e.Cancel = true;
-                            break;
-                    }
-                }
+                e.Cancel = !CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave();
             }
             catch (Exception ex)
             {
@@ -1113,10 +1144,43 @@ namespace DecisionTableCreator
             }
         }
 
+
         private void DataGridConditions_Unloaded(object sender, RoutedEventArgs e)
         {
             var grid = (DataGrid)sender;
             grid.CommitEdit(DataGridEditingUnit.Row, true);
         }
+
+
+        /// <summary>
+        /// check if the project is in an unsaved status
+        /// display the save dialog
+        /// save poject if wanted
+        /// </summary>
+        /// <returns>false - project is dirty do not distroy!!    true - Project is saved or dismissed</returns>
+        bool CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave()
+        {
+            if (DataContainer.DirtyObserver.Dirty)
+            {
+                MessageBoxResult result = MessageBox.Show(this, "Your work is not save. Do you want to save?", "Save", MessageBoxButton.YesNoCancel);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                    case MessageBoxResult.Yes:
+                        return SaveProject();
+
+                    case MessageBoxResult.No:
+                        return true;
+
+                    case MessageBoxResult.None:
+                    case MessageBoxResult.Cancel:
+                    default:
+                        return false;
+
+                }
+            }
+            return true;
+        }
+
     }
 }

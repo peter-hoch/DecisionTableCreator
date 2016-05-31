@@ -30,6 +30,7 @@
         <CommandBinding Command="local:WpfCommands.MoveConditionOrActionUp" Executed="MoveConditionOrActionUp_Executed" CanExecute="MoveConditionOrActionUp_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.MoveConditionOrActionDown" Executed="MoveConditionOrActionDown_Executed" CanExecute="MoveConditionOrActionDown_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.ExportToFileWithExternalTemplate" Executed="ExportToFileWithExternalTemplate_Executed" CanExecute="ExportToFileWithExternalTemplate_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.CreateSampleProject" Executed="CreateSampleProject_Executed" CanExecute="CreateSampleProject_OnCanExecute"/>
     </Window.CommandBindings>
 
     <Grid MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}">
@@ -64,6 +65,7 @@
                 <MenuItem Command="local:WpfCommands.Open"/>
                 <MenuItem Command="local:WpfCommands.Save"/>
                 <MenuItem Command="local:WpfCommands.SaveAs"/>
+                <MenuItem Command="local:WpfCommands.CreateSampleProject"/>
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Command="local:WpfCommands.AppendTestCase"/>

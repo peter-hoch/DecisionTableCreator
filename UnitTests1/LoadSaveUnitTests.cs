@@ -46,6 +46,7 @@ namespace UnitTests1
         public void Setup()
         {
             TestSupport.ClearCreatedFiles();
+            TestSupport.DiffAction = new InvokeWinMerge();
         }
 
         [Test]
@@ -60,8 +61,9 @@ namespace UnitTests1
 
             root.Load(savePath);
 
-            ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", savePath);
-            Process.Start(info);
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(savePath)));
+            //ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", savePath);
+            //Process.Start(info);
         }
     }
 }

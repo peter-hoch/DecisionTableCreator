@@ -78,6 +78,11 @@
     <Compile Include="EditCondition.xaml.cs">
       <DependentUpon>EditCondition.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ErrorDialog\ErrorDialogDataContainer.cs" />
+    <Compile Include="ErrorDialog\TemplateErrorDialog.xaml.cs">
+      <DependentUpon>TemplateErrorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorDialog\TemplateMessageWrapper.cs" />
     <Compile Include="GridCellControl.xaml.cs">
       <DependentUpon>GridCellControl.xaml</DependentUpon>
     </Compile>
@@ -95,6 +100,8 @@
     <Compile Include="TestCases\IConditionAction.cs" />
     <Compile Include="TestCases\LoadSaveVisitor.cs" />
     <Compile Include="TestCases\Statistics.cs" />
+    <Compile Include="TestCases\CustomStringTemplateErrorListener.cs" />
+    <Compile Include="TestCases\StringTemplateResult.cs" />
     <Compile Include="TestCases\TestCase.cs" />
     <Compile Include="TestCases\TestCasesRoot.cs" />
     <Compile Include="TestCases\TestCasesRootCalculations.cs" />
@@ -129,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditCondition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ErrorDialog\TemplateErrorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

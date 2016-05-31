@@ -55,8 +55,9 @@ namespace UnitTests1
             string templPath = Path.Combine(TestSupport.TestFilesDirectory, "template.stg");
             string resultPath = Path.Combine(TestSupport.CreatedFilesDirectory, "output.txt");
             TestCasesRoot tcRoot = TestCasesRoot.CreateSimpleTable();
-            string text = tcRoot.GenerateFromtemplate(templPath);
-            File.WriteAllText(resultPath, text);
+            var templResult = tcRoot.GenerateFromtemplate(templPath);
+            File.WriteAllText(resultPath, templResult.GeneratedContent);
+            Assert.That(!templResult.ErrorListener.ErrorReported);
             Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPath)));
         }
 
@@ -66,8 +67,9 @@ namespace UnitTests1
             string templPath = Path.Combine(TestSupport.TestFilesDirectory, "HtmlTemplate.stg");
             string resultPath = Path.Combine(TestSupport.CreatedFilesDirectory, "output.htm");
             TestCasesRoot tcRoot = TestCasesRoot.CreateSimpleTable();
-            string text = tcRoot.GenerateFromtemplate(templPath);
-            File.WriteAllText(resultPath, text);
+            var templResult = tcRoot.GenerateFromtemplate(templPath);
+            File.WriteAllText(resultPath, templResult.GeneratedContent);
+            Assert.That(!templResult.ErrorListener.ErrorReported);
             Assert.That( TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPath)));
         }
 
@@ -76,8 +78,9 @@ namespace UnitTests1
         {
             string resultPath = Path.Combine(TestSupport.CreatedFilesDirectory, "output.html");
             TestCasesRoot tcRoot = TestCasesRoot.CreateSimpleTable();
-            string text = tcRoot.GenerateFromTemplateString(DecisionTableCreator.Templates.Resources.HtmlTemplate);
-            File.WriteAllText(resultPath, text);
+            var result = tcRoot.GenerateFromTemplateString(DecisionTableCreator.Templates.Resources.HtmlTemplate);
+            Assert.That(!result.ErrorListener.ErrorReported);
+            File.WriteAllText(resultPath, result.GeneratedContent);
             Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPath)));
         }
 
@@ -86,8 +89,9 @@ namespace UnitTests1
         {
             string resultPath = Path.Combine(TestSupport.CreatedFilesDirectory, "output.html");
             TestCasesRoot tcRoot = new TestCasesRoot();
-            string text = tcRoot.GenerateFromTemplateString(DecisionTableCreator.Templates.Resources.HtmlTemplate);
-            File.WriteAllText(resultPath, text);
+            var result = tcRoot.GenerateFromTemplateString(DecisionTableCreator.Templates.Resources.HtmlTemplate);
+            File.WriteAllText(resultPath, result.GeneratedContent);
+            Assert.That(!result.ErrorListener.ErrorReported);
             Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPath)));
         }
 
@@ -99,10 +103,11 @@ namespace UnitTests1
             string resultPathHtml = Path.Combine(TestSupport.CreatedFilesDirectory, "html.txt");
             string resultPathFragment = Path.Combine(TestSupport.CreatedFilesDirectory, "fragment.txt");
             TestCasesRoot tcRoot = TestCasesRoot.CreateSimpleTable();
-            string html = tcRoot.GenerateFromTemplateString(DecisionTableCreator.Templates.Resources.HtmlTemplate);
+            var templResult = tcRoot.GenerateFromTemplateString(DecisionTableCreator.Templates.Resources.HtmlTemplate);
 
             PrepareForClipboard prepare = new PrepareForClipboard();
-            string result = prepare.Prepare(html);
+            string result = prepare.Prepare(templResult.GeneratedContent);
+            Assert.That(!templResult.ErrorListener.ErrorReported);
 
             File.WriteAllText(resultPath, result);
             File.WriteAllText(resultPathHtml, result.Substring(prepare.StartHtml, prepare.EndHtml - prepare.StartHtml));
@@ -110,6 +115,24 @@ namespace UnitTests1
             Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPathHtml)));
             Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPathFragment)));
             Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPath)));
+        }
+
+        [TestCase(0, "Template2.stg", false, Description = "template with errors")]
+        [TestCase(1, "Template1.stg", true, Description = "template without errors")]
+        public void CustomErrorListenerTest(int idx, string fileName, bool errorsExpected)
+        {
+            string templatePath = Path.Combine(TestSupport.TestFilesDirectory, fileName);
+            string outputPath = Path.Combine(TestSupport.CreatedFilesDirectory, "output" + idx + ".txt");
+            string errorsPath = Path.Combine(TestSupport.CreatedFilesDirectory, "errors" + idx + ".txt");
+            TestCasesRoot tcRoot = TestCasesRoot.CreateSimpleTable();
+            var output = tcRoot.GenerateFromTemplateString(File.ReadAllText(templatePath));
+
+            Assert.That(output.ErrorListener.ErrorReported == errorsExpected);
+
+            File.WriteAllText(outputPath, output.GeneratedContent);
+            File.WriteAllText(errorsPath, output.GetErrorList());
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(outputPath)));
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(errorsPath)));
         }
 
     }

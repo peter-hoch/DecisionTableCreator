@@ -49,6 +49,7 @@ namespace DecisionTableCreator.TestCases
         public TestCasesRoot()
         {
             Init();
+            CreateInfosForDatagrid();
             DirtyObserver = new DirtyObserver(this);
         }
 

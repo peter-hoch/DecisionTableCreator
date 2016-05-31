@@ -1,0 +1,6 @@
+TestCase TC1 dispIdx=1  unique=True invalid cond:0-Invalid-0-Default I   1-Invalid-0 I   2-Invalid-0 I   
+TestCase TC2 dispIdx=2  unique=True cond:0-EnumValue-1     1-EnumValue-1-Default     2-EnumValue-1     
+TestCase TC3 dispIdx=3  unique=True cond:0-EnumValue-2     1-EnumValue-2     2-EnumValue-2     
+TestCase TC4 dispIdx=4  unique=True cond:0-Don' t care-3   D 1-Don' t care-3   D 2-Don' t care-3-Default   D 
+TestCase TC5 dispIdx=5  unique=True invalid cond:0-Invalid-0-Default I   1-Invalid-0 I   2-Invalid-0 I   
+TestCase TC6 dispIdx=6  unique=True cond:0-EnumValue-1     1-EnumValue-1-Default     2-EnumValue-1     

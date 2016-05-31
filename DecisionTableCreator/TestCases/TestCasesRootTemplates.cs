@@ -32,24 +32,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Antlr4.StringTemplate;
+using Antlr4.StringTemplate.Misc;
 
 namespace DecisionTableCreator.TestCases
 {
     public partial class TestCasesRoot
     {
-        public string GenerateFromtemplate(string groupFilePath)
+        public StringTemplateResult GenerateFromtemplate(string groupFilePath)
         {
             TemplateGroup group = new TemplateGroupFile(groupFilePath);
+            var errorListener = new CustomStringTemplateErrorListener();
+            group.ErrorManager = new ErrorManager(errorListener);
             Template templ = group.GetInstanceOf("TestCasesRoot");
             templ.Add("root", this);
-            return templ.Render();
+            return new StringTemplateResult(errorListener, templ.Render());
         }
-        public string GenerateFromTemplateString(string groupFileContent)
+
+        public StringTemplateResult GenerateFromTemplateString(string groupFileContent)
         {
             TemplateGroup group = new TemplateGroupString(groupFileContent);
+            var errorListener = new CustomStringTemplateErrorListener();
+            group.ErrorManager = new ErrorManager(errorListener);
             Template templ = group.GetInstanceOf("TestCasesRoot");
             templ.Add("root", this);
-            return templ.Render();
+            return new StringTemplateResult(errorListener, templ.Render());
         }
 
 

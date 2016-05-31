@@ -59,6 +59,7 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand MoveConditionOrActionUp;
         public static readonly RoutedUICommand MoveConditionOrActionDown;
         public static readonly RoutedUICommand ExportToFileWithExternalTemplate;
+        public static readonly RoutedUICommand CreateSampleProject;
 
         static WpfCommands()
         {
@@ -88,6 +89,7 @@ namespace DecisionTableCreator
             MoveConditionOrActionUp = new RoutedUICommand("Move up", "MoveConditionOrActionUp", typeof(WpfCommands));
             MoveConditionOrActionDown = new RoutedUICommand("Move down", "MoveConditionOrActionDown", typeof(WpfCommands));
             ExportToFileWithExternalTemplate = new RoutedUICommand("Export to file with external template", "ExportToFileWithExternalTemplate", typeof(WpfCommands));
+            CreateSampleProject = new RoutedUICommand("Create sample project", "CreateSampleProject", typeof(WpfCommands));
         }
     }
 }
