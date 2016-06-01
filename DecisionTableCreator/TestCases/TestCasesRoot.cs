@@ -327,21 +327,21 @@ namespace DecisionTableCreator.TestCases
 
         public void ChangeCondition(int index, ConditionObject conditionClone)
         {
-            List<int> savedSelectedItemIndexes = SaveSelectedItemIndex(index);
+            List<int> savedSelectedItemIndexes = SaveSelectedConditionItemIndex(index);
             Conditions[index].Merge(conditionClone);
-            RestoreSelectedItemIndex(index, savedSelectedItemIndexes);
+            RestoreSelectedConditionItemIndex(index, savedSelectedItemIndexes);
             RecalculateStatistics();
         }
 
         internal void ChangeAction(int index, ActionObject actionClone)
         {
-            List<int> savedSelectedItemIndexes = SaveSelectedItemIndex(index);
+            List<int> savedSelectedItemIndexes = SaveSelectedActionItemIndex(index);
             Actions[index].Merge(actionClone);
-            RestoreSelectedItemIndex(index, savedSelectedItemIndexes);
+            RestoreSelectedActionItemIndex(index, savedSelectedItemIndexes);
         }
 
 
-        public List<int> SaveSelectedItemIndex(int conditionIndex)
+        public List<int> SaveSelectedConditionItemIndex(int conditionIndex)
         {
             List<int> selectedItemIndexes = new List<int>();
 
@@ -353,18 +353,52 @@ namespace DecisionTableCreator.TestCases
             return selectedItemIndexes;
         }
 
-        public void RestoreSelectedItemIndex(int conditionIndex, List<int> selectedItemIndexes)
+        public void RestoreSelectedConditionItemIndex(int conditionIndex, List<int> selectedItemIndexes)
         {
-            int enumValueCount = TestCases[0].Conditions[conditionIndex].EnumValues.Count;
-            for (int idx = 0; idx < TestCases.Count; idx++)
+            if (TestCases.Count > 0)
             {
-                if (enumValueCount <= selectedItemIndexes[idx])
+                int enumValueCount = TestCases[0].Conditions[conditionIndex].EnumValues.Count;
+                for (int idx = 0; idx < TestCases.Count; idx++)
                 {
-                    TestCases[idx].Conditions[conditionIndex].CalculateAndSetDefaultIndex();
+                    if (enumValueCount <= selectedItemIndexes[idx])
+                    {
+                        TestCases[idx].Conditions[conditionIndex].CalculateAndSetDefaultIndex();
+                    }
+                    else
+                    {
+                        TestCases[idx].Conditions[conditionIndex].SelectedItemIndex = selectedItemIndexes[idx];
+                    }
                 }
-                else
+            }
+        }
+
+        public List<int> SaveSelectedActionItemIndex(int actionIndex)
+        {
+            List<int> selectedItemIndexes = new List<int>();
+
+            foreach (TestCase testCase in TestCases)
+            {
+                selectedItemIndexes.Add(testCase.Actions[actionIndex].SelectedItemIndex);
+            }
+
+            return selectedItemIndexes;
+        }
+
+        public void RestoreSelectedActionItemIndex(int actionIndex, List<int> selectedItemIndexes)
+        {
+            if (TestCases.Count > 0)
+            {
+                int enumValueCount = TestCases[0].Actions[actionIndex].EnumValues.Count;
+                for (int idx = 0; idx < TestCases.Count; idx++)
                 {
-                    TestCases[idx].Conditions[conditionIndex].SelectedItemIndex = selectedItemIndexes[idx];
+                    if (enumValueCount <= selectedItemIndexes[idx])
+                    {
+                        TestCases[idx].Actions[actionIndex].CalculateAndSetDefaultIndex();
+                    }
+                    else
+                    {
+                        TestCases[idx].Actions[actionIndex].SelectedItemIndex = selectedItemIndexes[idx];
+                    }
                 }
             }
         }

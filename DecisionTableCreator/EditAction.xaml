@@ -27,7 +27,7 @@
         <StackPanel Grid.Row="1" Grid.Column="0">
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Label Content="Name"></Label>
-                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox MinWidth="80" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
@@ -42,10 +42,10 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="80"/>
-                <DataGridTextColumn Header="Value" Binding="{Binding Value}" MinWidth="80"/>
-                <DataGridCheckBoxColumn Header="IsInvalid" Binding="{Binding IsInvalid}"/>
-                <DataGridCheckBoxColumn Header="Is default" Binding="{Binding IsDefault}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="80"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="80"/>
+                <DataGridCheckBoxColumn Header="IsInvalid" Binding="{Binding IsInvalid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridCheckBoxColumn Header="Is default" Binding="{Binding IsDefault, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

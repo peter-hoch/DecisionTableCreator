@@ -263,7 +263,7 @@ namespace DecisionTableCreator.TestCases
                 throw new InvalidObjectIdReferenceException(xmlEnumValue, XmlNames.IdAttributeName, id);
             }
             valueObject = ValueObject.Create(ConditionActionIdDictionary[id]);
-            valueObject.Text = xmlEnumValue.GetAttributeStringValue(XmlNames.TextAttributeName, XmlElementOption.Optional);
+            valueObject.Text = xmlEnumValue.GetAttributeStringValue(XmlNames.TextAttributeName, XmlElementOption.MustExist);
             valueObject.BoolValue = xmlEnumValue.GetAttributeBoolValue(XmlNames.BoolAttributeName);
             valueObject.SelectedItemIndex = xmlEnumValue.GetAttributeIntValue(XmlNames.SelectedItemIndexAttributeName);
         }
@@ -309,8 +309,8 @@ namespace DecisionTableCreator.TestCases
         private void Load(XmlElement element, out EnumValue ev)
         {
             ev = new EnumValue(
-                element.GetAttributeStringValue(XmlNames.NameAttributeName),
-                element.GetAttributeStringValue(XmlNames.ValueAttributeName, XmlElementOption.Optional),
+                element.GetAttributeStringValue(XmlNames.NameAttributeName, XmlElementOption.MustExist),
+                element.GetAttributeStringValue(XmlNames.ValueAttributeName, XmlElementOption.MustExist),
                 element.GetAttributeBoolValue(XmlNames.IsInvalidAttributeName),
                 element.GetAttributeBoolValue(XmlNames.DontCareAttributeName),
                 element.GetAttributeBoolValue(XmlNames.IsDefaultAttributeName)

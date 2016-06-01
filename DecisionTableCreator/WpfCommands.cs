@@ -67,6 +67,7 @@ namespace DecisionTableCreator
             KeyGesture gestureAltA = new KeyGesture(Key.A, ModifierKeys.Alt);
             KeyGesture gestureAltT = new KeyGesture(Key.T, ModifierKeys.Alt);
             KeyGesture gestureAltE = new KeyGesture(Key.E, ModifierKeys.Alt);
+            KeyGesture gestureCtrlS = new KeyGesture(Key.S, ModifierKeys.Control);
             AppendTestCase = new RoutedUICommand("Append test case", "AppendTestCase", typeof(WpfCommands), new InputGestureCollection() { gestureAltT });
             DeleteTestCase = new RoutedUICommand("Delete test case", "DeleteTestCase", typeof(WpfCommands));
             InsertTestCase = new RoutedUICommand("Insert test case", "InsertTestCase", typeof(WpfCommands));
@@ -75,7 +76,7 @@ namespace DecisionTableCreator
             DeleteCondition = new RoutedUICommand("Delete condition", "DeleteCondition", typeof(WpfCommands));
             EditAction = new RoutedUICommand("Edit action", "EditAction", typeof(WpfCommands));
             DeleteAction = new RoutedUICommand("Delete action", "DeleteAction", typeof(WpfCommands));
-            Save = new RoutedUICommand("Save", "Save", typeof(WpfCommands));
+            Save = new RoutedUICommand("Save", "Save", typeof(WpfCommands), new InputGestureCollection() { gestureCtrlS });
             SaveAs = new RoutedUICommand("Save as", "SaveAs", typeof(WpfCommands));
             Open = new RoutedUICommand("Open", "Open", typeof(WpfCommands));
             NewDocument = new RoutedUICommand("New", "NewDocument", typeof(WpfCommands));

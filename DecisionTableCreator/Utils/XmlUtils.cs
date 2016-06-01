@@ -153,6 +153,7 @@ namespace DecisionTableCreator.Utils
             {
                 if (MustExist(option))
                 {
+                    return "";
                     throw new MissingAttributeException(me, name);
                 }
                 return null;

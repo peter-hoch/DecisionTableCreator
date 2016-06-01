@@ -49,7 +49,7 @@ namespace DecisionTableCreator
         public DataContainer()
         {
             TestCasesRoot = new TestCasesRoot();
-            TestCasesRoot.CreateTestProject();
+            //TestCasesRoot.CreateTestProject();
             Conditions = TestCasesRoot.ConditionTable;
             Actions = TestCasesRoot.ActionTable;
             OnStatisticsChanged();

@@ -694,7 +694,7 @@ namespace DecisionTableCreator
         {
             try
             {
-                ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
+                ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
                 EditAction wnd = new EditAction(newAction);
                 bool? result = wnd.ShowDialog();
                 if (result.HasValue && result.Value)
@@ -721,8 +721,8 @@ namespace DecisionTableCreator
                 var index = CalculateRowIndex(e);
                 if (index >= 0)
                 {
-                    ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
-                    EditCondition wnd = new EditCondition(newAction);
+                    ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
+                    EditAction wnd = new EditAction(newAction);
                     bool? result = wnd.ShowDialog();
                     if (result.HasValue && result.Value)
                     {
@@ -755,7 +755,7 @@ namespace DecisionTableCreator
         {
             try
             {
-                ConditionObject newCondition = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
+                ConditionObject newCondition = ConditionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
                 EditCondition wnd = new EditCondition(newCondition);
                 bool? result = wnd.ShowDialog();
                 if (result.HasValue && result.Value)
@@ -782,7 +782,7 @@ namespace DecisionTableCreator
                 var index = CalculateRowIndex(e);
                 if (index >= 0)
                 {
-                    ConditionObject conditionObject = ConditionObject.Create("new condition", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
+                    ConditionObject conditionObject = ConditionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
                     EditCondition wnd = new EditCondition(conditionObject);
                     bool? result = wnd.ShowDialog();
                     if (result.HasValue && result.Value)
