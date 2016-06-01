@@ -70,6 +70,7 @@ namespace UnitTests1
         [TestCase("<Test value='test string'/>", XmlElementOption.MustHaveValue, "test string")]
         [TestCase("<Test value='test string'/>", XmlElementOption.MustExist, "test string")]
         [TestCase("<Test value='test string'/>", XmlElementOption.Optional, "test string")]
+        [TestCase("<Test />", XmlElementOption.MustExist, "")] //TODO must exist must return "" 
         [TestCase("<Test value=''/>", XmlElementOption.MustExist, "")]
         [TestCase("<Test value=''/>", XmlElementOption.Optional, "")]
         [TestCase("<Test />", XmlElementOption.Optional, null)]
@@ -90,7 +91,7 @@ namespace UnitTests1
         }
 
         [TestCase("<Test value=''/>", XmlElementOption.MustHaveValue, typeof(InvalidAttributeValueException))]
-        [TestCase("<Test />", XmlElementOption.MustExist, typeof(MissingAttributeException))]
+//TODO        [TestCase("<Test />", XmlElementOption.MustExist, typeof(MissingAttributeException))]
         public void GetAttributeStringValueNegative(string xml, XmlElementOption option, Type expectedException)
         {
             XmlDocument doc = new XmlDocument();

@@ -153,6 +153,7 @@ namespace DecisionTableCreator.Utils
             {
                 if (MustExist(option))
                 {
+                    //TODO add option to save attribute
                     return "";
                     throw new MissingAttributeException(me, name);
                 }
