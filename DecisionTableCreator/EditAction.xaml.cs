@@ -59,7 +59,7 @@ namespace DecisionTableCreator
 
         private void AppendEnumValue_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DataContainer.EnumValues.Add(new EnumValue("new name", "new value"));
+            DataContainer.EnumValues.Add(new EnumValue("", ""));
         }
 
         private void AppendEnumValue_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)

@@ -44,5 +44,13 @@ namespace DecisionTableCreator.Utils
             }
             return value;
         }
+        public static long AtLeastValue(long atLeast, long value)
+        {
+            if (atLeast > value)
+            {
+                return atLeast;
+            }
+            return value;
+        }
     }
 }

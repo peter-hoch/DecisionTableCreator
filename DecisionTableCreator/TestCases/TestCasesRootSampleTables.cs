@@ -57,7 +57,18 @@ namespace DecisionTableCreator.TestCases
             CreateInfosForDatagrid();
             FireActionsChanged();
             ProcessConditionsChanged();
-            FireStatisticsChanged();  
+            FireStatisticsChanged();
+            FireDirtyChanged();
+        }
+
+        public void CreateTestProject()
+        {
+            Init();
+            CreateTestProjectInternal();
+            CreateInfosForDatagrid();
+            FireActionsChanged();
+            ProcessConditionsChanged();
+            FireStatisticsChanged();
             FireDirtyChanged();
         }
 
@@ -68,7 +79,7 @@ namespace DecisionTableCreator.TestCases
 
             for (int idx = 0; idx < count; idx++)
             {
-                EnumValue ev = new EnumValue(name+"-"+idx, idx==invalidIndex, idx==dontCareIndex, idx==defaultIndex);
+                EnumValue ev = new EnumValue(name + "-" + idx, idx == invalidIndex, idx == dontCareIndex, idx == defaultIndex);
                 list.Add(ev);
             }
 
@@ -181,6 +192,7 @@ namespace DecisionTableCreator.TestCases
             enumList.Add(new EnumValue("invalid condition", true, false, true));
             enumList.Add(new EnumValue("Blank sheet is ejected", false, false, false));
             enumList.Add(new EnumValue("Print quality is bad", false, false, false));
+            enumList.Add(new EnumValue("Nothing is ejected", false, false, false));
             enumList.Add(new EnumValue("DC", false, true, false));
 
             Conditions.Add(ConditionObject.Create("Paper", enumList));
@@ -207,17 +219,34 @@ namespace DecisionTableCreator.TestCases
             enumList = new ObservableCollection<EnumValue>();
             enumList.Add(new EnumValue("", false, false, true));
             enumList.Add(new EnumValue("Check paper filling level", false, false, false));
+            enumList.Add(new EnumValue("Check for clean (unused) paper", false, false, false));
 
             Actions.Add(ActionObject.Create("Paper", enumList));
 
             int idx = 1;
             TestCase tc = AddTestCase();
             tc.DisplayIndex = idx++;
-            SetSelectedItemIndex(tc, new int[] {1, 4, 3}, new int[0]);
+            SetSelectedItemIndex(tc, new int[] { 1, 4, 4 }, new int[0]);
 
             tc = AddTestCase();
             tc.DisplayIndex = idx++;
-            SetSelectedItemIndex(tc, new int[] { 2, 3, 3 }, new int[] {1});
+            SetSelectedItemIndex(tc, new int[] { 2, 3, 4 }, new int[] { 1 });
+
+            tc = AddTestCase();
+            tc.DisplayIndex = idx++;
+            SetSelectedItemIndex(tc, new int[] { 2, 2, 4 }, new int[] { 0, 1, 0, 1 });
+
+            tc = AddTestCase();
+            tc.DisplayIndex = idx++;
+            SetSelectedItemIndex(tc, new int[] { 2, 1, 1 }, new int[] { 0, 1, 0, 0 });
+
+            tc = AddTestCase();
+            tc.DisplayIndex = idx++;
+            SetSelectedItemIndex(tc, new int[] { 2, 1, 2 }, new int[] { 0, 1, 0, 2 });
+
+            tc = AddTestCase();
+            tc.DisplayIndex = idx++;
+            SetSelectedItemIndex(tc, new int[] { 2, 1, 3 }, new int[] { 0, 0, 1, 1 });
 
         }
 
@@ -235,5 +264,69 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        private void CreateTestProjectInternal()
+        {
+            int testCasesCount = 20;
+            int conditionCount = 8;
+            int actionCount = 8;
+
+            List<ObservableCollection<EnumValue>> lists = new List<ObservableCollection<EnumValue>>();
+
+            for (int idx = 0; idx < conditionCount; idx++)
+            {
+                CreateConditionEnum(lists, conditionCount, testCasesCount, "Cond");
+            }
+            for (int idx = 0; idx < actionCount; idx++)
+            {
+                CreateConditionEnum(lists, actionCount, testCasesCount, "Action");
+            }
+
+            int listIndex = 0;
+            for (int idx = 1; idx <= conditionCount; idx++)
+            {
+                Conditions.Add(ConditionObject.Create(String.Format("Condition {0}", idx), lists[listIndex++]));
+            }
+
+            for (int idx = 1; idx <= actionCount; idx++)
+            {
+                Actions.Add(ActionObject.Create(String.Format("Action {0}", idx), lists[listIndex++]));
+            }
+
+            CreateBasicColumnDescriptions();
+
+            for (int idx = 0; idx < testCasesCount; idx++)
+            {
+                TestCase tc = AddTestCase();
+                tc.DisplayIndex = idx + 1;
+                for (int condIdx = 0; condIdx < conditionCount; condIdx++)
+                {
+                    tc.Conditions[condIdx].SelectedItemIndex = idx*conditionCount+condIdx+1;
+                }
+                for (int actionIdx = 0; actionIdx < actionCount; actionIdx++)
+                {
+                    tc.Actions[actionIdx].SelectedItemIndex = idx * actionCount + actionIdx + 1;
+                }
+            }
+
+            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+            RecalculateStatistics();
+
+        }
+
+        private static void CreateConditionEnum(List<ObservableCollection<EnumValue>> lists, int conditionCount, int testCasesCount, string prefix)
+        {
+            ObservableCollection<EnumValue> subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("Invalid-Default"), true, false, true));
+            for (int tcIdx = 1; tcIdx <= testCasesCount; tcIdx++)
+            {
+                for (int idx = 1; idx < conditionCount + 1; idx++)
+                {
+                    subListSample.Add(new EnumValue(String.Format("{0}-{1}-TestCase-{2}", prefix, idx, tcIdx), false, false, false));
+                }
+            }
+            subListSample.Add(new EnumValue(String.Format("Don' t care"), false, true, false));
+        }
     }
 }

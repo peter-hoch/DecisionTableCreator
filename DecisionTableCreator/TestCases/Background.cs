@@ -86,7 +86,7 @@ namespace DecisionTableCreator.TestCases
                         return "Aqua";
 
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new NotSupportedException();
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace DecisionTableCreator.TestCases
                         return Brushes.Aqua;
 
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new NotSupportedException();
                 }
             }
         }

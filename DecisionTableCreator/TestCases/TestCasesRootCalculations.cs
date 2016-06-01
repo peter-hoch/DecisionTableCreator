@@ -50,13 +50,13 @@ namespace DecisionTableCreator.TestCases
             return stat;
         }
 
-        public int CalculatePossibleCombinations()
+        public long CalculatePossibleCombinations()
         {
             if (Conditions.Count == 0)
             {
                 return 0;
             }
-            int combinations = 1;
+            long combinations = 1;
             foreach (ConditionObject condition in Conditions)
             {
                 combinations *= Utilities.AtLeastValue(1, CalculateEnumValuesWithoutDontCareAndInvalid(condition));
@@ -71,9 +71,9 @@ namespace DecisionTableCreator.TestCases
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public static int CalculateEnumValuesWithoutDontCareAndInvalid(ConditionObject condition)
+        public static long CalculateEnumValuesWithoutDontCareAndInvalid(ConditionObject condition)
         {
-            int count = 0;
+            long count = 0;
             foreach (EnumValue value in condition.EnumValues)
             {
                 if (!value.DontCare && !value.IsInvalid)
@@ -92,7 +92,7 @@ namespace DecisionTableCreator.TestCases
         }
 
 
-        public int CalculateNumberOfUniqueCoveredTestCases()
+        public long CalculateNumberOfUniqueCoveredTestCases()
         {
             return CalculateNumberOfUniqueCoveredTestCases(TestCases);
         }
@@ -104,7 +104,7 @@ namespace DecisionTableCreator.TestCases
         /// </summary>
         /// <param name="testCases"></param>
         /// <returns></returns>
-        public static int CalculateNumberOfUniqueCoveredTestCases(IList<TestCase> testCases)
+        public static long CalculateNumberOfUniqueCoveredTestCases(IList<TestCase> testCases)
         {
             for (int outerIdx = 0; outerIdx < testCases.Count; outerIdx++)
             {
@@ -121,7 +121,7 @@ namespace DecisionTableCreator.TestCases
             }
 
             var uniqueTestCases = testCases.Where(tc => tc.TestCaseIsUnique && tc.ContainsInvalid == false);
-            int count = 0;
+            long count = 0;
             foreach (var testCase in uniqueTestCases)
             {
                 count += testCase.CalculateNumberOfCoveredTestCases();

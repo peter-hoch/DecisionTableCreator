@@ -63,7 +63,7 @@ namespace UnitTests2
         public void TestCalculationEnumValues(int count, int defaultIndex, int invalidIndex, int dontCareIndex, int expectedResult)
         {
             var condition = ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name", count, defaultIndex, invalidIndex, dontCareIndex));
-            int result = TestCasesRoot.CalculateEnumValuesWithoutDontCareAndInvalid(condition);
+            long result = TestCasesRoot.CalculateEnumValuesWithoutDontCareAndInvalid(condition);
             Assert.That(result == expectedResult);
         }
 
@@ -72,7 +72,7 @@ namespace UnitTests2
         {
             TestCasesRoot tcr = new TestCasesRoot();
             int expectedResult = 0;
-            int result = tcr.CalculatePossibleCombinations();
+            long result = tcr.CalculatePossibleCombinations();
             Assert.That(result == expectedResult);
 
             expectedResult = 4;
@@ -112,8 +112,9 @@ namespace UnitTests2
 
         }
 
-        [TestCase("Sample.dtc", 8, 8, 100.0)]
-        public void CalculateCoverage(string fileName, int expectedCombinations, int expectedUniqueTestCases, double expectedCoverage)
+        [TestCase("Sample.dtc", 8, 8, 99.9, 100.0)]
+        [TestCase("AnotherProject.dtc", 429496729600000000, 20, 4.5E-15, 4.7E-15)]
+        public void CalculateCoverage(string fileName, long expectedCombinations, long expectedUniqueTestCases, double minExpectedCoverage, double maxExpectedCoverage)
         {
             string testSettingPath = Path.Combine(TestSupport.CreatedFilesDirectory, "TestSetting.txt");
 
@@ -127,7 +128,8 @@ namespace UnitTests2
                 File.AppendAllText(testSettingPath, String.Format("{0}" + Environment.NewLine, tcr.TestCases[idx]));
             }
 
-            Assert.That(stat.Coverage.Equals(expectedCoverage));
+            Assert.That(stat.Coverage >= minExpectedCoverage);
+            Assert.That(stat.Coverage <= maxExpectedCoverage);
             Assert.That(stat.CoveredTestCases == expectedUniqueTestCases);
             Assert.That(stat.PossibleCombinations == expectedCombinations);
         }
@@ -186,7 +188,7 @@ namespace UnitTests2
             Trace.WriteLine(tc2);
             //bool isEqual = tc1.TestSettingIsEqual(tc2);
             Assert.That( TestCase.UpdateUniqueness(tc1,tc2) == (unique1 && unique2));
-            int count = TestCasesRoot.CalculateNumberOfUniqueCoveredTestCases(testCases);
+            long count = TestCasesRoot.CalculateNumberOfUniqueCoveredTestCases(testCases);
             Assert.That(tc1.TestCaseIsUnique == unique1);
             Assert.That(tc2.TestCaseIsUnique == unique2);
             Assert.That(count == expectedCoveredCount);
@@ -247,7 +249,7 @@ namespace UnitTests2
                 testCases.Add(tc);
                 Trace.WriteLine(tc);
             }
-            int result = TestCasesRoot.CalculateNumberOfUniqueCoveredTestCases(testCases);
+            long result = TestCasesRoot.CalculateNumberOfUniqueCoveredTestCases(testCases);
             Assert.That(result == expectedResult);
         }
 

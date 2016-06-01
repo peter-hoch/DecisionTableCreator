@@ -36,9 +36,9 @@ namespace DecisionTableCreator.TestCases
 {
     public class Statistics
     {
-        public int PossibleCombinations { get; set; }
+        public long PossibleCombinations { get; set; }
 
-        public int CoveredTestCases { get; set; }
+        public long CoveredTestCases { get; set; }
 
         public double Coverage { get; set; }
 

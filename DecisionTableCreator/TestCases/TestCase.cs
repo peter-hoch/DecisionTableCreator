@@ -115,7 +115,6 @@ namespace DecisionTableCreator.TestCases
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
-            UpdateTooltips(type);
         }
 
         public void InsertValueObject(CollectionType type, int whereToInsert, ValueObject value)
@@ -127,28 +126,6 @@ namespace DecisionTableCreator.TestCases
                     break;
                 case CollectionType.Actions:
                     Actions.Insert(whereToInsert, value);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-            UpdateTooltips(type);
-        }
-
-        void UpdateTooltips(CollectionType type)
-        {
-            switch (type)
-            {
-                case CollectionType.Conditions:
-                    foreach (ValueObject valueObject in Conditions)
-                    {
-                        valueObject.TooltipText = Name + " " + valueObject.ConditionOrActionParent.Name;
-                    }
-                    break;
-                case CollectionType.Actions:
-                    foreach (ValueObject valueObject in Actions)
-                    {
-                        valueObject.TooltipText = Name + " " + valueObject.ConditionOrActionParent.Name;
-                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -432,7 +409,6 @@ namespace DecisionTableCreator.TestCases
                 OnPropertyChanged("DirtyObserver");
             }
         }
-
 
 
         #region event

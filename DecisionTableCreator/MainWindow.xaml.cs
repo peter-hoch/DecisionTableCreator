@@ -49,6 +49,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.ErrorDialog;
+using DecisionTableCreator.Properties;
 using DecisionTableCreator.TestCases;
 using DecisionTableCreator.Utils;
 using Microsoft.Win32;
@@ -591,13 +592,19 @@ namespace DecisionTableCreator
 
         private bool SaveAsProject()
         {
+            string initialDir = Settings.Default.SaveAsDirectory;
+            if (string.IsNullOrEmpty(initialDir))
+            {
+                initialDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            }
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
-            dlg.InitialDirectory = Path.GetDirectoryName(DataContainer.ProjectPath);
-            dlg.FileName = DataContainer.ProjectPath;
+            dlg.InitialDirectory = initialDir;
+            dlg.FileName = "NewProject";
             var result = dlg.ShowDialog();
             if (result.HasValue && result.Value)
             {
+                Settings.Default.SaveAsDirectory = Path.GetDirectoryName(dlg.FileName);
                 DataContainer.TestCasesRoot.Save(dlg.FileName);
                 DataContainer.ResetDirty();
                 DataContainer.ProjectPath = dlg.FileName;
@@ -687,7 +694,7 @@ namespace DecisionTableCreator
         {
             try
             {
-                ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
+                ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
                 EditAction wnd = new EditAction(newAction);
                 bool? result = wnd.ShowDialog();
                 if (result.HasValue && result.Value)
@@ -714,7 +721,7 @@ namespace DecisionTableCreator
                 var index = CalculateRowIndex(e);
                 if (index >= 0)
                 {
-                    ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("new text", "new value") });
+                    ActionObject newAction = ActionObject.Create("new action", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
                     EditCondition wnd = new EditCondition(newAction);
                     bool? result = wnd.ShowDialog();
                     if (result.HasValue && result.Value)
@@ -963,7 +970,7 @@ namespace DecisionTableCreator
         {
             try
             {
-                var templResult = DataContainer.TestCasesRoot.GenerateFromtemplate(Templates.Resources.HtmlTemplate);
+                var templResult = DataContainer.TestCasesRoot.GenerateFromTemplateString(Templates.Resources.HtmlTemplate);
                 if (templResult.ErrorListener.ErrorReported)
                 {
                     DisplayTemplateErrorMessages(templResult);
@@ -1002,12 +1009,18 @@ namespace DecisionTableCreator
                 FileInfo fi = new FileInfo(e.Parameter.ToString());
                 if (fi.Exists)
                 {
+                    string initialDirectory = Settings.Default.ExportDirectory;
+                    if(string.IsNullOrEmpty(initialDirectory))
+                    {
+                        initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    }
                     SaveFileDialog dlg = new SaveFileDialog();
                     dlg.Filter = "Text files|*.txt|Source files|*.c;*.cs;*.cpp;*.h|All files|*.*";
-                    dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    dlg.InitialDirectory = initialDirectory;
                     bool? result = dlg.ShowDialog(this);
                     if (result.HasValue && result.Value)
                     {
+                        Settings.Default.ExportDirectory = Path.GetDirectoryName(dlg.FileName);
                         var templResult = DataContainer.TestCasesRoot.GenerateFromtemplate(fi.FullName);
                         if (templResult.ErrorListener.ErrorReported)
                         {
@@ -1137,6 +1150,7 @@ namespace DecisionTableCreator
             try
             {
                 e.Cancel = !CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave();
+                Settings.Default.Save();
             }
             catch (Exception ex)
             {

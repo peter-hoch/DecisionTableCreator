@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
@@ -48,6 +49,7 @@ namespace DecisionTableCreator
         public DataContainer()
         {
             TestCasesRoot = new TestCasesRoot();
+            TestCasesRoot.CreateTestProject();
             Conditions = TestCasesRoot.ConditionTable;
             Actions = TestCasesRoot.ActionTable;
             OnStatisticsChanged();
@@ -172,9 +174,9 @@ namespace DecisionTableCreator
             }
         }
 
-        private int _possibleCombinations;
+        private long _possibleCombinations;
 
-        public int PossibleCombinations
+        public long PossibleCombinations
         {
             get { return _possibleCombinations; }
             set
@@ -184,9 +186,9 @@ namespace DecisionTableCreator
             }
         }
 
-        private int _coveredTestCases;
+        private long _coveredTestCases;
 
-        public int CoveredTestCases
+        public long CoveredTestCases
         {
             get { return _coveredTestCases; }
             set
