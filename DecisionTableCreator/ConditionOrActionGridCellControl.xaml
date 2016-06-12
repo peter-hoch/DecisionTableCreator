@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
-        <TextBox Text="{Binding Path=Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
+        <TextBox Text="{Binding Path=Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"
                  Background="{Binding Path=Background.WpfBrush, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             <TextBox.InputBindings>
                 <MouseBinding Command="local:WpfCommands.EditConditionOrAction" Gesture="LeftDoubleClick"/>

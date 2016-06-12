@@ -88,8 +88,8 @@ namespace UnitTests2
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
             Assert.That(tcrc.TestCasesRoot.TestCases.Count == testCaseCount + 1);
             Assert.That(tcrc.TestCasesRoot.TestCases.Last().TestProperty.Equals(testCaseId));
-            Assert.That(tcrc.ConditionChangeCount == 1);
-            Assert.That(tcrc.ActionChangeCount == 1);
+            Assert.That(tcrc.ConditionChangeCount == 2);
+            Assert.That(tcrc.ActionChangeCount == 2);
             selValues.AppendTestCase(newTestCase, tcrc.TestCasesRoot);
             selValues.Check(tcrc.TestCasesRoot);
 
@@ -134,8 +134,8 @@ namespace UnitTests2
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
             Assert.That(tcrc.TestCasesRoot.TestCases.Count == testCaseCount + 1);
             Assert.That(tcrc.TestCasesRoot.TestCases[indexWhereToInsert].TestProperty.Equals(testCaseId));
-            Assert.That(tcrc.ConditionChangeCount == 1);
-            Assert.That(tcrc.ActionChangeCount == 1);
+            Assert.That(tcrc.ConditionChangeCount == 2);
+            Assert.That(tcrc.ActionChangeCount == 2);
             selValues.AppendTestCase(newTestCase, tcrc.TestCasesRoot);
             selValues.Check(tcrc.TestCasesRoot);
 
@@ -175,8 +175,8 @@ namespace UnitTests2
 
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
             Assert.That(tcrc.TestCasesRoot.TestCases.Count == testCaseCount - 1);
-            Assert.That(tcrc.ConditionChangeCount == 1);
-            Assert.That(tcrc.ActionChangeCount == 1);
+            Assert.That(tcrc.ConditionChangeCount == 2);
+            Assert.That(tcrc.ActionChangeCount == 2);
             selValues.DeleteTestCase(deletedTestCase, tcrc.TestCasesRoot);
             selValues.Check(tcrc.TestCasesRoot);
 
@@ -214,8 +214,8 @@ namespace UnitTests2
 
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
             Assert.That(tcrc.TestCasesRoot.TestCases.Count == testCaseCount - deleteCount);
-            Assert.That(tcrc.ConditionChangeCount == deleteCount);
-            Assert.That(tcrc.ActionChangeCount == deleteCount);
+            Assert.That(tcrc.ConditionChangeCount == deleteCount*2);
+            Assert.That(tcrc.ActionChangeCount == deleteCount*2);
             selValues.Check(tcrc.TestCasesRoot);
 
             testCaseCount = tcrc.TestCasesRoot.TestCases.Count;
@@ -231,8 +231,8 @@ namespace UnitTests2
 
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
             Assert.That(tcrc.TestCasesRoot.TestCases.Count == testCaseCount + addCount);
-            Assert.That(tcrc.ConditionChangeCount == (deleteCount + addCount));
-            Assert.That(tcrc.ActionChangeCount == (deleteCount + addCount));
+            Assert.That(tcrc.ConditionChangeCount == (deleteCount + addCount)*2);
+            Assert.That(tcrc.ActionChangeCount == (deleteCount + addCount)*2);
             selValues.Check(tcrc.TestCasesRoot);
 
             tcrc.TestCasesRoot.Save(secondPath);

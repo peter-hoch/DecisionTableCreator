@@ -104,7 +104,7 @@ namespace UnitTests2
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
             Assert.That(tcrc.TestCasesRoot.Conditions.Count == conditionCount + 1);
             Assert.That(tcrc.TestCasesRoot.Conditions.Last().Name.Equals(newConditionName));
-            Assert.That(tcrc.ConditionChangeCount == 1);
+            Assert.That(tcrc.ConditionChangeCount == 2);
             Assert.That(tcrc.ActionChangeCount == 0);
             selValues.AppendCondition(tcrc.TestCasesRoot.TestCases.Count);
             selValues.Check(tcrc.TestCasesRoot);
@@ -134,7 +134,7 @@ namespace UnitTests2
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
             Assert.That(tcrc.TestCasesRoot.Conditions.Count == conditionCount + 1);
             Assert.That(tcrc.TestCasesRoot.Conditions.Last().Name.Equals(newConditionName));
-            Assert.That(tcrc.ConditionChangeCount == 1);
+            Assert.That(tcrc.ConditionChangeCount == 2);
             Assert.That(tcrc.ActionChangeCount == 0);
             selValues.AppendCondition(tcrc.TestCasesRoot.TestCases.Count);
             selValues.Check(tcrc.TestCasesRoot);
@@ -176,7 +176,7 @@ namespace UnitTests2
             Assert.That(conditionCount == 3); // adjust last testcase on failue
             Assert.That(tcrc.TestCasesRoot.Conditions.Count == conditionCount + 1);
             Assert.That(tcrc.TestCasesRoot.Conditions[indexWhereToInsert].Name.Equals(newConditionName));
-            Assert.That(tcrc.ConditionChangeCount == 1);
+            Assert.That(tcrc.ConditionChangeCount == 2);
             Assert.That(tcrc.ActionChangeCount == 0);
             selValues.InsertCondition(insertPosition, tcrc.TestCasesRoot.TestCases.Count);
             selValues.Check(tcrc.TestCasesRoot);
@@ -206,7 +206,7 @@ namespace UnitTests2
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
             Assert.That(conditionCount == 3); // adjust last testcase on failue
             Assert.That(tcrc.TestCasesRoot.Conditions.Count == conditionCount - 1);
-            Assert.That(tcrc.ConditionChangeCount == 1);
+            Assert.That(tcrc.ConditionChangeCount == 2);
             Assert.That(tcrc.ActionChangeCount == 0);
             selValues.DeleteCondition(deletePosition);
             selValues.Check(tcrc.TestCasesRoot);
@@ -235,7 +235,7 @@ namespace UnitTests2
             Assert.That(tcrc.TestCasesRoot.Actions.Count == actionCount + 1);
             Assert.That(tcrc.TestCasesRoot.Actions.Last().Name.Equals(newActionName));
             Assert.That(tcrc.ConditionChangeCount == 0);
-            Assert.That(tcrc.ActionChangeCount == 1);
+            Assert.That(tcrc.ActionChangeCount == 2);
             selValues.AppendAction(tcrc.TestCasesRoot.TestCases.Count);
             selValues.Check(tcrc.TestCasesRoot);
 
@@ -268,7 +268,7 @@ namespace UnitTests2
             Assert.That(tcrc.TestCasesRoot.Actions.Count == actionCount + 1);
             Assert.That(tcrc.TestCasesRoot.Actions[indexWhereToInsert].Name.Equals(newActionName));
             Assert.That(tcrc.ConditionChangeCount == 0);
-            Assert.That(tcrc.ActionChangeCount == 1);
+            Assert.That(tcrc.ActionChangeCount == 2);
             selValues.InsertAction(insertPosition, tcrc.TestCasesRoot.TestCases.Count);
             selValues.Check(tcrc.TestCasesRoot);
 
@@ -298,7 +298,7 @@ namespace UnitTests2
             Assert.That(actionCount == 3); // adjust last testcase on failue
             Assert.That(tcrc.TestCasesRoot.Actions.Count == actionCount - 1);
             Assert.That(tcrc.ConditionChangeCount == 0);
-            Assert.That(tcrc.ActionChangeCount == 1);
+            Assert.That(tcrc.ActionChangeCount == 2);
             selValues.DeleteAction(deletePosition);
             selValues.Check(tcrc.TestCasesRoot);
 
@@ -334,7 +334,7 @@ namespace UnitTests2
             TestUtils.CheckTestCasesAndConditionsAndActions(tcrc.TestCasesRoot);
             Assert.That(tcrc.TestCasesRoot.Actions.Count == 3);
             Assert.That(tcrc.TestCasesRoot.Conditions.Count == 3);
-            Assert.That(tcrc.ConditionChangeCount == 1);
+            Assert.That(tcrc.ConditionChangeCount == 2);
             Assert.That(tcrc.ActionChangeCount == 0);
             selValues.Check(tcrc.TestCasesRoot);
 
@@ -370,7 +370,7 @@ namespace UnitTests2
             Assert.That(tcrc.TestCasesRoot.Actions.Count == 3);
             Assert.That(tcrc.TestCasesRoot.Conditions.Count == 3);
             Assert.That(tcrc.ConditionChangeCount == 0);
-            Assert.That(tcrc.ActionChangeCount == 1);
+            Assert.That(tcrc.ActionChangeCount == 2);
             selValues.Check(tcrc.TestCasesRoot);
 
             SaveConditionsOrActions(tcrc.TestCasesRoot.Actions, secondPath);

@@ -39,9 +39,11 @@ namespace DecisionTableCreator
     {
         public static readonly RoutedUICommand AppendTestCase;
         public static readonly RoutedUICommand DeleteTestCase;
+        public static readonly RoutedUICommand DeleteMostRightTestCase;
         public static readonly RoutedUICommand InsertTestCase;
         public static readonly RoutedUICommand EditCondition;
         public static readonly RoutedUICommand DeleteCondition;
+        public static readonly RoutedUICommand DeleteBottomCondition;
         public static readonly RoutedUICommand EditAction;
         public static readonly RoutedUICommand EditConditionOrAction;
         public static readonly RoutedUICommand DeleteAction;
@@ -60,6 +62,7 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand MoveConditionOrActionDown;
         public static readonly RoutedUICommand ExportToFileWithExternalTemplate;
         public static readonly RoutedUICommand CreateSampleProject;
+        public static readonly RoutedUICommand Exit;
 
         static WpfCommands()
         {
@@ -70,10 +73,12 @@ namespace DecisionTableCreator
             KeyGesture gestureCtrlS = new KeyGesture(Key.S, ModifierKeys.Control);
             AppendTestCase = new RoutedUICommand("Append test case", "AppendTestCase", typeof(WpfCommands), new InputGestureCollection() { gestureAltT });
             DeleteTestCase = new RoutedUICommand("Delete test case", "DeleteTestCase", typeof(WpfCommands));
+            DeleteMostRightTestCase = new RoutedUICommand("Delete most right test case", "DeleteMostRightTestCase", typeof(WpfCommands));
             InsertTestCase = new RoutedUICommand("Insert test case", "InsertTestCase", typeof(WpfCommands));
             EditCondition = new RoutedUICommand("Edit condition", "EditCondition", typeof(WpfCommands));
             EditConditionOrAction = new RoutedUICommand("Edit condition or action", "EditConditionOrAction", typeof(WpfCommands));
             DeleteCondition = new RoutedUICommand("Delete condition", "DeleteCondition", typeof(WpfCommands));
+            DeleteBottomCondition = new RoutedUICommand("Delete bottom condition", "DeleteBottomCondition", typeof(WpfCommands));
             EditAction = new RoutedUICommand("Edit action", "EditAction", typeof(WpfCommands));
             DeleteAction = new RoutedUICommand("Delete action", "DeleteAction", typeof(WpfCommands));
             Save = new RoutedUICommand("Save", "Save", typeof(WpfCommands), new InputGestureCollection() { gestureCtrlS });
@@ -91,6 +96,7 @@ namespace DecisionTableCreator
             MoveConditionOrActionDown = new RoutedUICommand("Move down", "MoveConditionOrActionDown", typeof(WpfCommands));
             ExportToFileWithExternalTemplate = new RoutedUICommand("Export to file with external template", "ExportToFileWithExternalTemplate", typeof(WpfCommands));
             CreateSampleProject = new RoutedUICommand("Create sample project", "CreateSampleProject", typeof(WpfCommands));
+            Exit = new RoutedUICommand("Exit", "Exit", typeof(WpfCommands));
         }
     }
 }

@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d"
-        Title="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="600" Width="800" Icon="pack://application:,,,/DtcIcon.ico" Closing="Window_Closing" >
+        Title="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="600" Width="800" Icon="pack://application:,,,/DtcIcon.ico" Closing="Window_Closing" 
+        AutomationProperties.AutomationId="MainWindow">
     <Window.DataContext>
         <local:DataContainer/>
     </Window.DataContext>
     <Window.CommandBindings>
         <CommandBinding Command="local:WpfCommands.AppendTestCase" Executed="AppendTestCase_Executed" CanExecute="AppendTestCase_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.DeleteTestCase" Executed="DeleteTestCase_Executed" CanExecute="DeleteTestCase_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.DeleteMostRightTestCase" Executed="DeleteMostRightTestCase_Executed" CanExecute="DeleteMostRightTestCase_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.InsertTestCase" Executed="InsertTestCase_Executed" CanExecute="InsertTestCase_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.EditConditionOrAction" Executed="EditConditionOrAction_Executed" CanExecute="EditConditionOrAction_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.EditCondition" Executed="EditConditionOrAction_Executed" CanExecute="EditCondition_OnCanExecute"/>
@@ -26,11 +28,13 @@
         <CommandBinding Command="local:WpfCommands.AppendCondition" Executed="AppendCondition_Executed" CanExecute="AppendCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.InsertCondition" Executed="InsertCondition_Executed" CanExecute="InsertCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.DeleteCondition" Executed="DeleteCondition_Executed" CanExecute="DeleteCondition_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.DeleteBottomCondition" Executed="DeleteBottomCondition_Executed" CanExecute="DeleteBottomCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.ExportHtmlToClipboard" Executed="ExportHtmlToClipboard_Executed" CanExecute="ExportHtmlToClipboard_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.MoveConditionOrActionUp" Executed="MoveConditionOrActionUp_Executed" CanExecute="MoveConditionOrActionUp_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.MoveConditionOrActionDown" Executed="MoveConditionOrActionDown_Executed" CanExecute="MoveConditionOrActionDown_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.ExportToFileWithExternalTemplate" Executed="ExportToFileWithExternalTemplate_Executed" CanExecute="ExportToFileWithExternalTemplate_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.CreateSampleProject" Executed="CreateSampleProject_Executed" CanExecute="CreateSampleProject_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.Exit" Executed="Exit_Executed" CanExecute="Exit_OnCanExecute"/>
     </Window.CommandBindings>
 
     <Grid MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}">
@@ -61,19 +65,23 @@
         </Grid.ContextMenu>
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <MenuItem Header="File">
-                <MenuItem Command="local:WpfCommands.NewDocument"/>
+                <MenuItem AutomationProperties.AutomationId="MenuItemNewDocument"  Command="local:WpfCommands.NewDocument"/>
                 <MenuItem Command="local:WpfCommands.Open"/>
-                <MenuItem Command="local:WpfCommands.Save"/>
+                <MenuItem AutomationProperties.AutomationId="MenuItemSave"  Command="local:WpfCommands.Save"/>
                 <MenuItem Command="local:WpfCommands.SaveAs"/>
                 <MenuItem Command="local:WpfCommands.CreateSampleProject"/>
+                <MenuItem AutomationProperties.AutomationId="MenuItemExit" Command="local:WpfCommands.Exit"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Command="local:WpfCommands.AppendTestCase"/>
+                <MenuItem AutomationProperties.AutomationId="MenuItemAppendTestCase"  Command="local:WpfCommands.AppendTestCase"/>
+                <MenuItem AutomationProperties.AutomationId="MenuItemDeleteTestCase"  Command="local:WpfCommands.DeleteTestCase"/>
+                <MenuItem AutomationProperties.AutomationId="MenuItemDeleteMostRightTestCase"  Command="local:WpfCommands.DeleteMostRightTestCase"/>
                 <MenuItem Command="local:WpfCommands.EditCondition"/>
                 <MenuItem Command="local:WpfCommands.EditAction"/>
                 <MenuItem Command="local:WpfCommands.InsertCondition"/>
-                <MenuItem Command="local:WpfCommands.AppendCondition"/>
-                <MenuItem Command="local:WpfCommands.DeleteCondition"/>
+                <MenuItem AutomationProperties.AutomationId="MenuItemAppendCondition"  Command="local:WpfCommands.AppendCondition"/>
+                <MenuItem AutomationProperties.AutomationId="MenuItemDeleteCondition"  Command="local:WpfCommands.DeleteCondition"/>
+                <MenuItem AutomationProperties.AutomationId="MenuItemDeleteBottomCondition"  Command="local:WpfCommands.DeleteBottomCondition"/>
                 <MenuItem Command="local:WpfCommands.InsertAction"/>
                 <MenuItem Command="local:WpfCommands.AppendAction"/>
                 <MenuItem Command="local:WpfCommands.DeleteAction"/>
@@ -90,9 +98,10 @@
         </Menu>
            
         <DockPanel Grid.Row="2" Grid.Column="1" >
-            <DataGrid Name="DataGridConditions" ItemsSource="{Binding Conditions}" FrozenColumnCount="1" AutoGeneratedColumns="DataGrid_OnAutoGeneratedColumns" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn" SelectionUnit="Cell" IsTabStop="False" 
-                       CanUserAddRows="False" CanUserDeleteRows="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  ColumnReordering="DataGrid_OnColumnReordering" ColumnReordered="DataGrid_OnColumnReordered"
-                      ComboBox.SelectionChanged="ComboBox_SelectionChanged" Unloaded="DataGridConditions_Unloaded" >
+            <DataGrid Name="DataGridConditions" ItemsSource="{Binding Conditions}" FrozenColumnCount="1" AutoGeneratedColumns="DataGrid_OnAutoGeneratedColumns" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn" SelectionUnit="Cell" 
+                      IsTabStop="False" CanUserAddRows="False" CanUserDeleteRows="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  
+                      ColumnReordering="DataGrid_OnColumnReordering" ColumnReordered="DataGrid_OnColumnReordered"
+                      ComboBox.SelectionChanged="ComboBox_SelectionChanged" AutomationProperties.AutomationId="DataGridConditions" >
                 <DataGrid.Resources>
                     <Style TargetType="DataGridCell">
                         <Setter Property="IsTabStop" Value="False"/>
@@ -104,9 +113,10 @@
         <GridSplitter Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" Height="5"/>
 
         <DockPanel Grid.Row="4" Grid.Column="1">
-            <DataGrid Name="DataGridActions" ItemsSource="{Binding Actions}" FrozenColumnCount="1" AutoGeneratedColumns="DataGrid_OnAutoGeneratedColumns" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn" SelectionUnit="Cell" IsTabStop="False" 
-                      CanUserAddRows="False" CanUserDeleteRows="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  ColumnReordering="DataGrid_OnColumnReordering" ColumnReordered="DataGrid_OnColumnReordered"
-                       Unloaded="DataGridConditions_Unloaded" >
+            <DataGrid Name="DataGridActions" ItemsSource="{Binding Actions}" FrozenColumnCount="1" AutoGeneratedColumns="DataGrid_OnAutoGeneratedColumns" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn" SelectionUnit="Cell" 
+                      IsTabStop="False" CanUserAddRows="False" CanUserDeleteRows="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  
+                      ColumnReordering="DataGrid_OnColumnReordering" ColumnReordered="DataGrid_OnColumnReordered"
+                       >
                 <DataGrid.Resources>
                     <Style TargetType="DataGridCell">
                         <Setter Property="IsTabStop" Value="False"/>

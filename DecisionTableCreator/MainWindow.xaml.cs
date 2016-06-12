@@ -75,7 +75,15 @@ namespace DecisionTableCreator
             _timer.Start();
             SearchForTemplatesAndCreateSubmenu();
             DataContainer.ResetDirty();
+            DataContainer.QuitEditMode += DataContainerOnQuitEditMode;
         }
+
+        private void DataContainerOnQuitEditMode()
+        {
+            bool result = DataGridActions.CommitEdit();
+            result = DataGridConditions.CommitEdit();
+        }
+
 
         private void SearchForTemplatesAndCreateSubmenu()
         {
@@ -381,6 +389,35 @@ namespace DecisionTableCreator
                 if (index >= 0)
                 {
                     e.CanExecute = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        private void DeleteMostRightTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            try
+            {
+                var tcr = DataContainer.TestCasesRoot;
+                e.CanExecute = tcr.TestCases.Count > 0;
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        private void DeleteMostRightTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                var tcr = DataContainer.TestCasesRoot;
+                if (tcr.TestCases.Count > 0)
+                {
+                    tcr.DeleteTestCaseAt(tcr.TestCases.Count-1);
                 }
             }
             catch (Exception ex)
@@ -874,6 +911,36 @@ namespace DecisionTableCreator
             }
         }
 
+        private void DeleteBottomCondition_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                var tcr = DataContainer.TestCasesRoot;
+                if (tcr.Conditions.Count > 0)
+                {
+                    tcr.DeleteConditionAt(tcr.Conditions.Count - 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+
+        }
+
+        private void DeleteBottomCondition_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            try
+            {
+                var tcr = DataContainer.TestCasesRoot;
+                e.CanExecute = tcr.Conditions.Count > 0;
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
         private void MoveConditionOrActionUp_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             try
@@ -1158,11 +1225,21 @@ namespace DecisionTableCreator
             }
         }
 
-
-        private void DataGridConditions_Unloaded(object sender, RoutedEventArgs e)
+        private void Exit_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var grid = (DataGrid)sender;
-            grid.CommitEdit(DataGridEditingUnit.Row, true);
+            try
+            {
+                    Close();
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        private void Exit_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
 
 

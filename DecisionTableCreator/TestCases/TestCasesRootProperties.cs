@@ -130,9 +130,11 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        public event ViewChangedDelegate ConditionsChanged;
+        public event ViewChangedDelegate ConditionsBeginChange;
+        public event ViewChangedDelegate ConditionsEndChange;
 
-        public event ViewChangedDelegate ActionsChanged;
+        public event ViewChangedDelegate ActionsBeginChange;
+        public event ViewChangedDelegate ActionsEndChange;
 
         public event StatisticsChangedDelegate StatisticsChanged;
 
@@ -140,13 +142,13 @@ namespace DecisionTableCreator.TestCases
         {
             RecalculateStatistics();
 
-            ConditionsChanged?.Invoke();
+            ConditionsEndChange?.Invoke();
         }
 
 
         private void FireActionsChanged()
         {
-            ActionsChanged?.Invoke();
+            ActionsEndChange?.Invoke();
         }
 
         public void FireStatisticsChanged()

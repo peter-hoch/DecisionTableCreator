@@ -86,6 +86,17 @@ namespace DecisionTableCreator.TestCases
 
         void PopulateRows<TType>(DataTableView dataTable, IList<TType> list, IList<TestCase> testCases, TestCase.CollectionType colType)
         {
+            switch (colType)
+            {
+                case TestCase.CollectionType.Conditions:
+                    ConditionsBeginChange?.Invoke();
+                    break;
+                case TestCase.CollectionType.Actions:
+                    ActionsBeginChange?.Invoke();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(colType), colType, null);
+            }
             dataTable.Rows.Clear();
             int rowIndex = 0;
             foreach (TType conditionActionBase in list)
@@ -101,7 +112,6 @@ namespace DecisionTableCreator.TestCases
                 }
                 rowIndex++;
             }
-
         }
 
         /// <summary>
@@ -404,32 +414,32 @@ namespace DecisionTableCreator.TestCases
         }
 
 
-        private void AddToTestCases(ConditionObject conditionObject, int whereToInsert=-1)
+        private void AddToTestCases(ConditionObject conditionObject, int whereToInsert = -1)
         {
             foreach (TestCase testCase in TestCases)
             {
                 if (whereToInsert < 0)
                 {
-                    testCase.AddValueObject(TestCase.CollectionType.Conditions,  ValueObject.Create(conditionObject));
+                    testCase.AddValueObject(TestCase.CollectionType.Conditions, ValueObject.Create(conditionObject));
                 }
                 else
                 {
-                    testCase.InsertValueObject(TestCase.CollectionType.Conditions,  whereToInsert, ValueObject.Create(conditionObject));
+                    testCase.InsertValueObject(TestCase.CollectionType.Conditions, whereToInsert, ValueObject.Create(conditionObject));
                 }
             }
         }
 
-        private void AddToTestCases(ActionObject actionObject, int whereToInsert=-1)
+        private void AddToTestCases(ActionObject actionObject, int whereToInsert = -1)
         {
             foreach (TestCase testCase in TestCases)
             {
                 if (whereToInsert < 0)
                 {
-                    testCase.AddValueObject(TestCase.CollectionType.Actions,  ValueObject.Create(actionObject));
+                    testCase.AddValueObject(TestCase.CollectionType.Actions, ValueObject.Create(actionObject));
                 }
                 else
                 {
-                    testCase.InsertValueObject(TestCase.CollectionType.Actions,  whereToInsert, ValueObject.Create(actionObject));
+                    testCase.InsertValueObject(TestCase.CollectionType.Actions, whereToInsert, ValueObject.Create(actionObject));
                 }
             }
         }
@@ -454,7 +464,6 @@ namespace DecisionTableCreator.TestCases
 
         public static void AddValueObjects<TType>(TestCase tc, ObservableCollection<TType> list, TestCase.CollectionType colType) where TType : IConditionAction
         {
-
             foreach (IConditionAction condition in list)
             {
                 ValueObject vo = ValueObject.Create(condition);
@@ -479,7 +488,6 @@ namespace DecisionTableCreator.TestCases
                 OnPropertyChanged("DirtyObserver");
             }
         }
-
 
         #region event
 
@@ -514,7 +522,5 @@ namespace DecisionTableCreator.TestCases
         }
 
         #endregion
-
-
     }
 }

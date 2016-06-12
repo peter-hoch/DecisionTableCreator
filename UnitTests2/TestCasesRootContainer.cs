@@ -47,8 +47,10 @@ namespace UnitTests2
         public TestCasesRootContainer()
         {
             TestCasesRoot = TestCasesRoot.CreateSimpleTable();
-            TestCasesRoot.ActionsChanged += TestCasesRootOnActionsChanged;
-            TestCasesRoot.ConditionsChanged += TestCasesRootOnConditionsChanged;
+            TestCasesRoot.ActionsBeginChange += TestCasesRootOnActionsChanged;
+            TestCasesRoot.ActionsEndChange += TestCasesRootOnActionsChanged;
+            TestCasesRoot.ConditionsBeginChange += TestCasesRootOnConditionsChanged;
+            TestCasesRoot.ConditionsEndChange += TestCasesRootOnConditionsChanged;
         }
 
         private void TestCasesRootOnConditionsChanged()
@@ -63,8 +65,10 @@ namespace UnitTests2
 
         public void Dispose()
         {
-            TestCasesRoot.ActionsChanged -= TestCasesRootOnActionsChanged;
-            TestCasesRoot.ConditionsChanged -= TestCasesRootOnConditionsChanged;
+            TestCasesRoot.ActionsBeginChange -= TestCasesRootOnActionsChanged;
+            TestCasesRoot.ActionsEndChange -= TestCasesRootOnActionsChanged;
+            TestCasesRoot.ConditionsBeginChange -= TestCasesRootOnConditionsChanged;
+            TestCasesRoot.ConditionsEndChange -= TestCasesRootOnConditionsChanged;
         }
     }
 }

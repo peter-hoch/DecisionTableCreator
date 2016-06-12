@@ -44,6 +44,8 @@ using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator
 {
+    public delegate void QuitEditModeDelegate();
+
     public class DataContainer : INotifyDirtyChanged
     {
         public DataContainer()
@@ -57,6 +59,8 @@ namespace DecisionTableCreator
             UpdateTitle();
             DirtyChanged += OnDirtyChanged;
         }
+
+        public event QuitEditModeDelegate QuitEditMode;
 
         private void OnDirtyChanged()
         {
@@ -113,16 +117,20 @@ namespace DecisionTableCreator
             {
                 if (_testCasesRoot != null)
                 {
-                    _testCasesRoot.ConditionsChanged -= OnConditionsChanged;
-                    _testCasesRoot.ActionsChanged -= OnActionsChanged;
+                    _testCasesRoot.ConditionsBeginChange -= OnConditionsBeginChange;
+                    _testCasesRoot.ConditionsEndChange -= OnConditionsEndChange;
+                    _testCasesRoot.ActionsBeginChange -= OnActionsBeginChange;
+                    _testCasesRoot.ActionsEndChange -= OnActionsEndChange;
                     _testCasesRoot.StatisticsChanged -= OnStatisticsChanged;
                 }
                 _testCasesRoot = value;
                 OnPropertyChanged("TestCasesRoot");
                 if (_testCasesRoot != null)
                 {
-                    _testCasesRoot.ConditionsChanged += OnConditionsChanged;
-                    _testCasesRoot.ActionsChanged += OnActionsChanged;
+                    _testCasesRoot.ConditionsBeginChange += OnConditionsBeginChange;
+                    _testCasesRoot.ConditionsEndChange += OnConditionsEndChange;
+                    _testCasesRoot.ActionsBeginChange += OnActionsBeginChange;
+                    _testCasesRoot.ActionsEndChange += OnActionsEndChange;
                     _testCasesRoot.StatisticsChanged += OnStatisticsChanged;
                 }
             }
@@ -136,15 +144,25 @@ namespace DecisionTableCreator
             Coverage = stat.Coverage;
         }
 
-        private void OnActionsChanged()
+        private void OnActionsBeginChange()
         {
+            QuitEditMode?.Invoke();
             Actions = null;
+        }
+
+        private void OnActionsEndChange()
+        {
             Actions = TestCasesRoot.ActionTable;
         }
 
-        private void OnConditionsChanged()
+        private void OnConditionsBeginChange()
         {
+            QuitEditMode?.Invoke();
             Conditions = null;
+        }
+
+        private void OnConditionsEndChange()
+        {
             Conditions = TestCasesRoot.ConditionTable;
         }
 
