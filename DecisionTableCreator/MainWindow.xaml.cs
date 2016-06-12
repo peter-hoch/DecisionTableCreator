@@ -370,8 +370,10 @@ namespace DecisionTableCreator
         {
             try
             {
-                DataContainer.TestCasesRoot.InsertTestCase();
-
+                using (new WaitCursor(this))
+                {
+                    DataContainer.TestCasesRoot.InsertTestCase();
+                }
             }
             catch (Exception ex)
             {
@@ -413,10 +415,13 @@ namespace DecisionTableCreator
         {
             try
             {
-                var tcr = DataContainer.TestCasesRoot;
-                if (tcr.TestCases.Count > 0)
+                using (new WaitCursor(this))
                 {
-                    tcr.DeleteTestCaseAt(tcr.TestCases.Count-1);
+                    var tcr = DataContainer.TestCasesRoot;
+                    if (tcr.TestCases.Count > 0)
+                    {
+                        tcr.DeleteTestCaseAt(tcr.TestCases.Count - 1);
+                    }
                 }
             }
             catch (Exception ex)
@@ -429,11 +434,14 @@ namespace DecisionTableCreator
         {
             try
             {
-                var tcr = DataContainer.TestCasesRoot;
-                int index = CalculateColumnIndex(e, true);
-                if (index >= 0)
+                using (new WaitCursor(this))
                 {
-                    tcr.DeleteTestCaseAt(index - 1);
+                    var tcr = DataContainer.TestCasesRoot;
+                    int index = CalculateColumnIndex(e, true);
+                    if (index >= 0)
+                    {
+                        tcr.DeleteTestCaseAt(index - 1);
+                    }
                 }
             }
             catch (Exception ex)
@@ -447,10 +455,12 @@ namespace DecisionTableCreator
         {
             try
             {
-                var tcr = DataContainer.TestCasesRoot;
-                int index = CalculateColumnIndex(e, true);
-                tcr.InsertTestCase(index - 1);
-
+                using (new WaitCursor(this))
+                {
+                    var tcr = DataContainer.TestCasesRoot;
+                    int index = CalculateColumnIndex(e, true);
+                    tcr.InsertTestCase(index - 1);
+                }
             }
             catch (Exception ex)
             {
@@ -481,19 +491,21 @@ namespace DecisionTableCreator
         {
             try
             {
-                var index = CalculateRowIndex(e);
-                if (index >= 0)
+                using (new WaitCursor(this))
                 {
-                    if (e.Source.Equals(DataGridConditions))
+                    var index = CalculateRowIndex(e);
+                    if (index >= 0)
                     {
-                        EditCondition(index);
-                    }
-                    else
-                    {
-                        EditAction(index);
+                        if (e.Source.Equals(DataGridConditions))
+                        {
+                            EditCondition(index);
+                        }
+                        else
+                        {
+                            EditAction(index);
+                        }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -680,16 +692,19 @@ namespace DecisionTableCreator
         {
             try
             {
-                if (CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave())
+                using (new WaitCursor(this))
                 {
-                    OpenFileDialog dlg = new OpenFileDialog();
-                    dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
-                    var result = dlg.ShowDialog();
-                    if (result.HasValue && result.Value)
+                    if (CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave())
                     {
-                        DataContainer.TestCasesRoot.Load(dlg.FileName);
-                        DataContainer.ProjectPath = dlg.FileName;
-                        DataContainer.ResetDirty();
+                        OpenFileDialog dlg = new OpenFileDialog();
+                        dlg.Filter = "Decision Table Creator Files|*.dtc|All Files|*.*";
+                        var result = dlg.ShowDialog();
+                        if (result.HasValue && result.Value)
+                        {
+                            DataContainer.TestCasesRoot.Load(dlg.FileName);
+                            DataContainer.ProjectPath = dlg.FileName;
+                            DataContainer.ResetDirty();
+                        }
                     }
                 }
             }
@@ -730,14 +745,16 @@ namespace DecisionTableCreator
         {
             try
             {
-                ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
-                EditAction wnd = new EditAction(newAction);
-                bool? result = wnd.ShowDialog();
-                if (result.HasValue && result.Value)
+                using (new WaitCursor(this))
                 {
-                    DataContainer.TestCasesRoot.AppendAction(newAction);
+                    ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() {new EnumValue("", "")});
+                    EditAction wnd = new EditAction(newAction);
+                    bool? result = wnd.ShowDialog();
+                    if (result.HasValue && result.Value)
+                    {
+                        DataContainer.TestCasesRoot.AppendAction(newAction);
+                    }
                 }
-
             }
             catch (Exception ex)
             {
@@ -754,18 +771,20 @@ namespace DecisionTableCreator
         {
             try
             {
-                var index = CalculateRowIndex(e);
-                if (index >= 0)
+                using (new WaitCursor(this))
                 {
-                    ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
-                    EditAction wnd = new EditAction(newAction);
-                    bool? result = wnd.ShowDialog();
-                    if (result.HasValue && result.Value)
+                    var index = CalculateRowIndex(e);
+                    if (index >= 0)
                     {
-                        DataContainer.TestCasesRoot.InsertAction(index, newAction);
+                        ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() {new EnumValue("", "")});
+                        EditAction wnd = new EditAction(newAction);
+                        bool? result = wnd.ShowDialog();
+                        if (result.HasValue && result.Value)
+                        {
+                            DataContainer.TestCasesRoot.InsertAction(index, newAction);
+                        }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -791,14 +810,16 @@ namespace DecisionTableCreator
         {
             try
             {
-                ConditionObject newCondition = ConditionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
-                EditCondition wnd = new EditCondition(newCondition);
-                bool? result = wnd.ShowDialog();
-                if (result.HasValue && result.Value)
+                using (new WaitCursor(this))
                 {
-                    DataContainer.TestCasesRoot.AppendCondition(newCondition);
+                    ConditionObject newCondition = ConditionObject.Create("", new ObservableCollection<EnumValue>() {new EnumValue("", "")});
+                    EditCondition wnd = new EditCondition(newCondition);
+                    bool? result = wnd.ShowDialog();
+                    if (result.HasValue && result.Value)
+                    {
+                        DataContainer.TestCasesRoot.AppendCondition(newCondition);
+                    }
                 }
-
             }
             catch (Exception ex)
             {
@@ -815,18 +836,20 @@ namespace DecisionTableCreator
         {
             try
             {
-                var index = CalculateRowIndex(e);
-                if (index >= 0)
+                using (new WaitCursor(this))
                 {
-                    ConditionObject conditionObject = ConditionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
-                    EditCondition wnd = new EditCondition(conditionObject);
-                    bool? result = wnd.ShowDialog();
-                    if (result.HasValue && result.Value)
+                    var index = CalculateRowIndex(e);
+                    if (index >= 0)
                     {
-                        DataContainer.TestCasesRoot.InsertCondition(index, conditionObject);
+                        ConditionObject conditionObject = ConditionObject.Create("", new ObservableCollection<EnumValue>() {new EnumValue("", "")});
+                        EditCondition wnd = new EditCondition(conditionObject);
+                        bool? result = wnd.ShowDialog();
+                        if (result.HasValue && result.Value)
+                        {
+                            DataContainer.TestCasesRoot.InsertCondition(index, conditionObject);
+                        }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -852,12 +875,14 @@ namespace DecisionTableCreator
         {
             try
             {
-                var index = CalculateRowIndex(e);
-                if (index >= 0)
+                using (new WaitCursor(this))
                 {
-                    DataContainer.TestCasesRoot.DeleteActionAt(index);
+                    var index = CalculateRowIndex(e);
+                    if (index >= 0)
+                    {
+                        DataContainer.TestCasesRoot.DeleteActionAt(index);
+                    }
                 }
-
             }
             catch (Exception ex)
             {
@@ -883,12 +908,14 @@ namespace DecisionTableCreator
         {
             try
             {
-                var index = CalculateRowIndex(e);
-                if (index >= 0)
+                using (new WaitCursor(this))
                 {
-                    DataContainer.TestCasesRoot.DeleteConditionAt(index);
+                    var index = CalculateRowIndex(e);
+                    if (index >= 0)
+                    {
+                        DataContainer.TestCasesRoot.DeleteConditionAt(index);
+                    }
                 }
-
             }
             catch (Exception ex)
             {
@@ -914,10 +941,13 @@ namespace DecisionTableCreator
         {
             try
             {
-                var tcr = DataContainer.TestCasesRoot;
-                if (tcr.Conditions.Count > 0)
+                using (new WaitCursor(this))
                 {
-                    tcr.DeleteConditionAt(tcr.Conditions.Count - 1);
+                    var tcr = DataContainer.TestCasesRoot;
+                    if (tcr.Conditions.Count > 0)
+                    {
+                        tcr.DeleteConditionAt(tcr.Conditions.Count - 1);
+                    }
                 }
             }
             catch (Exception ex)
@@ -944,20 +974,22 @@ namespace DecisionTableCreator
         {
             try
             {
-                var index = CalculateRowIndex(e);
-                if (index >= 0)
+                using (new WaitCursor(this))
                 {
-                    DataGrid dataGrid;
-                    if (IsConditionsDataGridSelected(e, out dataGrid))
+                    var index = CalculateRowIndex(e);
+                    if (index >= 0)
                     {
-                        DataContainer.TestCasesRoot.MoveConditionUp(index);
-                    }
-                    else if (IsActionsDataGridSelected(e, out dataGrid))
-                    {
-                        DataContainer.TestCasesRoot.MoveActionUp(index);
+                        DataGrid dataGrid;
+                        if (IsConditionsDataGridSelected(e, out dataGrid))
+                        {
+                            DataContainer.TestCasesRoot.MoveConditionUp(index);
+                        }
+                        else if (IsActionsDataGridSelected(e, out dataGrid))
+                        {
+                            DataContainer.TestCasesRoot.MoveActionUp(index);
+                        }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -969,20 +1001,22 @@ namespace DecisionTableCreator
         {
             try
             {
-                var index = CalculateRowIndex(e);
-                if (index >= 0)
+                using (new WaitCursor(this))
                 {
-                    DataGrid dataGrid;
-                    if (IsConditionsDataGridSelected(e, out dataGrid))
+                    var index = CalculateRowIndex(e);
+                    if (index >= 0)
                     {
-                        DataContainer.TestCasesRoot.MoveConditionDown(index);
-                    }
-                    else if (IsActionsDataGridSelected(e, out dataGrid))
-                    {
-                        DataContainer.TestCasesRoot.MoveActionDown(index);
+                        DataGrid dataGrid;
+                        if (IsConditionsDataGridSelected(e, out dataGrid))
+                        {
+                            DataContainer.TestCasesRoot.MoveConditionDown(index);
+                        }
+                        else if (IsActionsDataGridSelected(e, out dataGrid))
+                        {
+                            DataContainer.TestCasesRoot.MoveActionDown(index);
+                        }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -1036,7 +1070,11 @@ namespace DecisionTableCreator
         {
             try
             {
-                var templResult = DataContainer.TestCasesRoot.GenerateFromTemplateString(Templates.Resources.HtmlTemplate);
+                StringTemplateResult templResult = null;
+                using (new WaitCursor(this))
+                {
+                    templResult = DataContainer.TestCasesRoot.GenerateFromTemplateString(Templates.Resources.HtmlTemplate);
+                }
                 if (templResult.ErrorListener.ErrorReported)
                 {
                     DisplayTemplateErrorMessages(templResult);
@@ -1087,7 +1125,11 @@ namespace DecisionTableCreator
                     if (result.HasValue && result.Value)
                     {
                         Settings.Default.ExportDirectory = Path.GetDirectoryName(dlg.FileName);
-                        var templResult = DataContainer.TestCasesRoot.GenerateFromtemplate(fi.FullName);
+                        StringTemplateResult templResult = null;
+                        using (new WaitCursor(this))
+                        {
+                            templResult = DataContainer.TestCasesRoot.GenerateFromtemplate(fi.FullName);
+                        }
                         if (templResult.ErrorListener.ErrorReported)
                         {
                             DisplayTemplateErrorMessages(templResult);
