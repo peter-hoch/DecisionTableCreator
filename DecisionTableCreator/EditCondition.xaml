@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d"
-        Title="{Binding EditBoxName}" Height="300" Width="500"
+        Title="{Binding EditBoxName}" Height="300" Width="500" Icon="pack://application:,,,/DtcIcon.ico"
          AutomationProperties.AutomationId="EditConditionWindow">
     <Window.CommandBindings>
         <CommandBinding Command="local:WpfCommands.AppendEnumValue" Executed="AppendEnumValue_Executed" CanExecute="AppendEnumValue_OnCanExecute"/>

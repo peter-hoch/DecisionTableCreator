@@ -34,7 +34,7 @@ namespace UiTest
             menuItemExit.Click();
         }
 
-        [TestCase(1)]
+        [TestCase(50)]
         public void AddAndRemoveCondition(int repeatCount)
         {
             string workPath = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
