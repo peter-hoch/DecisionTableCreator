@@ -28,10 +28,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.TestCases;
 using NUnit.Framework;
 
@@ -82,10 +82,10 @@ namespace UnitTests2
                 TestCase tc = tcr.TestCases[testCaseIndex];
                 Assert.That(tc.Conditions.Count == conditionsCount);
                 Assert.That(tc.Actions.Count == actionsCount);
-                Assert.That(tc.Name.Equals(tcr.ActionTable.Columns[testCaseIndex + 1].Name));
-                Assert.That(tc.Name.Equals(tcr.ActionTable.Columns[testCaseIndex + 1].DisplayName));
-                Assert.That(tc.Name.Equals(tcr.ConditionTable.Columns[testCaseIndex + 1].Name));
-                Assert.That(tc.Name.Equals(tcr.ConditionTable.Columns[testCaseIndex + 1].DisplayName));
+                var actionCol = tcr.ActionTable.Columns[testCaseIndex + 1];
+                Assert.That(tc.Name.Equals(actionCol.Caption));
+                var conditionCol = tcr.ConditionTable.Columns[testCaseIndex + 1];
+                Assert.That(tc.Name.Equals(conditionCol.Caption));
 
                 for (int conditionIndex = 0; conditionIndex < tcr.Conditions.Count; conditionIndex++)
                 {
@@ -115,14 +115,14 @@ namespace UnitTests2
             }
 
             Assert.That(tcr.ConditionTable.Columns.Count == tcr.TestCases.Count + 1);
-            Assert.That(tcr.ConditionTable.ColumnPropDescColl.Count == tcr.TestCases.Count + 1);
+            Assert.That(tcr.ConditionTable.Columns.Count == tcr.TestCases.Count + 1);
             Assert.That(tcr.ActionTable.Columns.Count == tcr.TestCases.Count + 1);
-            Assert.That(tcr.ActionTable.ColumnPropDescColl.Count == tcr.TestCases.Count + 1);
+            Assert.That(tcr.ActionTable.Columns.Count == tcr.TestCases.Count + 1);
 
             for (int rowIndex = 0; rowIndex < tcr.ConditionTable.Rows.Count; rowIndex++)
             {
-                DataRowView rowView = tcr.ConditionTable.Rows[rowIndex];
-                Assert.That(rowView.ColumnCount == tcr.TestCases.Count + 1);
+                DataRow rowView = tcr.ConditionTable.Rows[rowIndex];
+                Assert.That(rowView.ItemArray.Length == tcr.TestCases.Count + 1);
 
                 Assert.That(rowView[0] is ConditionObject);
                 Assert.That(rowView[0] == tcr.Conditions[rowIndex]);
@@ -136,8 +136,8 @@ namespace UnitTests2
 
             for (int rowIndex = 0; rowIndex < tcr.ActionTable.Rows.Count; rowIndex++)
             {
-                DataRowView rowView = tcr.ActionTable.Rows[rowIndex];
-                Assert.That(rowView.ColumnCount == tcr.TestCases.Count + 1);
+                DataRow rowView = tcr.ActionTable.Rows[rowIndex];
+                Assert.That(rowView.ItemArray.Length == tcr.TestCases.Count + 1);
 
                 Assert.That(rowView[0] is ActionObject);
                 Assert.That(rowView[0] == tcr.Actions[rowIndex]);

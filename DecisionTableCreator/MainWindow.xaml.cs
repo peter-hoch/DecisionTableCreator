@@ -47,7 +47,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.ErrorDialog;
 using DecisionTableCreator.Properties;
 using DecisionTableCreator.TestCases;

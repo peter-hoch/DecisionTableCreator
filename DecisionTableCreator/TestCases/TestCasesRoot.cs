@@ -31,11 +31,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using DecisionTableCreator.DynamicTable;
+using Antlr4.StringTemplate;
 using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator.TestCases
@@ -55,8 +56,8 @@ namespace DecisionTableCreator.TestCases
 
         void Init()
         {
-            ConditionTable = new DataTableView();
-            ActionTable = new DataTableView();
+            ConditionTable = new DataTable();
+            ActionTable = new DataTable();
             TestCases = new ObservableCollection<TestCase>();
             Conditions = new ObservableCollection<ConditionObject>();
             Actions = new ObservableCollection<ActionObject>();
@@ -67,24 +68,24 @@ namespace DecisionTableCreator.TestCases
 
         private void CreateBasicColumnDescriptions()
         {
-            ConditionTable = new DataTableView();
-            ConditionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(ConditionsColumnHeaderName, typeof(ConditionObject), null));
+            ConditionTable = new DataTable();
+            ConditionTable.Columns.Add(ConditionsColumnHeaderName, typeof(ConditionObject));
 
-            ActionTable = new DataTableView();
-            ActionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(ActionsColumnHeaderName, typeof(ActionObject), null));
+            ActionTable = new DataTable();
+            ActionTable.Columns.Add(ActionsColumnHeaderName, typeof(ActionObject));
         }
 
         void AddColumnDescriptionsForTestCases()
         {
             foreach (TestCase testCase in TestCases)
             {
-                ConditionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCase.Name, typeof(TestCase), null));
-                ActionTable.ColumnPropDescColl.AddDescription(new ColumnPropertyDescriptor(testCase.Name, typeof(TestCase), null));
+                ConditionTable.Columns.Add(testCase.Name, typeof(ValueObject));
+                ActionTable.Columns.Add(testCase.Name, typeof(ValueObject));
             }
         }
 
 
-        void PopulateRows<TType>(DataTableView dataTable, IList<TType> list, IList<TestCase> testCases, TestCase.CollectionType colType)
+        void PopulateRows<TType>(DataTable dataTable, IList<TType> list, IList<TestCase> testCases, TestCase.CollectionType colType)
         {
             switch (colType)
             {
@@ -101,16 +102,17 @@ namespace DecisionTableCreator.TestCases
             int rowIndex = 0;
             foreach (TType conditionActionBase in list)
             {
-                var row = dataTable.Rows.AddRow();
-                dataTable.Columns[0].SetValue(row, conditionActionBase);
+                List<object> values = new List<object>();
+                values.Add(conditionActionBase);
                 int columnIndex = 1;
                 foreach (TestCase testCase in testCases)
                 {
                     var value = testCase.GetValueObject(colType, rowIndex);
-                    dataTable.Columns[columnIndex].SetValue(row, value);
+                    values.Add(value);
                     columnIndex++;
                 }
                 rowIndex++;
+                dataTable.Rows.Add(values.ToArray());
             }
         }
 
@@ -122,6 +124,12 @@ namespace DecisionTableCreator.TestCases
         public TestCase InsertTestCase(int index = -1)
         {
             var tc = AddTestCase(index);
+
+            ConditionTable.Columns.Clear();
+            ActionTable.Columns.Clear();
+            CreateBasicColumnDescriptions();
+            AddColumnDescriptionsForTestCases();
+
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
             FireActionsChanged();
@@ -139,11 +147,10 @@ namespace DecisionTableCreator.TestCases
             }
             UpdateDisplayIndex(TestCases);
 
+            ConditionTable.Columns.Clear();
+            ActionTable.Columns.Clear();
             CreateBasicColumnDescriptions();
             AddColumnDescriptionsForTestCases();
-
-            ConditionTable.ResizeColumnCount(TestCases.Count + 1);
-            ActionTable.ResizeColumnCount(TestCases.Count + 1);
 
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
@@ -151,6 +158,7 @@ namespace DecisionTableCreator.TestCases
             ProcessConditionsChanged();
             return deleted;
         }
+
 
         int CalculateNextTestCaseId()
         {
@@ -195,12 +203,6 @@ namespace DecisionTableCreator.TestCases
             }
             AddValueObjects(tc, Conditions, TestCase.CollectionType.Conditions);
             AddValueObjects(tc, Actions, TestCase.CollectionType.Actions);
-
-            CreateBasicColumnDescriptions();
-            AddColumnDescriptionsForTestCases();
-
-            ConditionTable.ResizeColumnCount(TestCases.Count + 1);
-            ActionTable.ResizeColumnCount(TestCases.Count + 1);
 
             return tc;
         }

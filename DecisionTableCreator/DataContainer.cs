@@ -38,7 +38,6 @@ using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.TestCases;
 using DecisionTableCreator.Utils;
 
@@ -167,9 +166,9 @@ namespace DecisionTableCreator
         }
 
 
-        private DataTableView _conditions;
+        private DataTable _conditions;
 
-        public DataTableView Conditions
+        public DataTable Conditions
         {
             get { return _conditions; }
             set
@@ -180,9 +179,9 @@ namespace DecisionTableCreator
         }
 
 
-        private DataTableView _actions;
+        private DataTable _actions;
 
-        public DataTableView Actions
+        public DataTable Actions
         {
             get { return _actions; }
             set

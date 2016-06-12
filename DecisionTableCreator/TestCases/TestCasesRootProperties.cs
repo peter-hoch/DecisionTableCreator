@@ -30,19 +30,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.Utils;
 
 namespace DecisionTableCreator.TestCases
 {
     public partial class TestCasesRoot
     {
-        private DataTableView _conditionTable;
+        private DataTable _conditionTable;
 
-        public DataTableView ConditionTable
+        public DataTable ConditionTable
         {
             get { return _conditionTable; }
             set
@@ -52,9 +52,9 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        private DataTableView _actionTable;
+        private DataTable _actionTable;
 
-        public DataTableView ActionTable
+        public DataTable ActionTable
         {
             get { return _actionTable; }
             set

@@ -34,7 +34,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Antlr.Runtime;
-using DecisionTableCreator.DynamicTable;
 using DecisionTableCreator.TestCases;
 using Microsoft.Win32;
 using NUnit.Framework;

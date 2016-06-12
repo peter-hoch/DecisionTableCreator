@@ -148,7 +148,6 @@ namespace DecisionTableCreator.TestCases
                 Actions.Add(ActionObject.Create(String.Format("Action1{0}", idx), lists[listIndex++]));
             }
 
-            CreateBasicColumnDescriptions();
 
             for (int idx = 0; idx < testCasesCount; idx++)
             {
@@ -164,6 +163,8 @@ namespace DecisionTableCreator.TestCases
                 }
             }
 
+            CreateBasicColumnDescriptions();
+            AddColumnDescriptionsForTestCases();
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
             RecalculateStatistics();
