@@ -138,7 +138,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Margin="5" Content="Coverage"/>
-                <TextBox Margin="5" MinWidth="60" Text="{Binding Coverage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"></TextBox>
+                <TextBox Margin="5" MinWidth="60" Text="{Binding Coverage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat=00.00}" IsReadOnly="True"></TextBox>
             </StackPanel>
         </StackPanel>
     </Grid>

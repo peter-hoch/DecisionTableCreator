@@ -37,8 +37,7 @@ Move condition or action one line up or down - the condition or action you want 
 copy the current decision table as HTML to clipbord
 use this to export the table to a word processing or spreadsheet tool 
 ###Export - External template - Sample.file.stg
-Code generation access
-the templates are locaten in directory "MyDocuments"/DecisionTableCreatorTemplates/*.stg
+The templates for code generation are locaten in the directory "MyDocuments"/DecisionTableCreatorTemplates/*.stg
 The first template "Sample.file.stg" is written to this directory during first start of the tool. This is the place to store other templates. During the start of the tool a submenu entry is created for every template in this directory. A template must have the extension "stg".
 
 ##Code generation
