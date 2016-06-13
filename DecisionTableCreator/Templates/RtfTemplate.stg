@@ -1,0 +1,31 @@
+﻿delimiters "$", "$"
+
+TestCasesRoot(root) ::= <<
+{\rtf1\ansi\deff0
+\trowd
+\clbrdrt\brdrw15\brdrs\clbrdrl\brdrw15\brdrs\clbrdrb\brdrw15\brdrs\clbrdrr\brdrw15\brdrs\cellx$root.RtfCellOffset$
+$root.TestCases:Define(); separator="\r\n"$
+ \intbl\cell
+$root.TestCases:TestCase(); separator="\r\n"$
+\row
+$root.Conditions:ConditionOrAction(); separator="\r\n"$
+
+$root.Actions:ConditionOrAction(); separator="\r\n"$
+}
+>>
+
+Define(def) ::= <<\clbrdrt\brdrw15\brdrs\clbrdrl\brdrw15\brdrs\clbrdrb\brdrw15\brdrs\clbrdrr\brdrw15\brdrs\cellx$def.RtfCellOffset$>>
+
+
+TestCase(tc) ::= <<$tc.Name$\intbl\cell>>
+
+ConditionOrAction(cond) ::= <<
+$cond.Name$\intbl\cell
+$cond.TestValues:TestValue(); separator="\r\n"$
+\row
+>>
+
+TestValueDefine(def) ::= <<\clbrdrt\brdrw15\brdrs\clbrdrl\brdrw15\brdrs\clbrdrb\brdrw15\brdrs\clbrdrr\brdrw15\brdrs\cellx$def.RtfCellOffset$>>
+
+
+TestValue(value) ::= <<$value$\intbl\cell>>

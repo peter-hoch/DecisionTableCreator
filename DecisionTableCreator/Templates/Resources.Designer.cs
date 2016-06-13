@@ -88,19 +88,34 @@ namespace DecisionTableCreator.Templates {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to using System;
-        ///using System.Collections.Generic;
-        ///using System.Linq;
-        ///using System.Text;
-        ///using System.Threading.Tasks;
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string RtfTemplate {
+            get {
+                return ResourceManager.GetString("RtfTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///TestCasesRoot(root) ::= &lt;&lt;
+        ///conditions count == &lt;root.Conditions.Count&gt;
+        ///List conditions
+        ///&lt;root.Conditions:ConditionOrAction(); separator=&quot;\r\n&quot;&gt;
         ///
-        ///namespace DecisionTableCreator.Templates
-        ///{
-        ///    class Sample
-        ///    {
-        ///    }
-        ///}
-        ///.
+        ///actions count == &lt;root.Actions.Count&gt;
+        ///List actions:
+        ///&lt;root.Actions:ConditionOrAction(); separator=&quot;\r\n&quot;&gt;
+        ///
+        ///test cases count == &lt;root.TestCases.Count&gt;
+        ///List test cases:
+        ///&lt;root.TestCases:TestCase();separator=&quot;\r\n&quot;&gt;
+        ///&gt;&gt;
+        ///
+        ///ConditionOrAction(co) ::= &lt;&lt;	&lt;co.Name&gt;
+        ///		Possible Values:
+        ///			enum value count &lt;co.EnumValues.Count&gt;
+        ///&lt;co.EnumValues:EnumValue(); separa [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Sample_file {
             get {

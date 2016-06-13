@@ -40,6 +40,7 @@ namespace DecisionTableCreator.TestCases
     {
         public StringTemplateResult GenerateFromtemplate(string groupFilePath)
         {
+            InitData();
             TemplateGroup group = new TemplateGroupFile(groupFilePath);
             var errorListener = new CustomStringTemplateErrorListener();
             group.ErrorManager = new ErrorManager(errorListener);
@@ -50,6 +51,7 @@ namespace DecisionTableCreator.TestCases
 
         public StringTemplateResult GenerateFromTemplateString(string groupFileContent)
         {
+            InitData();
             TemplateGroup group = new TemplateGroupString(groupFileContent);
             var errorListener = new CustomStringTemplateErrorListener();
             group.ErrorManager = new ErrorManager(errorListener);
@@ -58,6 +60,35 @@ namespace DecisionTableCreator.TestCases
             return new StringTemplateResult(errorListener, templ.Render());
         }
 
+       
+        void InitData(int cellWidth = 3000)
+        {
+            RtfCellOffset = cellWidth;
+            int offset = cellWidth;
+            foreach (TestCase testCase in TestCases)
+            {
+                offset += cellWidth;
+                testCase.RtfCellOffset = offset;
+            }
 
+            foreach (ConditionObject condition in Conditions)
+            {
+                condition.RtfCellOffset = offset = cellWidth;
+                foreach (ValueObject value in condition.TestValues)
+                {
+                    offset += cellWidth;
+                    value.RtfCellOffset = offset;
+                }
+            }
+            foreach (ActionObject action in Actions)
+            {
+                action.RtfCellOffset = offset = cellWidth;
+                foreach (ValueObject value in action.TestValues)
+                {
+                    offset += cellWidth;
+                    value.RtfCellOffset = offset;
+                }
+            }
+        }
     }
 }

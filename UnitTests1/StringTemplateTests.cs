@@ -70,8 +70,9 @@ namespace UnitTests1
             var templResult = tcRoot.GenerateFromtemplate(templPath);
             File.WriteAllText(resultPath, templResult.GeneratedContent);
             Assert.That(!templResult.ErrorListener.ErrorReported);
-            Assert.That( TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPath)));
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPath)));
         }
+
 
         [Test]
         public void FirstHtmlContentFromTemplateResource()
@@ -90,6 +91,17 @@ namespace UnitTests1
             string resultPath = Path.Combine(TestSupport.CreatedFilesDirectory, "output.html");
             TestCasesRoot tcRoot = new TestCasesRoot();
             var result = tcRoot.GenerateFromTemplateString(DecisionTableCreator.Templates.Resources.HtmlTemplate);
+            File.WriteAllText(resultPath, result.GeneratedContent);
+            Assert.That(!result.ErrorListener.ErrorReported);
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPath)));
+        }
+
+        [Test]
+        public void RtfContentFromTemplateResourceEmptyProject()
+        {
+            string resultPath = Path.Combine(TestSupport.CreatedFilesDirectory, "output.rtf");
+            TestCasesRoot tcRoot = TestCasesRoot.CreateSimpleTable();
+            var result = tcRoot.GenerateFromTemplateString(DecisionTableCreator.Templates.Resources.RtfTemplate);
             File.WriteAllText(resultPath, result.GeneratedContent);
             Assert.That(!result.ErrorListener.ErrorReported);
             Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(resultPath)));

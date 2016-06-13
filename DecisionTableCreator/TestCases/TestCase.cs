@@ -186,6 +186,13 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        /// <summary>
+        /// only for rtf generation 
+        /// value is not saved
+        /// is set during preparation for output generation
+        /// </summary>
+        public int RtfCellOffset { get; set; }
+
         #region test case calculation
 
         public bool TestSettingIsEqual(TestCase other)

@@ -98,6 +98,13 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        /// <summary>
+        /// only for rtf generation 
+        /// value is not saved
+        /// is set during preparation for output generation
+        /// </summary>
+        public int RtfCellOffset { get; set; }
+
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
         {
             if (eventArgs.Action == NotifyCollectionChangedAction.Add || eventArgs.Action == NotifyCollectionChangedAction.Replace)
