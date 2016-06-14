@@ -57,7 +57,7 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand InsertAction;
         public static readonly RoutedUICommand AppendEnumValue;
         public static readonly RoutedUICommand DeleteEnumValue;
-        public static readonly RoutedUICommand ExportHtmlToClipboard;
+        public static readonly RoutedUICommand ExportToClipboard;
         public static readonly RoutedUICommand MoveConditionOrActionUp;
         public static readonly RoutedUICommand MoveConditionOrActionDown;
         public static readonly RoutedUICommand ExportToFileWithExternalTemplate;
@@ -91,7 +91,7 @@ namespace DecisionTableCreator
             InsertAction = new RoutedUICommand("Insert action", "InsertAction", typeof(WpfCommands));
             AppendEnumValue = new RoutedUICommand("Append enum value", "AppendEnumValue", typeof(WpfCommands), new InputGestureCollection() { gestureAltE });
             DeleteEnumValue = new RoutedUICommand("Delete enum value", "DeleteEnumValue", typeof(WpfCommands));
-            ExportHtmlToClipboard = new RoutedUICommand("Export HTML to clipboard", "ExportHtmlToClipboard", typeof(WpfCommands));
+            ExportToClipboard = new RoutedUICommand("Export to clipboard", "ExportToClipboard", typeof(WpfCommands));
             MoveConditionOrActionUp = new RoutedUICommand("Move up", "MoveConditionOrActionUp", typeof(WpfCommands));
             MoveConditionOrActionDown = new RoutedUICommand("Move down", "MoveConditionOrActionDown", typeof(WpfCommands));
             ExportToFileWithExternalTemplate = new RoutedUICommand("Export to file with external template", "ExportToFileWithExternalTemplate", typeof(WpfCommands));

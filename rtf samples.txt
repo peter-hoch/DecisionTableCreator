@@ -1,0 +1,78 @@
+{\rtf1\fbidis\ansi\ansicpg1252\deff0\deflang1031\deflangfe1031\deftab708{\fonttbl{\f0\fswiss\fprq2\fcharset0 Calibri;}}
+\viewkind4\uc1\trowd\trgaph70\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \clbrdrt\brdrw15\brdrs\clbrdrl\brdrw15\brdrs\clbrdrb\brdrw15\brdrs\clbrdrr\brdrw15\brdrs \cellx2947\clbrdrt\brdrw15\brdrs\clbrdrl\brdrw15\brdrs\clbrdrb\brdrw15\brdrs\clbrdrr\brdrw15\brdrs \cellx6002\clbrdrt\brdrw15\brdrs\clbrdrl\brdrw15\brdrs\clbrdrb\brdrw15\brdrs\clbrdrr\brdrw15\brdrs \cellx9058\pard\intbl\ltrpar\sl276\slmult1\f0\fs22\cell\cell\cell\row
+\intbl\cell\cell\cell\row
+\intbl\cell\cell\cell\row
+\pard\ltrpar\fi-70\li-38\sa200\sl276\slmult1\par
+}
+
+{\rtf1\ansi\deff0
+\trowd
+\cellx1000
+\cellx2000
+\cellx3000
+cell 1\intbl\cell
+cell 2\intbl\cell
+cell 3\intbl\cell
+\row
+} 
+
+\trbrdrt\brdrs\brdrw10
+\trbrdrl\brdrs\brdrw10
+\trbrdrb\brdrs\brdrw10
+\trbrdrr\brdrs\brdrw10
+
+{\rtf1\ansi\deff0
+\trowd
+\clbrdrt\brdrw15\brdrs
+\clbrdrl\brdrw15\brdrs
+\clbrdrb\brdrw15\brdrs
+\clbrdrr\brdrw15\brdrs
+\cellx1000
+\clbrdrt\brdrw15\brdrs
+\clbrdrl\brdrw15\brdrs
+\clbrdrb\brdrw15\brdrs
+\clbrdrr\brdrw15\brdrs
+\cellx2000
+\clbrdrt\brdrw15\brdrs
+\clbrdrl\brdrw15\brdrs
+\clbrdrb\brdrw15\brdrs
+\clbrdrr\brdrw15\brdrs
+\cellx3000
+cell 1\intbl\cell
+cell 2\intbl\cell
+cell 3\intbl\cell
+\row
+\trowd
+\clbrdrt\brdrw15\brdrs
+\clbrdrl\brdrw15\brdrs
+\clbrdrb\brdrw15\brdrs
+\clbrdrr\brdrw15\brdrs
+
+\cellx1000
+
+\clbrdrt\brdrw15\brdrs
+\clbrdrl\brdrw15\brdrs
+\clbrdrb\brdrw15\brdrs
+\clbrdrr\brdrw15\brdrs
+
+\cellx2000
+
+\clbrdrt\brdrw15\brdrs
+\clbrdrl\brdrw15\brdrs
+\clbrdrb\brdrw15\brdrs
+\clbrdrr\brdrw15\brdrs
+
+\cellx3000
+cell 1\intbl\cell
+cell 2\intbl\cell
+cell 3\intbl\cell
+\row
+\trowd\trbrdrt
+\cellx1000
+\cellx2000
+\cellx3000
+cell 1\intbl\cell
+cell 2\intbl\cell
+cell 3\intbl\cell
+\row
+} 

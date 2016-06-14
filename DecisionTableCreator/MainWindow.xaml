@@ -29,7 +29,7 @@
         <CommandBinding Command="local:WpfCommands.InsertCondition" Executed="InsertCondition_Executed" CanExecute="InsertCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.DeleteCondition" Executed="DeleteCondition_Executed" CanExecute="DeleteCondition_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.DeleteBottomCondition" Executed="DeleteBottomCondition_Executed" CanExecute="DeleteBottomCondition_OnCanExecute"/>
-        <CommandBinding Command="local:WpfCommands.ExportHtmlToClipboard" Executed="ExportHtmlToClipboard_Executed" CanExecute="ExportHtmlToClipboard_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.ExportToClipboard" Executed="ExportHtmlToClipboard_Executed" CanExecute="ExportHtmlToClipboard_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.MoveConditionOrActionUp" Executed="MoveConditionOrActionUp_Executed" CanExecute="MoveConditionOrActionUp_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.MoveConditionOrActionDown" Executed="MoveConditionOrActionDown_Executed" CanExecute="MoveConditionOrActionDown_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.ExportToFileWithExternalTemplate" Executed="ExportToFileWithExternalTemplate_Executed" CanExecute="ExportToFileWithExternalTemplate_OnCanExecute"/>
@@ -89,7 +89,7 @@
                 <MenuItem Command="local:WpfCommands.MoveConditionOrActionDown"/>
             </MenuItem>
             <MenuItem Header="Export">
-                <MenuItem Command="local:WpfCommands.ExportHtmlToClipboard"/>
+                <MenuItem Command="local:WpfCommands.ExportToClipboard"/>
                 <MenuItem Header="External template" ItemsSource="{Binding ExportToFileItem}">
                     <!--<MenuItem Header="test1" Command="local:WpfCommands.ExportToFileWithExternalTemplate" CommandParameter="test"></MenuItem>-->
                 </MenuItem>

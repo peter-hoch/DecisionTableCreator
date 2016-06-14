@@ -747,7 +747,7 @@ namespace DecisionTableCreator
             {
                 using (new WaitCursor(this))
                 {
-                    ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() {new EnumValue("", "")});
+                    ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
                     EditAction wnd = new EditAction(newAction);
                     bool? result = wnd.ShowDialog();
                     if (result.HasValue && result.Value)
@@ -776,7 +776,7 @@ namespace DecisionTableCreator
                     var index = CalculateRowIndex(e);
                     if (index >= 0)
                     {
-                        ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() {new EnumValue("", "")});
+                        ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
                         EditAction wnd = new EditAction(newAction);
                         bool? result = wnd.ShowDialog();
                         if (result.HasValue && result.Value)
@@ -812,7 +812,7 @@ namespace DecisionTableCreator
             {
                 using (new WaitCursor(this))
                 {
-                    ConditionObject newCondition = ConditionObject.Create("", new ObservableCollection<EnumValue>() {new EnumValue("", "")});
+                    ConditionObject newCondition = ConditionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
                     EditCondition wnd = new EditCondition(newCondition);
                     bool? result = wnd.ShowDialog();
                     if (result.HasValue && result.Value)
@@ -841,7 +841,7 @@ namespace DecisionTableCreator
                     var index = CalculateRowIndex(e);
                     if (index >= 0)
                     {
-                        ConditionObject conditionObject = ConditionObject.Create("", new ObservableCollection<EnumValue>() {new EnumValue("", "")});
+                        ConditionObject conditionObject = ConditionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
                         EditCondition wnd = new EditCondition(conditionObject);
                         bool? result = wnd.ShowDialog();
                         if (result.HasValue && result.Value)
@@ -1070,24 +1070,30 @@ namespace DecisionTableCreator
         {
             try
             {
-                StringTemplateResult templResult = null;
+                StringTemplateResult templHtmlResult = null;
+                StringTemplateResult templRtfResult = null;
                 using (new WaitCursor(this))
                 {
-                    templResult = DataContainer.TestCasesRoot.GenerateFromTemplateString(Templates.Resources.HtmlTemplate);
+                    templHtmlResult = DataContainer.TestCasesRoot.GenerateFromTemplateString(Templates.Resources.HtmlTemplate);
+                    if (templHtmlResult.ErrorListener.ErrorReported)
+                    {
+                        DisplayTemplateErrorMessages(templHtmlResult);
+                        return;
+                    }
+                    templRtfResult = DataContainer.TestCasesRoot.GenerateFromTemplateString(Templates.Resources.RtfTemplate);
+                    if (templRtfResult.ErrorListener.ErrorReported)
+                    {
+                        DisplayTemplateErrorMessages(templRtfResult);
+                        return;
+                    }
                 }
-                if (templResult.ErrorListener.ErrorReported)
-                {
-                    DisplayTemplateErrorMessages(templResult);
-                }
-                else
-                {
-                    PrepareForClipboard prepare = new PrepareForClipboard();
-                    string clipboardText = prepare.Prepare(templResult.GeneratedContent);
+                PrepareForClipboard prepare = new PrepareForClipboard();
+                string clipboardText = prepare.Prepare(templHtmlResult.GeneratedContent);
 
-                    DataObject dataObject = new DataObject();
-                    dataObject.SetData(DataFormats.Html, new MemoryStream(Encoding.UTF8.GetBytes(clipboardText)));
-                    Clipboard.SetDataObject(dataObject, true);
-                }
+                DataObject dataObject = new DataObject();
+                dataObject.SetData(DataFormats.Html, new MemoryStream(Encoding.UTF8.GetBytes(clipboardText)));
+                dataObject.SetData(DataFormats.Rtf, new MemoryStream(Encoding.UTF8.GetBytes(templRtfResult.GeneratedContent)));
+                Clipboard.SetDataObject(dataObject, true);
             }
             catch (Exception ex)
             {
@@ -1114,7 +1120,7 @@ namespace DecisionTableCreator
                 if (fi.Exists)
                 {
                     string initialDirectory = Settings.Default.ExportDirectory;
-                    if(string.IsNullOrEmpty(initialDirectory))
+                    if (string.IsNullOrEmpty(initialDirectory))
                     {
                         initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                     }
@@ -1270,7 +1276,7 @@ namespace DecisionTableCreator
         {
             try
             {
-                    Close();
+                Close();
             }
             catch (Exception ex)
             {
