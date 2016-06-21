@@ -26,7 +26,7 @@
         </Menu>
         <StackPanel Grid.Row="1" Grid.Column="0">
             <StackPanel Margin="10" Orientation="Horizontal">
-                <Label Content="Name"></Label>
+                <Label Content="Action name"/>
                 <TextBox MinWidth="80" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>

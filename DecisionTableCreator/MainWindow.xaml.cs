@@ -75,6 +75,20 @@ namespace DecisionTableCreator
             SearchForTemplatesAndCreateSubmenu();
             DataContainer.ResetDirty();
             DataContainer.QuitEditMode += DataContainerOnQuitEditMode;
+            try
+            {
+                if (!String.IsNullOrEmpty(Settings.Default.LastFile))
+                {
+                    if (File.Exists(Settings.Default.LastFile))
+                    {
+                        LoadFile(Settings.Default.LastFile);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void DataContainerOnQuitEditMode()
@@ -701,9 +715,7 @@ namespace DecisionTableCreator
                         var result = dlg.ShowDialog();
                         if (result.HasValue && result.Value)
                         {
-                            DataContainer.TestCasesRoot.Load(dlg.FileName);
-                            DataContainer.ProjectPath = dlg.FileName;
-                            DataContainer.ResetDirty();
+                            LoadFile(dlg.FileName);
                         }
                     }
                 }
@@ -712,6 +724,13 @@ namespace DecisionTableCreator
             {
                 ShowAndLogMessage("exception caught", ex);
             }
+        }
+
+        private void LoadFile(string filePath)
+        {
+            DataContainer.TestCasesRoot.Load(filePath);
+            DataContainer.ProjectPath = filePath;
+            DataContainer.ResetDirty();
         }
 
         private void NewDocument_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -1264,6 +1283,7 @@ namespace DecisionTableCreator
             try
             {
                 e.Cancel = !CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave();
+                Settings.Default.LastFile = DataContainer.ProjectPath;
                 Settings.Default.Save();
             }
             catch (Exception ex)

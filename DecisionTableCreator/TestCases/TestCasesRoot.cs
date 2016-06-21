@@ -45,7 +45,7 @@ namespace DecisionTableCreator.TestCases
 
     public delegate void StatisticsChangedDelegate();
 
-    public partial class TestCasesRoot : INotifyDirtyChanged
+    public partial class TestCasesRoot : INotifyDirtyChanged, ITestCasesRoot
     {
         public TestCasesRoot()
         {

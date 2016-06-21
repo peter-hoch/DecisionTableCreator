@@ -38,7 +38,7 @@ using DecisionTableCreator.Utils;
 namespace DecisionTableCreator.TestCases
 {
 
-    public class TestCase : IEqualTestSetting<TestCase>, INotifyDirtyChanged
+    public class TestCase : IEqualTestSetting<TestCase>, INotifyDirtyChanged, ITestCase
     {
         public enum CollectionType
         {

@@ -41,7 +41,7 @@ namespace DecisionTableCreator.TestCases
     /// this clas represents a possible value for a condition or action
     /// DontCare==true and IsInvalid==true is not a possible combination 
     /// </summary>
-    public class EnumValue : INotifyDirtyChanged
+    public class EnumValue : INotifyDirtyChanged, IEnumValue
     {
         public EnumValue(string name, string value, bool isInavlid = false, bool dontCare = false, bool isDefault = false)
         {

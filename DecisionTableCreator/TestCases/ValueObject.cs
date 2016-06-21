@@ -51,7 +51,7 @@ namespace DecisionTableCreator.TestCases
         bool TestSettingIsEqual(TType other);
     }
 
-    public class ValueObject : INotifyDirtyChanged, IEqualTestSetting<ValueObject>
+    public class ValueObject : INotifyDirtyChanged, IEqualTestSetting<ValueObject>, IValueObject
     {
 
         public static ValueObject Create(IConditionAction conditionOrAction)

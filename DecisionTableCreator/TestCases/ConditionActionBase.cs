@@ -43,7 +43,7 @@ namespace DecisionTableCreator.TestCases
     /// <summary>
     /// base class for condition and action
     /// </summary>
-    public class ConditionActionBase : IConditionAction, INotifyDirtyChanged
+    public class ConditionActionBase : IConditionAction, INotifyDirtyChanged, IConditionActionObject
     {
 
         protected ConditionActionBase()
