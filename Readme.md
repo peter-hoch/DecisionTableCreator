@@ -1,4 +1,4 @@
-#Decesion Table Creater
+#Decision Table Creater
 ##Main features
 
 
