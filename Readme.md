@@ -18,7 +18,7 @@ Open an existing project
 ###File - Save / Save as
 Save the current project
 ###File - Create sample project
-Create the printer trubbleshooting sample
+Create the printer trubleshooting sample
 ###File - Exit
 Exit tool
 
@@ -44,7 +44,7 @@ This check box mark this enum item as an invalid choice. It will be displayed wi
 #####Don't care
 This check box mark this enum item as an don't care for this test case. This is included in the coverage calculation and reduces count of needed test cases.
 #####Is default
-This check box mark this enum item an the default item. This means that this is the default value if a new text case is added. If more than one enum item have the default flag, the first default enum item becomes the default enum item. If none of the enum items have a default flag, the first enum item becomes the default enum item.  
+This check box mark this enum item as the default item. This means that this is the default value when a new text case is added. If more than one enum item have the default flag, the first default enum item becomes the default enum item. If none of the enum items have a default flag, the first enum item becomes the default enum item.  
 
 ##Actions
 ###Edit - Delete action / Delete condition
@@ -63,15 +63,15 @@ The value of the action enum item. The value is used for code generation.
 #####IsInvalid
 This check box mark this enum item as an invalid choice. It will be displayed with a diffrent color. In combination with "Is default" this will be the default enum item.
 #####Is default
-This check box mark this enum item an the default item. This means that this is the default value if a new text case is added. If more than one enum item have the default flag, the first default enum item becomes the default enum item. If none of the enum items have a default flag, the first enum item becomes the default enum item.  
+This check box mark this enum item as the default item. This means that this is the default value when a new text case is added. If more than one enum item have the default flag, the first default enum item becomes the default enum item. If none of the enum items have a default flag, the first enum item becomes the default enum item.  
 
 
 ###Export - Export to clipboard
 copy the current decision table to clipbord
 use this to export the table to a word processing or spreadsheet tool 
 ###Export - External template - Sample.file.stg
-The templates for code generation are locaten in the directory "MyDocuments"/DecisionTableCreatorTemplates/*.stg
-The first template "Sample.file.stg" is written to this directory during first start of the tool. This is the place to store other templates. During the start of the tool a submenu entry is created for every template in this directory. A template must have the extension "stg".
+The templates for code generation are located in the directory "MyDocuments"/DecisionTableCreatorTemplates/*.stg
+The first template "Sample.file.stg" is written to this directory during the first start of the tool. This is the place to store other templates. During the start of the tool a submenu entry is created for every template in this directory. A template must have the extension "stg".
 
 ##Code generation
 The code generation is based on StringTemplate [https://github.com/antlr/stringtemplate4](https://github.com/antlr/stringtemplate4)
@@ -85,7 +85,7 @@ The root entry must be **TestCasesRoot**(**root**) ::= "..."
 
 
 ###Object model
-The following list ob objects are available for code generation.
+The following list of objects (interfaces) are available for code generation.
 The root object supports the interface ITestCasesRoot
 
     public interface ITestCasesRoot
