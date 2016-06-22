@@ -1313,7 +1313,7 @@ namespace DecisionTableCreator
         /// <summary>
         /// check if the project is in an unsaved status
         /// display the save dialog
-        /// save poject if wanted
+        /// save project if wanted
         /// </summary>
         /// <returns>false - project is dirty do not distroy!!    true - Project is saved or dismissed</returns>
         bool CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave()
