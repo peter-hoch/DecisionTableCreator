@@ -1320,7 +1320,7 @@ namespace DecisionTableCreator
         {
             if (DataContainer.DirtyObserver.Dirty)
             {
-                MessageBoxResult result = MessageBox.Show(this, "Your work is not save. Do you want to save?", "Save", MessageBoxButton.YesNoCancel);
+                MessageBoxResult result = MessageBox.Show(this, "Your work is not saved. Do you want to save?", "Save", MessageBoxButton.YesNoCancel);
                 switch (result)
                 {
                     case MessageBoxResult.OK:
