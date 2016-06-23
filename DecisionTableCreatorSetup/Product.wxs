@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="DecisionTableCreatorSetup" Language="1033" Version="1.0.0.0" Manufacturer="Peter Hoch" UpgradeCode="{BD6FE505-0561-4F81-9E5F-57ADE1829F26}">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of Decision Table Creator is already installed." />
+		<MediaTemplate />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONROOTDIRECTORY" Name="DecisionTableCreator" />
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="DecisionTableCreator"/>
+      </Directory>
+
+    </Directory>
+
+    <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+      <Component Id="ProductComponent" Guid="{6DD0F896-9DEF-4F1D-9D34-BA418B28F81F}">
+        <File Id="ExeFile" Source="$(var.DecisionTableCreator.TargetPath)" KeyPath="yes" Checksum="yes"/>
+        <File Id="StringTemplate" Source="$(var.DecisionTableCreator.TargetDir)Antlr4.StringTemplate.dll" Checksum="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="{54A6CDBD-4C2E-4BBD-BABC-9BC013F95EC9}">
+        <Shortcut Id="ApplicationStartMenuShortcut" Name="Decision Table Creator" Description="Editor for creating and editing decision tables" Target="[APPLICATIONROOTDIRECTORY]$(var.DecisionTableCreator.TargetFileName)" WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\TestTools\DecisionTableCreator" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <Feature Id="ProductFeature" Title="SetupProject" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONROOTDIRECTORY"/>
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf"/>
+
+    <UIRef Id="WixUI_InstallDir"/>
+
+
+    <UIRef Id="WixUI_ErrorProgressText" />
+  </Product>
+
+</Wix>
