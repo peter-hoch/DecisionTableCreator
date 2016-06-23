@@ -1313,14 +1313,14 @@ namespace DecisionTableCreator
         /// <summary>
         /// check if the project is in an unsaved status
         /// display the save dialog
-        /// save poject if wanted
+        /// save project if wanted
         /// </summary>
         /// <returns>false - project is dirty do not distroy!!    true - Project is saved or dismissed</returns>
         bool CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave()
         {
             if (DataContainer.DirtyObserver.Dirty)
             {
-                MessageBoxResult result = MessageBox.Show(this, "Your work is not save. Do you want to save?", "Save", MessageBoxButton.YesNoCancel);
+                MessageBoxResult result = MessageBox.Show(this, "Your work is not saved. Do you want to save?", "Save", MessageBoxButton.YesNoCancel);
                 switch (result)
                 {
                     case MessageBoxResult.OK:
