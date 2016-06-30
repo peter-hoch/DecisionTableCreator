@@ -319,6 +319,7 @@ namespace UnitTests2
         [TestCase("ExpandTest2.dtc")]
         [TestCase("ExpandTest3.dtc")]
         [TestCase("ExpandTest4.dtc")]
+        [TestCase("ExpandTest5.dtc")]
         public void ExpandTestcases(string fileName)
         {
             string testOutput = Path.Combine(TestSupport.CreatedFilesDirectory, fileName + ".Output.txt");
@@ -343,6 +344,7 @@ namespace UnitTests2
                 DumpTestCase(sb, tc);
                 sb.AppendLine();
             }
+            sb.AppendFormat("calaulated {0,5}  count {1,5}", statistics.CoveredTestCases, result.Count);
 
             File.WriteAllText(testOutput, sb.ToString());
             //ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", testOutput);
@@ -353,7 +355,7 @@ namespace UnitTests2
 
         void DumpTestCase(StringBuilder sb, ITestCase tc)
         {
-            sb.AppendFormat("{0,10} conds ", tc.Name);
+            sb.AppendFormat("{0,-20} conds ", tc.Name);
             foreach (ValueObject condition in tc.Conditions)
             {
                 sb.AppendFormat("{0,5}", condition.Value);

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestFiles\ExpandTestcases\ExpandTest5.dtc" />
     <None Include="TestFiles\ExpandTestcases\ExpandTest4.dtc" />
     <None Include="TestFiles\ExpandTestcases\ExpandTest3.dtc" />
     <None Include="TestFiles\ExpandTestcases\ExpandTest2.dtc" />

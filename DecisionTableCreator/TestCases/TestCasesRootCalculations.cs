@@ -131,10 +131,10 @@ namespace DecisionTableCreator.TestCases
 
 
         private int _index = 0;
-        public List<ITestCase> ExpandTestCases()
+        public List<TestCase> ExpandTestCases()
         {
             _index = 0;
-            List<ITestCase> expandedTestCases = new List<ITestCase>();
+            List<TestCase> expandedTestCases = new List<TestCase>();
             if (Conditions.Count > 0)
             {
                 foreach (TestCase testCase in TestCases)
@@ -146,7 +146,7 @@ namespace DecisionTableCreator.TestCases
             return expandedTestCases;
         }
 
-        private void ExpandCondition(List<ITestCase> expandedTestCases, TestCase testCase, List<int> values, int idx)
+        private void ExpandCondition(List<TestCase> expandedTestCases, TestCase testCase, List<int> values, int idx)
         {
             if (testCase.Conditions.Count - 1 > idx)
             {
@@ -175,7 +175,7 @@ namespace DecisionTableCreator.TestCases
                     foreach (int enumIndex in condition.ConditionOrActionParent.ValidEnumValueIndexes)
                     {
                         values.Add(enumIndex);
-                        var etc = new ExpandedTestCase("exp" + _index++ + "  " + testCase.Name);
+                        var etc = new TestCase("exp" + _index + "  " + testCase.Name);
                         for (int localIndex = 0; localIndex < testCase.Conditions.Count; localIndex++)
                         {
                             etc.Conditions.Add(new ValueObject(testCase.Conditions[localIndex].EnumValues, values[localIndex]));
@@ -185,13 +185,22 @@ namespace DecisionTableCreator.TestCases
                             etc.Actions.Add(new ValueObject(action.EnumValues, action.SelectedItemIndex));
                         }
                         values.RemoveAt(values.Count - 1);
-                        expandedTestCases.Add(etc);
+                        var existing = expandedTestCases.FirstOrDefault(tc => tc.TestSettingIsEqual(etc));
+                        if (existing != null)
+                        {
+                            existing.Name += testCase.Name;
+                        }
+                        else
+                        {
+                            expandedTestCases.Add(etc);
+                            _index++;
+                        }
                     }
                 }
                 else
                 {
                     values.Add(condition.SelectedItemIndex);
-                    var etc = new ExpandedTestCase("exp" + _index++ + "  " + testCase.Name);
+                    var etc = new TestCase("exp" + _index + "  " + testCase.Name);
                     for (int localIndex = 0; localIndex < testCase.Conditions.Count; localIndex++)
                     {
                         etc.Conditions.Add(new ValueObject(testCase.Conditions[localIndex].EnumValues, values[localIndex]));
@@ -201,7 +210,16 @@ namespace DecisionTableCreator.TestCases
                         etc.Actions.Add(new ValueObject(action.EnumValues, action.SelectedItemIndex));
                     }
                     values.RemoveAt(values.Count - 1);
-                    expandedTestCases.Add(etc);
+                    var existing = expandedTestCases.FirstOrDefault(tc => tc.TestSettingIsEqual(etc));
+                    if (existing != null)
+                    {
+                        existing.Name += testCase.Name;
+                    }
+                    else
+                    {
+                        expandedTestCases.Add(etc);
+                        _index++;
+                    }
                 }
 
             }
