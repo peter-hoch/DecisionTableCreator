@@ -1,0 +1,15 @@
+TestCases
+       TC1 conds   aDC  bDC  cV1  dV1  eV1 acts   ok
+       TC2 conds   aV1  bV1  cDC  dDC  eDC acts   ok
+expanded TestCases
+ exp0  TC1 conds   aV1  bV1  cV1  dV1  eV1 acts   ok
+ exp1  TC1 conds   aV1  bV2  cV1  dV1  eV1 acts   ok
+ exp2  TC1 conds   aV2  bV1  cV1  dV1  eV1 acts   ok
+ exp3  TC1 conds   aV2  bV2  cV1  dV1  eV1 acts   ok
+ exp4  TC2 conds   aV1  bV1  cV1  dV1  eV2 acts   ok
+ exp5  TC2 conds   aV1  bV1  cV1  dV2  eV1 acts   ok
+ exp6  TC2 conds   aV1  bV1  cV1  dV2  eV2 acts   ok
+ exp7  TC2 conds   aV1  bV1  cV2  dV1  eV1 acts   ok
+ exp8  TC2 conds   aV1  bV1  cV2  dV1  eV2 acts   ok
+ exp9  TC2 conds   aV1  bV1  cV2  dV2  eV1 acts   ok
+exp10  TC2 conds   aV1  bV1  cV2  dV2  eV2 acts   ok

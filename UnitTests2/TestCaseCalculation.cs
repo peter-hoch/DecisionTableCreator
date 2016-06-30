@@ -114,6 +114,7 @@ namespace UnitTests2
 
         [TestCase("Sample.dtc", 8, 8, 99.9, 100.0)]
         [TestCase("AnotherProject.dtc", 429496729600000000, 20, 4.5E-15, 4.7E-15)]
+        [TestCase("CoverageTest.dtc", 32, 31, 31/32*100, 100, Ignore = "Bug")]
         public void CalculateCoverage(string fileName, long expectedCombinations, long expectedUniqueTestCases, double minExpectedCoverage, double maxExpectedCoverage)
         {
             string testSettingPath = Path.Combine(TestSupport.CreatedFilesDirectory, "TestSetting.txt");
@@ -312,6 +313,56 @@ namespace UnitTests2
             Assert.That(stat.CoveredTestCases == expectedCoveredTestCases);
             Assert.That(stat.PossibleCombinations == expectedCombinations);
             Assert.That(stat.Coverage.Equals(expectedCovarage));
+        }
+
+        [TestCase("ExpandTest1.dtc")]
+        [TestCase("ExpandTest2.dtc")]
+        [TestCase("ExpandTest3.dtc")]
+        [TestCase("ExpandTest4.dtc")]
+        public void ExpandTestcases(string fileName)
+        {
+            string testOutput = Path.Combine(TestSupport.CreatedFilesDirectory, fileName + ".Output.txt");
+
+            string source = Path.Combine(TestSupport.TestFilesDirectory, fileName);
+            TestCasesRoot tcr = new TestCasesRoot();
+            tcr.Load(source);
+
+            var statistics = tcr.CalculateStatistics();
+            var result = tcr.ExpandTestCases();
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("TestCases");
+            foreach (TestCase tc in tcr.TestCases)
+            {
+                DumpTestCase(sb, tc);
+                sb.AppendLine();
+            }
+            sb.AppendLine("expanded TestCases");
+            foreach (ITestCase tc in result)
+            {
+                DumpTestCase(sb, tc);
+                sb.AppendLine();
+            }
+
+            File.WriteAllText(testOutput, sb.ToString());
+            //ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", testOutput);
+            //Process.Start(info);
+            Assert.That( TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(testOutput)));
+//TODO bug            Assert.That(statistics.CoveredTestCases == result.Count);
+        }
+
+        void DumpTestCase(StringBuilder sb, ITestCase tc)
+        {
+            sb.AppendFormat("{0,10} conds ", tc.Name);
+            foreach (ValueObject condition in tc.Conditions)
+            {
+                sb.AppendFormat("{0,5}", condition.Value);
+            }
+            sb.Append(" acts");
+            foreach (ValueObject action in tc.Actions)
+            {
+                sb.AppendFormat("{0,5}", action.Value);
+            }
         }
 
     }

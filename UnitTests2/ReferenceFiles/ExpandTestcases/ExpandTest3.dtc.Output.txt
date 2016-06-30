@@ -1,0 +1,35 @@
+TestCases
+       TC1 conds   aDC  bDC  cDC  dDC  eDC acts   ok
+expanded TestCases
+ exp0  TC1 conds   aV1  bV1  cV1  dV1  eV1 acts   ok
+ exp1  TC1 conds   aV1  bV1  cV1  dV1  eV2 acts   ok
+ exp2  TC1 conds   aV1  bV1  cV1  dV2  eV1 acts   ok
+ exp3  TC1 conds   aV1  bV1  cV1  dV2  eV2 acts   ok
+ exp4  TC1 conds   aV1  bV1  cV2  dV1  eV1 acts   ok
+ exp5  TC1 conds   aV1  bV1  cV2  dV1  eV2 acts   ok
+ exp6  TC1 conds   aV1  bV1  cV2  dV2  eV1 acts   ok
+ exp7  TC1 conds   aV1  bV1  cV2  dV2  eV2 acts   ok
+ exp8  TC1 conds   aV1  bV2  cV1  dV1  eV1 acts   ok
+ exp9  TC1 conds   aV1  bV2  cV1  dV1  eV2 acts   ok
+exp10  TC1 conds   aV1  bV2  cV1  dV2  eV1 acts   ok
+exp11  TC1 conds   aV1  bV2  cV1  dV2  eV2 acts   ok
+exp12  TC1 conds   aV1  bV2  cV2  dV1  eV1 acts   ok
+exp13  TC1 conds   aV1  bV2  cV2  dV1  eV2 acts   ok
+exp14  TC1 conds   aV1  bV2  cV2  dV2  eV1 acts   ok
+exp15  TC1 conds   aV1  bV2  cV2  dV2  eV2 acts   ok
+exp16  TC1 conds   aV2  bV1  cV1  dV1  eV1 acts   ok
+exp17  TC1 conds   aV2  bV1  cV1  dV1  eV2 acts   ok
+exp18  TC1 conds   aV2  bV1  cV1  dV2  eV1 acts   ok
+exp19  TC1 conds   aV2  bV1  cV1  dV2  eV2 acts   ok
+exp20  TC1 conds   aV2  bV1  cV2  dV1  eV1 acts   ok
+exp21  TC1 conds   aV2  bV1  cV2  dV1  eV2 acts   ok
+exp22  TC1 conds   aV2  bV1  cV2  dV2  eV1 acts   ok
+exp23  TC1 conds   aV2  bV1  cV2  dV2  eV2 acts   ok
+exp24  TC1 conds   aV2  bV2  cV1  dV1  eV1 acts   ok
+exp25  TC1 conds   aV2  bV2  cV1  dV1  eV2 acts   ok
+exp26  TC1 conds   aV2  bV2  cV1  dV2  eV1 acts   ok
+exp27  TC1 conds   aV2  bV2  cV1  dV2  eV2 acts   ok
+exp28  TC1 conds   aV2  bV2  cV2  dV1  eV1 acts   ok
+exp29  TC1 conds   aV2  bV2  cV2  dV1  eV2 acts   ok
+exp30  TC1 conds   aV2  bV2  cV2  dV2  eV1 acts   ok
+exp31  TC1 conds   aV2  bV2  cV2  dV2  eV2 acts   ok

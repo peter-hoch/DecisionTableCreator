@@ -147,7 +147,7 @@ namespace UnitTestSupport
         public void TestCreateFile(int size, int expectedLength, bool fileExists)
         {
             string path = Path.Combine(TestSupport.CreatedFilesDirectory, "TestFile1.txt");
-            if(File.Exists(path))
+            if (File.Exists(path))
             {
                 File.Delete(path);
             }
@@ -222,7 +222,7 @@ namespace UnitTestSupport
             {
                 string subDir = Path.Combine(dir, "Subdir");
                 Directory.CreateDirectory(subDir);
-                CreateTestFiles(subDir, levels-1);
+                CreateTestFiles(subDir, levels - 1);
             }
             for (int idx = 0; idx < 10; idx++)
             {

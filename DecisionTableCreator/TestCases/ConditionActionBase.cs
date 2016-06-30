@@ -246,6 +246,23 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        public List<int> ValidEnumValueIndexes
+        {
+            get
+            {
+                List<int> values = new List<int>();
+                for(int idx=0; idx < EnumValues.Count; idx++)
+                {
+                    var value = EnumValues[idx];
+                    if (!value.DontCare && !value.IsInvalid)
+                    {
+                        values.Add(idx);
+                    }
+                }
+                return values;
+            }
+        }
+
         private Background _background = new Background(BackgroundColor.White);
 
         public Background Background

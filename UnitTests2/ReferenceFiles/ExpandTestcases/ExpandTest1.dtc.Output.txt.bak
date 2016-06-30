@@ -1,0 +1,7 @@
+TestCases
+       TC1 conds    DC   DC   V1   V1   V1 acts   ok
+expanded TestCases
+ exp0  TC1 conds    V1   V1   V1   V1   V1 acts   ok
+ exp1  TC1 conds    V1   V2   V1   V1   V1 acts   ok
+ exp2  TC1 conds    V2   V1   V1   V1   V1 acts   ok
+ exp3  TC1 conds    V2   V2   V1   V1   V1 acts   ok

@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DecisionTableRoot>
+  <Conditions>
+    <Condition Name="Modul 1" Type="Enumeration" LoadSaveId="1" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="aV1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="aV2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="aDC" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Modul 2" Type="Enumeration" LoadSaveId="2" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="bV1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="bV2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="bDC" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Modul 3" Type="Enumeration" LoadSaveId="3" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="cV1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="cV2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="cDC" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Modul 4" Type="Enumeration" LoadSaveId="4" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="dV1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="dV2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="dDC" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Modul 5" Type="Enumeration" LoadSaveId="5" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="eV1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="eV2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="eDC" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+  </Conditions>
+  <Actions>
+    <Action LoadSaveId="1000" Name="Function" Type="Enumeration" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="ok" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="not ok" IsDefault="False" IsInvalid="False" DontCare="False" />
+      </EnumValues>
+    </Action>
+  </Actions>
+  <TestCases>
+    <TestCase Name="TC1">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="5" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+      </TestCaseActions>
+    </TestCase>
+  </TestCases>
+</DecisionTableRoot>

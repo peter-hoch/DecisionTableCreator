@@ -108,7 +108,7 @@ namespace DecisionTableCreator.TestCases
         {
             for (int outerIdx = 0; outerIdx < testCases.Count; outerIdx++)
             {
-                for (int innerIdx = outerIdx+1; innerIdx < testCases.Count; innerIdx++)
+                for (int innerIdx = outerIdx + 1; innerIdx < testCases.Count; innerIdx++)
                 {
                     TestCase outer = testCases[outerIdx];
                     TestCase inner = testCases[innerIdx];
@@ -116,7 +116,7 @@ namespace DecisionTableCreator.TestCases
                     if (outer.TestSettingIsEqual(inner))
                     {
                         inner.TestCaseIsUnique = false;
-                    }                     
+                    }
                 }
             }
 
@@ -129,6 +129,83 @@ namespace DecisionTableCreator.TestCases
             return count;
         }
 
+
+        private int _index = 0;
+        public List<ITestCase> ExpandTestCases()
+        {
+            _index = 0;
+            List<ITestCase> expandedTestCases = new List<ITestCase>();
+            if (Conditions.Count > 0)
+            {
+                foreach (TestCase testCase in TestCases)
+                {
+                    List<int> values = new List<int>();
+                    ExpandCondition(expandedTestCases, testCase, values, 0);
+                }
+            }
+            return expandedTestCases;
+        }
+
+        private void ExpandCondition(List<ITestCase> expandedTestCases, TestCase testCase, List<int> values, int idx)
+        {
+            if (testCase.Conditions.Count - 1 > idx)
+            {
+                ValueObject condition = testCase.Conditions[idx];
+                if (condition.SelectedValue.DontCare)
+                {
+                    foreach (int enumIndex in condition.ConditionOrActionParent.ValidEnumValueIndexes)
+                    {
+                        values.Add(enumIndex);
+                        ExpandCondition(expandedTestCases, testCase, values, idx + 1);
+                        values.RemoveAt(values.Count - 1);
+                    }
+                }
+                else
+                {
+                    values.Add(condition.SelectedItemIndex);
+                    ExpandCondition(expandedTestCases, testCase, values, idx + 1);
+                    values.RemoveAt(values.Count - 1);
+                }
+            }
+            else
+            {
+                ValueObject condition = testCase.Conditions[idx];
+                if (condition.SelectedValue.DontCare)
+                {
+                    foreach (int enumIndex in condition.ConditionOrActionParent.ValidEnumValueIndexes)
+                    {
+                        values.Add(enumIndex);
+                        var etc = new ExpandedTestCase("exp" + _index++ + "  " + testCase.Name);
+                        for (int localIndex = 0; localIndex < testCase.Conditions.Count; localIndex++)
+                        {
+                            etc.Conditions.Add(new ValueObject(testCase.Conditions[localIndex].EnumValues, values[localIndex]));
+                        }
+                        foreach (ValueObject action in testCase.Actions)
+                        {
+                            etc.Actions.Add(new ValueObject(action.EnumValues, action.SelectedItemIndex));
+                        }
+                        values.RemoveAt(values.Count - 1);
+                        expandedTestCases.Add(etc);
+                    }
+                }
+                else
+                {
+                    values.Add(condition.SelectedItemIndex);
+                    var etc = new ExpandedTestCase("exp" + _index++ + "  " + testCase.Name);
+                    for (int localIndex = 0; localIndex < testCase.Conditions.Count; localIndex++)
+                    {
+                        etc.Conditions.Add(new ValueObject(testCase.Conditions[localIndex].EnumValues, values[localIndex]));
+                    }
+                    foreach (ValueObject action in testCase.Actions)
+                    {
+                        etc.Actions.Add(new ValueObject(action.EnumValues, action.SelectedItemIndex));
+                    }
+                    values.RemoveAt(values.Count - 1);
+                    expandedTestCases.Add(etc);
+                }
+
+            }
+        }
     }
 
 

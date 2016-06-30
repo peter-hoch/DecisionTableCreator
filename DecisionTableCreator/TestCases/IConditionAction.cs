@@ -50,6 +50,8 @@ namespace DecisionTableCreator.TestCases
         ObservableCollection<EnumValue> EnumValues { get; set; }
 
         string TooltipText { get; set; }
+
+        List<int> ValidEnumValueIndexes { get; }
     }
 
 }
