@@ -69,6 +69,8 @@
     <Compile Include="ConditionOrActionGridCellControl.xaml.cs">
       <DependentUpon>ConditionOrActionGridCellControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\CoverageConverter.cs" />
+    <Compile Include="Converter\CoveredTestCasesConverter.cs" />
     <Compile Include="DataGridColumnContainer.cs" />
     <Compile Include="DataGridHeader.cs" />
     <Compile Include="EditAction.xaml.cs">
@@ -96,6 +98,7 @@
     <Compile Include="TestCases\ConditionActionBase.cs" />
     <Compile Include="TestCases\ConditionObject.cs" />
     <Compile Include="TestCases\EnumValue.cs" />
+    <Compile Include="TestCases\ExpandTestCases.cs" />
     <Compile Include="TestCases\Generation.cs" />
     <Compile Include="TestCases\IConditionAction.cs" />
     <Compile Include="TestCases\LoadSaveVisitor.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="TestCases\CustomStringTemplateErrorListener.cs" />
     <Compile Include="TestCases\StringTemplateResult.cs" />
     <Compile Include="TestCases\TestCase.cs" />
+    <Compile Include="TestCases\TestCaseCalcContainer.cs" />
     <Compile Include="TestCases\TestCasesRoot.cs" />
     <Compile Include="TestCases\TestCasesRootCalculations.cs" />
     <Compile Include="TestCases\TestCasesRootLoadSave.cs" />

@@ -44,9 +44,17 @@ namespace DecisionTableCreator.TestCases
             Statistics stat = new Statistics();
 
             stat.PossibleCombinations = CalculatePossibleCombinations();
-            TestCase.UpdateUniqueness(TestCases);
-            stat.CoveredTestCases = CalculateNumberOfUniqueCoveredTestCases(TestCases);
-            stat.Coverage = CalculateCoverage();
+            if (stat.PossibleCombinations < 1000)
+            {
+                stat.CoveredTestCases = CalculateNumberOfUniqueCoveredTestCases();
+                stat.Coverage = (double)stat.CoveredTestCases / stat.PossibleCombinations * 100.0;
+
+            }
+            else
+            {
+                stat.CoveredTestCases = -1;
+                stat.Coverage = -1;
+            }
             return stat;
         }
 
@@ -84,17 +92,11 @@ namespace DecisionTableCreator.TestCases
             return count;
         }
 
-        private double CalculateCoverage()
-        {
-            double combinations = CalculatePossibleCombinations();
-            double result = CalculateNumberOfUniqueCoveredTestCases();
-            return result / combinations * 100;
-        }
-
 
         public long CalculateNumberOfUniqueCoveredTestCases()
         {
-            return CalculateNumberOfUniqueCoveredTestCases(TestCases);
+            DecisionTableCreator.TestCases.ExpandTestCases expand = new ExpandTestCases();
+            return expand.Expand(this).Count;
         }
 
         /// <summary>
@@ -102,128 +104,16 @@ namespace DecisionTableCreator.TestCases
         /// DontCare counts with the count of valid enum values
         /// Invalid do not count
         /// </summary>
+        /// <param name="conditions"></param>
         /// <param name="testCases"></param>
         /// <returns></returns>
-        public static long CalculateNumberOfUniqueCoveredTestCases(IList<TestCase> testCases)
+        public static long CalculateNumberOfUniqueCoveredTestCases(ObservableCollection<ConditionObject> conditions, IList<TestCase> testCases)
         {
-            for (int outerIdx = 0; outerIdx < testCases.Count; outerIdx++)
-            {
-                for (int innerIdx = outerIdx + 1; innerIdx < testCases.Count; innerIdx++)
-                {
-                    TestCase outer = testCases[outerIdx];
-                    TestCase inner = testCases[innerIdx];
-
-                    if (outer.TestSettingIsEqual(inner))
-                    {
-                        inner.TestCaseIsUnique = false;
-                    }
-                }
-            }
-
-            var uniqueTestCases = testCases.Where(tc => tc.TestCaseIsUnique && tc.ContainsInvalid == false);
-            long count = 0;
-            foreach (var testCase in uniqueTestCases)
-            {
-                count += testCase.CalculateNumberOfCoveredTestCases();
-            }
-            return count;
+            DecisionTableCreator.TestCases.ExpandTestCases expand = new ExpandTestCases();
+            return expand.Expand(conditions, testCases).Count;
         }
 
 
-        private int _index = 0;
-        public List<TestCase> ExpandTestCases()
-        {
-            _index = 0;
-            List<TestCase> expandedTestCases = new List<TestCase>();
-            if (Conditions.Count > 0)
-            {
-                foreach (TestCase testCase in TestCases)
-                {
-                    List<int> values = new List<int>();
-                    ExpandCondition(expandedTestCases, testCase, values, 0);
-                }
-            }
-            return expandedTestCases;
-        }
-
-        private void ExpandCondition(List<TestCase> expandedTestCases, TestCase testCase, List<int> values, int idx)
-        {
-            if (testCase.Conditions.Count - 1 > idx)
-            {
-                ValueObject condition = testCase.Conditions[idx];
-                if (condition.SelectedValue.DontCare)
-                {
-                    foreach (int enumIndex in condition.ConditionOrActionParent.ValidEnumValueIndexes)
-                    {
-                        values.Add(enumIndex);
-                        ExpandCondition(expandedTestCases, testCase, values, idx + 1);
-                        values.RemoveAt(values.Count - 1);
-                    }
-                }
-                else
-                {
-                    values.Add(condition.SelectedItemIndex);
-                    ExpandCondition(expandedTestCases, testCase, values, idx + 1);
-                    values.RemoveAt(values.Count - 1);
-                }
-            }
-            else
-            {
-                ValueObject condition = testCase.Conditions[idx];
-                if (condition.SelectedValue.DontCare)
-                {
-                    foreach (int enumIndex in condition.ConditionOrActionParent.ValidEnumValueIndexes)
-                    {
-                        values.Add(enumIndex);
-                        var etc = new TestCase("exp" + _index + "  " + testCase.Name);
-                        for (int localIndex = 0; localIndex < testCase.Conditions.Count; localIndex++)
-                        {
-                            etc.Conditions.Add(new ValueObject(testCase.Conditions[localIndex].EnumValues, values[localIndex]));
-                        }
-                        foreach (ValueObject action in testCase.Actions)
-                        {
-                            etc.Actions.Add(new ValueObject(action.EnumValues, action.SelectedItemIndex));
-                        }
-                        values.RemoveAt(values.Count - 1);
-                        var existing = expandedTestCases.FirstOrDefault(tc => tc.TestSettingIsEqual(etc));
-                        if (existing != null)
-                        {
-                            existing.Name += testCase.Name;
-                        }
-                        else
-                        {
-                            expandedTestCases.Add(etc);
-                            _index++;
-                        }
-                    }
-                }
-                else
-                {
-                    values.Add(condition.SelectedItemIndex);
-                    var etc = new TestCase("exp" + _index + "  " + testCase.Name);
-                    for (int localIndex = 0; localIndex < testCase.Conditions.Count; localIndex++)
-                    {
-                        etc.Conditions.Add(new ValueObject(testCase.Conditions[localIndex].EnumValues, values[localIndex]));
-                    }
-                    foreach (ValueObject action in testCase.Actions)
-                    {
-                        etc.Actions.Add(new ValueObject(action.EnumValues, action.SelectedItemIndex));
-                    }
-                    values.RemoveAt(values.Count - 1);
-                    var existing = expandedTestCases.FirstOrDefault(tc => tc.TestSettingIsEqual(etc));
-                    if (existing != null)
-                    {
-                        existing.Name += testCase.Name;
-                    }
-                    else
-                    {
-                        expandedTestCases.Add(etc);
-                        _index++;
-                    }
-                }
-
-            }
-        }
     }
 
 

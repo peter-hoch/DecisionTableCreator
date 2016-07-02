@@ -7,3 +7,4 @@ exp1  TC1            conds   aV1  bV2  cV1  dV1  eV1 acts   ok
 exp2  TC1            conds   aV2  bV1  cV1  dV1  eV1 acts   ok
 exp3  TC1            conds   aV2  bV2  cV1  dV1  eV1 acts   ok
 exp4  TC2            conds   aV1  bV1  cV1  dV1  eV2 acts   ok
+calaulated     5  count     5

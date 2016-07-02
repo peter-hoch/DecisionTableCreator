@@ -76,7 +76,7 @@ namespace UnitTests2
             Assert.That(result == expectedResult);
 
             expectedResult = 4;
-            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name", 4, 0, 0, 3))); 
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name", 4, 0, 0, 3)));
             tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name", 4, 0, 0, 3)));
             result = tcr.CalculatePossibleCombinations();
             Assert.That(result == expectedResult);
@@ -113,8 +113,8 @@ namespace UnitTests2
         }
 
         [TestCase("Sample.dtc", 8, 8, 99.9, 100.0)]
-        [TestCase("AnotherProject.dtc", 429496729600000000, 20, 4.5E-15, 4.7E-15)]
-        [TestCase("CoverageTest.dtc", 32, 31, 31/32*100, 100, Ignore = "Bug")]
+        [TestCase("AnotherProject.dtc", 429496729600000000, -1, -1, -1)]
+        [TestCase("CoverageTest.dtc", 32, 28, (28.0 / 32.0 * 100.0 - 0.001), (28.0 / 32.0 * 100.0 + 0.001))]
         public void CalculateCoverage(string fileName, long expectedCombinations, long expectedUniqueTestCases, double minExpectedCoverage, double maxExpectedCoverage)
         {
             string testSettingPath = Path.Combine(TestSupport.CreatedFilesDirectory, "TestSetting.txt");
@@ -128,6 +128,17 @@ namespace UnitTests2
             {
                 File.AppendAllText(testSettingPath, String.Format("{0}" + Environment.NewLine, tcr.TestCases[idx]));
             }
+            File.AppendAllText(testSettingPath, Environment.NewLine+ Environment.NewLine);
+
+            ExpandTestCases expand = new ExpandTestCases();
+            var expandedTestCases = expand.Expand(tcr);
+            foreach (TestCase expandedTestCase in expandedTestCases)
+            {
+                File.AppendAllText(testSettingPath, String.Format("{0}" + Environment.NewLine, expandedTestCase));
+            }
+
+            //ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", testSettingPath);
+            //Process.Start(info);
 
             Assert.That(stat.Coverage >= minExpectedCoverage);
             Assert.That(stat.Coverage <= maxExpectedCoverage);
@@ -167,13 +178,16 @@ namespace UnitTests2
         [TestCase(1, 1, 1, 1, 2, 1, true, true, 2)]
         [TestCase(1, 1, 1, 2, 1, 1, true, true, 2)]
         [TestCase(2, 2, 2, 1, 1, 1, true, true, 2)]
-
         [TestCase(1, 1, 1, 1, 1, 5, false, true, 4)]
         public void CompareTestCases2Test(int selected11, int selected12, int selected13, int selected21, int selected22, int selected23, bool unique1, bool unique2, int expectedCoveredCount)
         {
+            TestCasesRoot tcr = new TestCasesRoot();
             var enum1 = TestCasesRoot.CreateSampleEnum("enum1", 6, 0, 0, 5);
             var enum2 = TestCasesRoot.CreateSampleEnum("enum2", 6, 0, 0, 5);
             var enum3 = TestCasesRoot.CreateSampleEnum("enum3", 6, 0, 0, 5);
+            tcr.Conditions.Add(ConditionObject.Create("enum1", enum1));
+            tcr.Conditions.Add(ConditionObject.Create("enum2", enum2));
+            tcr.Conditions.Add(ConditionObject.Create("enum3", enum3));
             List<ValueObject> conditions1 = new List<ValueObject>();
             conditions1.Add(new ValueObject(enum1, selected11));
             conditions1.Add(new ValueObject(enum2, selected12));
@@ -182,20 +196,20 @@ namespace UnitTests2
             conditions2.Add(new ValueObject(enum1, selected21));
             conditions2.Add(new ValueObject(enum2, selected22));
             conditions2.Add(new ValueObject(enum3, selected23));
-            TestCase tc1 = new TestCase("tc1", conditions1, new List<ValueObject>());
-            TestCase tc2 = new TestCase("tc2", conditions2, new List<ValueObject>());
-            List<TestCase> testCases = new List<TestCase>() {tc1,tc2};
+
+            TestCase tc1 = tcr.InsertTestCase();
+            tc1.SetValues(tcr, conditions1, new List<ValueObject>());
+            TestCase tc2 = tcr.InsertTestCase();
+            tc2.SetValues(tcr, conditions2, new List<ValueObject>());
             Trace.WriteLine(tc1);
             Trace.WriteLine(tc2);
-            //bool isEqual = tc1.TestSettingIsEqual(tc2);
-            Assert.That( TestCase.UpdateUniqueness(tc1,tc2) == (unique1 && unique2));
-            long count = TestCasesRoot.CalculateNumberOfUniqueCoveredTestCases(testCases);
+            bool isEqual = tc1.TestSettingIsEqual(tc2);
+            Assert.That(TestCase.UpdateUniqueness(tc1, tc2) == (unique1 && unique2));
+            long count = tcr.CalculateNumberOfUniqueCoveredTestCases();
             Assert.That(tc1.TestCaseIsUnique == unique1);
             Assert.That(tc2.TestCaseIsUnique == unique2);
             Assert.That(count == expectedCoveredCount);
         }
-
-
 
 
         [TestCase(0, new int[] { 0, 2, 4, 6 }, 4)]
@@ -206,11 +220,16 @@ namespace UnitTests2
         [TestCase(4, new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 }, 7)]
         public void CalculateUniqueTestCases(int id, int[] values, int expectedResult)
         {
+            TestCasesRoot tcr = new TestCasesRoot();
             List<List<ValueObject>> listOfValueLists = new List<List<ValueObject>>();
 
             var enum1 = TestCasesRoot.CreateSampleEnum("enum1", 4, 0, 0, -1);
             var enum2 = TestCasesRoot.CreateSampleEnum("enum2", 4, 0, 0, 1);
             var enum3 = TestCasesRoot.CreateSampleEnum("enum3", 6, 0, 0, -1);
+
+            tcr.Conditions.Add(ConditionObject.Create("name", enum1));
+            tcr.Conditions.Add(ConditionObject.Create("name", enum2));
+            tcr.Conditions.Add(ConditionObject.Create("name", enum3));
 
             //0
             listOfValueLists.Add(new List<ValueObject>() { new ValueObject(enum1, 1), new ValueObject(enum2, 2), new ValueObject(enum3, 2), });
@@ -246,17 +265,19 @@ namespace UnitTests2
             List<TestCase> testCases = new List<TestCase>();
             for (int idx = 0; idx < values.Length; idx++)
             {
-                TestCase tc = new TestCase(String.Format("tc {0:d2} {1:d2}", idx, values[idx]), listOfValueLists[values[idx]], new List<ValueObject>());
-                testCases.Add(tc);
-                Trace.WriteLine(tc);
+                TestCase tc = tcr.InsertTestCase();
+                tc.SetValues(tcr, listOfValueLists[values[idx]], new List<ValueObject>());
+                //TestCase tc = new TestCase(String.Format("tc {0:d2} {1:d2}", idx, values[idx]), listOfValueLists[values[idx]], new List<ValueObject>());
+                //testCases.Add(tc);
+                //Trace.WriteLine(tc);
             }
-            long result = TestCasesRoot.CalculateNumberOfUniqueCoveredTestCases(testCases);
+            long result = tcr.CalculateNumberOfUniqueCoveredTestCases();
             Assert.That(result == expectedResult);
         }
 
 
         [TestCase(0, new int[] { 31, 32, 33, 34, 37, 38, 39, 40, 71 }, 16, 16, 100)]
-        [TestCase(1, new int[] { 31, 32, 33, 34, 37, 38, 39, 71 }, 16, 15, 15.0/16.0*100.0)]
+        [TestCase(1, new int[] { 31, 32, 33, 34, 37, 38, 39, 71 }, 16, 15, 15.0 / 16.0 * 100.0)]
         [TestCase(2, new int[] { 31, 31, 32, 33, 34, 37, 38, 39, 40, 71 }, 16, 16, 100)]
         [TestCase(3, new int[] { 31, 32, 33, 34, 37, 38, 39, 40, 71, 71 }, 16, 16, 100)]
         [TestCase(4, new int[] { 31, 32, 33, 34, 37, 38, 39, 40, 71, 11 }, 16, 16, 100)]
@@ -294,13 +315,15 @@ namespace UnitTests2
             for (int idx = 0; idx < listOfValueLists.Count; idx++)
             {
                 List<ValueObject> condList = listOfValueLists[idx];
-                File.AppendAllText(testOutputPath, String.Format("{0:d2} {1} {2} {3}"+Environment.NewLine, idx, condList[0].SelectedValue.ToTestString(), condList[1].SelectedValue.ToTestString(), condList[2].SelectedValue.ToTestString()));
+                File.AppendAllText(testOutputPath, String.Format("{0:d2} {1} {2} {3}" + Environment.NewLine, idx, condList[0].SelectedValue.ToTestString(), condList[1].SelectedValue.ToTestString(), condList[2].SelectedValue.ToTestString()));
             }
 
             for (int idx = 0; idx < values.Length; idx++)
             {
-                TestCase tc = new TestCase(String.Format("tc {0:d2}", idx), listOfValueLists[values[idx]], new List<ValueObject>());
-                tcr.TestCases.Add(tc);
+                //TestCase tc = new TestCase(String.Format("tc {0:d2}", idx), listOfValueLists[values[idx]], new List<ValueObject>());
+                //tcr.TestCases.Add(tc);
+                TestCase tc = tcr.InsertTestCase();
+                tc.SetValues(tcr, listOfValueLists[values[idx]], new List<ValueObject>());
                 //File.AppendAllText(testSettingPath, String.Format("{0}" + Environment.NewLine, tc));
             }
             Statistics stat = tcr.CalculateStatistics();
@@ -308,6 +331,15 @@ namespace UnitTests2
             for (int idx = 0; idx < tcr.TestCases.Count; idx++)
             {
                 File.AppendAllText(testSettingPath, String.Format("{0}" + Environment.NewLine, tcr.TestCases[idx]));
+            }
+
+            File.AppendAllText(testSettingPath, Environment.NewLine + Environment.NewLine);
+
+            ExpandTestCases expand = new ExpandTestCases();
+            var resultList = expand.Expand(tcr);
+            foreach (TestCase testCase in resultList)
+            {
+                File.AppendAllText(testSettingPath, String.Format("{0}" + Environment.NewLine, testCase));
             }
 
             Assert.That(stat.CoveredTestCases == expectedCoveredTestCases);
@@ -329,7 +361,8 @@ namespace UnitTests2
             tcr.Load(source);
 
             var statistics = tcr.CalculateStatistics();
-            var result = tcr.ExpandTestCases();
+            ExpandTestCases expand = new ExpandTestCases();
+            var result = expand.Expand(tcr);
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("TestCases");
@@ -344,13 +377,13 @@ namespace UnitTests2
                 DumpTestCase(sb, tc);
                 sb.AppendLine();
             }
-            sb.AppendFormat("calaulated {0,5}  count {1,5}", statistics.CoveredTestCases, result.Count);
+            sb.AppendFormat("calculated {0,5}  expandCount {1,5}", statistics.CoveredTestCases, result.Count);
 
             File.WriteAllText(testOutput, sb.ToString());
-            //ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", testOutput);
-            //Process.Start(info);
-            Assert.That( TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(testOutput)));
-//TODO bug            Assert.That(statistics.CoveredTestCases == result.Count);
+            ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", testOutput);
+            Process.Start(info);
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(testOutput)));
+            Assert.That(statistics.CoveredTestCases == result.Count);
         }
 
         void DumpTestCase(StringBuilder sb, ITestCase tc)

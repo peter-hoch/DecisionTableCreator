@@ -33,4 +33,4 @@ exp28  TC1           conds   aV2  bV2  cV2  dV1  eV1 acts   ok
 exp29  TC1           conds   aV2  bV2  cV2  dV1  eV2 acts   ok
 exp30  TC1           conds   aV2  bV2  cV2  dV2  eV1 acts   ok
 exp31  TC1           conds   aV2  bV2  cV2  dV2  eV2 acts   ok
-calaulated    32  count    32
+calculated    32  expandCount    32

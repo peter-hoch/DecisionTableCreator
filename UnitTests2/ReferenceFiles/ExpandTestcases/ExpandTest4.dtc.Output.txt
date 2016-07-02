@@ -13,4 +13,4 @@ exp7  TC2            conds   aV1  bV1  cV2  dV1  eV1 acts   ok
 exp8  TC2            conds   aV1  bV1  cV2  dV1  eV2 acts   ok
 exp9  TC2            conds   aV1  bV1  cV2  dV2  eV1 acts   ok
 exp10  TC2           conds   aV1  bV1  cV2  dV2  eV2 acts   ok
-calaulated     8  count    11
+calculated    11  expandCount    11

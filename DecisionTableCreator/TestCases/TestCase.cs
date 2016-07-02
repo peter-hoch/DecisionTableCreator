@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -447,6 +448,28 @@ namespace DecisionTableCreator.TestCases
             if (DirtyObserver != null)
             {
                 DirtyObserver.Reset();
+            }
+        }
+
+        /// <summary>
+        /// for unit tests only
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="conditionValues"></param>
+        /// <param name="actionValues"></param>
+        public void SetValues(TestCasesRoot root, List<ValueObject> conditionValues, List<ValueObject> actionValues)
+        {
+            if (conditionValues.Count != root.Conditions.Count)
+            {
+                throw new Exception("internal error");
+            }
+            for (int idx = 0; idx < root.Conditions.Count; idx++)
+            {
+                Conditions[idx].SelectedItemIndex = conditionValues[idx].SelectedItemIndex;
+            }
+            for (int idx = 0; idx < root.Actions.Count; idx++)
+            {
+                Actions[idx].SelectedItemIndex = actionValues[idx].SelectedItemIndex;
             }
         }
 

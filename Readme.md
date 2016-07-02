@@ -73,6 +73,14 @@ use this to export the table to a word processing or spreadsheet tool
 The templates for code generation are located in the directory "MyDocuments"/DecisionTableCreatorTemplates/*.stg
 The first template "Sample.file.stg" is written to this directory during the first start of the tool. This is the place to store other templates. During the start of the tool a submenu entry is created for every template in this directory. A template must have the extension "stg".
 
+##Statistics
+###Possible combinations
+The possibe combinations are calculated based on the defined conditions and enum values. This is the count of test cases you need to get a coverage of 100%.
+###Covered test cases
+The number of test cases that are defined. In this calculation the test cases with "Don't care" are considered. This calculation is suppressed if the possible combinations exceeds 1000.
+###Coverage
+The coverage in percent which are reached with the defined test cases. This calculation is suppressed if the possible combinations exceeds 1000.
+
 ##Code generation
 The code generation is based on StringTemplate [https://github.com/antlr/stringtemplate4](https://github.com/antlr/stringtemplate4)
 
