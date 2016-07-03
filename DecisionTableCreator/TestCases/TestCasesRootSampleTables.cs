@@ -173,54 +173,54 @@ namespace DecisionTableCreator.TestCases
         private void CreateSampleProjectInternal()
         {
             var enumList = new ObservableCollection<EnumValue>();
-            enumList.Add(new EnumValue("invalid condition", true, false, true));
-            enumList.Add(new EnumValue("Printer is printing", false, false, false));
-            enumList.Add(new EnumValue("Printer is not printing", false, false, false));
-            enumList.Add(new EnumValue("DC", false, true, false));
+            enumList.Add(new EnumValue("invalid condition", true, false, true, "this is an invalid condition please choose an other value"));
+            enumList.Add(new EnumValue("Printer is printing", false, false, false, "everything is ok"));
+            enumList.Add(new EnumValue("Printer is not printing", false, false, false, "problems with printing or printing quality"));
+            enumList.Add(new EnumValue("DC", false, true, false, "don't care this condition in this case"));
 
             Conditions.Add(ConditionObject.Create("Basic Printer status", enumList));
 
             enumList = new ObservableCollection<EnumValue>();
-            enumList.Add(new EnumValue("invalid condition", true, false, true));
-            enumList.Add(new EnumValue("LED is on", false, false, false));
-            enumList.Add(new EnumValue("LED is flashing", false, false, false));
-            enumList.Add(new EnumValue("LED is off", false, false, false));
-            enumList.Add(new EnumValue("DC", false, true, false));
+            enumList.Add(new EnumValue("invalid condition", true, false, true, "this is an invalid condition please choose an other value"));
+            enumList.Add(new EnumValue("LED is on", false, false, false, "Power LED is on"));
+            enumList.Add(new EnumValue("LED is flashing", false, false, false, "Power LED is flashing"));
+            enumList.Add(new EnumValue("LED is off", false, false, false, "Power LED is off"));
+            enumList.Add(new EnumValue("DC", false, true, false, "don't care this condition in this case"));
 
             Conditions.Add(ConditionObject.Create("Green LED", enumList));
 
             enumList = new ObservableCollection<EnumValue>();
-            enumList.Add(new EnumValue("invalid condition", true, false, true));
-            enumList.Add(new EnumValue("Blank sheet is ejected", false, false, false));
-            enumList.Add(new EnumValue("Print quality is bad", false, false, false));
-            enumList.Add(new EnumValue("Nothing is ejected", false, false, false));
-            enumList.Add(new EnumValue("DC", false, true, false));
+            enumList.Add(new EnumValue("invalid condition", true, false, true, "this is an invalid condition please choose an other value"));
+            enumList.Add(new EnumValue("Blank sheet is ejected", false, false, false, "Printer ejects only blank sheets"));
+            enumList.Add(new EnumValue("Print quality is bad", false, false, false, "Printer output has bad quality"));
+            enumList.Add(new EnumValue("Nothing is ejected", false, false, false, "Printer don't eject a sheet"));
+            enumList.Add(new EnumValue("DC", false, true, false, "don't care this condition in this case"));
 
             Conditions.Add(ConditionObject.Create("Paper", enumList));
 
 
             enumList = new ObservableCollection<EnumValue>();
-            enumList.Add(new EnumValue("", false, false, true));
-            enumList.Add(new EnumValue("Check connection", false, false, false));
+            enumList.Add(new EnumValue("", false, false, true, "nothing to do"));
+            enumList.Add(new EnumValue("Check connection", false, false, false, "Check the printer power connection"));
 
             Actions.Add(ActionObject.Create("Power", enumList));
 
             enumList = new ObservableCollection<EnumValue>();
-            enumList.Add(new EnumValue("", false, false, true));
-            enumList.Add(new EnumValue("Check filling level", false, false, false));
+            enumList.Add(new EnumValue("", false, false, true, "nothing to do"));
+            enumList.Add(new EnumValue("Check filling level", false, false, false, "Check the fill level of the ink cartridges"));
 
             Actions.Add(ActionObject.Create("Ink catridge", enumList));
 
             enumList = new ObservableCollection<EnumValue>();
-            enumList.Add(new EnumValue("", false, false, true));
-            enumList.Add(new EnumValue("Check connection", false, false, false));
+            enumList.Add(new EnumValue("", false, false, true, "nothing to do"));
+            enumList.Add(new EnumValue("Check connection", false, false, false, "Check the printer computer connection"));
 
             Actions.Add(ActionObject.Create("PC connection", enumList));
 
             enumList = new ObservableCollection<EnumValue>();
-            enumList.Add(new EnumValue("", false, false, true));
-            enumList.Add(new EnumValue("Check paper filling level", false, false, false));
-            enumList.Add(new EnumValue("Check for clean (unused) paper", false, false, false));
+            enumList.Add(new EnumValue("", false, false, true, "nothing to do"));
+            enumList.Add(new EnumValue("Check paper filling level", false, false, false, "Does the printer contain enough paper?"));
+            enumList.Add(new EnumValue("Check for clean (unused) paper", false, false, false, "Does the printer contain blank paper?"));
 
             Actions.Add(ActionObject.Create("Paper", enumList));
 

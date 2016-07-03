@@ -43,7 +43,7 @@ namespace DecisionTableCreator.TestCases
     /// </summary>
     public class EnumValue : INotifyDirtyChanged, IEnumValue
     {
-        public EnumValue(string name, string value, bool isInavlid = false, bool dontCare = false, bool isDefault = false)
+        public EnumValue(string name, string value, bool isInavlid = false, bool dontCare = false, bool isDefault = false, string tooltipText = null)
         {
             DirtyObserver = new DirtyObserver(this);
             Name = name;
@@ -51,9 +51,10 @@ namespace DecisionTableCreator.TestCases
             DontCare = dontCare;
             IsDefault = isDefault;
             Value = value;
+            TooltipText = tooltipText;
         }
 
-        public EnumValue(string name, bool isInavlid = false, bool dontCare = false, bool isDefault = false) : this(name, "value-"+name, isInavlid, dontCare, isDefault)
+        public EnumValue(string name, bool isInavlid = false, bool dontCare = false, bool isDefault = false, string tooltipText = null) : this(name, "value-"+name, isInavlid, dontCare, isDefault, tooltipText)
         {
         }
 
@@ -133,6 +134,22 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+        private string _tooltipText;
+
+        [ObserveForDirty]
+        public string TooltipText
+        {
+            get { return _tooltipText; }
+            set
+            {
+                _tooltipText = value;
+                OnPropertyChanged("TooltipText");
+            }
+        }
+
+        public string Comment { get {return _tooltipText;} }
+
+
         public override string ToString()
         {
             return Name;
@@ -194,7 +211,7 @@ namespace DecisionTableCreator.TestCases
 
         public EnumValue Clone()
         {
-            return new EnumValue(Name, Value, IsInvalid, DontCare, IsDefault);
+            return new EnumValue(Name, Value, IsInvalid, DontCare, IsDefault, TooltipText);
         }
     }
 }

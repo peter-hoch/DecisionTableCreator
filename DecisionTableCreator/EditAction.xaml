@@ -51,6 +51,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="80"/>
                 <DataGridTextColumn Header="Value" Binding="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="80"/>
+                <DataGridTextColumn Header="Comment" Binding="{Binding TooltipText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="80"/>
                 <DataGridCheckBoxColumn Header="IsInvalid" Binding="{Binding IsInvalid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridCheckBoxColumn Header="Is default" Binding="{Binding IsDefault, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>

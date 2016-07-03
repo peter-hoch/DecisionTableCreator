@@ -184,6 +184,7 @@ namespace DecisionTableCreator.TestCases
             xmlEnumValue.AddAttribute(XmlNames.IsDefaultAttributeName, value.IsDefault);
             xmlEnumValue.AddAttribute(XmlNames.IsInvalidAttributeName, value.IsInvalid);
             xmlEnumValue.AddAttribute(XmlNames.DontCareAttributeName, value.DontCare);
+            xmlEnumValue.AddAttribute(XmlNames.TooltipTextAttributeName, value.TooltipText);
         }
 
 
@@ -317,7 +318,8 @@ namespace DecisionTableCreator.TestCases
                 element.GetAttributeStringValue(XmlNames.ValueAttributeName, XmlElementOption.MustExist),
                 element.GetAttributeBoolValue(XmlNames.IsInvalidAttributeName),
                 element.GetAttributeBoolValue(XmlNames.DontCareAttributeName),
-                element.GetAttributeBoolValue(XmlNames.IsDefaultAttributeName)
+                element.GetAttributeBoolValue(XmlNames.IsDefaultAttributeName),
+                element.GetAttributeStringValue(XmlNames.TooltipTextAttributeName)
                 );
         }
 

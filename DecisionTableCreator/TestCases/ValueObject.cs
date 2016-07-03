@@ -326,19 +326,6 @@ namespace DecisionTableCreator.TestCases
         }
 
 
-        private string _tooltipText;
-
-        [ObserveForDirty]
-        public string TooltipText
-        {
-            get { return _tooltipText; }
-            set
-            {
-                _tooltipText = value;
-                OnPropertyChanged("TooltipText");
-            }
-        }
-
         private void SetBackground()
         {
             Brush brush = Brushes.White;

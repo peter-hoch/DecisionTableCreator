@@ -44,6 +44,7 @@ namespace DecisionTableCreator.TestCases
     {
         string Name { get; }
         String Value { get; }
+        string Comment { get; }
         bool IsDefault { get; }
         bool IsInvalid { get; }
         bool DontCare { get; }
