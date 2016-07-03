@@ -380,8 +380,8 @@ namespace UnitTests2
             sb.AppendFormat("calculated {0,5}  expandCount {1,5}", statistics.CoveredTestCases, result.Count);
 
             File.WriteAllText(testOutput, sb.ToString());
-            ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", testOutput);
-            Process.Start(info);
+            //ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", testOutput);
+            //Process.Start(info);
             Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(testOutput)));
             Assert.That(statistics.CoveredTestCases == result.Count);
         }

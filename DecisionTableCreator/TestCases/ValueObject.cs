@@ -393,11 +393,17 @@ namespace DecisionTableCreator.TestCases
 
         public bool TestSettingIsEqual(ValueObject other)
         {
-            //TODO
-            //if (this.EnumValues.Equals(other.EnumValues))
-            //{
-            //    throw new ArgumentException("the two ValueObjects do not have the same enumeration");
-            //}
+            if (this.EnumValues.Count != other.EnumValues.Count)
+            {
+                throw new ArgumentException("the two ValueObjects do not have the same enumeration");
+            }
+            for (int idx = 0; idx < this.EnumValues.Count; idx++)
+            {
+                if (!this.EnumValues[idx].Equals(other.EnumValues[idx]))
+                {
+                    throw new ArgumentException("the two ValueObjects do not have the same enumeration");
+                }
+            }
             return SettingOption == other.SettingOption && SelectedItemIndex == other.SelectedItemIndex;
         }
 
