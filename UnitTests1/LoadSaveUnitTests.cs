@@ -65,5 +65,21 @@ namespace UnitTests1
             //ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", savePath);
             //Process.Start(info);
         }
+
+        [TestCase(0, "PrinterTestV1.0.dtc")]
+        public void LoadOldProjectFiles(int idx, string fileName)
+        {
+            string loadPath = Path.Combine(TestSupport.TestFilesDirectory, fileName);
+            string savePath = Path.Combine(TestSupport.CreatedFilesDirectory, fileName);
+            TestCasesRoot root = new TestCasesRoot();
+            root.Load(loadPath);
+
+            root.Save(savePath);
+            // only to view the diffrence
+            TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.TestFilesDirectory, Path.GetFileName(savePath));
+            Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(savePath)));
+            //ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", savePath);
+            //Process.Start(info);
+        }
     }
 }

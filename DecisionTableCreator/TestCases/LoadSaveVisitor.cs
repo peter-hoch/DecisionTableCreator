@@ -118,6 +118,7 @@ namespace DecisionTableCreator.TestCases
             xmlCondition.AddAttribute(XmlNames.IdAttributeName, condition.LoadSaveId);
             xmlCondition.AddAttribute(XmlNames.DefaultTextAttributeName, condition.DefaultText);
             xmlCondition.AddAttribute(XmlNames.DefaultBoolAttributeName, condition.DefaultBool);
+            xmlCondition.AddAttribute(XmlNames.TooltipTextAttributeName, condition.TooltipText);
             if (condition.EnumValues != null && condition.EnumValues.Count != 0)
             {
                 var xmlEnumValues = xmlCondition.AddElement(XmlNames.EnumValuesName);
@@ -164,6 +165,7 @@ namespace DecisionTableCreator.TestCases
             xmlCondition.AddAttribute(XmlNames.TypeAttributeName, action.DataType.ToString());
             xmlCondition.AddAttribute(XmlNames.DefaultTextAttributeName, action.DefaultText);
             xmlCondition.AddAttribute(XmlNames.DefaultBoolAttributeName, action.DefaultBool);
+            xmlCondition.AddAttribute(XmlNames.TooltipTextAttributeName, action.TooltipText);
             if (action.EnumValues != null && action.EnumValues.Count != 0)
             {
                 var xmlEnumValues = xmlCondition.AddElement(XmlNames.EnumValuesName);
@@ -276,6 +278,7 @@ namespace DecisionTableCreator.TestCases
             condition.LoadSaveId = element.GetAttributeIntValue(XmlNames.IdAttributeName, XmlElementOption.MustHaveValue);
             condition.DefaultText = element.GetAttributeStringValue(XmlNames.DefaultTextAttributeName, XmlElementOption.Optional);
             condition.DefaultBool = element.GetAttributeBoolValue(XmlNames.DefaultBoolAttributeName);
+            condition.TooltipText = element.GetAttributeStringValue(XmlNames.TooltipTextAttributeName);
 
             LoadEnumValues(element, condition);
         }
@@ -288,6 +291,7 @@ namespace DecisionTableCreator.TestCases
             action.LoadSaveId = element.GetAttributeIntValue(XmlNames.IdAttributeName, XmlElementOption.MustHaveValue);
             action.DefaultText = element.GetAttributeStringValue(XmlNames.DefaultTextAttributeName, XmlElementOption.Optional);
             action.DefaultBool = element.GetAttributeBoolValue(XmlNames.DefaultBoolAttributeName);
+            action.TooltipText = element.GetAttributeStringValue(XmlNames.TooltipTextAttributeName);
             LoadEnumValues(element, action);
         }
 

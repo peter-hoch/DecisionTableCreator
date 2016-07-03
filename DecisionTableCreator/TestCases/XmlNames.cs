@@ -53,6 +53,7 @@ namespace DecisionTableCreator.TestCases
         public static readonly string TypeAttributeName = "Type";
         public static readonly string DefaultTextAttributeName = "DefaultText";
         public static readonly string DefaultBoolAttributeName = "DefaultBool";
+        public static readonly string TooltipTextAttributeName = "TooltipText";
         public static readonly string BoolAttributeName = "Bool";
         public static readonly string SelectedItemIndexAttributeName = "SelectedItemIndex";
 

@@ -78,6 +78,7 @@ namespace DecisionTableCreator.TestCases
             }
             DefaultBool = clone.DefaultBool;
             Background = clone.Background;
+            TooltipText = clone.TooltipText;
 
             //EnumValues.Clear();
             while (EnumValues.Count != 0)
@@ -102,6 +103,7 @@ namespace DecisionTableCreator.TestCases
             co.DefaultBool = DefaultBool;
             co.DefaultText = DefaultText;
             co.Background = Background;
+            co.TooltipText = TooltipText;
             co.EnumValues = new ObservableCollection<EnumValue>();
             foreach (EnumValue value in EnumValues)
             {
@@ -245,6 +247,8 @@ namespace DecisionTableCreator.TestCases
                 OnPropertyChanged("TooltipText");
             }
         }
+
+        public string Comment { get { return _tooltipText;} }
 
         public List<int> ValidEnumValueIndexes
         {

@@ -16,6 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -32,11 +33,17 @@
                 <TextBox MinWidth="80" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1">
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
             <Button Margin="5" Content="Ok" MinWidth="80" Click="OnOk_OnClick" IsDefault="True"/>
             <Button Margin="5" Content="Cancel" MinWidth="80" Click="OnCancel_OnClick"/>
         </StackPanel>
-        <DataGrid Margin="10"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding EnumValues}" AutoGenerateColumns="False">
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <StackPanel Margin="10" Orientation="Horizontal">
+                <Label Content="Comment"/>
+                <TextBox MinWidth="80" Text="{Binding TooltipText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True"/>
+            </StackPanel>
+        </StackPanel>
+        <DataGrid Margin="10"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding EnumValues}" AutoGenerateColumns="False">
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="local:WpfCommands.AppendEnumValue"/>

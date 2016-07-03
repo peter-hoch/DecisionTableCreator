@@ -30,6 +30,7 @@ namespace DecisionTableCreator.TestCases
         IList<ValueObject> TestValues { get; }
         Background Background { get; }
         ObservableCollection<EnumValue> EnumValues { get; }
+        string Comment { get; }
     }
 
     public interface IValueObject

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DecisionTableCreator"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel>
+    <StackPanel ToolTip="{Binding TooltipText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
         <TextBox Text="{Binding Path=Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"
                  Background="{Binding Path=Background.WpfBrush, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             <TextBox.InputBindings>

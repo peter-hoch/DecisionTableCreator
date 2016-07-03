@@ -73,6 +73,7 @@
   <ItemGroup>
     <Folder Include="ReferenceFiles\CreateHtmlTableTest\" />
     <Folder Include="ReferenceFiles\FirstTemplateTest\" />
+    <Folder Include="TestFiles\LoadOldProjectFiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
