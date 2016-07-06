@@ -39,7 +39,7 @@ namespace DecisionTableCreator.TestCases
     {
         private ActionObject() : base()
         {
-            EditBoxName = "Edit action object";
+            EditBoxName = "Edit action";
         }
 
         public static ActionObject Create(string text, ValueDataType type)

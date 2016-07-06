@@ -34,11 +34,15 @@ Add or insert new condition - the edit condition dialog box appears
 ![](./EditCondition.png)
 ####Condition name
 The name of the condition. This name will be displayed in the main window in the conditions column.
+####Comment
+It is possibel to define a comment for this condition. This comment will be displayed as tooltip and the comment is available for code generation.
 ####Condition enum items
 #####Name
 The name of the condition enum item. This name will be displayed in the test case column.
 #####Value
 The value of the condition enum item. The value is used for code generation.
+#####Comment
+It is possibel to define a comment for this condition enum item. This comment will be displayed as tooltip and the comment is available for code generation.
 #####IsInvalid
 This check box mark this enum item as an invalid choice. It will be displayed with a diffrent color. In combination with "Is default" this will be the default enum item. An enum value with IsInvalid is not included in the coverage calculation.
 #####Don't care
@@ -55,11 +59,15 @@ Move condition or action one line up or down - the condition or action you want 
 ![](./EditAction.png)
 ####Action name
 The name of the action. This name will be displayed in the main window in the actions column.
+####Comment
+It is possibel to define a comment for this action. This comment will be displayed as tooltip and the comment is available for code generation.
 ####Action enum items
 #####Name
 The name of the action enum item. This name will be displayed in the test case column.
 #####Value
 The value of the action enum item. The value is used for code generation.
+#####Comment
+It is possibel to define a comment for this action enum item. This comment will be displayed as tooltip and the comment is available for code generation.
 #####IsInvalid
 This check box mark this enum item as an invalid choice. It will be displayed with a diffrent color. In combination with "Is default" this will be the default enum item.
 #####Is default
@@ -116,6 +124,7 @@ The root object supports the interface ITestCasesRoot
         IList<ValueObject> TestValues { get; }
         Background Background { get; }
         ObservableCollection<EnumValue> EnumValues { get; }
+        string Comment { get; }
     }
 
     public interface IValueObject
@@ -129,6 +138,7 @@ The root object supports the interface ITestCasesRoot
     {
         string Name { get; }
         String Value { get; }
+        string Comment { get; }
         bool IsDefault { get; }
         bool IsInvalid { get; }
         bool DontCare { get; }

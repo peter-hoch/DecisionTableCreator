@@ -39,7 +39,7 @@ namespace DecisionTableCreator.TestCases
     {
         private ConditionObject() : base()
         {
-            EditBoxName = "Edit condition object";
+            EditBoxName = "Edit condition";
         }
 
         public static ConditionObject Create(string name)
