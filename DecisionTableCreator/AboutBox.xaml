@@ -7,6 +7,9 @@
         xmlns:properties="clr-namespace:DecisionTableCreator.Properties"
         mc:Ignorable="d"
         Title="AboutBox" Height="250" Width="600" Icon="pack://application:,,,/DtcIcon.ico" >
+    <Window.DataContext>
+        <local:AboutBoxDataContainer/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,7 +21,7 @@
         <Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Margin="5"  Text="Decision Table Creator"/>
-        <TextBlock Grid.Row="1" Margin="5"  Text="Version 1.0"/>
+        <TextBlock Grid.Row="1" Margin="5"  Text="{Binding Version}"/>
         <TextBlock Grid.Row="2" Margin="5"  Text="Copyright (c) 2016 Peter Hoch"/>
         <TextBlock Grid.Row="3" Margin="5"  Text="License:"/>
         <ScrollViewer Grid.Row="4" Margin="5">

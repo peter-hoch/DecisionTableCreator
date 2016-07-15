@@ -66,6 +66,7 @@
     <Compile Include="AboutBox.xaml.cs">
       <DependentUpon>AboutBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AboutBoxDataContainer.cs" />
     <Compile Include="ConditionOrActionGridCellControl.xaml.cs">
       <DependentUpon>ConditionOrActionGridCellControl.xaml</DependentUpon>
     </Compile>
