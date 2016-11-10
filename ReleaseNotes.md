@@ -7,4 +7,8 @@ First release
 - Comments are available for export
 - Comments are displayed as tooltip
 
+#Version 1.2
+- Bugfix crash after insert condition and test case in some circumstances
+
+
  

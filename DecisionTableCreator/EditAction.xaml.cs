@@ -104,12 +104,14 @@ namespace DecisionTableCreator
 
         private void OnOk_OnClick(object sender, RoutedEventArgs e)
         {
+            DataContext = null;
             DialogResult = true;
             Close();
         }
 
         private void OnCancel_OnClick(object sender, RoutedEventArgs e)
         {
+            DataContext = null;
             Close();
         }
 
