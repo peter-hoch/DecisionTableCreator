@@ -58,5 +58,17 @@ namespace DecisionTableCreator.Properties {
                 this["LastFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastExportFileName {
+            get {
+                return ((string)(this["LastExportFileName"]));
+            }
+            set {
+                this["LastExportFileName"] = value;
+            }
+        }
     }
 }

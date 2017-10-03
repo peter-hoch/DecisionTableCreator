@@ -120,6 +120,14 @@ namespace DecisionTableCreator
                     menuItem.CommandParameter = fileInfo.FullName;
                     DataContainer.ExportToFileItem.Add(menuItem);
                 }
+                foreach (FileInfo fileInfo in di.GetFiles("*.stg"))
+                {
+                    MenuItem menuItem = new MenuItem();
+                    menuItem.Header = fileInfo.Name;
+                    menuItem.Command = WpfCommands.ExportToClipboardWithExternalTemplate;
+                    menuItem.CommandParameter = fileInfo.FullName;
+                    DataContainer.ExportToClipboardItem.Add(menuItem);
+                }
             }
             catch (Exception ex)
             {
@@ -1146,9 +1154,15 @@ namespace DecisionTableCreator
                     SaveFileDialog dlg = new SaveFileDialog();
                     dlg.Filter = "Text files|*.txt|Source files|*.c;*.cs;*.cpp;*.h|All files|*.*";
                     dlg.InitialDirectory = initialDirectory;
+                    string lastExportFileName = Settings.Default.LastExportFileName;
+                    if (!string.IsNullOrEmpty(lastExportFileName))
+                    {
+                        dlg.FileName = lastExportFileName;
+                    }
                     bool? result = dlg.ShowDialog(this);
                     if (result.HasValue && result.Value)
                     {
+                        Settings.Default.LastExportFileName = dlg.FileName;
                         Settings.Default.ExportDirectory = Path.GetDirectoryName(dlg.FileName);
                         StringTemplateResult templResult = null;
                         using (new WaitCursor(this))
@@ -1163,6 +1177,43 @@ namespace DecisionTableCreator
                         {
                             File.WriteAllText(dlg.FileName, templResult.GeneratedContent);
                         }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this, "File " + args.Parameter + " not found", "File not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        private void ExportToClipboardWithExternalTemplate_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                ExecutedRoutedEventArgs args = e as ExecutedRoutedEventArgs;
+                FileInfo fi = new FileInfo(e.Parameter.ToString());
+                if (fi.Exists)
+                {
+                    StringTemplateResult templResult = null;
+                    using (new WaitCursor(this))
+                    {
+                        templResult = DataContainer.TestCasesRoot.GenerateFromtemplate(fi.FullName);
+                    }
+                    if (templResult.ErrorListener.ErrorReported)
+                    {
+                        DisplayTemplateErrorMessages(templResult);
+                    }
+                    else
+                    {
+                        //PrepareForClipboard prepare = new PrepareForClipboard();
+                        //DataObject dataObject = new DataObject();
+                        //dataObject.SetData(DataFormats.Text, new MemoryStream(Encoding.UTF8.GetBytes(templResult.GeneratedContent)));
+                        //Clipboard.SetDataObject(dataObject, true);
+                        Clipboard.SetText(templResult.GeneratedContent);
                     }
                 }
                 else

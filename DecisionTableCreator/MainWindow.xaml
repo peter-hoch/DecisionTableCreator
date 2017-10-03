@@ -34,6 +34,7 @@
         <CommandBinding Command="local:WpfCommands.MoveConditionOrActionUp" Executed="MoveConditionOrActionUp_Executed" CanExecute="MoveConditionOrActionUp_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.MoveConditionOrActionDown" Executed="MoveConditionOrActionDown_Executed" CanExecute="MoveConditionOrActionDown_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.ExportToFileWithExternalTemplate" Executed="ExportToFileWithExternalTemplate_Executed" CanExecute="ExportToFileWithExternalTemplate_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.ExportToClipboardWithExternalTemplate" Executed="ExportToClipboardWithExternalTemplate_Executed" CanExecute="ExportToFileWithExternalTemplate_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.CreateSampleProject" Executed="CreateSampleProject_Executed" CanExecute="CreateSampleProject_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.Exit" Executed="Exit_Executed" CanExecute="Exit_OnCanExecute"/>
     </Window.CommandBindings>
@@ -95,9 +96,9 @@
             </MenuItem>
             <MenuItem Header="Export">
                 <MenuItem Command="local:WpfCommands.ExportToClipboard"/>
-                <MenuItem Header="External template" ItemsSource="{Binding ExportToFileItem}">
+                <MenuItem Header="External template" ItemsSource="{Binding ExportToFileItem}"/>
                     <!--<MenuItem Header="test1" Command="local:WpfCommands.ExportToFileWithExternalTemplate" CommandParameter="test"></MenuItem>-->
-                </MenuItem>
+                <MenuItem Header="External template to clipboard as text" ItemsSource="{Binding ExportToClipboardItem}"/>
             </MenuItem>
             <MenuItem Header="About" Click="About_OnClick"></MenuItem>
         </Menu>

@@ -240,6 +240,19 @@ namespace DecisionTableCreator
             }
         }
 
+        private ObservableCollection<MenuItem> _exportToClipboardItem = new ObservableCollection<MenuItem>();
+
+        public ObservableCollection<MenuItem> ExportToClipboardItem
+        {
+            get { return _exportToClipboardItem; }
+            set
+            {
+                _exportToClipboardItem = value;
+                OnPropertyChanged("ExportToClipboardItem");
+            }
+        }
+
+
         private DirtyObserver _dirtyObserver;
 
         public DirtyObserver DirtyObserver

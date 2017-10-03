@@ -63,6 +63,7 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand ExportToFileWithExternalTemplate;
         public static readonly RoutedUICommand CreateSampleProject;
         public static readonly RoutedUICommand Exit;
+        public static readonly RoutedUICommand ExportToClipboardWithExternalTemplate;
 
         static WpfCommands()
         {
@@ -97,6 +98,7 @@ namespace DecisionTableCreator
             ExportToFileWithExternalTemplate = new RoutedUICommand("Export to file with external template", "ExportToFileWithExternalTemplate", typeof(WpfCommands));
             CreateSampleProject = new RoutedUICommand("Create sample project", "CreateSampleProject", typeof(WpfCommands));
             Exit = new RoutedUICommand("Exit", "Exit", typeof(WpfCommands));
+            ExportToClipboardWithExternalTemplate = new RoutedUICommand("ExportToClipboardWithExternalTemplate", "ExportToClipboardWithExternalTemplate", typeof(WpfCommands));
         }
     }
 }
