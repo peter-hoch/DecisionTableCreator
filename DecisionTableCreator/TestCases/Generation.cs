@@ -20,6 +20,7 @@ namespace DecisionTableCreator.TestCases
     public interface ITestCase
     {
         String Name { get; }
+        int DisplayIndex { get; }
         ObservableCollection<ValueObject> Conditions { get; }
         ObservableCollection<ValueObject> Actions { get; }
     }

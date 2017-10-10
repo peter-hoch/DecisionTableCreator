@@ -37,6 +37,7 @@
         <CommandBinding Command="local:WpfCommands.ExportToClipboardWithExternalTemplate" Executed="ExportToClipboardWithExternalTemplate_Executed" CanExecute="ExportToFileWithExternalTemplate_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.CreateSampleProject" Executed="CreateSampleProject_Executed" CanExecute="CreateSampleProject_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.Exit" Executed="Exit_Executed" CanExecute="Exit_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.OpenTemplateDirectory" Executed="OpenTemplateDirectory_Executed" CanExecute="OpenTemplateDirectory_OnCanExecute"/>
     </Window.CommandBindings>
     <Window.Resources>
         <converter:CoveredTestCasesConverter x:Key="CoveredTestCasesConverter"/>
@@ -99,6 +100,7 @@
                 <MenuItem Header="External template" ItemsSource="{Binding ExportToFileItem}"/>
                     <!--<MenuItem Header="test1" Command="local:WpfCommands.ExportToFileWithExternalTemplate" CommandParameter="test"></MenuItem>-->
                 <MenuItem Header="External template to clipboard as text" ItemsSource="{Binding ExportToClipboardItem}"/>
+                <MenuItem Command="local:WpfCommands.OpenTemplateDirectory" />
             </MenuItem>
             <MenuItem Header="About" Click="About_OnClick"></MenuItem>
         </Menu>

@@ -64,6 +64,8 @@ namespace DecisionTableCreator
         DispatcherTimer _timer;
         public bool CalculateStatistics { get; set; }
 
+        public const string DecisionTableCreatorTemplatesDirectoryName = "DecisionTableCreatorTemplates";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -102,7 +104,7 @@ namespace DecisionTableCreator
         {
             try
             {
-                DirectoryInfo di = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "DecisionTableCreatorTemplates"));
+                DirectoryInfo di = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), DecisionTableCreatorTemplatesDirectoryName));
                 if (!di.Exists)
                 {
                     di.Create();
@@ -1391,5 +1393,21 @@ namespace DecisionTableCreator
             return true;
         }
 
+        private void OpenTemplateDirectory_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void OpenTemplateDirectory_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), DecisionTableCreatorTemplatesDirectoryName));
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
     }
 }
