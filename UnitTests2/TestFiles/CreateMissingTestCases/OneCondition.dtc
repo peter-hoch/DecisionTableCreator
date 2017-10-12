@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DecisionTableRoot>
+  <Conditions>
+    <Condition Name="C1" Type="Enumeration" LoadSaveId="1" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="C1-V1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C1-V2" IsDefault="False" IsInvalid="False" DontCare="False" />
+      </EnumValues>
+    </Condition>
+  </Conditions>
+  <Actions />
+  <TestCases />
+</DecisionTableRoot>

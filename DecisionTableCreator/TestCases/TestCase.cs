@@ -273,7 +273,7 @@ namespace DecisionTableCreator.TestCases
         /// <param name="tc1"></param>
         /// <param name="tc2"></param>
         /// <returns></returns>
-        static bool TestSettingIsEqual(TestCase tc1, TestCase tc2)
+        public static bool TestSettingIsEqual(TestCase tc1, TestCase tc2)
         {
             if (tc1.Conditions.Count != tc2.Conditions.Count)
             {

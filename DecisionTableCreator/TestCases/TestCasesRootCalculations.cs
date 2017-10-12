@@ -69,7 +69,7 @@ namespace DecisionTableCreator.TestCases
                 TestCaseCreator creator = new TestCaseCreator();
                 creator.CreateMissingTestCases(this);
 
-                List<TestCase> missingTestCases = creator.CreatedTestCases;
+                List<TestCase> missingTestCases = creator.FilterForMissingTestCases(existingTestCases);
 
                 foreach (TestCase tc in missingTestCases)
                 {

@@ -87,7 +87,40 @@ namespace DecisionTableCreator.TestCases
                 value.ConditionOrActionParent = pair.Value;
                 newTestCase.Conditions.Add(value);
             }
+            foreach (ActionObject action in TestCasesRoot.Actions)
+            {
+                ValueObject value = new ValueObject(action.EnumValues);
+                value.ConditionOrActionParent = action;
+                value.CalculateAndSetDefaultIndex();
+                newTestCase.Actions.Add(value);
+            }
             CreatedTestCases.Add(newTestCase);
+        }
+
+        internal List<TestCase> FilterForMissingTestCases(List<TestCase> existingTestCases)
+        {
+            List<TestCase> missingTestCases = new List<TestCase>(CreatedTestCases);
+            foreach (TestCase exTc in existingTestCases)
+            {
+                DeleteExistingTestCaseInMissingTestCases(exTc, missingTestCases);
+            }
+
+            return missingTestCases;
+        }
+
+        private void DeleteExistingTestCaseInMissingTestCases(TestCase exTc, List<TestCase> missingTestCases)
+        {
+            for (int idx = 0; idx < missingTestCases.Count; idx++)
+            {
+                if (TestCase.TestSettingIsEqual(exTc, missingTestCases[idx]))
+                {
+                    if (!missingTestCases.Remove(missingTestCases[idx]))
+                    {
+                        throw new Exception("internal error");
+                    }
+                    return;
+                }
+            }
         }
     }
 }

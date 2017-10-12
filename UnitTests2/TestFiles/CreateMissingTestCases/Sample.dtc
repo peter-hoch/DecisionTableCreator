@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DecisionTableRoot>
+  <Conditions>
+    <Condition Name="Basic Printer status" Type="Enumeration" LoadSaveId="1" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="invalid condition" Value="value-invalid condition" IsDefault="True" IsInvalid="True" DontCare="False" TooltipText="this is an invalid condition please choose an other value" />
+        <EnumValue Name="Printer is printing" Value="value-Printer is printing" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="everything is ok" />
+        <EnumValue Name="Printer is not printing" Value="value-Printer is not printing" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="problems with printing or printing quality" />
+        <EnumValue Name="DC" Value="value-DC" IsDefault="False" IsInvalid="False" DontCare="True" TooltipText="don't care this condition in this case" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Green LED" Type="Enumeration" LoadSaveId="2" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="invalid condition" Value="value-invalid condition" IsDefault="True" IsInvalid="True" DontCare="False" TooltipText="this is an invalid condition please choose an other value" />
+        <EnumValue Name="LED is on" Value="value-LED is on" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Power LED is on" />
+        <EnumValue Name="LED is flashing" Value="value-LED is flashing" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Power LED is flashing" />
+        <EnumValue Name="LED is off" Value="value-LED is off" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Power LED is off" />
+        <EnumValue Name="DC" Value="value-DC" IsDefault="False" IsInvalid="False" DontCare="True" TooltipText="don't care this condition in this case" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Paper" Type="Enumeration" LoadSaveId="3" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="invalid condition" Value="value-invalid condition" IsDefault="True" IsInvalid="True" DontCare="False" TooltipText="this is an invalid condition please choose an other value" />
+        <EnumValue Name="Blank sheet is ejected" Value="value-Blank sheet is ejected" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Printer ejects only blank sheets" />
+        <EnumValue Name="Print quality is bad" Value="value-Print quality is bad" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Printer output has bad quality" />
+        <EnumValue Name="Nothing is ejected" Value="value-Nothing is ejected" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Printer don't eject a sheet" />
+        <EnumValue Name="DC" Value="value-DC" IsDefault="False" IsInvalid="False" DontCare="True" TooltipText="don't care this condition in this case" />
+      </EnumValues>
+    </Condition>
+  </Conditions>
+  <Actions>
+    <Action LoadSaveId="1000" Name="Power" Type="Enumeration" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Value="value-" IsDefault="True" IsInvalid="False" DontCare="False" TooltipText="nothing to do" />
+        <EnumValue Name="Check connection" Value="value-Check connection" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Check the printer power connection" />
+      </EnumValues>
+    </Action>
+    <Action LoadSaveId="1001" Name="Ink catridge" Type="Enumeration" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Value="value-" IsDefault="True" IsInvalid="False" DontCare="False" TooltipText="nothing to do" />
+        <EnumValue Name="Check filling level" Value="value-Check filling level" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Check the fill level of the ink cartridges" />
+      </EnumValues>
+    </Action>
+    <Action LoadSaveId="1002" Name="PC connection" Type="Enumeration" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Value="value-" IsDefault="True" IsInvalid="False" DontCare="False" TooltipText="nothing to do" />
+        <EnumValue Name="Check connection" Value="value-Check connection" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Check the printer computer connection" />
+      </EnumValues>
+    </Action>
+    <Action LoadSaveId="1003" Name="Paper" Type="Enumeration" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Value="value-" IsDefault="True" IsInvalid="False" DontCare="False" TooltipText="nothing to do" />
+        <EnumValue Name="Check paper filling level" Value="value-Check paper filling level" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Does the printer contain enough paper?" />
+        <EnumValue Name="Check for clean (unused) paper" Value="value-Check for clean (unused) paper" IsDefault="False" IsInvalid="False" DontCare="False" TooltipText="Does the printer contain blank paper?" />
+      </EnumValues>
+    </Action>
+  </Actions>
+  <TestCases>
+    <TestCase Name="TC1">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="4" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="4" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+      </TestCaseActions>
+    </TestCase>
+    <TestCase Name="TC2">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="4" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+      </TestCaseActions>
+    </TestCase>
+    <TestCase Name="TC3">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="4" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+      </TestCaseActions>
+    </TestCase>
+  </TestCases>
+</DecisionTableRoot>

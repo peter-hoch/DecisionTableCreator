@@ -150,8 +150,6 @@ namespace UnitTests2
         [Test]
         public void CreateAllTestCases1()
         {
-            string testResult = Path.Combine(TestSupport.CreatedFilesDirectory, "TestResult.txt");
-
             TestCasesRoot tcr = new TestCasesRoot();
             tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-1", 4, 0, 0, 3)));
 
@@ -161,8 +159,6 @@ namespace UnitTests2
         [Test]
         public void CreateAllTestCases2()
         {
-            string testResult = Path.Combine(TestSupport.CreatedFilesDirectory, "TestResult.txt");
-
             TestCasesRoot tcr = new TestCasesRoot();
             tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-1", 4, 0, 0, 3)));
             tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-2", 4, 0, 0, 3)));
@@ -173,8 +169,6 @@ namespace UnitTests2
         [Test]
         public void CreateAllTestCases3()
         {
-            string testResult = Path.Combine(TestSupport.CreatedFilesDirectory, "TestResult.txt");
-
             TestCasesRoot tcr = new TestCasesRoot();
             tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-1", 4, 0, 0, 3)));
             tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-2", 4, 0, 0, 3)));
@@ -187,8 +181,6 @@ namespace UnitTests2
         [Test]
         public void CreateAllTestCases4()
         {
-            string testResult = Path.Combine(TestSupport.CreatedFilesDirectory, "TestResult.txt");
-
             TestCasesRoot tcr = new TestCasesRoot();
             tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-1", 4, 0, 0, 3)));
             tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-2", 4, 0, 0, 3)));
@@ -226,6 +218,7 @@ namespace UnitTests2
 
 
         }
+
 
 
         [TestCase(1, 1, 2, 2, true)]
@@ -466,6 +459,53 @@ namespace UnitTests2
             Assert.That(TestSupport.CompareFile(TestSupport.CreatedFilesDirectory, TestSupport.ReferenceFilesDirectory, Path.GetFileName(testOutput)));
             Assert.That(statistics.CoveredTestCases == result.Count);
         }
+
+
+        [TestCase(100, "EmptyProject.dtc", 0)]
+        [TestCase(110, "OneCondition.dtc", 2)]
+        [TestCase(120, "Sample.dtc", 6)]
+        public void CreateMissingTestCases(int idx, string fileName, int expectedTestCasesCount)
+        {
+            string testOutput = Path.Combine(TestSupport.CreatedFilesDirectory, fileName + ".Output.txt");
+
+            string source = Path.Combine(TestSupport.TestFilesDirectory, fileName);
+            string target = Path.Combine(TestSupport.CreatedFilesDirectory, fileName);
+            TestCasesRoot tcr = new TestCasesRoot();
+            tcr.Load(source);
+
+            StringBuilder sb = new StringBuilder();
+            foreach (TestCase tc in tcr.TestCases)
+            {
+                DumpTestCase(sb, tc);
+                sb.AppendLine();
+            }
+
+            tcr.CalculateMissingTestCases();
+
+            sb.AppendLine("After calculation");
+            foreach (TestCase tc in tcr.TestCases)
+            {
+                DumpTestCase(sb, tc);
+                sb.AppendLine();
+            }
+            File.WriteAllText(testOutput, sb.ToString());
+            ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", testOutput);
+            Process.Start(info);
+
+            tcr.Save(target);
+
+            var statistics = tcr.CalculateStatistics();
+
+            if (tcr.TestCases.Count > 0)
+            {
+                Assert.IsTrue( statistics.Coverage >= 99.9);
+            }
+            Assert.IsTrue(tcr.TestCases.Count == expectedTestCasesCount);
+
+            TestUtils.CheckTestCasesAndConditionsAndActions(tcr);
+        }
+
+
 
         void DumpTestCase(StringBuilder sb, ITestCase tc)
         {
