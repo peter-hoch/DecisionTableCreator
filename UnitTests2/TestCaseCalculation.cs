@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -128,7 +129,7 @@ namespace UnitTests2
             {
                 File.AppendAllText(testSettingPath, String.Format("{0}" + Environment.NewLine, tcr.TestCases[idx]));
             }
-            File.AppendAllText(testSettingPath, Environment.NewLine+ Environment.NewLine);
+            File.AppendAllText(testSettingPath, Environment.NewLine + Environment.NewLine);
 
             ExpandTestCases expand = new ExpandTestCases();
             var expandedTestCases = expand.Expand(tcr);
@@ -144,6 +145,86 @@ namespace UnitTests2
             Assert.That(stat.Coverage <= maxExpectedCoverage);
             Assert.That(stat.CoveredTestCases == expectedUniqueTestCases);
             Assert.That(stat.PossibleCombinations == expectedCombinations);
+        }
+
+        [Test]
+        public void CreateAllTestCases1()
+        {
+            string testResult = Path.Combine(TestSupport.CreatedFilesDirectory, "TestResult.txt");
+
+            TestCasesRoot tcr = new TestCasesRoot();
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-1", 4, 0, 0, 3)));
+
+            CreateAllTestCases(tcr, 2);
+        }
+
+        [Test]
+        public void CreateAllTestCases2()
+        {
+            string testResult = Path.Combine(TestSupport.CreatedFilesDirectory, "TestResult.txt");
+
+            TestCasesRoot tcr = new TestCasesRoot();
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-1", 4, 0, 0, 3)));
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-2", 4, 0, 0, 3)));
+
+            CreateAllTestCases(tcr, 4);
+        }
+
+        [Test]
+        public void CreateAllTestCases3()
+        {
+            string testResult = Path.Combine(TestSupport.CreatedFilesDirectory, "TestResult.txt");
+
+            TestCasesRoot tcr = new TestCasesRoot();
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-1", 4, 0, 0, 3)));
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-2", 4, 0, 0, 3)));
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-3", 4, 0, 0, 3)));
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-4", 1, 0, 0, -1)));
+
+            CreateAllTestCases(tcr, 8);
+        }
+
+        [Test]
+        public void CreateAllTestCases4()
+        {
+            string testResult = Path.Combine(TestSupport.CreatedFilesDirectory, "TestResult.txt");
+
+            TestCasesRoot tcr = new TestCasesRoot();
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-1", 4, 0, 0, 3)));
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-2", 4, 0, 0, 3)));
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-3", 1, 0, 0, -1)));
+            tcr.Conditions.Add(ConditionObject.Create("name", TestCasesRoot.CreateSampleEnum("name-4", 4, 0, 0, -1)));
+
+            CreateAllTestCases(tcr, 2*2*3);
+        }
+
+        public void CreateAllTestCases(TestCasesRoot tcr, int expectedCount)
+        {
+            string testResult = Path.Combine(TestSupport.CreatedFilesDirectory, "TestResult.txt");
+
+            long result = tcr.CalculatePossibleCombinations();
+            Assert.That(result == expectedCount);
+
+            TestCaseCreator creator = new TestCaseCreator();
+            creator.CreateMissingTestCases(tcr);
+
+            List<TestCase> missingTestCases = creator.CreatedTestCases;
+
+            StringBuilder sb = new StringBuilder();
+            foreach (TestCase tc in creator.CreatedTestCases)
+            {
+                sb.AppendLine(TestUtils.TestCaseToString(tc));
+            }
+            File.WriteAllText(testResult, sb.ToString());
+            Process.Start(testResult);
+
+            Assert.IsTrue(missingTestCases.Count == result);
+            foreach (TestCase tc in missingTestCases)
+            {
+                Assert.IsTrue(tc.Conditions.Count == tcr.Conditions.Count);
+            }
+
+
         }
 
 

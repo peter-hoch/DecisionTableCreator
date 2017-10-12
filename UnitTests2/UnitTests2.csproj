@@ -61,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestFiles\CalculateCoverage\AnotherProject.dtc" />
+    <None Include="TestFiles\CalculateCoverage\CoverageTest.dtc" />
+    <None Include="TestFiles\CalculateCoverage\Sample.dtc" />
     <None Include="TestFiles\ExpandTestcases\ExpandTest5.dtc" />
     <None Include="TestFiles\ExpandTestcases\ExpandTest4.dtc" />
     <None Include="TestFiles\ExpandTestcases\ExpandTest3.dtc" />
@@ -80,9 +83,7 @@
   <ItemGroup>
     <None Include="TestFiles\AddTestCaseTemplate.stg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestFiles\CalculateCoverage\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

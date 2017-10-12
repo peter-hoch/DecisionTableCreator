@@ -149,5 +149,19 @@ namespace UnitTests2
                 }
             }
         }
+
+        public static string TestCaseToString(TestCase tc)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (ValueObject cond in tc.Conditions)
+            {
+                sb.AppendFormat("{1}({0})  ", cond.Value, cond.ConditionOrActionParent.Name);
+            }
+            foreach (ValueObject cond in tc.Actions)
+            {
+                sb.AppendFormat("{1}({0})  ", cond.Value, cond.ConditionOrActionParent.Name);
+            }
+            return sb.ToString();
+        }
     }
 }

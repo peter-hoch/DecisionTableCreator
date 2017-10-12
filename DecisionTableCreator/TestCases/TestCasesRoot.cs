@@ -207,6 +207,8 @@ namespace DecisionTableCreator.TestCases
             return tc;
         }
 
+
+
         private void UpdateDisplayIndex(ObservableCollection<TestCase> testCases)
         {
             for (int idx = 0; idx < testCases.Count; idx++)

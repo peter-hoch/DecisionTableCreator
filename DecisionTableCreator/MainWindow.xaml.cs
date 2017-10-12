@@ -1409,5 +1409,23 @@ namespace DecisionTableCreator
                 ShowAndLogMessage("exception caught", ex);
             }
         }
+
+        private void CreateMissingTestCases_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CreateMissingTestCases_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+               DataContainer.TestCasesRoot.CalculateMissingTestCases();
+
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
     }
 }

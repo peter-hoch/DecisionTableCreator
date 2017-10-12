@@ -58,6 +58,55 @@ namespace DecisionTableCreator.TestCases
             return stat;
         }
 
+        public bool CalculateMissingTestCases()
+        {
+            var possibleCombinations = CalculatePossibleCombinations();
+            if (possibleCombinations < 1000)
+            {
+                ExpandTestCases expand = new ExpandTestCases();
+                List<TestCase> existingTestCases = expand.Expand(this);
+
+                TestCaseCreator creator = new TestCaseCreator();
+                creator.CreateMissingTestCases(this);
+
+                List<TestCase> missingTestCases = creator.CreatedTestCases;
+
+                foreach (TestCase tc in missingTestCases)
+                {
+                    AppendMissingTestCase(tc);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private void AppendMissingTestCase(TestCase tc)
+        {
+            int index = CalculateNextTestCaseId();
+            string name = String.Format("TC{0}", index);
+            tc.Name = name;
+            TestCases.Add(tc);
+            tc.DisplayIndex = TestCases.Count; // displayindex includes first column action or condition
+
+            //AddValueObjects(tc, Conditions, TestCase.CollectionType.Conditions);
+            //AddValueObjects(tc, Actions, TestCase.CollectionType.Actions);
+
+            ConditionTable.Columns.Clear();
+            ActionTable.Columns.Clear();
+            CreateBasicColumnDescriptions();
+            AddColumnDescriptionsForTestCases();
+
+            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
+            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
+            FireActionsChanged();
+            ProcessConditionsChanged();
+
+        }
+
+
+
         public long CalculatePossibleCombinations()
         {
             if (Conditions.Count == 0)
