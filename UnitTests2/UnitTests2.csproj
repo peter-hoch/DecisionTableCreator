@@ -64,6 +64,11 @@
     <None Include="TestFiles\CalculateCoverage\AnotherProject.dtc" />
     <None Include="TestFiles\CalculateCoverage\CoverageTest.dtc" />
     <None Include="TestFiles\CalculateCoverage\Sample.dtc" />
+    <None Include="TestFiles\CreateMissingTestCases\EmptyProject.dtc" />
+    <None Include="TestFiles\CreateMissingTestCases\OneCondition.dtc" />
+    <None Include="TestFiles\CreateMissingTestCases\Sample.dtc" />
+    <None Include="TestFiles\CreateMissingTestCases\TestProject1.dtc" />
+    <None Include="TestFiles\CreateMissingTestCases\TestProjectEmpty.dtc" />
     <None Include="TestFiles\ExpandTestcases\ExpandTest5.dtc" />
     <None Include="TestFiles\ExpandTestcases\ExpandTest4.dtc" />
     <None Include="TestFiles\ExpandTestcases\ExpandTest3.dtc" />

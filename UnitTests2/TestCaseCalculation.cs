@@ -464,6 +464,8 @@ namespace UnitTests2
         [TestCase(100, "EmptyProject.dtc", 0)]
         [TestCase(110, "OneCondition.dtc", 2)]
         [TestCase(120, "Sample.dtc", 6)]
+        [TestCase(130, "TestProjectEmpty.dtc", 40)]
+        [TestCase(140, "TestProject1.dtc", 36)]
         public void CreateMissingTestCases(int idx, string fileName, int expectedTestCasesCount)
         {
             string testOutput = Path.Combine(TestSupport.CreatedFilesDirectory, fileName + ".Output.txt");
