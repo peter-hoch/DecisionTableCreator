@@ -39,12 +39,14 @@ namespace DecisionTableCreator.TestCases
 {
     public partial class TestCasesRoot
     {
+        public const int MaxPossibleCombinations = 1000;
+
         public Statistics CalculateStatistics()
         {
             Statistics stat = new Statistics();
 
             stat.PossibleCombinations = CalculatePossibleCombinations();
-            if (stat.PossibleCombinations < 1000)
+            if (stat.PossibleCombinations < MaxPossibleCombinations)
             {
                 stat.CoveredTestCases = CalculateNumberOfUniqueCoveredTestCases();
                 stat.Coverage = (double)stat.CoveredTestCases / stat.PossibleCombinations * 100.0;
@@ -61,7 +63,7 @@ namespace DecisionTableCreator.TestCases
         public bool CalculateMissingTestCases()
         {
             var possibleCombinations = CalculatePossibleCombinations();
-            if (possibleCombinations < 1000)
+            if (possibleCombinations < MaxPossibleCombinations)
             {
                 ExpandTestCases expand = new ExpandTestCases();
                 List<TestCase> existingTestCases = expand.Expand(this);

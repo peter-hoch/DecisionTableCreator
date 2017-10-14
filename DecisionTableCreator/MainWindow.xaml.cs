@@ -36,6 +36,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -694,17 +695,17 @@ namespace DecisionTableCreator
         /// <returns>true id successfully saved</returns>
         private bool SaveProject()
         {
-            FileInfo fi = new FileInfo(DataContainer.ProjectPath);
-            if (fi.Exists)
+            if (!string.IsNullOrEmpty(DataContainer.ProjectPath))
             {
-                DataContainer.TestCasesRoot.Save(DataContainer.ProjectPath);
-                DataContainer.ResetDirty();
-                return true;
+                FileInfo fi = new FileInfo(DataContainer.ProjectPath);
+                if (fi.Exists)
+                {
+                    DataContainer.TestCasesRoot.Save(DataContainer.ProjectPath);
+                    DataContainer.ResetDirty();
+                    return true;
+                }
             }
-            else
-            {
-                return SaveAsProject();
-            }
+            return SaveAsProject();
         }
 
         private void Save_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -754,6 +755,7 @@ namespace DecisionTableCreator
             {
                 if (CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave())
                 {
+                    DataContainer.ProjectPath = "";
                     DataContainer.TestCasesRoot.New();
                 }
 
@@ -1419,7 +1421,12 @@ namespace DecisionTableCreator
         {
             try
             {
-               DataContainer.TestCasesRoot.CalculateMissingTestCases();
+
+                DateTime start = DateTime.Now;
+                Trace.WriteLine(start.ToString());
+                DataContainer.TestCasesRoot.CalculateMissingTestCases();
+                Thread.Sleep(1000);
+                Trace.WriteLine((DateTime.Now-start).ToString());
 
             }
             catch (Exception ex)

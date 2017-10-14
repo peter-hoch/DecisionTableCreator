@@ -39,6 +39,7 @@ namespace DecisionTableCreator.TestCases
         ObservableCollection<EnumValue> EnumValues { get; }
         Background Background { get; }
         object Value { get; }
+        IConditionAction ConditionOrActionParent { get; }
     }
 
     public interface IEnumValue

@@ -14,4 +14,6 @@ First release
 - Remember the file name of last export 
 - New menu command "external template to clipboard as text". A way to generate TestCase attributes for NUnit into the clipboard
 - New command open template folder
+- Create missing test cases
+- Bugfix clear project name in command: File - New
  
