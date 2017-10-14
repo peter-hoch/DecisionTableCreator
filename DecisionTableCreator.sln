@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecisionTableCreator", "DecisionTableCreator\DecisionTableCreator.csproj", "{42444D72-3E56-4BD6-9CC0-5E674F1BD693}"
 EndProject
@@ -12,8 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests2", "UnitTests2\UnitTests2.csproj", "{D7F7EC5A-6426-41D9-A4E2-C1FCEB1B6531}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UiTest", "UiTest\UiTest.csproj", "{8441B507-73C7-409F-9A26-BF1C6BF1C211}"
-EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "DecisionTableCreatorSetup", "DecisionTableCreatorSetup\DecisionTableCreatorSetup.wixproj", "{5B723227-0992-4B1F-9CA3-897A0D741FD1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FF139752-D21F-42EA-88EE-48F5A7128823}"
 	ProjectSection(SolutionItems) = preProject
@@ -97,17 +95,6 @@ Global
 		{8441B507-73C7-409F-9A26-BF1C6BF1C211}.Release|Win32.ActiveCfg = Release|Any CPU
 		{8441B507-73C7-409F-9A26-BF1C6BF1C211}.Release|x86.ActiveCfg = Release|Any CPU
 		{8441B507-73C7-409F-9A26-BF1C6BF1C211}.Release|x86.Build.0 = Release|Any CPU
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Debug|Win32.ActiveCfg = Debug|x86
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Debug|x86.ActiveCfg = Debug|x86
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Debug|x86.Build.0 = Debug|x86
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Release|Any CPU.ActiveCfg = Release|x86
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Release|Any CPU.Build.0 = Release|x86
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Release|Win32.ActiveCfg = Release|x86
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Release|x86.ActiveCfg = Release|x86
-		{5B723227-0992-4B1F-9CA3-897A0D741FD1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
