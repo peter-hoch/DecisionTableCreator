@@ -39,7 +39,9 @@ namespace DecisionTableCreator.TestCases
 {
     public partial class TestCasesRoot
     {
-        public const int MaxPossibleCombinations = 1000;
+        public const int MaxPossibleCombinations = 1001;
+
+        public bool CreateMissingTestcasesPossible { get; private set; }
 
         public Statistics CalculateStatistics()
         {
@@ -50,12 +52,13 @@ namespace DecisionTableCreator.TestCases
             {
                 stat.CoveredTestCases = CalculateNumberOfUniqueCoveredTestCases();
                 stat.Coverage = (double)stat.CoveredTestCases / stat.PossibleCombinations * 100.0;
-
+                CreateMissingTestcasesPossible = true;
             }
             else
             {
                 stat.CoveredTestCases = -1;
                 stat.Coverage = -1;
+                CreateMissingTestcasesPossible = false;
             }
             return stat;
         }
@@ -72,11 +75,7 @@ namespace DecisionTableCreator.TestCases
                 creator.CreateMissingTestCases(this);
 
                 List<TestCase> missingTestCases = creator.FilterForMissingTestCases(existingTestCases);
-
-                foreach (TestCase tc in missingTestCases)
-                {
-                    AppendMissingTestCase(tc);
-                }
+                AddMissingTestCases(missingTestCases);
 
                 return true;
             }
@@ -84,19 +83,16 @@ namespace DecisionTableCreator.TestCases
             return false;
         }
 
-        private void AppendMissingTestCase(TestCase tc)
+        void AddMissingTestCases(List<TestCase> missingTestCases)
         {
-            int index = CalculateNextTestCaseId();
-            string name = String.Format("TC{0}", index);
-            tc.Name = name;
-            TestCases.Add(tc);
-            tc.DisplayIndex = TestCases.Count; // displayindex includes first column action or condition
-
-            //AddValueObjects(tc, Conditions, TestCase.CollectionType.Conditions);
-            //AddValueObjects(tc, Actions, TestCase.CollectionType.Actions);
-
             ConditionTable.Columns.Clear();
             ActionTable.Columns.Clear();
+
+            foreach (TestCase tc in missingTestCases)
+            {
+                AppendTestCase(tc);
+            }
+
             CreateBasicColumnDescriptions();
             AddColumnDescriptionsForTestCases();
 
@@ -104,6 +100,17 @@ namespace DecisionTableCreator.TestCases
             PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
             FireActionsChanged();
             ProcessConditionsChanged();
+
+        }
+
+
+        private void AppendTestCase(TestCase tc)
+        {
+            int index = CalculateNextTestCaseId();
+            string name = String.Format("TC{0}", index);
+            tc.Name = name;
+            TestCases.Add(tc);
+            tc.DisplayIndex = TestCases.Count; // displayindex includes first column action or condition
 
         }
 

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DecisionTableRoot>
+  <Conditions>
+    <Condition Name="C1" Type="Enumeration" LoadSaveId="1" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="C1-V1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C1-V2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C1-V3" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C1-V4" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C1-V5" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C1-V6" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C1-V7" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C1-V8" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C1-V9" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C1-V10" IsDefault="False" IsInvalid="False" DontCare="False" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="C2" Type="Enumeration" LoadSaveId="2" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="C2-V1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C2-V2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C2-V3" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C2-V4" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C2-V5" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C2-V6" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C2-V7" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C2-V8" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C2-V9" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="C2-V10" IsDefault="False" IsInvalid="False" DontCare="False" />
+      </EnumValues>
+    </Condition>
+  </Conditions>
+  <Actions />
+  <TestCases/>
+</DecisionTableRoot>

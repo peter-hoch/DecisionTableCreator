@@ -1414,7 +1414,10 @@ namespace DecisionTableCreator
 
         private void CreateMissingTestCases_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            if (DataContainer != null && DataContainer.TestCasesRoot != null)
+            {
+                e.CanExecute = DataContainer.TestCasesRoot.CreateMissingTestcasesPossible;
+            }
         }
 
         private void CreateMissingTestCases_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -1424,8 +1427,9 @@ namespace DecisionTableCreator
 
                 DateTime start = DateTime.Now;
                 Trace.WriteLine(start.ToString());
+
                 DataContainer.TestCasesRoot.CalculateMissingTestCases();
-                Thread.Sleep(1000);
+
                 Trace.WriteLine((DateTime.Now-start).ToString());
 
             }

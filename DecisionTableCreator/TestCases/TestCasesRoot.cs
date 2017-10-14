@@ -162,8 +162,15 @@ namespace DecisionTableCreator.TestCases
 
         int CalculateNextTestCaseId()
         {
+            if (TestCases == null)
+            {
+                return 1;
+            }
+            return TestCases.Count + 1;
+
             int nextId = 0;
 
+            //TODO
             foreach (TestCase testCase in TestCases)
             {
                 Regex regex = new Regex(@"^TC(?<value>\d+)$");
