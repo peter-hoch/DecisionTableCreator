@@ -160,21 +160,16 @@ namespace DecisionTableCreator.TestCases
         }
 
 
+        static Regex _regexNextTestCaseId = new Regex(@"^TC(?<value>\d+)$", RegexOptions.Compiled);
+
         int CalculateNextTestCaseId()
         {
-            if (TestCases == null)
-            {
-                return 1;
-            }
-            return TestCases.Count + 1;
 
             int nextId = 0;
 
-            //TODO
             foreach (TestCase testCase in TestCases)
             {
-                Regex regex = new Regex(@"^TC(?<value>\d+)$");
-                var match = regex.Match(testCase.Name);
+                var match = _regexNextTestCaseId.Match(testCase.Name);
                 if (match.Success)
                 {
                     int id = int.Parse(match.Groups["value"].Value);
