@@ -208,7 +208,7 @@ namespace UnitTests2
                 sb.AppendLine(TestUtils.TestCaseToString(tc));
             }
             File.WriteAllText(testResult, sb.ToString());
-            Process.Start(testResult);
+            //Process.Start(testResult);
 
             Assert.IsTrue(missingTestCases.Count == result);
             foreach (TestCase tc in missingTestCases)
@@ -492,7 +492,7 @@ namespace UnitTests2
             }
             File.WriteAllText(testOutput, sb.ToString());
             ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", testOutput);
-            Process.Start(info);
+            //Process.Start(info);
 
             tcr.Save(target);
 
