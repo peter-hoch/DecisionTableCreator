@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -42,9 +43,20 @@ namespace DecisionTableCreator
     /// </summary>
     public partial class App : Application
     {
+        public static string FilePathFromCommandLine = null;
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+            if (e.Args.Length > 0)
+            {
+                FileInfo    fi = new FileInfo(e.Args[0]);
+                if (fi.Exists)
+                {
+                    FilePathFromCommandLine = e.Args[0];
+                }
+            }
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

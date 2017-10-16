@@ -16,4 +16,7 @@ First release
 - New command open template folder
 - Create missing test cases
 - Bugfix clear project name in command: File - New
- 
+
+#Version 1.4
+- file extension dtc will be registered during setup
+

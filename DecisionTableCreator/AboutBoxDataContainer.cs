@@ -13,7 +13,7 @@ namespace DecisionTableCreator
         public AboutBoxDataContainer()
         {
             var ver = Assembly.GetExecutingAssembly().GetName().Version;
-            _version = String.Format("Version {0}.{1}", ver.Major, ver.Minor);
+            _version = String.Format("Version {0}.{1}.{2}", ver.Major, ver.Minor, ver.Build);
         }
 
         private string _version;

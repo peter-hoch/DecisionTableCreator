@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="DecisionTableCreatorSetup" Language="1033" Version="1.3.0.0" Manufacturer="Peter Hoch" UpgradeCode="{BD6FE505-0561-4F81-9E5F-57ADE1829F26}">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+  <Product Id="*" Name="DecisionTableCreatorSetup" Language="1033" Version="1.4.0.0" Manufacturer="Peter Hoch" UpgradeCode="{BD6FE505-0561-4F81-9E5F-57ADE1829F26}">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of Decision Table Creator is already installed." />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Decision Table Creator is already installed." />
 
-    <MediaTemplate />
+    <Media Id="1" Cabinet="CabFileName.cab" EmbedCab="yes" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
@@ -22,6 +22,11 @@
       <Component Id="ProductComponent" Guid="{6DD0F896-9DEF-4F1D-9D34-BA418B28F81F}">
         <File Id="ExeFile" Source="$(var.DecisionTableCreator.TargetPath)" KeyPath="yes" Checksum="yes"/>
         <File Id="StringTemplate" Source="$(var.DecisionTableCreator.TargetDir)Antlr4.StringTemplate.dll" Checksum="yes"/>
+        <ProgId Id='ExeFile.ProgId' Description='Decision Table Creator file' Advertise='yes'>
+          <Extension Id='dtc' ContentType='application/dtc'>
+            <Verb Id='open' Sequence='10' Command='Open' Argument='"%1"' />
+          </Extension>
+        </ProgId>
       </Component>
     </DirectoryRef>
 

@@ -80,11 +80,21 @@ namespace DecisionTableCreator
             DataContainer.QuitEditMode += DataContainerOnQuitEditMode;
             try
             {
-                if (!String.IsNullOrEmpty(Settings.Default.LastFile))
+                if (string.IsNullOrEmpty(App.FilePathFromCommandLine))
                 {
-                    if (File.Exists(Settings.Default.LastFile))
+                    if (!String.IsNullOrEmpty(Settings.Default.LastFile))
                     {
-                        LoadFile(Settings.Default.LastFile);
+                        if (File.Exists(Settings.Default.LastFile))
+                        {
+                            LoadFile(Settings.Default.LastFile);
+                        }
+                    }
+                }
+                else
+                {
+                    if (File.Exists(App.FilePathFromCommandLine))
+                    {
+                        LoadFile(App.FilePathFromCommandLine);
                     }
                 }
             }
@@ -1430,7 +1440,7 @@ namespace DecisionTableCreator
 
                 DataContainer.TestCasesRoot.CalculateMissingTestCases();
 
-                Trace.WriteLine((DateTime.Now-start).ToString());
+                Trace.WriteLine((DateTime.Now - start).ToString());
 
             }
             catch (Exception ex)
