@@ -64,6 +64,20 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
+
+        private string _description;
+
+        [ObserveForDirty]
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
+                OnPropertyChanged("Description");
+            }
+        }
+
         private ObservableCollection<TestCase> _testCases;
 
         [ObserveForDirty]

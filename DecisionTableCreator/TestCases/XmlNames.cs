@@ -37,6 +37,7 @@ namespace DecisionTableCreator.TestCases
     public class XmlNames
     {
         public static readonly string DecisionTableRootName = "DecisionTableRoot";
+        public static readonly string DescriptonName = "Description";
         public static readonly string ConditionsName = "Conditions";
         public static readonly string ActionsName = "Actions";
         public static readonly string ConditionName = "Condition";

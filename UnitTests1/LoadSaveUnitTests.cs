@@ -66,7 +66,28 @@ namespace UnitTests1
             //Process.Start(info);
         }
 
+        [Test]
+        public void SaveTestCaseDescription()
+        {
+
+            string savePath = Path.Combine(TestSupport.CreatedFilesDirectory, "Save.dtc");
+            TestCasesRoot root = TestCasesRoot.CreateSimpleTable();
+            root.TestCases[0].Description = "test description";
+            Assert.True(root.TestCases[1].Description == "");
+            root.Save(savePath);
+
+            root.New();
+
+            root.Load(savePath);
+
+            Assert.True( root.TestCases[0].Description == "test description");
+            Assert.True(root.TestCases[1].Description == "");
+        }
+
         [TestCase(0, "PrinterTestV1.0.dtc")]
+        [TestCase(1, "PrinterTestV1.4.dtc")]
+        [TestCase(2, "PrinterTestV1.5.dtc")]
+        [TestCase(3, "PrinterTestV1.5-emptyDesc.dtc")]
         public void LoadOldProjectFiles(int idx, string fileName)
         {
             string loadPath = Path.Combine(TestSupport.TestFilesDirectory, fileName);

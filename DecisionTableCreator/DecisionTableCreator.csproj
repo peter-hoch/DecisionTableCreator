@@ -80,6 +80,10 @@
     <Compile Include="EditCondition.xaml.cs">
       <DependentUpon>EditCondition.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditTestCase.xaml.cs">
+      <DependentUpon>EditTestCase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditTestCaseDataContainer.cs" />
     <Compile Include="ErrorDialog\ErrorDialogDataContainer.cs" />
     <Compile Include="ErrorDialog\TemplateErrorDialog.xaml.cs">
       <DependentUpon>TemplateErrorDialog.xaml</DependentUpon>
@@ -143,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditCondition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditTestCase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

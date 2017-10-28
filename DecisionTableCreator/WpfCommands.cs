@@ -66,6 +66,7 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand ExportToClipboardWithExternalTemplate;
         public static readonly RoutedUICommand OpenTemplateDirectory;
         public static readonly RoutedUICommand CreateMissingTestCases;
+        public static readonly RoutedUICommand EditTestCaseDescription;
 
         static WpfCommands()
         {
@@ -103,6 +104,7 @@ namespace DecisionTableCreator
             ExportToClipboardWithExternalTemplate = new RoutedUICommand("ExportToClipboardWithExternalTemplate", "ExportToClipboardWithExternalTemplate", typeof(WpfCommands));
             OpenTemplateDirectory = new RoutedUICommand("Open template directory", "OpenTemplateDirectory", typeof(WpfCommands));
             CreateMissingTestCases = new RoutedUICommand("Create missing testcases", "CreateMissingTestCases", typeof(WpfCommands));
+            EditTestCaseDescription = new RoutedUICommand("Edit test case description", "EditTestCaseDescription", typeof(WpfCommands));
         }
     }
 }

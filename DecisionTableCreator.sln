@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecisionTableCreator", "DecisionTableCreator\DecisionTableCreator.csproj", "{42444D72-3E56-4BD6-9CC0-5E674F1BD693}"
 EndProject
@@ -113,7 +113,6 @@ Global
 		{82AC9F77-879E-43EA-9B50-998E662C3440}.Debug|Win32.ActiveCfg = Debug|x86
 		{82AC9F77-879E-43EA-9B50-998E662C3440}.Debug|Win32.Build.0 = Debug|x86
 		{82AC9F77-879E-43EA-9B50-998E662C3440}.Debug|x86.ActiveCfg = Debug|x86
-		{82AC9F77-879E-43EA-9B50-998E662C3440}.Debug|x86.Build.0 = Debug|x86
 		{82AC9F77-879E-43EA-9B50-998E662C3440}.Release|Any CPU.ActiveCfg = Release|x86
 		{82AC9F77-879E-43EA-9B50-998E662C3440}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{82AC9F77-879E-43EA-9B50-998E662C3440}.Release|Mixed Platforms.Build.0 = Release|x86

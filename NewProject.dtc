@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DecisionTableRoot Description="thios is a test descriptionlnl-jkkknjnlknökbösösjbäsölbnöbsnöbnönönösnösbnöbnsnsnölsnbsnölbsnsnsnbnölnnölnblkgblknblnlkfglbslkblkbmlffgdsnsfnblkbnlbfnfbnfgdn&#xD;&#xA;jfhggwhoihgwtj&#xD;&#xA;krjbkrköbrnkrjbtnkjr&#xD;&#xA;knkbrnrkbnkrtnb&#xD;&#xA;xkbnskjbnslfg&#xD;&#xA;">
+  <Conditions>
+    <Condition Name="Basic Printer status" Type="Enumeration" LoadSaveId="1" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="invalid condition" Value="value-invalid condition" IsDefault="True" IsInvalid="True" DontCare="False" />
+        <EnumValue Name="Printer is printing" Value="value-Printer is printing" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="Printer is not printing" Value="value-Printer is not printing" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="DC" Value="value-DC" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Green LED" Type="Enumeration" LoadSaveId="2" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="invalid condition" Value="value-invalid condition" IsDefault="True" IsInvalid="True" DontCare="False" />
+        <EnumValue Name="LED is on" Value="value-LED is on" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="LED is flashing" Value="value-LED is flashing" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="LED is off" Value="value-LED is off" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="DC" Value="value-DC" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Paper" Type="Enumeration" LoadSaveId="3" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="invalid condition" Value="value-invalid condition" IsDefault="True" IsInvalid="True" DontCare="False" />
+        <EnumValue Name="Blank sheet is ejected" Value="value-Blank sheet is ejected" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="Print quality is bad" Value="value-Print quality is bad" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="Nothing is ejected" Value="value-Nothing is ejected" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="DC" Value="value-DC" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+  </Conditions>
+  <Actions>
+    <Action LoadSaveId="1000" Name="Power" Type="Enumeration" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Value="value-" IsDefault="True" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="Check connection" Value="value-Check connection" IsDefault="False" IsInvalid="False" DontCare="False" />
+      </EnumValues>
+    </Action>
+    <Action LoadSaveId="1001" Name="Ink catridge" Type="Enumeration" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Value="value-" IsDefault="True" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="Check filling level" Value="value-Check filling level" IsDefault="False" IsInvalid="False" DontCare="False" />
+      </EnumValues>
+    </Action>
+    <Action LoadSaveId="1002" Name="PC connection" Type="Enumeration" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Value="value-" IsDefault="True" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="Check connection" Value="value-Check connection" IsDefault="False" IsInvalid="False" DontCare="False" />
+      </EnumValues>
+    </Action>
+    <Action LoadSaveId="1003" Name="Paper" Type="Enumeration" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Value="value-" IsDefault="True" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="Check paper filling level" Value="value-Check paper filling level" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="Check for clean (unused) paper" Value="value-Check for clean (unused) paper" IsDefault="False" IsInvalid="False" DontCare="False" />
+      </EnumValues>
+    </Action>
+  </Actions>
+  <TestCases>
+    <TestCase Name="TC1">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="4" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="4" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+      </TestCaseActions>
+    </TestCase>
+    <TestCase Name="TC2">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="4" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+      </TestCaseActions>
+    </TestCase>
+    <TestCase Name="TC3">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="4" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+      </TestCaseActions>
+    </TestCase>
+    <TestCase Name="TC4">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+      </TestCaseActions>
+    </TestCase>
+    <TestCase Name="TC5">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+      </TestCaseActions>
+    </TestCase>
+    <TestCase Name="TC6">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="3" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1001" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="1002" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="1003" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+      </TestCaseActions>
+    </TestCase>
+  </TestCases>
+</DecisionTableRoot>

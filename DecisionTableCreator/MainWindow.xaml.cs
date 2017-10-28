@@ -1448,5 +1448,49 @@ namespace DecisionTableCreator
                 ShowAndLogMessage("exception caught", ex);
             }
         }
+
+        private void EditTestCaseDescription_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            try
+            {
+                var tcr = DataContainer.TestCasesRoot;
+                int index = CalculateColumnIndex(e, true);
+                if (index > 0)
+                {
+                    e.CanExecute = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+
+        }
+
+        private void EditTestCaseDescription_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                var tcr = DataContainer.TestCasesRoot;
+                int index = CalculateColumnIndex(e, true);
+                if (index > 0)
+                {
+                    TestCase tc = tcr.TestCases[index - 1];
+                    EditTestCaseDataContainer dataContainer = new EditTestCaseDataContainer();
+                    dataContainer.Name = tc.Name;
+                    dataContainer.Description = tc.Description;
+                    EditTestCase dialog = new EditTestCase(dataContainer);
+                    if (dialog.ShowDialog() == true)
+                    {
+                        tc.Description = dataContainer.Description;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
     }
 }

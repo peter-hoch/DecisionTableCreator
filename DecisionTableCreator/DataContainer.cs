@@ -91,6 +91,8 @@ namespace DecisionTableCreator
             }
         }
 
+
+
         private string _projectPath = "New Project";
 
         public string ProjectPath
@@ -103,8 +105,6 @@ namespace DecisionTableCreator
                 UpdateTitle();
             }
         }
-
-
 
         private TestCasesRoot _testCasesRoot;
 

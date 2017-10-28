@@ -58,6 +58,10 @@ namespace DecisionTableCreator.TestCases
             doc.AppendChild(doc.CreateXmlDeclaration("1.0", "UTF-8", null));
             var root = doc.CreateElement(XmlNames.DecisionTableRootName);
             doc.AppendChild(root);
+            if (!string.IsNullOrEmpty(testCasesRoot.Description))
+            {
+                root.AddAttribute(XmlNames.DescriptonName, testCasesRoot.Description);
+            }
 
             var xmlConditions = root.AddElement(XmlNames.ConditionsName);
             foreach (ConditionObject condition in testCasesRoot.Conditions)
@@ -133,6 +137,10 @@ namespace DecisionTableCreator.TestCases
         {
             var xmlTestCase = xmlTestCases.AddElement(XmlNames.TestCaseName);
             xmlTestCase.AddAttribute(XmlNames.NameAttributeName, testCase.Name);
+            if (!string.IsNullOrEmpty(testCase.Description))
+            {
+                xmlTestCase.AddAttribute(XmlNames.DescriptonName, testCase.Description);
+            }
 
             var xmlConditions = xmlTestCase.AddElement(XmlNames.TestCaseConditionsName);
             foreach (ValueObject condValueObject in testCase.Conditions)
@@ -196,6 +204,15 @@ namespace DecisionTableCreator.TestCases
             XmlElement root = doc.DocumentElement;
             if (root.Name.Equals(XmlNames.DecisionTableRootName))
             {
+                if (root.Attributes[XmlNames.DescriptonName] != null)
+                {
+                    testCasesRoot.Description = root.Attributes[XmlNames.DescriptonName].Value;
+                }
+                else
+                {
+                    testCasesRoot.Description = "";
+                }
+
                 var xmlConditions = root.GetElementsByTagName(XmlNames.ConditionsName);
                 var element = xmlConditions[0] as XmlElement;
                 foreach (XmlElement item in element.GetElementsByTagName(XmlNames.ConditionName))
@@ -238,6 +255,7 @@ namespace DecisionTableCreator.TestCases
         {
             string name = element.GetAttributeStringValue(XmlNames.NameAttributeName);
             testCase = new TestCase(name);
+            testCase.Description = element.GetAttributeStringValue(XmlNames.DescriptonName);
 
             var xmlValueObjectColl = element.GetElementsByTagName(XmlNames.TestCaseConditionsName);
             var xmlValueObject = xmlValueObjectColl[0] as XmlElement;

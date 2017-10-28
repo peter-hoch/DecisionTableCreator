@@ -69,11 +69,14 @@
     <None Include="TestFiles\CustomErrorListenerTest\Template2.stg" />
     <None Include="TestFiles\CustomErrorListenerTest\Template1.stg" />
     <None Include="TestFiles\FirstTemplateTest\template.stg" />
+    <None Include="TestFiles\LoadOldProjectFiles\PrinterTestV1.0.dtc" />
+    <None Include="TestFiles\LoadOldProjectFiles\PrinterTestV1.4.dtc" />
+    <None Include="TestFiles\LoadOldProjectFiles\PrinterTestV1.5-emptyDesc.dtc" />
+    <None Include="TestFiles\LoadOldProjectFiles\PrinterTestV1.5.dtc" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ReferenceFiles\CreateHtmlTableTest\" />
     <Folder Include="ReferenceFiles\FirstTemplateTest\" />
-    <Folder Include="TestFiles\LoadOldProjectFiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
