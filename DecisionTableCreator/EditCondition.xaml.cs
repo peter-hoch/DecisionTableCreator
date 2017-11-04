@@ -28,7 +28,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -55,11 +57,19 @@ namespace DecisionTableCreator
             DataContext = condObject;
         }
 
-        IConditionAction DataContainer { get { return (IConditionAction) DataContext; } }
+        IConditionAction DataContainer { get { return (IConditionAction)DataContext; } }
 
         private void AppendEnumValue_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DataContainer.EnumValues.Add(new EnumValue("", ""));
+            try
+            {
+                DataContainer.EnumValues.Add(new EnumValue("", ""));
+                WpfTools.SetFocusOnNewCreatedColumn(DataGrid, DataContainer.EnumValues.Count - 1);
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void AppendEnumValue_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -69,36 +79,50 @@ namespace DecisionTableCreator
 
         private void DeleteEnumValue_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DataGrid dataGrid = e.Source as DataGrid;
-            DependencyObject dep = e.OriginalSource as DependencyObject;
-            if (dataGrid != null && dep != null)
+            try
             {
-                var dataGridRow = WpfTools.SearchForParent(dep, typeof(DataGridRow), false);
-                if (dataGridRow != null)
+                DataGrid dataGrid = e.Source as DataGrid;
+                DependencyObject dep = e.OriginalSource as DependencyObject;
+                if (dataGrid != null && dep != null)
                 {
-                    int index = dataGrid.ItemContainerGenerator.IndexFromContainer(dataGridRow);
-                    if (index >= 0 && index < dataGrid.Items.Count)
+                    var dataGridRow = WpfTools.SearchForParent(dep, typeof(DataGridRow), false);
+                    if (dataGridRow != null)
                     {
-                        DataContainer.EnumValues.RemoveAt(index);
+                        int index = dataGrid.ItemContainerGenerator.IndexFromContainer(dataGridRow);
+                        if (index >= 0 && index < dataGrid.Items.Count)
+                        {
+                            DataContainer.EnumValues.RemoveAt(index);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
         private void DeleteEnumValue_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            DataGrid dataGrid = e.Source as DataGrid;
-            DependencyObject dep = e.OriginalSource as DependencyObject;
-            if (dataGrid != null && dep != null)
+            try
             {
-                if (dataGrid.Items.Count > 1)
+                DataGrid dataGrid = e.Source as DataGrid;
+                DependencyObject dep = e.OriginalSource as DependencyObject;
+                if (dataGrid != null && dep != null)
                 {
-                    var dataGridCell = WpfTools.SearchForParent(dep, typeof(DataGridCell), false);
-                    if (dataGridCell != null)
+                    if (dataGrid.Items.Count > 1)
                     {
-                        e.CanExecute = true;
+                        var dataGridCell = WpfTools.SearchForParent(dep, typeof(DataGridCell), false);
+                        if (dataGridCell != null)
+                        {
+                            e.CanExecute = true;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
             }
         }
 
@@ -114,5 +138,15 @@ namespace DecisionTableCreator
             DataContext = null;
             Close();
         }
+
+        void ShowAndLogMessage(string message, Exception ex, [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string memberName = null, [CallerFilePath] string fileName = null)
+        {
+            string text = String.Format("{0} in method({3}) file({4}/{2})" + Environment.NewLine + "{1}", message, ex, lineNumber, memberName, fileName);
+            Trace.WriteLine(text);
+#if DEBUG
+            MessageBox.Show(this, text);
+#endif
+        }
+
     }
 }

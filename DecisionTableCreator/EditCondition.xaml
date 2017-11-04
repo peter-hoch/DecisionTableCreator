@@ -44,7 +44,7 @@
                 <TextBox MinWidth="80" Text="{Binding TooltipText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True"/>
             </StackPanel>
         </StackPanel>
-        <DataGrid Margin="10"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding EnumValues}" AutoGenerateColumns="False">
+        <DataGrid Name="DataGrid" Margin="10"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding EnumValues}" AutoGenerateColumns="False">
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="local:WpfCommands.AppendEnumValue"/>

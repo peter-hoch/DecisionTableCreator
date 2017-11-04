@@ -114,5 +114,34 @@ namespace DecisionTableCreator.Utils
             return null;
         }
 
+
+        public static void SetFocusOnNewCreatedColumn(DataGrid DataGrid, int rowIndex)
+        {
+            DataGrid.Focus();
+
+            DataGridRow rowContainer = DataGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex) as DataGridRow;
+            if (rowContainer == null)
+            {
+                DataGrid.SelectedIndex = rowIndex;
+                DataGrid.ScrollIntoView(DataGrid.SelectedItem);
+                rowContainer = DataGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex) as DataGridRow;
+            }
+            if (rowContainer != null)
+            {
+                rowContainer.ApplyTemplate();
+                DataGridCellsPresenter presenter = WpfTools.FindVisualChild<DataGridCellsPresenter>(rowContainer);
+                DataGridCell cell = presenter.ItemContainerGenerator.ContainerFromIndex(0) as DataGridCell;
+                if (cell == null)
+                {
+                    /* bring the column into view in case it has been virtualized away */
+                    DataGrid.ScrollIntoView(rowContainer, DataGrid.Columns[0]);
+                    cell = presenter.ItemContainerGenerator.ContainerFromIndex(0) as DataGridCell;
+                }
+                if (cell != null)
+                {
+                    cell.Focus();
+                }
+            }
+        }
     }
 }
