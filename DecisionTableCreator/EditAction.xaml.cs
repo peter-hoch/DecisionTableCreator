@@ -33,6 +33,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -60,6 +61,31 @@ namespace DecisionTableCreator
         private void AppendEnumValue_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             DataContainer.EnumValues.Add(new EnumValue("", ""));
+            int rowIndex = DataGrid.SelectedIndex = DataContainer.EnumValues.Count - 1;
+            DataGrid.Focus();
+
+            DataGridRow rowContainer = DataGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex) as DataGridRow;
+            if (rowContainer == null)
+            {
+                DataGrid.ScrollIntoView(DataGrid.SelectedItem);
+                rowContainer = DataGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex) as DataGridRow;
+            }
+            if (rowContainer != null)
+            {
+                rowContainer.ApplyTemplate();
+                DataGridCellsPresenter presenter = WpfTools.FindVisualChild<DataGridCellsPresenter>(rowContainer);
+                DataGridCell cell = presenter.ItemContainerGenerator.ContainerFromIndex(0) as DataGridCell;
+                if (cell == null)
+                {
+                    /* bring the column into view in case it has been virtualized away */
+                    DataGrid.ScrollIntoView(rowContainer, DataGrid.Columns[0]);
+                    cell = presenter.ItemContainerGenerator.ContainerFromIndex(0) as DataGridCell;
+                }
+                if (cell != null)
+                {
+                    cell.Focus();
+                }
+            }
         }
 
         private void AppendEnumValue_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)

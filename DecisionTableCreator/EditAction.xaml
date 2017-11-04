@@ -42,7 +42,7 @@
                 <TextBox MinWidth="80" Text="{Binding TooltipText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True"/>
             </StackPanel>
         </StackPanel>
-        <DataGrid Margin="10"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding EnumValues}" AutoGenerateColumns="False">
+        <DataGrid Name="DataGrid" Margin="10"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding EnumValues}" AutoGenerateColumns="False">
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="local:WpfCommands.AppendEnumValue"/>
@@ -50,7 +50,7 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="80"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="80" FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}"/>
                 <DataGridTextColumn Header="Value" Binding="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="80"/>
                 <DataGridTextColumn Header="Comment" Binding="{Binding TooltipText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="80"/>
                 <DataGridCheckBoxColumn Header="IsInvalid" Binding="{Binding IsInvalid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

@@ -34,6 +34,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using DecisionTableCreator.TestCases;
 
@@ -52,6 +53,63 @@ namespace DecisionTableCreator.Utils
             if (parent != null)
             {
                 return SearchForParent(parent, typeofParent, trace);
+            }
+            return null;
+        }
+
+        public static T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            int childCount = VisualTreeHelper.GetChildrenCount(parent);
+            if (childCount != 0)
+            {
+                for (int idx = 0; idx < childCount; idx++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(parent, idx);
+                    Trace.WriteLine(child.GetType().Name);
+                    T result = child as T;
+                    if (result != null)
+                    {
+                        return result;
+                    }
+                    else
+                    {
+                        T found = FindVisualChild<T>(child);
+                        if (found != null)
+                        {
+                            return found;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+
+        public static DataGridCell GetDataGridCell(DataGrid dataGrid, DataGridRow rowContainer, int column)
+        {
+            if (rowContainer != null)
+            {
+                DataGridCellsPresenter presenter = WpfTools.FindVisualChild<DataGridCellsPresenter>(rowContainer);
+                if (presenter == null)
+                {
+                    /* if the row has been virtualized away, call its ApplyTemplate() method
+                     * to build its visual tree in order for the DataGridCellsPresenter
+                     * and the DataGridCells to be created */
+                    rowContainer.ApplyTemplate();
+                    presenter = WpfTools.FindVisualChild<DataGridCellsPresenter>(rowContainer);
+                }
+                if (presenter != null)
+                {
+                    DataGridCell cell = presenter.ItemContainerGenerator.ContainerFromIndex(column) as DataGridCell;
+                    if (cell == null)
+                    {
+                        /* bring the column into view
+                         * in case it has been virtualized away */
+                        dataGrid.ScrollIntoView(rowContainer, dataGrid.Columns[column]);
+                        cell = presenter.ItemContainerGenerator.ContainerFromIndex(column) as DataGridCell;
+                    }
+                    return cell;
+                }
             }
             return null;
         }
