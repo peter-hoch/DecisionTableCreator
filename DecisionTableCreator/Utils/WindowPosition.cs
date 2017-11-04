@@ -31,23 +31,29 @@ namespace DecisionTableCreator.Utils
                     SystemParameters.VirtualScreenWidth > Width &&
                     SystemParameters.VirtualScreenHeight > Height)
                 {
-                    window.WindowState = WindowState;
-                    window.Top = Top;
-                    window.Left = Left;
-                    window.Height = Height;
-                    window.Width = Width;
+                    if (WindowState == WindowState.Normal)
+                    {
+                        window.WindowState = WindowState;
+                        window.Top = Top;
+                        window.Left = Left;
+                        window.Height = Height;
+                        window.Width = Width;
+                    }
                 }
             }
         }
 
         public void GetWindowPosition(Window window)
         {
-            IsValid = true;
-            WindowState = window.WindowState;
-            Top = window.Top;
-            Left = window.Left;
-            Height = window.Height;
-            Width = window.Width;
+            if (window.WindowState == WindowState.Normal)
+            {
+                IsValid = true;
+                WindowState = window.WindowState;
+                Top = window.Top;
+                Left = window.Left;
+                Height = window.Height;
+                Width = window.Width;
+            }
         }
     }
 }
