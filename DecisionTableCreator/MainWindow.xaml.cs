@@ -67,8 +67,15 @@ namespace DecisionTableCreator
 
         public const string DecisionTableCreatorTemplatesDirectoryName = "DecisionTableCreatorTemplates";
 
+        public WindowPosition ActionWindowPosition { get; set; }
+        public WindowPosition ConditionWindowPosition { get; set; }
+
+
         public MainWindow()
         {
+            ActionWindowPosition = new WindowPosition();
+            ConditionWindowPosition = new WindowPosition();
+
             InitializeComponent();
             CalculateStatistics = false;
             _timer = new DispatcherTimer();
@@ -552,7 +559,7 @@ namespace DecisionTableCreator
         {
             ConditionObject original = ((ConditionObject)DataContainer.TestCasesRoot.Conditions[index]);
             ConditionObject coClone = original.Clone();
-            EditCondition wnd = new EditCondition(coClone);
+            EditCondition wnd = new EditCondition(coClone, ConditionWindowPosition);
             bool? result = wnd.ShowDialog();
             if (result.HasValue && result.Value)
             {
@@ -564,7 +571,7 @@ namespace DecisionTableCreator
         {
             ActionObject original = ((ActionObject)DataContainer.TestCasesRoot.Actions[index]);
             ActionObject coClone = original.Clone();
-            EditAction wnd = new EditAction(coClone);
+            EditAction wnd = new EditAction(coClone, ActionWindowPosition);
             bool? result = wnd.ShowDialog();
             if (result.HasValue && result.Value)
             {
@@ -789,7 +796,7 @@ namespace DecisionTableCreator
                 using (new WaitCursor(this))
                 {
                     ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
-                    EditAction wnd = new EditAction(newAction);
+                    EditAction wnd = new EditAction(newAction, ActionWindowPosition);
                     bool? result = wnd.ShowDialog();
                     if (result.HasValue && result.Value)
                     {
@@ -818,7 +825,7 @@ namespace DecisionTableCreator
                     if (index >= 0)
                     {
                         ActionObject newAction = ActionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
-                        EditAction wnd = new EditAction(newAction);
+                        EditAction wnd = new EditAction(newAction, ActionWindowPosition);
                         bool? result = wnd.ShowDialog();
                         if (result.HasValue && result.Value)
                         {
@@ -854,7 +861,7 @@ namespace DecisionTableCreator
                 using (new WaitCursor(this))
                 {
                     ConditionObject newCondition = ConditionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
-                    EditCondition wnd = new EditCondition(newCondition);
+                    EditCondition wnd = new EditCondition(newCondition, ConditionWindowPosition);
                     bool? result = wnd.ShowDialog();
                     if (result.HasValue && result.Value)
                     {
@@ -883,7 +890,7 @@ namespace DecisionTableCreator
                     if (index >= 0)
                     {
                         ConditionObject conditionObject = ConditionObject.Create("", new ObservableCollection<EnumValue>() { new EnumValue("", "") });
-                        EditCondition wnd = new EditCondition(conditionObject);
+                        EditCondition wnd = new EditCondition(conditionObject, ConditionWindowPosition);
                         bool? result = wnd.ShowDialog();
                         if (result.HasValue && result.Value)
                         {

@@ -131,6 +131,7 @@
     <Compile Include="Utils\PrepareForClipboard.cs" />
     <Compile Include="Utils\Utilities.cs" />
     <Compile Include="Utils\WaitCursor.cs" />
+    <Compile Include="Utils\WindowPosition.cs" />
     <Compile Include="Utils\WpfTools.cs" />
     <Compile Include="Utils\XmlUtils.cs" />
     <Compile Include="WpfCommands.cs" />

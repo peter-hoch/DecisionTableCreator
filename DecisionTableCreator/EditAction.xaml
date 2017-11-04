@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d" Icon="pack://application:,,,/DtcIcon.ico"
         Title="EditAction" Height="300" Width="531.762"
-        FocusManager.FocusedElement="{Binding ElementName=ActionTextBox}">
+        FocusManager.FocusedElement="{Binding ElementName=ActionTextBox}"
+        Closing="Window_Closing"
+        WindowStartupLocation="CenterOwner">
     <Window.CommandBindings>
         <CommandBinding Command="local:WpfCommands.AppendEnumValue" Executed="AppendEnumValue_Executed" CanExecute="AppendEnumValue_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.DeleteEnumValue" Executed="DeleteEnumValue_Executed" CanExecute="DeleteEnumValue_OnCanExecute"/>

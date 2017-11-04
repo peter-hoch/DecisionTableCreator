@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d"
-        Title="Edit test case" Height="300" Width="400">
+        Title="Edit test case" Height="300" Width="400"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

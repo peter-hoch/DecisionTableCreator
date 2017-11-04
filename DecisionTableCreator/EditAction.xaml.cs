@@ -52,10 +52,15 @@ namespace DecisionTableCreator
     /// </summary>
     public partial class EditAction : Window
     {
-        public EditAction(ActionObject actionObject)
+        private WindowPosition defaultPosition;
+
+        public EditAction(ActionObject actionObject, WindowPosition position)
         {
+            defaultPosition = position;
             DataContext = actionObject;
             InitializeComponent();
+
+            defaultPosition?.SetWindowPosition(this);
         }
 
         ActionObject DataContainer { get { return (ActionObject)DataContext; } }
@@ -149,5 +154,9 @@ namespace DecisionTableCreator
 #endif
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            defaultPosition?.GetWindowPosition(this);
+        }
     }
 }

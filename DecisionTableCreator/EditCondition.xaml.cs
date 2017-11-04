@@ -51,10 +51,16 @@ namespace DecisionTableCreator
     /// </summary>
     public partial class EditCondition : Window
     {
-        public EditCondition(IConditionAction condObject)
+        private WindowPosition defaultPosition;
+
+        public EditCondition(IConditionAction condObject, WindowPosition position)
         {
+            defaultPosition = position;
+
             InitializeComponent();
             DataContext = condObject;
+
+            defaultPosition?.SetWindowPosition(this);
         }
 
         IConditionAction DataContainer { get { return (IConditionAction)DataContext; } }
@@ -148,5 +154,9 @@ namespace DecisionTableCreator
 #endif
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            defaultPosition?.GetWindowPosition(this);
+        }
     }
 }
