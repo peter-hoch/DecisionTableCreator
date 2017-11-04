@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d"
         Title="{Binding EditBoxName}" Height="300" Width="500" Icon="pack://application:,,,/DtcIcon.ico"
-         AutomationProperties.AutomationId="EditConditionWindow">
+         AutomationProperties.AutomationId="EditConditionWindow"
+        FocusManager.FocusedElement="{Binding ElementName=ConditionTextBox}">
     <Window.CommandBindings>
         <CommandBinding Command="local:WpfCommands.AppendEnumValue" Executed="AppendEnumValue_Executed" CanExecute="AppendEnumValue_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.DeleteEnumValue" Executed="DeleteEnumValue_Executed" CanExecute="DeleteEnumValue_OnCanExecute"/>
@@ -30,7 +31,7 @@
         <StackPanel Grid.Row="1" Grid.Column="0">
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Label Content="Condition name"/>
-                <TextBox MinWidth="80" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Name="ConditionTextBox" MinWidth="80" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DecisionTableCreator"
         mc:Ignorable="d" Icon="pack://application:,,,/DtcIcon.ico"
-        Title="EditAction" Height="300" Width="531.762">
+        Title="EditAction" Height="300" Width="531.762"
+        FocusManager.FocusedElement="{Binding ElementName=ActionTextBox}">
     <Window.CommandBindings>
         <CommandBinding Command="local:WpfCommands.AppendEnumValue" Executed="AppendEnumValue_Executed" CanExecute="AppendEnumValue_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.DeleteEnumValue" Executed="DeleteEnumValue_Executed" CanExecute="DeleteEnumValue_OnCanExecute"/>
@@ -28,7 +29,7 @@
         <StackPanel Grid.Row="1" Grid.Column="0">
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Label Content="Action name"/>
-                <TextBox MinWidth="80" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Name="ActionTextBox" MinWidth="80" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">

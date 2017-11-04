@@ -15,6 +15,7 @@ namespace DecisionTableCreator.TestCases
         ObservableCollection<TestCase> TestCases { get; }
         ObservableCollection<ConditionObject> Conditions { get; }
         ObservableCollection<ActionObject> Actions { get; }
+        string Description { get; }
     }
 
     public interface ITestCase
@@ -23,6 +24,7 @@ namespace DecisionTableCreator.TestCases
         int DisplayIndex { get; }
         ObservableCollection<ValueObject> Conditions { get; }
         ObservableCollection<ValueObject> Actions { get; }
+        string Description { get; }
     }
 
     public interface IConditionActionObject
