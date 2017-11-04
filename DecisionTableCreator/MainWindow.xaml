@@ -40,6 +40,7 @@
         <CommandBinding Command="local:WpfCommands.OpenTemplateDirectory" Executed="OpenTemplateDirectory_Executed" CanExecute="OpenTemplateDirectory_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.CreateMissingTestCases" Executed="CreateMissingTestCases_Executed" CanExecute="CreateMissingTestCases_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.EditTestCaseDescription" Executed="EditTestCaseDescription_Executed" CanExecute="EditTestCaseDescription_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.OpenReadMeFile" Executed="OpenReadMeFile_Executed" CanExecute="OpenReadMeFile_OnCanExecute"/>
     </Window.CommandBindings>
     <Window.Resources>
         <converter:CoveredTestCasesConverter x:Key="CoveredTestCasesConverter"/>
@@ -81,6 +82,7 @@
                 <MenuItem Command="local:WpfCommands.SaveAs"/>
                 <MenuItem Command="local:WpfCommands.CreateSampleProject"/>
                 <MenuItem Command="local:WpfCommands.CreateMissingTestCases"/>
+                <MenuItem Command="local:WpfCommands.OpenReadMeFile"/>
                 <MenuItem AutomationProperties.AutomationId="MenuItemExit" Command="local:WpfCommands.Exit"/>
             </MenuItem>
             <MenuItem Header="Edit">

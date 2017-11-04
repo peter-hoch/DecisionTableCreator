@@ -1492,5 +1492,36 @@ namespace DecisionTableCreator
             }
         }
 
+        string GetReadMePath()
+        {
+            Uri uri = new Uri(Assembly.GetExecutingAssembly().Location);
+            string path = Path.Combine(Path.GetDirectoryName(uri.LocalPath), "ReadMe.pdf");
+            return path;
+        }
+
+        private void OpenReadMeFile_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            try
+            {
+                e.CanExecute = File.Exists(GetReadMePath());
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        private void OpenReadMeFile_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start(GetReadMePath());
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+
+        }
     }
 }

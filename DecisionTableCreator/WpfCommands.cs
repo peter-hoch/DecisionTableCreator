@@ -67,6 +67,7 @@ namespace DecisionTableCreator
         public static readonly RoutedUICommand OpenTemplateDirectory;
         public static readonly RoutedUICommand CreateMissingTestCases;
         public static readonly RoutedUICommand EditTestCaseDescription;
+        public static readonly RoutedUICommand OpenReadMeFile;
 
         static WpfCommands()
         {
@@ -105,6 +106,7 @@ namespace DecisionTableCreator
             OpenTemplateDirectory = new RoutedUICommand("Open template directory", "OpenTemplateDirectory", typeof(WpfCommands));
             CreateMissingTestCases = new RoutedUICommand("Create missing testcases", "CreateMissingTestCases", typeof(WpfCommands));
             EditTestCaseDescription = new RoutedUICommand("Edit test case description", "EditTestCaseDescription", typeof(WpfCommands));
+            OpenReadMeFile = new RoutedUICommand("Open ReadMe", "OpenReadMeFile", typeof(WpfCommands));
         }
     }
 }

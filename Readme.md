@@ -6,7 +6,7 @@
 - Define don't care entries in conditions 
 - Customizable code generator
 - Calculation of possible combinations and coverage
-- Creation of remaining testcases for 100% coverage
+- Creation of remaining testcases for 100% coverage (limited to 1000 combinations)
 
 ![](./MainWindow.png)
 
@@ -22,6 +22,8 @@ Save the current project
 Create the printer trubleshooting sample
 ### File - Create missing testcases
 Create remaining testcases for 100% coverage
+### File - Open ReadMe
+Opens the ReadMe.pdf - pdf viewer has to be installed 
 ### File - Exit
 Exit tool
 
@@ -118,6 +120,7 @@ The root object supports the interface ITestCasesRoot
         ObservableCollection<ITestCase> TestCases { get; }
         ObservableCollection<IConditionObject> Conditions { get; }
         ObservableCollection<IActionObject> Actions { get; }
+        string Description { get; }
     }
 
     public interface ITestCase
@@ -126,6 +129,7 @@ The root object supports the interface ITestCasesRoot
         int DisplayIndex { get; }
         ObservableCollection<ValueObject> Conditions { get; }
         ObservableCollection<ValueObject> Actions { get; }
+        string Description { get; }
     }
 
     public interface IConditionActionObject
