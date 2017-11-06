@@ -1,5 +1,5 @@
 # Version 1.0
-First release
+- First release
 
 # Version 1.1
 - Bugfix coverage calculation
@@ -20,3 +20,8 @@ First release
 # Version 1.4
 - file extension dtc will be registered during setup
 
+# Version 1.5
+- Description entries for decesion table and for every test case possible
+- Save and restore window position of edit condition and edit action window
+- ReadMe file as pdf will be installed
+- Set focus to the name field of a new created entry in edit condition and action  
