@@ -448,25 +448,29 @@ namespace DecisionTableCreator
 
         private void AppendCopyOfTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //try
-            //{
-            //    using (new WaitCursor(this))
-            //    {
-            //        var tcr = DataContainer.TestCasesRoot;
-            //        if (tcr.TestCases.Count < 1)
-            //        {
-            //            throw new Exception("invalid test case count");
-            //        }
-            //        int testCaseIndex = tcr.TestCases.Count - 1;
-            //        TestCase templateTestCase = DataContainer.TestCasesRoot.TestCases[testCaseIndex];
-            //        TestCase newTestCase = DataContainer.TestCasesRoot.InsertTestCase();
-            //        DataContainer.TestCasesRoot.CopyTestCaseSettings(templateTestCase, newTestCase);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    ShowAndLogMessage("exception caught", ex);
-            //}
+            try
+            {
+                using (new WaitCursor(this))
+                {
+                    var tcr = DataContainer.TestCasesRoot;
+                    if (tcr.TestCases.Count < 1)
+                    {
+                        throw new Exception("invalid test case count");
+                    }
+                    int testCaseIndex = CalculateColumnIndex(e, true) - 1;
+                    if (testCaseIndex < 0)
+                    {
+                        throw new Exception("invalid test case index");
+                    }
+                    TestCase templateTestCase = DataContainer.TestCasesRoot.TestCases[testCaseIndex];
+                    TestCase newTestCase = DataContainer.TestCasesRoot.InsertTestCase();
+                    DataContainer.TestCasesRoot.CopyTestCaseSettings(templateTestCase, newTestCase);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
         }
 
         private void DeleteTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -525,7 +529,7 @@ namespace DecisionTableCreator
                 {
                     var tcr = DataContainer.TestCasesRoot;
                     int index = CalculateColumnIndex(e, true);
-                    if (index >= 0)
+                    if (index > 0)
                     {
                         tcr.DeleteTestCaseAt(index - 1);
                     }

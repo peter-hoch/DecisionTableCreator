@@ -28,6 +28,7 @@
 
  using System;
 using System.Collections.Generic;
+ using System.Diagnostics;
  using System.IO;
  using System.Linq;
 using System.Text;
@@ -48,15 +49,80 @@ namespace UnitTests2
             TestSupport.DiffAction = new InvokeWinMerge();
         }
 
-        //[Test]
-        //public void ClearAllFieldsOnNewTest()
-        //{
-        //    TestCasesRoot tcr = new TestCasesRoot();
-        //    tcr.CreateTestProject();
-        //    TestUtils.CheckTestCasesAndConditionsAndActions(tcr);
+        [TestCase(10, 5, 5, 12)]
+        [TestCase(12, 0, 5, 12)]
+        [TestCase(14, 5, 0, 12)]
+        public void AppendCopyOfTestCaseTest(int idx, int conditionCount, int actionCount, int testCasesCount)
+        {
+            TestCasesRoot tcr = TestCasesRoot.CreateSimpleTable2(conditionCount, actionCount, testCasesCount);
+            TestUtils.CheckTestCasesAndConditionsAndActions(tcr);
 
-        //}
+            for (int tcIdx = 0; tcIdx < testCasesCount; tcIdx++)
+            {
+                TestCase newTestCase = tcr.InsertTestCase();
+                TestCase templateTestCase = tcr.TestCases[tcIdx];
+                tcr.CopyTestCaseSettings(templateTestCase, newTestCase);
+            }
 
+            // create and save the sample project
+            string savePath = Path.Combine(TestSupport.CreatedFilesDirectory, idx + "SimpleProject.dtc");
+            tcr.Save(savePath);
+            //ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", savePath);
+            //Process.Start(info);
 
+            for (int tcIdx = 0; tcIdx < testCasesCount; tcIdx++)
+            {
+                CompareTestCases(tcr, tcIdx, tcIdx + testCasesCount);
+            }
+
+        }
+
+        [Test]
+        public void AppendCopyOfTestCaseSampleProjectTest()
+        {
+            TestCasesRoot tcr = new TestCasesRoot();
+            tcr.CreateSampleProject();
+            TestUtils.CheckTestCasesAndConditionsAndActions(tcr);
+            int testCasesCount = tcr.TestCases.Count;
+
+            for (int tcIdx = 0; tcIdx < testCasesCount; tcIdx++)
+            {
+                TestCase newTestCase = tcr.InsertTestCase();
+                TestCase templateTestCase = tcr.TestCases[tcIdx];
+                tcr.CopyTestCaseSettings(templateTestCase, newTestCase);
+            }
+
+            // create and save the sample project
+            string savePath = Path.Combine(TestSupport.CreatedFilesDirectory, "SimpleProject.dtc");
+            tcr.Save(savePath);
+            ProcessStartInfo info = new ProcessStartInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe", savePath);
+            Process.Start(info);
+
+            for (int tcIdx = 0; tcIdx < testCasesCount; tcIdx++)
+            {
+                CompareTestCases(tcr, tcIdx, tcIdx + testCasesCount);
+            }
+
+        }
+
+        private void CompareTestCases(TestCasesRoot tcr, int sourceIndex, int targetIndex)
+        {
+            TestCase sourceTestCase = tcr.TestCases[sourceIndex];
+            TestCase targetTestCase = tcr.TestCases[targetIndex];
+
+            Assert.That(sourceTestCase.Description.Equals(targetTestCase.Description));
+
+            Assert.That(sourceTestCase.Conditions.Count == targetTestCase.Conditions.Count);
+            for (int idx = 0; idx < sourceTestCase.Conditions.Count; idx++)
+            {
+                Assert.That(sourceTestCase.Conditions[idx].SelectedItemIndex == targetTestCase.Conditions[idx].SelectedItemIndex);
+            }
+
+            Assert.That(sourceTestCase.Actions.Count == targetTestCase.Actions.Count);
+            for (int idx = 0; idx < sourceTestCase.Actions.Count; idx++)
+            {
+                Assert.That(sourceTestCase.Actions[idx].SelectedItemIndex == targetTestCase.Actions[idx].SelectedItemIndex);
+            }
+        }
     }
 }

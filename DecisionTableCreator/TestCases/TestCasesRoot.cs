@@ -162,10 +162,14 @@ namespace DecisionTableCreator.TestCases
 
         public void CopyTestCaseSettings(TestCase templateTestCase, TestCase newTestCase)
         {
+            newTestCase.Description = templateTestCase.Description;
             for (int idx = 0; idx < templateTestCase.Conditions.Count; idx++)
             {
-                ValueObject valueObject = templateTestCase.Conditions[idx];
-               // newTestCase.Conditions[idx].
+                newTestCase.Conditions[idx].SelectedItemIndex = templateTestCase.Conditions[idx].SelectedItemIndex;
+            }
+            for (int idx = 0; idx < templateTestCase.Actions.Count; idx++)
+            {
+                newTestCase.Actions[idx].SelectedItemIndex = templateTestCase.Actions[idx].SelectedItemIndex;
             }
         }
 

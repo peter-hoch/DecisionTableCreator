@@ -46,6 +46,22 @@ namespace DecisionTableCreator.TestCases
         {
             TestCasesRoot testCasesRoot = new TestCasesRoot();
             testCasesRoot.CreateSimpleTableInternal();
+            testCasesRoot.AddAndSelectTestCases();
+            testCasesRoot.FinishTableCreation();
+
+            return testCasesRoot;
+        }
+
+        /// <summary>
+        /// used for unit tests
+        /// </summary>
+        /// <returns></returns>
+        public static TestCasesRoot CreateSimpleTable2(int conditionCount, int actionCount, int testCasesCount)
+        {
+            TestCasesRoot testCasesRoot = new TestCasesRoot();
+            testCasesRoot.CreateSimpleTableInternal2(conditionCount, actionCount);
+            testCasesRoot.AddAndSelectTestCases2(testCasesCount);
+            testCasesRoot.FinishTableCreation();
 
             return testCasesRoot;
         }
@@ -61,18 +77,6 @@ namespace DecisionTableCreator.TestCases
             FireDirtyChanged();
         }
 
-        public void CreateTestProject()
-        {
-            Init();
-            CreateTestProjectInternal();
-            CreateInfosForDatagrid();
-            FireActionsChanged();
-            ProcessConditionsChanged();
-            FireStatisticsChanged();
-            FireDirtyChanged();
-        }
-
-
         public static ObservableCollection<EnumValue> CreateSampleEnum(string name, int count, int defaultIndex, int invalidIndex, int dontCareIndex)
         {
             ObservableCollection<EnumValue> list = new ObservableCollection<EnumValue>();
@@ -86,12 +90,8 @@ namespace DecisionTableCreator.TestCases
             return list;
         }
 
-        private void CreateSimpleTableInternal()
+        private void CreateSimpleTableInternal(int conditionCount = 3, int actionCount = 3)
         {
-            int testCasesCount = 6;
-            int conditionCount = 3;
-            int actionCount = 3;
-
             List<ObservableCollection<EnumValue>> lists = new List<ObservableCollection<EnumValue>>();
             int listNumber = 0;
             int enumIdx = 0;
@@ -147,8 +147,10 @@ namespace DecisionTableCreator.TestCases
             {
                 Actions.Add(ActionObject.Create(String.Format("Action1{0}", idx), lists[listIndex++]));
             }
+        }
 
-
+        private void AddAndSelectTestCases(int testCasesCount = 6)
+        {
             for (int idx = 0; idx < testCasesCount; idx++)
             {
                 TestCase tc = AddTestCase();
@@ -162,7 +164,108 @@ namespace DecisionTableCreator.TestCases
                     value.SelectedItemIndex = idx % value.EnumValues.Count;
                 }
             }
+        }
 
+        private void AddAndSelectTestCases2(int testCasesCount)
+        {
+            int[] condIndexes = new int[Conditions.Count];
+            for (int idx = 0; idx < condIndexes.Length; idx++)
+            {
+                condIndexes[idx] = idx;
+            }
+            int[] actIndexes = new int[Actions.Count];
+            for (int idx = 0; idx < actIndexes.Length; idx++)
+            {
+                actIndexes[idx] = idx;
+            }
+
+            for (int idx = 0; idx < testCasesCount; idx++)
+            {
+                TestCase tc = AddTestCase();
+                tc.DisplayIndex = idx + 1;
+                tc.Description = "Description of test case " + (idx+1);
+                for (int condIdx = 0; condIdx < tc.Conditions.Count; condIdx++)
+                {
+                    CalculateAndSetNewIndex(condIndexes, condIdx, tc.Conditions[condIdx]);
+                }
+                for (int actIdx = 0; actIdx < tc.Actions.Count; actIdx++)
+                {
+                    CalculateAndSetNewIndex(actIndexes, actIdx, tc.Actions[actIdx]);
+                }
+            }
+        }
+
+        private void CalculateAndSetNewIndex(int[] condIndexes, int condIdx, ValueObject valueObject)
+        {
+            int curValueIndex = condIndexes[condIdx];
+            int enumValues = valueObject.EnumValues.Count;
+            if (curValueIndex >= enumValues)
+            {
+                curValueIndex = 0;
+            }
+            condIndexes[condIdx] = curValueIndex + 1;
+            valueObject.SelectedItemIndex = curValueIndex;
+        }
+
+        private void CreateSimpleTableInternal2(int conditionCount, int actionCount)
+        {
+            List<ObservableCollection<EnumValue>> lists = new List<ObservableCollection<EnumValue>>();
+            int listNumber = 0;
+            int enumIdx = 0;
+            var subListSample = new ObservableCollection<EnumValue>();
+            subListSample.Add(new EnumValue("", true, false, true));
+            lists.Add(subListSample);
+            enumIdx = 0;
+            subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}-Default", listNumber, enumIdx++), true, false, true));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}", listNumber++, enumIdx++), false, true, false));
+            enumIdx = 0;
+            subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}", listNumber++, enumIdx++), false, true, false));
+            enumIdx = 0;
+            subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}-Default", listNumber++, enumIdx++), false, true, true));
+            enumIdx = 0;
+            subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}-Default", listNumber++, enumIdx++), false, true, true));
+            enumIdx = 0;
+            subListSample = new ObservableCollection<EnumValue>();
+            lists.Add(subListSample);
+            subListSample.Add(new EnumValue(String.Format("{0}-Invalid-{1}", listNumber, enumIdx++), true, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-EnumValue-{1}", listNumber, enumIdx++), false, false, false));
+            subListSample.Add(new EnumValue(String.Format("{0}-Don' t care-{1}-Default", listNumber++, enumIdx++), false, true, true));
+
+            int listIndex = 0;
+            for (int idx = 1; idx <= conditionCount; idx++)
+            {
+                Conditions.Add(ConditionObject.Create(String.Format("Condition {0}", idx), lists[listIndex++]));
+            }
+
+            listIndex = 0;
+            for (int idx = 1; idx <= actionCount; idx++)
+            {
+                Actions.Add(ActionObject.Create(String.Format("Action1{0}", idx), lists[listIndex++]));
+            }
+        }
+
+        private void FinishTableCreation()
+        {
             CreateBasicColumnDescriptions();
             AddColumnDescriptionsForTestCases();
             PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
@@ -270,56 +373,6 @@ namespace DecisionTableCreator.TestCases
             {
                 tc.Actions[idx++].SelectedItemIndex = action;
             }
-        }
-
-        private void CreateTestProjectInternal()
-        {
-            int testCasesCount = 20;
-            int conditionCount = 8;
-            int actionCount = 8;
-
-            List<ObservableCollection<EnumValue>> lists = new List<ObservableCollection<EnumValue>>();
-
-            for (int idx = 0; idx < conditionCount; idx++)
-            {
-                CreateConditionEnum(lists, conditionCount, testCasesCount, "Cond");
-            }
-            for (int idx = 0; idx < actionCount; idx++)
-            {
-                CreateConditionEnum(lists, actionCount, testCasesCount, "Action");
-            }
-
-            int listIndex = 0;
-            for (int idx = 1; idx <= conditionCount; idx++)
-            {
-                Conditions.Add(ConditionObject.Create(String.Format("Condition {0}", idx), lists[listIndex++]));
-            }
-
-            for (int idx = 1; idx <= actionCount; idx++)
-            {
-                Actions.Add(ActionObject.Create(String.Format("Action {0}", idx), lists[listIndex++]));
-            }
-
-            CreateBasicColumnDescriptions();
-
-            for (int idx = 0; idx < testCasesCount; idx++)
-            {
-                TestCase tc = AddTestCase();
-                tc.DisplayIndex = idx + 1;
-                for (int condIdx = 0; condIdx < conditionCount; condIdx++)
-                {
-                    tc.Conditions[condIdx].SelectedItemIndex = idx*conditionCount+condIdx+1;
-                }
-                for (int actionIdx = 0; actionIdx < actionCount; actionIdx++)
-                {
-                    tc.Actions[actionIdx].SelectedItemIndex = idx * actionCount + actionIdx + 1;
-                }
-            }
-
-            PopulateRows(ConditionTable, Conditions, TestCases, TestCase.CollectionType.Conditions);
-            PopulateRows(ActionTable, Actions, TestCases, TestCase.CollectionType.Actions);
-            RecalculateStatistics();
-
         }
 
         private static void CreateConditionEnum(List<ObservableCollection<EnumValue>> lists, int conditionCount, int testCasesCount, string prefix)
