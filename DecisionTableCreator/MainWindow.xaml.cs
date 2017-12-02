@@ -62,19 +62,27 @@ namespace DecisionTableCreator
     /// </summary>
     public partial class MainWindow : Window
     {
+
         DispatcherTimer _timer;
         public bool CalculateStatistics { get; set; }
 
         public const string DecisionTableCreatorTemplatesDirectoryName = "DecisionTableCreatorTemplates";
 
+        public const string MainWindowPositionName = "MainWindowPosition";
+
         public WindowPosition ActionWindowPosition { get; set; }
         public WindowPosition ConditionWindowPosition { get; set; }
+        private WindowPosition MainWindowDefaultPosition { get; set; }
 
 
         public MainWindow()
         {
-            ActionWindowPosition = new WindowPosition();
-            ConditionWindowPosition = new WindowPosition();
+            MainWindowDefaultPosition = new WindowPosition("MainWindow");
+            MainWindowDefaultPosition.Load(Settings.Default);
+            ActionWindowPosition = new WindowPosition("ActionWindow");
+            ActionWindowPosition.Load(Settings.Default);
+            ConditionWindowPosition = new WindowPosition("ConditionWindow");
+            ConditionWindowPosition.Load(Settings.Default);
 
             InitializeComponent();
             CalculateStatistics = false;
@@ -85,6 +93,7 @@ namespace DecisionTableCreator
             SearchForTemplatesAndCreateSubmenu();
             DataContainer.ResetDirty();
             DataContainer.QuitEditMode += DataContainerOnQuitEditMode;
+            MainWindowDefaultPosition?.SetWindowPosition(this);
             try
             {
                 if (string.IsNullOrEmpty(App.FilePathFromCommandLine))
@@ -1403,6 +1412,11 @@ namespace DecisionTableCreator
         {
             try
             {
+                MainWindowDefaultPosition?.GetWindowPosition(this);
+                MainWindowDefaultPosition?.Save(Settings.Default);
+                ConditionWindowPosition?.Save(Settings.Default);
+                ActionWindowPosition?.Save(Settings.Default);
+
                 e.Cancel = !CheckIfProjectIsDirtyAnDisplaySaveDialogAndSave();
                 Settings.Default.LastFile = DataContainer.ProjectPath;
                 Settings.Default.Save();

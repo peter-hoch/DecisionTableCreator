@@ -108,7 +108,7 @@ namespace DecisionTableCreator
             CreateMissingTestCases = new RoutedUICommand("Create missing testcases", "CreateMissingTestCases", typeof(WpfCommands));
             EditTestCaseDescription = new RoutedUICommand("Edit test case description", "EditTestCaseDescription", typeof(WpfCommands));
             OpenReadMeFile = new RoutedUICommand("Open ReadMe", "OpenReadMeFile", typeof(WpfCommands));
-            AppendCopyOfTestCase = new RoutedUICommand("Append a copy of selected test case", "AppendCopyOfTestCase", typeof(WpfCommands));
+            AppendCopyOfTestCase = new RoutedUICommand("Append a copy of the selected test case", "AppendCopyOfTestCase", typeof(WpfCommands));
         }
     }
 }

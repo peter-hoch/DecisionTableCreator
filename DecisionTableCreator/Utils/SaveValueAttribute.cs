@@ -1,6 +1,6 @@
 ﻿/*
  * [The "BSD license"]
- * Copyright (c) 2016 Peter Hoch
+ * Copyright (c) 2017 Peter Hoch
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,30 +31,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 
 namespace DecisionTableCreator.Utils
 {
-    public class WaitCursor : IDisposable
+
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    public sealed class SaveValueAttribute : Attribute
     {
-        public Cursor OldCursor { get; private set; }
-
-        public Window Window { get; private set; }
-
-        public WaitCursor(Window wnd)
-        {
-            OldCursor = wnd.Cursor;
-            Window = wnd;
-            Window.Cursor = Cursors.Wait;
-        }
-
-        public void Dispose()
-        {
-            if (Window != null)
-            {
-                Window.Cursor = OldCursor;
-            }
-        }
     }
+
 }

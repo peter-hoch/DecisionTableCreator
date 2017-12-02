@@ -31,6 +31,8 @@ Exit tool
 Add and delete test case
 ### Edit - Delete most right test case
 Deletes the most right test case
+### Edit - Append a copy of the selected test case
+Append a new test case with the settings of the selected test case 
 ### Edit - Edit test case description
 Opens a dialog to edit the test case description
 ### Edit test case dialog

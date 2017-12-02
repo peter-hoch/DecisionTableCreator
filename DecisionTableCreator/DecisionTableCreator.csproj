@@ -149,6 +149,7 @@
     <Compile Include="Utils\ObservedItem.cs" />
     <Compile Include="Utils\ObserveForDirtyAttribute.cs" />
     <Compile Include="Utils\PrepareForClipboard.cs" />
+    <Compile Include="Utils\SaveValueAttribute.cs" />
     <Compile Include="Utils\Utilities.cs" />
     <Compile Include="Utils\WaitCursor.cs" />
     <Compile Include="Utils\WindowPosition.cs" />

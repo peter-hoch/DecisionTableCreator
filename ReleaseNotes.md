@@ -24,4 +24,10 @@
 - Description entries for decesion table and for every test case possible
 - Save and restore window position of edit condition and edit action window
 - ReadMe file as pdf will be installed
-- Set focus to the name field of a new created entry in edit condition and action  
+- Set focus to the name field of a new created entry in edit condition and action
+
+# Version 1.6
+- Bugfix: delete test case description on New
+- New Command append a copy of the selected test case  
+- Load and save last window position
+

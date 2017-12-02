@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Margin="5"  Text="Decision Table Creator"/>
         <TextBlock Grid.Row="1" Margin="5"  Text="{Binding Version}"/>
-        <TextBlock Grid.Row="2" Margin="5"  Text="Copyright (c) 2016 Peter Hoch"/>
+        <TextBlock Grid.Row="2" Margin="5"  Text="Copyright (c) 2017 Peter Hoch"/>
         <TextBlock Grid.Row="3" Margin="5"  Text="License:"/>
         <ScrollViewer Grid.Row="4" Margin="5">
             <TextBlock Text="{x:Static properties:Resources.License}"/>
