@@ -228,27 +228,34 @@ namespace DecisionTableCreator.TestCases
             TestCase tc = AddTestCase();
             tc.DisplayIndex = idx++;
             SetSelectedItemIndex(tc, new int[] { 1, 4, 4 }, new int[0]);
+            tc.Description = "This is the description of TestCase 1";
 
             tc = AddTestCase();
             tc.DisplayIndex = idx++;
             SetSelectedItemIndex(tc, new int[] { 2, 3, 4 }, new int[] { 1 });
+            tc.Description = "This is the description of TestCase 2";
 
             tc = AddTestCase();
             tc.DisplayIndex = idx++;
             SetSelectedItemIndex(tc, new int[] { 2, 2, 4 }, new int[] { 0, 1, 0, 1 });
+            tc.Description = "This is the description of TestCase 3";
 
             tc = AddTestCase();
             tc.DisplayIndex = idx++;
             SetSelectedItemIndex(tc, new int[] { 2, 1, 1 }, new int[] { 0, 1, 0, 0 });
+            tc.Description = "This is the description of TestCase 4";
 
             tc = AddTestCase();
             tc.DisplayIndex = idx++;
             SetSelectedItemIndex(tc, new int[] { 2, 1, 2 }, new int[] { 0, 1, 0, 2 });
+            tc.Description = "This is the description of TestCase 5";
 
             tc = AddTestCase();
             tc.DisplayIndex = idx++;
             SetSelectedItemIndex(tc, new int[] { 2, 1, 3 }, new int[] { 0, 0, 1, 1 });
+            tc.Description = "This is the description of TestCase 6";
 
+            this.Description = "This is the description of the sample project";
         }
 
         void SetSelectedItemIndex(TestCase tc, int[] conditions, int[] actions)

@@ -56,6 +56,7 @@ namespace DecisionTableCreator.TestCases
 
         void Init()
         {
+            Description = string.Empty;
             ConditionTable = new DataTable();
             ActionTable = new DataTable();
             TestCases = new ObservableCollection<TestCase>();
