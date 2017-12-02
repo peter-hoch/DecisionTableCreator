@@ -160,6 +160,16 @@ namespace DecisionTableCreator.TestCases
             return deleted;
         }
 
+        public void CopyTestCaseSettings(TestCase templateTestCase, TestCase newTestCase)
+        {
+            for (int idx = 0; idx < templateTestCase.Conditions.Count; idx++)
+            {
+                ValueObject valueObject = templateTestCase.Conditions[idx];
+               // newTestCase.Conditions[idx].
+            }
+        }
+
+
 
         static Regex _regexNextTestCaseId = new Regex(@"^TC(?<value>\d+)$", RegexOptions.Compiled);
 
@@ -209,7 +219,6 @@ namespace DecisionTableCreator.TestCases
 
             return tc;
         }
-
 
 
         private void UpdateDisplayIndex(ObservableCollection<TestCase> testCases)

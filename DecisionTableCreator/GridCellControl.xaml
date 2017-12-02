@@ -21,6 +21,7 @@
                     <MenuItem Command="ApplicationCommands.Paste" />
                     <MenuItem Command="local:WpfCommands.InsertTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.AppendTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Command="local:WpfCommands.AppendCopyOfTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.DeleteTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.EditTestCaseDescription" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.EditCondition" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
@@ -42,6 +43,7 @@
                 <ContextMenu>
                     <MenuItem Command="local:WpfCommands.InsertTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.AppendTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                    <MenuItem Command="local:WpfCommands.AppendCopyOfTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.DeleteTestCase" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.EditTestCaseDescription" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                     <MenuItem Command="local:WpfCommands.EditCondition" CommandTarget="{Binding Path=PlacementTarget,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>

@@ -423,11 +423,56 @@ namespace DecisionTableCreator
             }
         }
 
+        private void AppendCopyOfTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            try
+            {
+                if (DataContainer != null &&
+                    DataContainer.TestCasesRoot != null &&
+                    DataContainer.TestCasesRoot.TestCases != null &&
+                    DataContainer.TestCasesRoot.TestCases.Count > 0)
+                {
+                    // check if a test case is selected
+                    int index = CalculateColumnIndex(e, true);
+                    if (index >= 1)
+                    {
+                        e.CanExecute = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAndLogMessage("exception caught", ex);
+            }
+        }
+
+        private void AppendCopyOfTestCase_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            //try
+            //{
+            //    using (new WaitCursor(this))
+            //    {
+            //        var tcr = DataContainer.TestCasesRoot;
+            //        if (tcr.TestCases.Count < 1)
+            //        {
+            //            throw new Exception("invalid test case count");
+            //        }
+            //        int testCaseIndex = tcr.TestCases.Count - 1;
+            //        TestCase templateTestCase = DataContainer.TestCasesRoot.TestCases[testCaseIndex];
+            //        TestCase newTestCase = DataContainer.TestCasesRoot.InsertTestCase();
+            //        DataContainer.TestCasesRoot.CopyTestCaseSettings(templateTestCase, newTestCase);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    ShowAndLogMessage("exception caught", ex);
+            //}
+        }
+
         private void DeleteTestCase_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             try
             {
-                var tcr = DataContainer.TestCasesRoot;
                 int index = CalculateColumnIndex(e, true);
                 if (index >= 0)
                 {
@@ -1530,5 +1575,6 @@ namespace DecisionTableCreator
             }
 
         }
+
     }
 }

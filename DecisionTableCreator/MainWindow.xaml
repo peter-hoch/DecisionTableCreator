@@ -41,6 +41,7 @@
         <CommandBinding Command="local:WpfCommands.CreateMissingTestCases" Executed="CreateMissingTestCases_Executed" CanExecute="CreateMissingTestCases_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.EditTestCaseDescription" Executed="EditTestCaseDescription_Executed" CanExecute="EditTestCaseDescription_OnCanExecute"/>
         <CommandBinding Command="local:WpfCommands.OpenReadMeFile" Executed="OpenReadMeFile_Executed" CanExecute="OpenReadMeFile_OnCanExecute"/>
+        <CommandBinding Command="local:WpfCommands.AppendCopyOfTestCase" Executed="AppendCopyOfTestCase_Executed" CanExecute="AppendCopyOfTestCase_OnCanExecute"/>
     </Window.CommandBindings>
     <Window.Resources>
         <converter:CoveredTestCasesConverter x:Key="CoveredTestCasesConverter"/>
@@ -87,6 +88,7 @@
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem AutomationProperties.AutomationId="MenuItemAppendTestCase"  Command="local:WpfCommands.AppendTestCase"/>
+                <MenuItem Command="local:WpfCommands.AppendCopyOfTestCase"/>
                 <MenuItem AutomationProperties.AutomationId="MenuItemDeleteTestCase"  Command="local:WpfCommands.DeleteTestCase"/>
                 <MenuItem AutomationProperties.AutomationId="MenuItemDeleteMostRightTestCase"  Command="local:WpfCommands.DeleteMostRightTestCase"/>
                 <MenuItem Command="local:WpfCommands.EditTestCaseDescription"/>

@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="AddColumnTest.cs" />
     <Compile Include="AddRowsTest.cs" />
+    <Compile Include="CopyTestCaseTest.cs" />
     <Compile Include="DirtyObserverTest.cs" />
     <Compile Include="DirtyObserverTestFiles\DataContainerTest1.cs" />
     <Compile Include="DirtyObserverTestFiles\DataContainerTest2.cs" />

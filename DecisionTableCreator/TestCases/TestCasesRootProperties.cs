@@ -177,7 +177,5 @@ namespace DecisionTableCreator.TestCases
             StatisticsChanged?.Invoke();
         }
 
-
-
     }
 }
