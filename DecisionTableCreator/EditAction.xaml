@@ -36,7 +36,7 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
             <Button Margin="5" Content="Ok" MinWidth="80" Click="OnOk_OnClick" IsDefault="True"/>
-            <Button Margin="5" Content="Cancel" MinWidth="80" Click="OnCancel_OnClick"/>
+            <Button Margin="5" Content="Cancel" MinWidth="80" Click="OnCancel_OnClick" IsCancel="True"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0">
             <StackPanel Margin="10" Orientation="Horizontal">

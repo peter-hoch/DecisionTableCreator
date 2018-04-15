@@ -26,7 +26,7 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
             <Button Margin="5" Content="Ok" MinWidth="80" Click="OnOk_OnClick" IsDefault="True"/>
-            <Button Margin="5" Content="Cancel" MinWidth="80" Click="OnCancel_OnClick"/>
+            <Button Margin="5" Content="Cancel" MinWidth="80" Click="OnCancel_OnClick" IsCancel="True"/>
         </StackPanel>
         <GroupBox Margin="5" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  Header="Description">
             <TextBox Margin="5" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" AcceptsTab="True"/>
