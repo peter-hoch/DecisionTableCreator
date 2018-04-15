@@ -116,6 +116,7 @@ namespace UnitTests2
         [TestCase("Sample.dtc", 8, 8, 99.9, 100.0)]
         [TestCase("AnotherProject.dtc", 429496729600000000, -1, -1, -1)]
         [TestCase("CoverageTest.dtc", 32, 28, (28.0 / 32.0 * 100.0 - 0.001), (28.0 / 32.0 * 100.0 + 0.001))]
+        [TestCase("CoverageTest14.dtc", 16, 14, (14.0 / 16.0 * 100.0 - 0.001), (14.0 / 16.0 * 100.0 + 0.001))]
         public void CalculateCoverage(string fileName, long expectedCombinations, long expectedUniqueTestCases, double minExpectedCoverage, double maxExpectedCoverage)
         {
             string testSettingPath = Path.Combine(TestSupport.CreatedFilesDirectory, "TestSetting.txt");

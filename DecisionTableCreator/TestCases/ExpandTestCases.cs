@@ -33,7 +33,7 @@ namespace DecisionTableCreator.TestCases
             return new List<TestCase>(uniqueTestCases);
         }
 
-        private void ExpandCondition(List<TestCase> expandedTestCases, TestCase testCase, List<int> values, int idx)
+        public void ExpandCondition(List<TestCase> expandedTestCases, TestCase testCase, List<int> values, int idx)
         {
             if (testCase.Conditions.Count - 1 > idx)
             {

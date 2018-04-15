@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DecisionTableRoot>
+  <Conditions>
+    <Condition Name="Condition 1" Type="Enumeration" LoadSaveId="1" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="V1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="V2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="V1+V2" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Condition 3" Type="Enumeration" LoadSaveId="2" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="V1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="V2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="V1+V2" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Condition 4" Type="Enumeration" LoadSaveId="3" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="V1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="V2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="V1+V2" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+    <Condition Name="Condition 5" Type="Enumeration" LoadSaveId="4" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="V1" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="V2" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="V1+V2" IsDefault="False" IsInvalid="False" DontCare="True" />
+      </EnumValues>
+    </Condition>
+  </Conditions>
+  <Actions>
+    <Action LoadSaveId="1000" Name="Funktion" Type="Enumeration" DefaultBool="False">
+      <EnumValues>
+        <EnumValue Name="ok" IsDefault="False" IsInvalid="False" DontCare="False" />
+        <EnumValue Name="nok" IsDefault="False" IsInvalid="False" DontCare="False" />
+      </EnumValues>
+    </Action>
+  </Actions>
+  <TestCases>
+    <TestCase Name="TC1">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+      </TestCaseActions>
+    </TestCase>
+    <TestCase Name="TC2">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+      </TestCaseActions>
+    </TestCase>
+    <TestCase Name="TC3">
+      <TestCaseConditions>
+        <TestCaseValue LoadSaveId="1" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="2" Type="Enumeration" Bool="False" SelectedItemIndex="2" />
+        <TestCaseValue LoadSaveId="3" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+        <TestCaseValue LoadSaveId="4" Type="Enumeration" Bool="False" SelectedItemIndex="0" />
+      </TestCaseConditions>
+      <TestCaseActions>
+        <TestCaseValue LoadSaveId="1000" Type="Enumeration" Bool="False" SelectedItemIndex="1" />
+      </TestCaseActions>
+    </TestCase>
+  </TestCases>
+</DecisionTableRoot>
