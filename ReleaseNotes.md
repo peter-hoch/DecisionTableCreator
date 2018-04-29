@@ -31,3 +31,5 @@
 - New Command append a copy of the selected test case  
 - Load and save last window position
 
+# Version 1.7
+- Bugfix: Color support for Windows 10
