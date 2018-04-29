@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="DecisionTableCreatorSetup" Language="1033" Version="1.6.0.0" Manufacturer="Peter Hoch" UpgradeCode="{BD6FE505-0561-4F81-9E5F-57ADE1829F26}">
+  <Product Id="*" Name="DecisionTableCreatorSetup" Language="1033" Version="1.7.0.0" Manufacturer="Peter Hoch" UpgradeCode="{BD6FE505-0561-4F81-9E5F-57ADE1829F26}">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of Decision Table Creator is already installed." />
