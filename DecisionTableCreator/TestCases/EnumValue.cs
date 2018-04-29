@@ -32,6 +32,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Xml;
 using DecisionTableCreator.Utils;
 
@@ -47,6 +48,7 @@ namespace DecisionTableCreator.TestCases
         {
             DirtyObserver = new DirtyObserver(this);
             Name = name;
+            Background = new Background(BackgroundColor.White);
             IsInvalid = isInavlid;
             DontCare = dontCare;
             IsDefault = isDefault;
@@ -54,7 +56,7 @@ namespace DecisionTableCreator.TestCases
             TooltipText = tooltipText;
         }
 
-        public EnumValue(string name, bool isInavlid = false, bool dontCare = false, bool isDefault = false, string tooltipText = null) : this(name, "value-"+name, isInavlid, dontCare, isDefault, tooltipText)
+        public EnumValue(string name, bool isInavlid = false, bool dontCare = false, bool isDefault = false, string tooltipText = null) : this(name, "value-" + name, isInavlid, dontCare, isDefault, tooltipText)
         {
         }
 
@@ -87,6 +89,7 @@ namespace DecisionTableCreator.TestCases
                     _dontCare = false;
                     OnPropertyChanged("DontCare");
                 }
+                SetBackground();
             }
         }
 
@@ -105,6 +108,7 @@ namespace DecisionTableCreator.TestCases
                     _isInvalid = false;
                     OnPropertyChanged("IsInvalid");
                 }
+                SetBackground();
             }
         }
 
@@ -147,7 +151,7 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        public string Comment { get {return _tooltipText;} }
+        public string Comment { get { return _tooltipText; } }
 
 
         public override string ToString()
@@ -169,6 +173,35 @@ namespace DecisionTableCreator.TestCases
             {
                 _dirtyObserver = value;
                 OnPropertyChanged("DirtyObserver");
+            }
+        }
+
+        private void SetBackground()
+        {
+            if (IsInvalid)
+            {
+                Background.BackgroundColor = BackgroundColor.Red;
+            }
+            else if (DontCare)
+            {
+                Background.BackgroundColor = BackgroundColor.Aqua;
+            }
+            else
+            {
+                Background.BackgroundColor = BackgroundColor.White;
+            }
+        }
+
+
+        private Background _background;
+
+        public Background Background
+        {
+            get { return _background; }
+            set
+            {
+                _background = value;
+                OnPropertyChanged("Background");
             }
         }
 

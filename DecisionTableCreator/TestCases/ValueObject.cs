@@ -232,15 +232,21 @@ namespace DecisionTableCreator.TestCases
             }
         }
 
-        private Background _background = new Background(BackgroundColor.White);
 
         public Background Background
         {
-            get { return _background; }
-            set
+            get
             {
-                _background = value;
-                OnPropertyChanged("Background");
+                Background background = new Background(BackgroundColor.White);
+                if (DataType == ValueDataType.Enumeration)
+                {
+                    EnumValue ev = Value as EnumValue;
+                    if (ev != null)
+                    {
+                        return ev.Background;
+                    }
+                }
+                return background;
             }
         }
 
@@ -306,7 +312,6 @@ namespace DecisionTableCreator.TestCases
             {
                 _enumValues = value;
                 OnPropertyChanged("EnumValues");
-                SetBackground();
             }
         }
 
@@ -321,35 +326,10 @@ namespace DecisionTableCreator.TestCases
             {
                 _selectedItemIndex = value;
                 OnPropertyChanged("SelectedItemIndex");
-                SetBackground();
             }
         }
 
 
-        private void SetBackground()
-        {
-            Brush brush = Brushes.White;
-
-            if (DataType == ValueDataType.Enumeration)
-            {
-                EnumValue ev = Value as EnumValue;
-                if (ev != null)
-                {
-                    if (ev.IsInvalid)
-                    {
-                        Background.BackgroundColor = BackgroundColor.Red;
-                    }
-                    else if (ev.DontCare)
-                    {
-                        Background.BackgroundColor = BackgroundColor.Aqua;
-                    }
-                    else
-                    {
-                        Background.BackgroundColor = BackgroundColor.White;
-                    }
-                }
-            }
-        }
 
         private string _testProperty;
 
