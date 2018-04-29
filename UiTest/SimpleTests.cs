@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -15,12 +16,21 @@ using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems.MenuItems;
 using TestStack.White.UIItems.WindowItems;
 using TestStack.White.UIItems.WPFUIItems;
+using UnitTestSupport;
 
 namespace UiTest
 {
     [TestFixture]
     public class SimpleTests
     {
+        [OneTimeSetUp]
+        public void OneTimeSetup()
+        {
+            var context = TestContext.CurrentContext;
+            // copy and rename app.config file - overwrite existing
+            File.Copy(Path.Combine(context.TestDirectory,@"configFile\\app.config"), Path.Combine(context.TestDirectory,"DecisionTableCreator.exe.config"), true);
+        }
+
         [Test]
         public void StartApplicationTest()
         {

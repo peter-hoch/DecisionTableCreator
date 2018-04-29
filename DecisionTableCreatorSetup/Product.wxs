@@ -21,6 +21,7 @@
     <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
       <Component Id="ProductComponent" Guid="{6DD0F896-9DEF-4F1D-9D34-BA418B28F81F}">
         <File Id="ExeFile" Source="$(var.DecisionTableCreator.TargetPath)" KeyPath="yes" Checksum="yes"/>
+        <File Id="ExeFileConfig" Source="$(var.DecisionTableCreator.TargetPath).Config"/>
         <File Id="ReadMe" Source="$(var.SolutionDir)\ReadMe.pdf" Checksum="yes"/>
         <File Id="StringTemplate" Source="$(var.DecisionTableCreator.TargetDir)Antlr4.StringTemplate.dll" Checksum="yes"/>
         <ProgId Id='ExeFile.ProgId' Description='Decision Table Creator file' Advertise='yes'>
